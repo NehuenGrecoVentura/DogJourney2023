@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Carrot
+  - Wolf
+  - Dog
+  - Sleep Wolf
+  - Area Destruction
+  - Sensor Wolf
+  - Cut Tree
+  - Axe
+  - Escape Rabbit
+  - Stairs
+  - Bridge
+  - Block Order
+  - Tree Decals
+  - Purple Tree
+  - Purple Decal
+  - Green Leaves
+  - Purple Trunks
+  - Purple Leaves
+  - Sit
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Green Tree
+  - Water
+  - UI
+  - Purple Tree
+  - Axe
+  - Player
+  - Dog
+  - Volume
+  - Floor
+  - Wolf
+  - Geiser
+  - Geiser Controller
+  - Cilinder
+  - Torch
+  - Rock
+  - 3DUI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0

@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 12451f034e582974092329336bb657a5
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _IconCry: {fileID: 2800000, guid: af9c7ed9d1bfafc448bc04850d67be67, type: 3}
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

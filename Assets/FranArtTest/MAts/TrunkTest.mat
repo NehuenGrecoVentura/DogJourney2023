@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TrunkTest
+  m_Shader: {fileID: 4800000, guid: 8a1618d9cbd67c341becbd71deeea414, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _CantidadBrillo: 0.75
+    - _Cantidadmedio: 0.25
+    - __dirty: 0
+    m_Colors:
+    - _ColorBrillo: {r: 0.4056604, g: 0.29644412, b: 0, a: 1}
+    - _ColorSombra: {r: 0.21698111, g: 0.1761105, b: 0, a: 1}
+    - _Colormedio: {r: 0.3207547, g: 0.23634559, b: 0, a: 1}
+  m_BuildTextureStacks: []
