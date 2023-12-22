@@ -23,6 +23,7 @@ TagManager:
   - Purple Trunks
   - Purple Leaves
   - Sit
+  - Terrain
   layers:
   - Default
   - TransparentFX
