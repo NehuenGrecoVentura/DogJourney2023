@@ -15,7 +15,13 @@ public class BillboardCam : MonoBehaviour
         Vector3 lookDirection = _camPos.position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(lookDirection);
 
-        // Aplica la rotación solo en el eje Y (para que siempre mire hacia la cámara)
-        transform.rotation = Quaternion.Euler(0, rotation.eulerAngles.y, 0);
+
+        // Extrae las rotaciones en los ejes individuales
+        float rotationX = rotation.eulerAngles.x;
+        float rotationY = rotation.eulerAngles.y;
+        float rotationZ = rotation.eulerAngles.z;
+
+        // Aplica la rotación en los ejes X, Y, Z
+        transform.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
     }
 }
