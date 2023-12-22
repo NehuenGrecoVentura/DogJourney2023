@@ -22,6 +22,12 @@ public class Character : MonoBehaviour
 
     [SerializeField] AudioClip[] _soundsCall;
 
+    [Header("FIX RAY")]
+    [SerializeField] float _rayDist;
+    [SerializeField] Transform _rayPoint1;
+    [SerializeField] Transform _rayPoint2;
+    private bool _test1, _test2;
+
     private void Awake()
     {
         _myRb = GetComponent<Rigidbody>();
@@ -29,7 +35,7 @@ public class Character : MonoBehaviour
         _myAudio = GetComponent<AudioSource>();
         _orderDog = GetComponent<OrderDog>();
 
-        _model = new ModelCharacter(_myRb, speed, speedRun, _speedCrouch, speedAux, isClimb, transform, _camPos, _gravity, _orderDog);
+        _model = new ModelCharacter(_myRb, speed, speedRun, _speedCrouch, speedAux, isClimb, transform, _camPos, _gravity, _orderDog, _test1, _test2, _rayDist, _rayPoint1, _rayPoint2);
         _view = new ViewCharacter(_myAnim, _myAudio, _soundsCall);
         _controller = new ControllerCharacter(_model);
 

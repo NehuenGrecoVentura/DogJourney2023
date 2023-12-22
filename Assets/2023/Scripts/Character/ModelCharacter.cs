@@ -4,13 +4,14 @@ using System;
 public class ModelCharacter
 {
     private Rigidbody _rb;
-    private float _speed, _speedRun, _speedCrouch, _speedAux, _gravity;
-    private bool _isClimb;
-    private Transform _myTransform, _camPos;
+    private float _speed, _speedRun, _speedCrouch, _speedAux, _gravity, _rayDist;
+    private bool _isClimb, _test, _test2;
+    private Transform _myTransform, _camPos, _rayPoint1, _rayPoint2;
     private OrderDog _orderDog;
-    public event Action EventIdle, EventWalk, EventRun, EventIdleCrouch, EventWalkCrouch, EventPickIdle, EventPickWalk, EventClimb, EventIdleCallDog, EventCallMoveDog, EventHitTree; 
-    
-    public ModelCharacter(Rigidbody rb, float speed, float speedRun, float speedCrouch, float speedAux, bool isClimb, Transform transform, Transform camPos, float gravity, OrderDog orderDog)
+    public event Action EventIdle, EventWalk, EventRun, EventIdleCrouch, EventWalkCrouch, EventPickIdle, EventPickWalk, EventClimb, EventIdleCallDog, EventCallMoveDog, EventHitTree;
+
+    public ModelCharacter(Rigidbody rb, float speed, float speedRun, float speedCrouch, float speedAux, bool isClimb, Transform transform, Transform camPos, float gravity, OrderDog orderDog, bool test1, bool test2,
+        float rayDist, Transform rayPoint1, Transform rayPoint2)
     {
         _rb = rb;
         _speed = speed;
@@ -23,6 +24,12 @@ public class ModelCharacter
         _gravity = gravity;
         _orderDog = orderDog;
         _speedAux = _speed;
+
+        _test = test1;
+        _test2 = test2;
+        _rayDist = rayDist;
+        _rayPoint1 = rayPoint1;
+        _rayPoint2 = rayPoint2;
     }
 
     public void Movement(float h, float v)
@@ -40,9 +47,14 @@ public class ModelCharacter
             right.y = 0;
             Vector3 dir = forward * v + right * h;
             moveSpeed = Mathf.Clamp01(dir.magnitude);
-            dir.Normalize();
-            _rb.MovePosition(_myTransform.position + dir * _speed * moveSpeed * Time.deltaTime);
-            _myTransform.rotation = Quaternion.Slerp(_myTransform.rotation, Quaternion.LookRotation(dir), 0.2f);
+            _test = Physics.Raycast(_rayPoint1.position, dir, _rayDist);
+            _test2 = Physics.Raycast(_rayPoint2.position, dir, _rayDist);
+            if (!_test && !_test2)
+            {
+                dir.Normalize();
+                _rb.MovePosition(_myTransform.position + dir * _speed * moveSpeed * Time.deltaTime);
+                _myTransform.rotation = Quaternion.Slerp(_myTransform.rotation, Quaternion.LookRotation(dir), 0.2f);
+            }
         }
 
         move.y += _gravity * Time.deltaTime;
