@@ -22,19 +22,20 @@ public class Barriel : MonoBehaviour
         _animBarriel.enabled = false;
     }
 
-    public void UpBarriel(float time, bool up, bool down)
+    public void UpBarriel(float time)
     {
-        StartCoroutine(DownBarriel(time, up, down));
+        StartCoroutine(DownBarriel(time));
     }
 
-    private IEnumerator DownBarriel(float time, bool up, bool down)
+    private IEnumerator DownBarriel(float time)
     {
         _animBarriel.enabled = true;
-        _animBarriel.SetBool("Up", up);
-        _animBarriel.SetBool("Down", down);
+        _animBarriel.SetBool("Up", true);
+        _animBarriel.SetBool("Down", false);
         yield return new WaitForSeconds(time);
-        _animBarriel.SetBool("Up", up);
-        _animBarriel.SetBool("Down", down);
+        _animBarriel.SetBool("Up", false);
+        _animBarriel.SetBool("Down", true);
+        Destroy(this);
     }
 
     private void OnTriggerEnter(Collider other)

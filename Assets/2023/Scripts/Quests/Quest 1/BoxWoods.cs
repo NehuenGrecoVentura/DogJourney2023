@@ -18,6 +18,7 @@ public class BoxWoods : MonoBehaviour
     [SerializeField] GameObject _canvasStatusQuest;
     [SerializeField] GameObject[] _canvasQuests;
     [SerializeField] AudioSource _truckSource;
+    private Barriel _barriel;
 
     [Header("NEXT QUEST")]
     [SerializeField] int _rewardMoney = 100;
@@ -43,6 +44,7 @@ public class BoxWoods : MonoBehaviour
         _gameManager = FindObjectOfType<Manager>();
         _radar = FindObjectOfType<LocationQuest>();
         _player = FindObjectOfType<Character>();
+        _barriel = FindObjectOfType<Barriel>();
     }
 
     private void Start()
@@ -96,6 +98,7 @@ public class BoxWoods : MonoBehaviour
         _iconInteractive.SetActive(false);
         _player.FreezePlayer(RigidbodyConstraints.FreezePosition);
         _player.speed = 0;
+        _barriel.UpBarriel(_timeCinematic);
     }
 
     private void OnTriggerStay(Collider other)
