@@ -24,9 +24,14 @@ public class PickAxe : MonoBehaviour, IPick
     [SerializeField] Transform _nextPos;
     private LocationQuest _radar;
 
+    [Header("AUDIO")]
+    [SerializeField] AudioClip _soundNotification;
+    private AudioSource _myAudio;
+
     private void Awake()
     {
         _col = GetComponent<Collider>();
+        _myAudio = GetComponent<AudioSource>();
 
         _questManager = FindObjectOfType<QuestManager>();
         _managerQuest = FindObjectOfType<ManagerQuest1>();
@@ -50,6 +55,7 @@ public class PickAxe : MonoBehaviour, IPick
             foreach (var anim in _animGates)
                 anim.enabled = true;
 
+            _myAudio.PlayOneShot(_soundNotification);
             _radar.target = _nextPos;
             _axes[0].SetActive(true);
             _questManager.FirstSuccess(_text);

@@ -3,6 +3,7 @@ using TMPro;
 
 public class ManagerQuest1 : MonoBehaviour
 {
+    [Header("NEXT STEP")]
     [SerializeField] string _thirdTextQuest = "Leave it in front of his house";
     [SerializeField] GameObject _arrowBox;
     [SerializeField] TMP_Text _textWoods;
@@ -15,9 +16,14 @@ public class ManagerQuest1 : MonoBehaviour
     [SerializeField] Transform _boxPos;
     private LocationQuest _radar;
 
+    [Header("AUDIO")]
+    [SerializeField] AudioClip _soundNotification;
+    private AudioSource _myAudio;
 
     private void Awake()
     {
+        _myAudio = GetComponent<AudioSource>();
+
         _inventory = FindObjectOfType<CharacterInventory>();
         _questManager = FindObjectOfType<QuestManager>();
         _radar = FindObjectOfType<LocationQuest>();
@@ -36,6 +42,9 @@ public class ManagerQuest1 : MonoBehaviour
 
         if (_inventory.greenTrees >= 10)
         {
+            if (!_myAudio.isPlaying) 
+                _myAudio.PlayOneShot(_soundNotification);
+
             _arrowBox.SetActive(true);
             _questManager.SecondSuccess(_thirdTextQuest);
             _radar.StatusRadar(true);

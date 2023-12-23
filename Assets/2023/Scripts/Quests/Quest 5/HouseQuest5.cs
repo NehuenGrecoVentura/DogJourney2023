@@ -20,7 +20,9 @@ public class HouseQuest5 : MailQuest
 
     [Header("AUDIO")]
     [SerializeField] AudioClip _soundClip;
+    [SerializeField] AudioClip _soundNotification;
     private AudioSource _myAudio;
+    private bool _sound = false;
 
     [Header("NEXT QUEST")]
     [SerializeField] Camera _camPlayer;
@@ -89,6 +91,12 @@ public class HouseQuest5 : MailQuest
 
         if (_inventory.nails >= _totalNails && _inventory.money >= _totalMoney)
         {
+            if (!_sound)
+            {
+                _myAudio.PlayOneShot(_soundNotification);
+                _sound = true;
+            }
+
             _animNPC.Play("Quest");
             questsTexts[3].text = "Give it to them at home.";
             _phasesQuests[3].SetActive(true);

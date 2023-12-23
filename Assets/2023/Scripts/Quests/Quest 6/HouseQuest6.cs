@@ -22,7 +22,9 @@ public class HouseQuest6 : MailQuest
 
     [Header("AUDIO")]
     [SerializeField] AudioClip _soundClip;
+    [SerializeField] AudioClip _soundNotification;
     private AudioSource _myAudio;
+    private bool _sound = false;
 
     [Header("NEXT QUEST")]
     [SerializeField] Sprite _iconOil;
@@ -101,6 +103,12 @@ public class HouseQuest6 : MailQuest
 
             if (_inventory.greenTrees >= _objetiveGreenTrees && _inventory.purpleTrees >= _objetivePurpleTrees && _inventory.nails >= _objetiveNails)
             {
+                if (!_sound)
+                {
+                    _myAudio.PlayOneShot(_soundNotification);
+                    _sound = true;
+                }
+
                 _manager.GreenTreesNormal();
                 _manager.PurpleTreesNormal();
                 _isFull = true;

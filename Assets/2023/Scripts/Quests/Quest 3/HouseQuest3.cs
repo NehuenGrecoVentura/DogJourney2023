@@ -24,7 +24,9 @@ public class HouseQuest3 : MailQuest
 
     [Header("AUDIO")]
     [SerializeField] AudioClip _soundClip;
+    [SerializeField] AudioClip _soundNotification;
     private AudioSource _myAudio;
+    private bool _sound = false;
 
     [Header("NEXT QUEST")]
     [SerializeField] Camera _camPlayer;
@@ -68,6 +70,12 @@ public class HouseQuest3 : MailQuest
     {
         if (_inventory.purpleTrees >= 10)
         {
+            if (!_sound)
+            {
+                _myAudio.PlayOneShot(_soundNotification);
+                _sound = true;
+            }
+
             _radar.StatusRadar(true);
             _radar.target = transform;
             _quest.FirstSuccess(secondText);

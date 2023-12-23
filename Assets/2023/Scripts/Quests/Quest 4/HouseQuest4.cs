@@ -19,7 +19,9 @@ public class HouseQuest4 : MailQuest
 
     [Header("AUDIO")]
     [SerializeField] AudioClip _soundClip;
+    [SerializeField] AudioClip _soundNotification;
     private AudioSource _myAudio;
+    private bool _sound = false;
 
     [Header("NEXT QUEST")]
     [SerializeField] Camera _camPlayer;
@@ -62,6 +64,12 @@ public class HouseQuest4 : MailQuest
     {
         if (amount == _totalAmount && _time > 0)
         {
+            if (!_sound)
+            {
+                _myAudio.PlayOneShot(_soundNotification);
+                _sound = true;
+            }
+
             _time = 0;
             StopAllCoroutines();
             quest4Active = false;
@@ -109,6 +117,13 @@ public class HouseQuest4 : MailQuest
             {
                 _time = 0;
                 quest4Active = false;
+
+                if (!_sound)
+                {
+                    _myAudio.PlayOneShot(_soundNotification);
+                    _sound = true;
+                }
+
 
                 _radar.StatusRadar(true);
                 _radar.target = transform;

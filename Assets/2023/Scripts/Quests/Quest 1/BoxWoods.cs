@@ -24,6 +24,8 @@ public class BoxWoods : MonoBehaviour
     [SerializeField] int _rewardMoney = 100;
     [SerializeField] GameObject _iconQuest2Mail;
     [SerializeField] Animator[] _animGates;
+    [SerializeField] AudioClip _soundNotification;
+    private AudioSource _myAudio;
 
     [Header("RADAR")]
     [SerializeField] Transform _nextPos;
@@ -33,12 +35,16 @@ public class BoxWoods : MonoBehaviour
     [SerializeField] GameObject _arrow;
     [SerializeField] GameObject _woodsInBox;
     
+    
+    
     private CharacterInventory _inventory;
     private Character _player;
     private Manager _gameManager;
 
     private void Awake()
     {
+        _myAudio = GetComponent<AudioSource>();
+
         _inventory = FindObjectOfType<CharacterInventory>();
         _messageSlide = FindObjectOfType<MessageSlide>();
         _gameManager = FindObjectOfType<Manager>();
@@ -88,6 +94,7 @@ public class BoxWoods : MonoBehaviour
 
     private void PlayCinematic()
     {
+        _myAudio.PlayOneShot(_soundNotification);
         _radar.StatusRadar(false);
         _canvasStatusQuest.SetActive(false);
         _camPlayer.gameObject.SetActive(false);
