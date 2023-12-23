@@ -60,10 +60,15 @@ public class TreeRegenerative : MonoBehaviour
 
             if (!Input.GetKey(_inputInteractive)) 
                 _hitBar.gameObject.SetActive(true);
-            
+
+            else if (Input.GetKey(_inputInteractive) && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
+            {
+                player.HitTree();
+            }
+
             else
             {
-                _player.HitTree();
+                player.HitTree();
                 amountHit--;
                 if (!_myAudio.isPlaying) _myAudio.PlayOneShot(_soundHit);
                 _hitBar.Bar();
