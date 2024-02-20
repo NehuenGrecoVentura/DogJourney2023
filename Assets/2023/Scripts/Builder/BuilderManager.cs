@@ -27,7 +27,7 @@ public class BuilderManager : MonoBehaviour
     private Character _player;
     private bool _playCinematic = false;
     public CharacterInventory _inventory;
-    private bool _isBuilding = false;
+    //public bool _isBuilding = false;
     [SerializeField] GameObject _canvasQuest;
 
     [Header("RADAR")]
@@ -111,13 +111,13 @@ public class BuilderManager : MonoBehaviour
             if (item1 < _amountItem1) _item1.material.color = Color.red;
             if (item2 < _amountItem2) _item2.material.color = Color.red;
 
-            else if (item1 >= _amountItem1 && item2 >= _amountItem2 && !_isBuilding)
+            else if (item1 >= _amountItem1 && item2 >= _amountItem2 && !_player.isConstruct)
             {
                 if (gameObject.name == "Icon Bridge 1" || gameObject.name == "Build Stairs") RemoveItemsBridge1();
                 if (gameObject.name == "Icon Bridge 2") RemoveItemsBridge2();
 
                 StartCoroutine(Construct());
-                _isBuilding = true;
+                _player.isConstruct = true;
             }
         }
 
@@ -135,7 +135,7 @@ public class BuilderManager : MonoBehaviour
         if (player != null)
         {
             _iconsMaterials.SetActive(false);
-            _isBuilding = false;
+            _player.isConstruct = false;
         }   
     }
 }

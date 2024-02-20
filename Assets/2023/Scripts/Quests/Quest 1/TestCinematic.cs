@@ -22,6 +22,7 @@ public class TestCinematic : MonoBehaviour
         cinematic.SetActive(true);
         _player.FreezePlayer(RigidbodyConstraints.FreezePosition);
         _player.speed = 0;
+        _player.PlayAnim("Idle");
         yield return new WaitForSeconds(timeCinematic);
         _camPlayer.gameObject.SetActive(true);
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);

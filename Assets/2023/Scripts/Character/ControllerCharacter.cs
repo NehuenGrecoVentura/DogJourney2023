@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ControllerCharacter 
+public class ControllerCharacter : MonoBehaviour
 {
     private ModelCharacter _model;
 

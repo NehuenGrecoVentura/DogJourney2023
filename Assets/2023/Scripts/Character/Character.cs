@@ -10,6 +10,7 @@ public class Character : MonoBehaviour
     private Animator _myAnim;
     private AudioSource _myAudio;
     private OrderDog _orderDog;
+    private BuilderManager _construct;
 
     public float speed = 10f;
     public float speedRun = 15f;
@@ -19,6 +20,7 @@ public class Character : MonoBehaviour
     [SerializeField] Transform _camPos;
     public bool isClimb = false;
     public bool rabbitPicked = false;
+    public bool isConstruct = false;
 
     [SerializeField] AudioClip[] _soundsCall;
 
@@ -34,6 +36,7 @@ public class Character : MonoBehaviour
         _myAnim = GetComponent<Animator>();
         _myAudio = GetComponent<AudioSource>();
         _orderDog = GetComponent<OrderDog>();
+        _construct = FindObjectOfType<BuilderManager>();
 
         _model = new ModelCharacter(_myRb, speed, speedRun, _speedCrouch, speedAux, isClimb, transform, _camPos, _gravity, _orderDog, _test1, _test2, _rayDist, _rayPoint1, _rayPoint2);
         _view = new ViewCharacter(_myAnim, _myAudio, _soundsCall);
@@ -51,9 +54,24 @@ public class Character : MonoBehaviour
         _model.EventPickWalk += _view.PickWalkAnim;
     }
 
+    private void Start()
+    {
+        speedAux = speed;
+    }
+
     private void FixedUpdate()
     {
-        _controller.Move(rabbitPicked);
+        if (speed != 0)
+        {
+            _controller.Move(rabbitPicked);
+            _myAnim.enabled = true;
+        }
+
+        else
+        {
+            if (!isConstruct) _myAnim.enabled = false;
+            else _myAnim.enabled = true;
+        }
     }
 
     private void Update()
