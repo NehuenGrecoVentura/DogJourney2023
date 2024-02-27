@@ -22,6 +22,11 @@ public class TreeWithBall : MonoBehaviour
         _orders = FindObjectOfType<OrderDog>();
     }
 
+    private void Start()
+    {
+        _dogBall.enabled = false;
+    }
+
     private void Update()
     {
         if (_tree.amountHit <= 2)
