@@ -14,11 +14,15 @@ public class BoxWoods : MonoBehaviour
     [SerializeField] float _timeCinematic = 3f;
     [SerializeField] Animator _animTruck;
     [SerializeField] Camera _camPlayer;
+    [SerializeField] Camera _camCinematic;
     [SerializeField] GameObject _cinematic;
     [SerializeField] GameObject _canvasStatusQuest;
     [SerializeField] GameObject[] _canvasQuests;
     [SerializeField] AudioSource _truckSource;
+    [SerializeField] GameObject[] _wheels;
+    [SerializeField] float _speedWheels = 500f;
     private Barriel _barriel;
+    [SerializeField] private bool _play = false;
 
     [Header("NEXT QUEST")]
     [SerializeField] int _rewardMoney = 100;
@@ -33,9 +37,7 @@ public class BoxWoods : MonoBehaviour
 
     [Header("BOX CONFIG")]
     [SerializeField] GameObject _arrow;
-    [SerializeField] GameObject _woodsInBox;
-    
-    
+    [SerializeField] GameObject _box;
     
     private CharacterInventory _inventory;
     private Character _player;
@@ -56,14 +58,25 @@ public class BoxWoods : MonoBehaviour
     private void Start()
     {
         _truckSource.Stop();
-        _woodsInBox.SetActive(false);
         _iconInteractive.SetActive(false);
         _arrow.SetActive(false);
         _animTruck.enabled = false;
         _cinematic.SetActive(false);
+        _camCinematic.gameObject.SetActive(false);
 
         foreach (var anim in _animGates)
             anim.enabled = false;
+    }
+
+    private void Update()
+    {
+        if (_play)
+        {
+            foreach (GameObject rueda in _wheels)
+            {
+                rueda.transform.Rotate(Vector3.forward * _speedWheels * Time.deltaTime);
+            }
+        }
     }
 
     public void FinishQuest()
@@ -72,6 +85,7 @@ public class BoxWoods : MonoBehaviour
         _radar.StatusRadar(true);
         _radar.target = _nextPos;
         Destroy(_animTruck.gameObject);
+        Destroy(_camCinematic.gameObject);
         _camPlayer.gameObject.SetActive(true);
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _player.speed = _player.speedAux;
@@ -83,7 +97,6 @@ public class BoxWoods : MonoBehaviour
             anim.enabled = true;
 
         _gameManager.QuestCompleted();
-        _woodsInBox.SetActive(true);
         _iconQuest2Mail.SetActive(true);
 
         _inventory.money += _rewardMoney;
@@ -94,13 +107,14 @@ public class BoxWoods : MonoBehaviour
 
     private void PlayCinematic()
     {
+        _box.gameObject.SetActive(false);
         _myAudio.PlayOneShot(_soundNotification);
         _radar.StatusRadar(false);
         _canvasStatusQuest.SetActive(false);
         _camPlayer.gameObject.SetActive(false);
+        _camCinematic.gameObject.SetActive(true);
         _cinematic.SetActive(true);
         _animTruck.enabled = true;
-        _woodsInBox.SetActive(true);
         _arrow.SetActive(false);
         _iconInteractive.SetActive(false);
         _player.FreezePlayer(RigidbodyConstraints.FreezePosition);
@@ -132,6 +146,7 @@ public class BoxWoods : MonoBehaviour
 
     private IEnumerator RunTruck()
     {
+        _play = true;
         _truckSource.Play();
         _inventory.greenTrees -= 10;
         if (_inventory.greenTrees < 0) _inventory.greenTrees = 0;
