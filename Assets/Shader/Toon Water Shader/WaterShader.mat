@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ToonShader
-  m_Shader: {fileID: 4800000, guid: 14c2a9a2a75ac8c4f8d998c0a81d06d9, type: 3}
+  m_Name: WaterShader
+  m_Shader: {fileID: 4800000, guid: d3610961f6ee4524d8ba36ce10887f3a, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -26,17 +26,20 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Density: 26.79
-    - _DensityAmount: 34.76
-    - _Depth: 3.94
-    - _Float0: 4.82
-    - _Foam: 4.11
-    - _SpeedWater: 3
-    - _SpeedWeave: -2.89
-    - _Weaves: 0.17
+    - _DensityAmount: 12.7
+    - _Depth: 3.07
+    - _Depth1: 6.12
+    - _Foam: -2.63
+    - _NoiseScale: 12.9
+    - _ScaleNoise: 1
+    - _SpeedWater: -13.66
+    - _SpeedWeave: -2.09
+    - _SpeedWeave1: -2.89
+    - _Weaves: 0.05
+    - _Weaves1: 0.17
     - __dirty: 0
     m_Colors:
-    - _FoamColor: {r: 11.279113, g: 14.755065, b: 16.490839, a: 1}
-    - _Vector0: {r: 0, g: 0, b: 0, a: 0}
-    - _WaterColor: {r: 0.2663314, g: 0.4689247, b: 0.5943396, a: 0}
+    - _Color: {r: 0, g: 0.7649336, b: 1, a: 1}
+    - _FoamColor: {r: 0.009658977, g: 0.014859966, b: 0.019317955, a: 1}
+    - _WaterColor: {r: 0.26633123, g: 0.46892446, b: 0.5943396, a: 0}
   m_BuildTextureStacks: []
