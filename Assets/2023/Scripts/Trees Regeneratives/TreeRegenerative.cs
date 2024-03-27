@@ -4,6 +4,7 @@ public class TreeRegenerative : MonoBehaviour
 {
     private Character _player;
     private HouseQuest4 _quest4;
+    private DoTweenManager _doTween;
 
     private AudioSource _myAudio;
     [SerializeField] AudioClip _soundHit;
@@ -25,6 +26,7 @@ public class TreeRegenerative : MonoBehaviour
         _myAudio = GetComponent<AudioSource>();
         _player = FindObjectOfType<Character>();
         _quest4 = FindObjectOfType<HouseQuest4>();
+        _doTween = FindObjectOfType<DoTweenManager>();
     }
 
     private void Start()
@@ -64,10 +66,12 @@ public class TreeRegenerative : MonoBehaviour
             else if (Input.GetKey(_inputInteractive) && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
             {
                 player.HitTree();
+                //_doTween.Shake(gameObject.transform);
             }
 
             else
             {
+                _doTween.Shake(gameObject.transform);
                 player.HitTree();
                 amountHit--;
                 if (!_myAudio.isPlaying) _myAudio.PlayOneShot(_soundHit);

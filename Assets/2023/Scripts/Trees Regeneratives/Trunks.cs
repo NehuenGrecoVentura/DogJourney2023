@@ -6,10 +6,12 @@ public class Trunks : MonoBehaviour
     [SerializeField] KeyCode _buttonInteractive;
     [HideInInspector] public bool isUpgraded = false;
     private CharacterInventory _inventory;
+    private DoTweenTest _doTweenMessage;
 
     private void Awake()
     {
         _inventory = FindObjectOfType<CharacterInventory>();
+        _doTweenMessage = FindObjectOfType<DoTweenTest>();
     }
 
     void Start()
@@ -23,17 +25,34 @@ public class Trunks : MonoBehaviour
         if (gameObject.layer == 3)
         { 
             // Si no compré el upgrade, entonces junta de a uno.
-            if (!isUpgraded) _inventory.greenTrees++;
+            if (!isUpgraded)
+            {
+                _inventory.greenTrees++;
+                _doTweenMessage.ShowUI("+ 1");
+            }          
 
             // Sino junta de a 10 (SI ESTÁ EN LA QUEST 6 SUMA DE A UNO PARA EL CONTADOR)
-            else _inventory.greenTrees += 10;
+            else
+            {
+                _inventory.greenTrees += 10;
+                _doTweenMessage.ShowUI("+ 10");
+            }    
         }
 
         // Si es del arbol púrpura, usa la misma lógica que la del verde.
         else
         {
-            if (!isUpgraded) _inventory.purpleTrees++;
-            else _inventory.purpleTrees += 10; 
+            if (!isUpgraded)
+            {
+                _inventory.purpleTrees++;
+                _doTweenMessage.ShowUI("+ 1");
+            }
+
+            else
+            {
+                _inventory.purpleTrees += 10;
+                _doTweenMessage.ShowUI("+ 10");
+            }  
         } 
     }
 
