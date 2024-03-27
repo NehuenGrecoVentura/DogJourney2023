@@ -29,15 +29,8 @@ public class Mail1 : MailQuest
 
     private void Start()
     {
-        StatusObjs(false);
+        _colAxe.enabled = false;
         _letterQuest.gameObject.SetActive(false);
-    }
-
-    private void StatusObjs(bool active)
-    {
-        _colAxe.enabled = active;
-        foreach (var obj in _activeObjs)
-            obj.SetActive(active);
     }
 
     public void ConfirmQuest()
@@ -50,8 +43,8 @@ public class Mail1 : MailQuest
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         Destroy(_letterQuest.gameObject);
-        StatusUI(nameQuest, secondText, iconQuestActive);
-        StatusObjs(true);
+        _colAxe.enabled = true;
+        ShowTasks();
         _canvasQuest.SetActive(true);
         Destroy(this);
     }

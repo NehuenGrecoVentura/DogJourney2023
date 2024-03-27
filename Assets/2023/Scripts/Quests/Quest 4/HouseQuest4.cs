@@ -155,7 +155,7 @@ public class HouseQuest4 : MailQuest
         quest4Active = true;
         _quest.gameObject.SetActive(true);
         _quest.QuestStatus(true, true, true, false);
-        StatusUI(nameQuest, secondText + "  " + _time.ToString(), iconQuestActive);
+        //StatusUI(nameQuest, secondText + "  " + _time.ToString(), iconQuestActive);
         StartCoroutine(Timer());
     }
 

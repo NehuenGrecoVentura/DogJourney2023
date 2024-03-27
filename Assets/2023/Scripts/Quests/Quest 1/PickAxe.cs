@@ -9,31 +9,25 @@ public class PickAxe : MonoBehaviour, IPick
     [SerializeField] Animator[] _animGates;
 
     [Header("AXE")]
-    [SerializeField] GameObject _arrow;
     [SerializeField] GameObject[] _axes;
 
     [Header("TEXT QUEST")]
     [SerializeField] string _text = "Pick the axe";
     [SerializeField] string _nextText = "Collect the woods";
 
+
     private ManagerQuest1 _managerQuest;
-    private QuestManager _questManager;
+    private QuestUI _questUI;
     private Collider _col;
 
     [Header("RADAR")]
     [SerializeField] Transform _nextPos;
     private LocationQuest _radar;
 
-    [Header("AUDIO")]
-    [SerializeField] AudioClip _soundNotification;
-    private AudioSource _myAudio;
-
     private void Awake()
     {
         _col = GetComponent<Collider>();
-        _myAudio = GetComponent<AudioSource>();
-
-        _questManager = FindObjectOfType<QuestManager>();
+        _questUI = FindObjectOfType<QuestUI>();
         _managerQuest = FindObjectOfType<ManagerQuest1>();
         _radar = FindObjectOfType<LocationQuest>();
     }
@@ -55,15 +49,13 @@ public class PickAxe : MonoBehaviour, IPick
             foreach (var anim in _animGates)
                 anim.enabled = true;
 
-            _myAudio.PlayOneShot(_soundNotification);
             _radar.target = _nextPos;
             _axes[0].SetActive(true);
-            _questManager.FirstSuccess(_text);
-            _questManager.InitialSecondPhase(_nextText);
+            _questUI.TaskCompleted(1);
+            _questUI.AddNewTask(2, _nextText);
             _managerQuest.enabled = true;
             _cinematicObj.gameObject.SetActive(true);
             Destroy(_axes[1]);
-            Destroy(_arrow);
             Destroy(_iconInteractive);
             Destroy(this);
         }

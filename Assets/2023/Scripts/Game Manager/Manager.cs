@@ -18,6 +18,7 @@ public class Manager : MonoBehaviour
     [SerializeField] GameObject[] _objsToHide;
     [SerializeField] Collider _firstTree;
     [SerializeField] Button _buttonRope;
+    private QuestUI _questUI;
 
     [Header("GAME OVER")]
     [SerializeField] GameObject _gameOver;
@@ -43,6 +44,7 @@ public class Manager : MonoBehaviour
         _allTrees = FindObjectsOfType<TreeRegenerative>();
         _player = FindObjectOfType<Character>();
         _cam = FindObjectOfType<CameraOrbit>();
+        _questUI = FindObjectOfType<QuestUI>();
 
         _allDecals = GameObject.FindGameObjectsWithTag("Tree Decals");
         _greenTrees = GameObject.FindGameObjectsWithTag("Green Leaves");
@@ -78,6 +80,7 @@ public class Manager : MonoBehaviour
 
     public void QuestCompleted()
     {
+        _questUI.UIStatus(false);
         _player.PlayAnim("Win");
         _myAudio.PlayOneShot(_soundWin);
         _winText.gameObject.SetActive(true);

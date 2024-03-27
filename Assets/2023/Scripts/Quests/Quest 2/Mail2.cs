@@ -82,7 +82,7 @@ public class Mail2 : MailQuest
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         Destroy(_letterQuest.gameObject);
-        StatusUI(nameQuest, secondText, iconQuestActive);
+        //StatusUI(nameQuest, secondText, iconQuestActive);
         iconQuestActive.sprite = _newIconQuest;
     }
 

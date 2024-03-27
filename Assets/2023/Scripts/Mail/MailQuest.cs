@@ -13,19 +13,28 @@ public class MailQuest : MonoBehaviour
     public string nameQuest;
     public string secondText;
 
-    public void StatusUI(string nameQuest, string secondtText, Image questActive)
+    public QuestUI _questUI;
+    public string[] tasks;
+
+    //public void StatusUI(string nameQuest, string secondtText, Image questActive)
+    //{
+    //    questsTexts[0].text = nameQuest;
+    //    questsTexts[1].text = secondtText;
+    //    iconQuestActive = questActive;
+    //    //imageStatusPhase[0].gameObject.SetActive(true);
+    //    //imageStatusPhase[1].gameObject.SetActive(false);
+    //    imageStatusPhase[0].enabled = true;
+    //    imageStatusPhase[1].enabled = false;
+    //    Destroy(iconQuest);
+
+    //    foreach (var item in _phasesQuests)
+    //        item.SetActive(true);
+    //}
+
+    public void ShowTasks()
     {
-        questsTexts[0].text = nameQuest;
-        questsTexts[1].text = secondtText;
-        iconQuestActive = questActive;
-        //imageStatusPhase[0].gameObject.SetActive(true);
-        //imageStatusPhase[1].gameObject.SetActive(false);
-        imageStatusPhase[0].enabled = true;
-        imageStatusPhase[1].enabled = false;
         Destroy(iconQuest);
-        
-        foreach (var item in _phasesQuests)
-            item.SetActive(true);
+        _questUI.ActiveUIQuest(nameQuest, tasks[0], tasks[1], tasks[2]);
     }
 
     public void Confirm(GameObject letterQuest)
@@ -36,6 +45,6 @@ public class MailQuest : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Destroy(letterQuest);
         Destroy(iconQuest);
-        StatusUI(nameQuest, secondText, iconQuestActive);
+        //StatusUI(nameQuest, secondText, iconQuestActive);
     }
 }

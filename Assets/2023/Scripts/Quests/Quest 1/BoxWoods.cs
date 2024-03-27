@@ -38,7 +38,8 @@ public class BoxWoods : MonoBehaviour
     [Header("BOX CONFIG")]
     [SerializeField] GameObject _arrow;
     [SerializeField] GameObject _box;
-    
+
+    private QuestUI _questUI;
     private CharacterInventory _inventory;
     private Character _player;
     private Manager _gameManager;
@@ -47,6 +48,7 @@ public class BoxWoods : MonoBehaviour
     {
         _myAudio = GetComponent<AudioSource>();
 
+        _questUI = FindObjectOfType<QuestUI>();
         _inventory = FindObjectOfType<CharacterInventory>();
         _messageSlide = FindObjectOfType<MessageSlide>();
         _gameManager = FindObjectOfType<Manager>();
@@ -107,6 +109,7 @@ public class BoxWoods : MonoBehaviour
 
     private void PlayCinematic()
     {
+        _questUI.UIStatus(false);
         _box.gameObject.SetActive(false);
         _myAudio.PlayOneShot(_soundNotification);
         _radar.StatusRadar(false);
