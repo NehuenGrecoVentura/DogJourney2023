@@ -12,6 +12,7 @@ public class Mail2 : MailQuest
     [SerializeField] GameObject _letterQuest;
     [SerializeField] GameObject _canvasQuest;
     [SerializeField] Sprite _newIconQuest;
+    [SerializeField] string[] _tasks;
 
     [Header("BUTTONS MARKET")]
     [SerializeField] Image[] _backgroundColor;
@@ -39,7 +40,6 @@ public class Mail2 : MailQuest
 
     private CharacterInventory _inventory;
     private bool _questActive = false;
-    private QuestManager _questManager;
     private MessageSlide _message;
     private Manager _manager;
 
@@ -49,7 +49,6 @@ public class Mail2 : MailQuest
         _myAnim = GetComponent<Animator>();
 
         _inventory = FindObjectOfType<CharacterInventory>();
-        _questManager = FindObjectOfType<QuestManager>();
         _message = FindObjectOfType<MessageSlide>();
         _player = FindObjectOfType<Character>();
         _manager = FindObjectOfType<Manager>();
@@ -82,7 +81,7 @@ public class Mail2 : MailQuest
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         Destroy(_letterQuest.gameObject);
-        //StatusUI(nameQuest, secondText, iconQuestActive);
+        _questUI.ActiveUIQuest(nameQuest, _tasks[0], _tasks[1], _tasks[2]);
         iconQuestActive.sprite = _newIconQuest;
     }
 
@@ -96,7 +95,7 @@ public class Mail2 : MailQuest
         _radar.target = _posMarket;
         _npcMarket.SetActive(true);
         _manager.QuestCompleted();
-        _questManager.HideHUDQuest();
+        _questUI.UIStatus(false);
         _message.ShowMessage(_messageText, _iconMessage);
         _buttonRope.enabled = true;
         _buttonRope.GetComponent<Image>().sprite = _ropeUnlocked;

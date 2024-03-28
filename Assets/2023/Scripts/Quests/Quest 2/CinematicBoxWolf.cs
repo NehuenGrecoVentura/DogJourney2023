@@ -8,14 +8,13 @@ public class CinematicBoxWolf : CinematicManager
     [SerializeField] GameObject _cinematicPlay;
     [SerializeField] Collider _col;    
     [SerializeField] WolfStatic _wolfStatic;
-    [SerializeField] GameObject _phase2;
-    [SerializeField] Image[] _iconsPhase2;
-    [SerializeField] string _messagePhase2;
+    [SerializeField] string _newTask;
     [SerializeField] TMP_Text _textPhase2;
     
     private Character _player;
     private TestCinematic _cinematic;
     private LocationQuest _radar;
+    private QuestUI _questUI;
 
     [Header("MESSAGE SLIDE")]
     [SerializeField] Sprite _iconWolf;
@@ -29,6 +28,7 @@ public class CinematicBoxWolf : CinematicManager
         _messageSlide = FindObjectOfType<MessageSlide>();
         _radar = FindObjectOfType<LocationQuest>();
         _player = FindObjectOfType<Character>();
+        _questUI = FindObjectOfType<QuestUI>();
     }
 
     private void Start()
@@ -47,11 +47,9 @@ public class CinematicBoxWolf : CinematicManager
         yield return new WaitForSeconds(durationCinematic);
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _player.speed = _player.speedAux;
-        _phase2.SetActive(true);
-        _iconsPhase2[0].enabled = true;
-        _iconsPhase2[1].enabled = false;
-        _textPhase2.text = _messagePhase2;
         ObjStatus(true);
+        _questUI.AddNewTask(2, _newTask);
+        _questUI.ActiveUIQuest("The Box", "Recover the box", _newTask, "");
         _radar.StatusRadar(true);
         _messageSlide.ShowMessage(_messageText, _iconWolf);
         Destroy(_cinematic);        
