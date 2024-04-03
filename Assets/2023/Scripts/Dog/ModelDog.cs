@@ -9,7 +9,7 @@ public class ModelDog
     private Vector3 _targetDist;
     private bool _scared;
     private Transform[] _scaredPoints;
-    private float _speedNormal, _speedRun, _distToPlayer, _targetRadius;
+    private float _speedNormal, _speedRun,_offSpeed, _distToPlayer, _targetRadius;
     private GameObject _target;
     private Character _player;
     private Transform _myTransform;
@@ -17,7 +17,7 @@ public class ModelDog
     private OrderDog _order;
     private Transform _posTeletransport;
 
-    public ModelDog(NavMeshAgent agent, Vector3 targetDist, bool scared, Transform[] scaredPoints, float speedNormal, float speedRun, float distToPlayer, float targetRadius, GameObject target, 
+    public ModelDog(NavMeshAgent agent, Vector3 targetDist, bool scared, Transform[] scaredPoints, float speedNormal, float speedRun, float offSpeed, float distToPlayer, float targetRadius, GameObject target, 
         Transform transform, Character player, OrderDog order, Transform posTeletransport)
     {
         _agent = agent;
@@ -34,6 +34,7 @@ public class ModelDog
         _agent.speed = speedNormal;
         _order = order;
         _posTeletransport = posTeletransport;
+        _offSpeed = offSpeed;
     }
 
     public void Scared()
@@ -70,7 +71,7 @@ public class ModelDog
             {
                 if (_target != null)
                 {
-                    _agent.speed = _speedNormal;
+                     //_agent.speed = _speedNormal;
                     _agent.destination = _target.transform.position;
                     _targetDist = _target.transform.position - _myTransform.position;
                     EventWalk?.Invoke();
@@ -92,6 +93,24 @@ public class ModelDog
     {
         if (_order.activeOrders)
             _target.transform.position = _myTransform.position;
+    }
+
+    public void OffScreenSpeed()
+    {
+        
+        
+            float distanceToPlayer = Vector3.Distance(_myTransform.position, _player.gameObject.transform.position);
+            if (distanceToPlayer >= _distToPlayer)
+            {
+                _agent.speed = _offSpeed;
+            }
+            if (distanceToPlayer <= _distToPlayer)
+            {
+                _agent.speed = _speedNormal;
+            }
+        
+       
+        
     }
 
     public void TeletransportToPlayer()
