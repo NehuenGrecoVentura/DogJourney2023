@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 
 public class MarketManager : MonoBehaviour
@@ -9,6 +10,7 @@ public class MarketManager : MonoBehaviour
     private CharacterInventory _inventory;
 
     [SerializeField] GameObject _canvas;
+    [SerializeField] TMP_Text _textInventory;
 
     [Header("NAILS")]
     [SerializeField] int _costNails = 50;
@@ -32,6 +34,11 @@ public class MarketManager : MonoBehaviour
     private void Start()
     {
         _canvas.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (_canvas.activeSelf) _textInventory.text = "$ " + _inventory.money.ToString();
     }
 
     public void BuyNails()
