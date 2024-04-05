@@ -135,30 +135,20 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 
     public void UpgradeSpeedPlayer()
     {
-        if (_inventory.upgradeLoot)
-        {
-            _player.speedAux = 13; // Ahora la velocidad del player es más rápida al caminar.
-            _player.speedRun = 20; // Ahora la velocidad del player es más rápida al correr.
-            _player.speed = 13;
-            Destroy(_boxes[1].gameObject);
-            _myAudio.PlayOneShot(_sounds[1]);
-        }
-
-        else ErrorUpgrade(1);
+        _player.speedAux = 13; // Ahora la velocidad del player es más rápida al caminar.
+        _player.speedRun = 20; // Ahora la velocidad del player es más rápida al correr.
+        _player.speed = 13;
+        Destroy(_boxes[1].gameObject);
+        _myAudio.PlayOneShot(_sounds[1]);
     }
 
     public void UpgradeRegenerate()
     {
-        if (_inventory.upgradeLoot)
-        {
-            foreach (var sapling in _sapling)
-                sapling.isUpgraded = true;
+        foreach (var sapling in _sapling)
+            sapling.isUpgraded = true;
 
-            Destroy(_boxes[2].gameObject);
-            _myAudio.PlayOneShot(_sounds[1]);
-        }
-
-        else ErrorUpgrade(2);
+        Destroy(_boxes[2].gameObject);
+        _myAudio.PlayOneShot(_sounds[1]);
     }
 
     public void UpgradeTrolley()

@@ -80,19 +80,28 @@ public class Article : MonoBehaviour
 
     public void UpgradeSpeedPlayer()
     {
-        if (_inventory.upgradeLoot) Success();
-        else _market.UpgradeSpeedPlayer();
+        if (_inventory.upgradeLoot)
+        {
+            _market.UpgradeSpeedPlayer();
+            Success();
+        }
+
+        else _market.ErrorUpgrade(1);
     }
 
     public void UpgradeRegenerate()
     {
-        if (_inventory.upgradeLoot) Success();
-        else _market.UpgradeRegenerate();
+        if (_inventory.upgradeLoot)
+        {
+            _market.UpgradeRegenerate();
+            Success();
+        }
+
+        else _market.ErrorUpgrade(2);
     }
 
     public void UpgradeTrolley()
     {
-        if (_inventory.upgradeLoot) Success();
-        else _market.UpgradeRegenerate();
+        
     }
 }
