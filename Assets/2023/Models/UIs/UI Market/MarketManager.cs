@@ -74,8 +74,6 @@ public class MarketManager : MonoBehaviour, IScrollHandler
     private void Update()
     {
         if (_canvas.activeSelf) _textInventory.text = "$ " + _inventory.money.ToString();
-
-        if (Input.GetKeyDown(KeyCode.J)) ExitMarket();
     }
 
     #region EVENT TRIGGER
@@ -161,6 +159,8 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 
     #endregion
 
+    #region UPGRADES DOG
+
     public void UpgradeTrolley()
     {
         foreach (var trunk in _trunks)
@@ -191,6 +191,8 @@ public class MarketManager : MonoBehaviour, IScrollHandler
         _myAudio.PlayOneShot(_sounds[1]);
 
     }
+
+    #endregion
 
     public void SellWood()
     {
@@ -279,11 +281,6 @@ public class MarketManager : MonoBehaviour, IScrollHandler
         Cursor.visible = false;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        var player = other.GetComponent<Character>();
-        if (player != null) StartCoroutine(OpenMarketCoroutine());
-    }
 
     public void OnScroll(PointerEventData eventData)
     {

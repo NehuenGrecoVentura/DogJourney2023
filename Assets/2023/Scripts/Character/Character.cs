@@ -30,12 +30,6 @@ public class Character : MonoBehaviour
     [SerializeField] Transform _rayPoint2;
     private bool _test1, _test2;
 
-
-
-    [SerializeField] MarketManager _market;
-
-
-
     private void Awake()
     {
         _myRb = GetComponent<Rigidbody>();
@@ -83,11 +77,6 @@ public class Character : MonoBehaviour
     private void Update()
     {
         _controller.OnUpdate();
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            _market.OpenMarket();
-        }
     }
 
     public void HitTree()
