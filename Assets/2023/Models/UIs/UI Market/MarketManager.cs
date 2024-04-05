@@ -12,6 +12,7 @@ public class MarketManager : MonoBehaviour, IScrollHandler
     private TreeRegenerative[] _allTrees;
     private HitBar[] _hitBars;
     private SaplingTree[] _sapling;
+    private Trunks[] _trunks;
 
     [SerializeField] GameObject _canvas;
     [SerializeField] Image _intro;
@@ -31,9 +32,6 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 
     [Header("UPGRADES BOX ICONS")]
     [SerializeField] Image[] _boxes;
-    public bool axeUpgraded = false;
-    public bool speedPlayerUpgraded = false;
-    public bool regenerateUpgraded = false;
 
     [Header("AUDIO")]
     [SerializeField] AudioClip[] _sounds;
@@ -57,6 +55,7 @@ public class MarketManager : MonoBehaviour, IScrollHandler
         _allTrees = FindObjectsOfType<TreeRegenerative>();
         _hitBars = FindObjectsOfType<HitBar>();
         _sapling = FindObjectsOfType<SaplingTree>();
+        _trunks = FindObjectsOfType<Trunks>();
     }
 
     private void Start()
@@ -121,36 +120,17 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 
     public void UpgradeAxe()
     {
-        if (_inventory.upgradeLoot)
+        foreach (var tree in _allTrees)
         {
-            //foreach (var tree in _allTrees)
-            //{
-            //    tree.initialAmount = 100;
-            //    tree.RestartAmount();
-            //}
-
-            //foreach (var hitBar in _hitBars)
-            //    hitBar.UpgradeBar();
-
-            //Destroy(_boxes[0].gameObject);
-            //_myAudio.PlayOneShot(_sounds[1]);
-            //axeUpgraded = true;
-            //_inventory.upgradeLoot = false;
-
-            foreach (var tree in _allTrees)
-            {
-                tree.initialAmount = 100;
-                tree.RestartAmount();
-            }
-
-            foreach (var hitBar in _hitBars)
-                hitBar.UpgradeBar();
-
-            Destroy(_boxes[0].gameObject);
-            _myAudio.PlayOneShot(_sounds[1]);
+            tree.initialAmount = 100;
+            tree.RestartAmount();
         }
 
-        else ErrorUpgrade(0);
+        foreach (var hitBar in _hitBars)
+            hitBar.UpgradeBar();
+
+        Destroy(_boxes[0].gameObject);
+        _myAudio.PlayOneShot(_sounds[1]);
     }
 
     public void UpgradeSpeedPlayer()
@@ -181,7 +161,21 @@ public class MarketManager : MonoBehaviour, IScrollHandler
         else ErrorUpgrade(2);
     }
 
-    private void ErrorUpgrade(int indexBox)
+    public void UpgradeTrolley()
+    {
+        if (_inventory.upgradeLoot)
+        {
+            foreach (var trunk in _trunks)
+                trunk.isUpgraded = true;
+
+            Destroy(_boxes[3].gameObject);
+            _myAudio.PlayOneShot(_sounds[1]);
+        }
+
+        else ErrorUpgrade(2);
+    }
+
+    public void ErrorUpgrade(int indexBox)
     {
         _boxes[indexBox].transform.DOScale(0.5f, 0.5f).OnComplete(() =>
         {

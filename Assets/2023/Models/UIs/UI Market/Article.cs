@@ -63,44 +63,36 @@ public class Article : MonoBehaviour
         Destroy(_borderSelected.gameObject);
         Destroy(_myEvent);
         Destroy(_myButton);
+        _inventory.upgradeLoot = false;
+        Destroy(this);
     }
 
     public void UpgradeAxe()
     {
-        //_market.UpgradeAxe();
-        //if (_market.axeUpgraded) Success();
-
         if (_inventory.upgradeLoot)
         {
+            _market.UpgradeAxe();
             Success();
-            _inventory.upgradeLoot = false;
-            Destroy(this);
         }
 
-        else _market.UpgradeAxe();
+        else _market.ErrorUpgrade(0);
     }
 
     public void UpgradeSpeedPlayer()
     {
-        if (_inventory.upgradeLoot)
-        {
-            Success();
-            _inventory.upgradeLoot = false;
-            Destroy(this);
-        }
-
+        if (_inventory.upgradeLoot) Success();
         else _market.UpgradeSpeedPlayer();
     }
 
     public void UpgradeRegenerate()
     {
-        if (_inventory.upgradeLoot)
-        {
-            Success();
-            _inventory.upgradeLoot = false;
-            Destroy(this);
-        }
+        if (_inventory.upgradeLoot) Success();
+        else _market.UpgradeRegenerate();
+    }
 
+    public void UpgradeTrolley()
+    {
+        if (_inventory.upgradeLoot) Success();
         else _market.UpgradeRegenerate();
     }
 }
