@@ -18,11 +18,13 @@ public class MarketManager : MonoBehaviour, IScrollHandler
     [SerializeField] int _costNails = 50;
     [SerializeField] int _amountNails = 20;
     [SerializeField] TMP_Text _txtAmountNails;
+    [SerializeField] TMP_Text _txtCosttNails;
 
     [Header("ROPES")]
     [SerializeField] int _costRopes = 100;
     [SerializeField] int _amountRopes = 60;
     [SerializeField] TMP_Text _txtAmountRopes;
+    [SerializeField] TMP_Text _txtCostRopes;
 
     //[Header("DEFAULT ARTICLES LOCKED")]
     //[SerializeField] Button[] _articlesLocked;
@@ -81,12 +83,12 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 
     public void BuyNails()
     {
-        BuyMaterial(_costNails, ref _inventory.nails, _amountNails, _txtAmountNails);
+        BuyMaterial(_costNails, ref _inventory.nails, _amountNails, _txtAmountNails, _txtCosttNails);
     }
 
     public void BuyRopes()
     {
-        BuyMaterial(_costNails, ref _inventory.ropes, _amountRopes, _txtAmountRopes);
+        BuyMaterial(_costNails, ref _inventory.ropes, _amountRopes, _txtAmountRopes, _txtCostRopes);
     }
 
     public void OpenMarket()
@@ -123,7 +125,7 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 
     #endregion
 
-    private void BuyMaterial(int cost, ref int materialInInvetory, int addMaterial, TMP_Text textAmount)
+    private void BuyMaterial(int cost, ref int materialInInvetory, int addMaterial, TMP_Text textAmount, TMP_Text textCost)
     {
         if (_inventory.money >= cost)
         {
@@ -151,6 +153,17 @@ public class MarketManager : MonoBehaviour, IScrollHandler
         {
             _myAudio.PlayOneShot(_sounds[0]);
             print("TE FALTA PLATA");
+
+            textCost.color = Color.red;
+            textCost.transform.DOScale(new Vector3(0.5f, 0.5f, 0.5f), 0.5f)
+            .OnComplete(() =>
+            {
+                textCost.transform.DOScale(new Vector3(0.3f, 0.3f, 0.3f), 0.5f)
+                    .OnComplete(() =>
+                    {
+                        textCost.DOColor(Color.white, 1f);
+                    });
+            });
         }
     }
 

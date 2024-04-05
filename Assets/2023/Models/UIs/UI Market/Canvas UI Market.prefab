@@ -3651,7 +3651,7 @@ GameObject:
   - component: {fileID: 6713703454607255708}
   - component: {fileID: 6713703454607255711}
   m_Layer: 5
-  m_Name: Cost Text
+  m_Name: Nails Cost Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3666,11 +3666,11 @@ RectTransform:
   m_GameObject: {fileID: 6713703454607255705}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.29443806, y: 0.2944381, z: 0.29443806}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6713703455809528096}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5612,7 +5612,7 @@ GameObject:
   - component: {fileID: 6713703454951844644}
   - component: {fileID: 6713703454951844647}
   m_Layer: 5
-  m_Name: Cost Text
+  m_Name: Ropes Cost Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9468,8 +9468,8 @@ RectTransform:
   m_LocalScale: {x: 0.91161, y: 0.91161, z: 0.91161}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6713703454607255710}
   - {fileID: 6713703455879106974}
+  - {fileID: 6713703454607255710}
   m_Father: {fileID: 6713703454073555488}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9827,7 +9827,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6713703455809528096}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11292,9 +11292,11 @@ MonoBehaviour:
   _costNails: 50
   _amountNails: 20
   _txtAmountNails: {fileID: 438470217366126354}
+  _txtCosttNails: {fileID: 6713703454607255711}
   _costRopes: 100
   _amountRopes: 60
   _txtAmountRopes: {fileID: 4111330263695042304}
+  _txtCostRopes: {fileID: 6713703454951844647}
   _sounds:
   - {fileID: 8300000, guid: e7fb482ed391db14eaa3a2b698127e2c, type: 3}
   - {fileID: 8300000, guid: cd6388049e89dcd4b87be60d97951369, type: 3}
