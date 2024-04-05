@@ -9,6 +9,9 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 {
     private Character _player;
     private CharacterInventory _inventory;
+    private TreeRegenerative[] _allTrees;
+    private HitBar[] _hitBars;
+    private SaplingTree[] _sapling;
 
     [SerializeField] GameObject _canvas;
     [SerializeField] Image _intro;
@@ -26,9 +29,11 @@ public class MarketManager : MonoBehaviour, IScrollHandler
     [SerializeField] TMP_Text _txtAmountRopes;
     [SerializeField] TMP_Text _txtCostRopes;
 
-    //[Header("DEFAULT ARTICLES LOCKED")]
-    //[SerializeField] Button[] _articlesLocked;
-    //[SerializeField] EventTrigger[] _eventTriggerArticles;
+    [Header("UPGRADES BOX ICONS")]
+    [SerializeField] Image[] _boxes;
+    public bool axeUpgraded = false;
+    public bool speedPlayerUpgraded = false;
+    public bool regenerateUpgraded = false;
 
     [Header("AUDIO")]
     [SerializeField] AudioClip[] _sounds;
@@ -49,6 +54,9 @@ public class MarketManager : MonoBehaviour, IScrollHandler
         _myAudio = GetComponent<AudioSource>();
         _player = FindObjectOfType<Character>();
         _inventory = FindObjectOfType<CharacterInventory>();
+        _allTrees = FindObjectsOfType<TreeRegenerative>();
+        _hitBars = FindObjectsOfType<HitBar>();
+        _sapling = FindObjectsOfType<SaplingTree>();
     }
 
     private void Start()
@@ -56,12 +64,6 @@ public class MarketManager : MonoBehaviour, IScrollHandler
         _intialScale = transform.localScale;
         _intro.gameObject.SetActive(false);
         _canvas.SetActive(false);
-
-        //foreach (var article in _articlesLocked)
-        //    article.enabled = false;
-
-        //foreach (var item in _eventTriggerArticles)
-        //    item.enabled = false;
     }
 
     private void Update()
@@ -69,14 +71,6 @@ public class MarketManager : MonoBehaviour, IScrollHandler
         if (_canvas.activeSelf) _textInventory.text = "$ " + _inventory.money.ToString();
 
         if (Input.GetKeyDown(KeyCode.J)) ExitMarket();
-        //if (Input.GetKeyDown(KeyCode.C))
-        //{
-        //    foreach (var article in _articlesLocked)
-        //        article.enabled = true;
-
-        //    foreach (var item in _eventTriggerArticles)
-        //        item.enabled = true;
-        //}
     }
 
     #region EVENT TRIGGER
@@ -124,6 +118,78 @@ public class MarketManager : MonoBehaviour, IScrollHandler
     }
 
     #endregion
+
+    public void UpgradeAxe()
+    {
+        if (_inventory.upgradeLoot)
+        {
+            //foreach (var tree in _allTrees)
+            //{
+            //    tree.initialAmount = 100;
+            //    tree.RestartAmount();
+            //}
+
+            //foreach (var hitBar in _hitBars)
+            //    hitBar.UpgradeBar();
+
+            //Destroy(_boxes[0].gameObject);
+            //_myAudio.PlayOneShot(_sounds[1]);
+            //axeUpgraded = true;
+            //_inventory.upgradeLoot = false;
+
+            foreach (var tree in _allTrees)
+            {
+                tree.initialAmount = 100;
+                tree.RestartAmount();
+            }
+
+            foreach (var hitBar in _hitBars)
+                hitBar.UpgradeBar();
+
+            Destroy(_boxes[0].gameObject);
+            _myAudio.PlayOneShot(_sounds[1]);
+        }
+
+        else ErrorUpgrade(0);
+    }
+
+    public void UpgradeSpeedPlayer()
+    {
+        if (_inventory.upgradeLoot)
+        {
+            _player.speedAux = 13; // Ahora la velocidad del player es más rápida al caminar.
+            _player.speedRun = 20; // Ahora la velocidad del player es más rápida al correr.
+            _player.speed = 13;
+            Destroy(_boxes[1].gameObject);
+            _myAudio.PlayOneShot(_sounds[1]);
+        }
+
+        else ErrorUpgrade(1);
+    }
+
+    public void UpgradeRegenerate()
+    {
+        if (_inventory.upgradeLoot)
+        {
+            foreach (var sapling in _sapling)
+                sapling.isUpgraded = true;
+
+            Destroy(_boxes[2].gameObject);
+            _myAudio.PlayOneShot(_sounds[1]);
+        }
+
+        else ErrorUpgrade(2);
+    }
+
+    private void ErrorUpgrade(int indexBox)
+    {
+        _boxes[indexBox].transform.DOScale(0.5f, 0.5f).OnComplete(() =>
+        {
+            _boxes[indexBox].transform.DOScale(0.13f, 0.5f);
+        });
+
+        _myAudio.PlayOneShot(_sounds[0]);
+    }
 
     private void BuyMaterial(int cost, ref int materialInInvetory, int addMaterial, TMP_Text textAmount, TMP_Text textCost)
     {

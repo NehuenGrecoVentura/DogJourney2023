@@ -977,7 +977,7 @@ GameObject:
   - component: {fileID: 3733720355957029254}
   - component: {fileID: 7358578265553842543}
   m_Layer: 5
-  m_Name: Cost Icon
+  m_Name: Speed Player Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -996,7 +996,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6713703454493744997}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2272,7 +2272,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6713703455530035516}
   m_HandleRect: {fileID: 6713703455530035519}
   m_Direction: 2
-  m_Value: 1.0000001
+  m_Value: 1.0000002
   m_Size: 0.3435197
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3200,7 +3200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8679245, g: 0.23335704, b: 0.23335704, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3748,7 +3748,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6713703455806769621}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3821,10 +3821,10 @@ RectTransform:
   m_LocalScale: {x: 0.91161, y: 0.91161, z: 0.91161}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6713703455350811257}
   - {fileID: 7419250890708124590}
+  - {fileID: 6713703455350811257}
   m_Father: {fileID: 6713703455713135835}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4587,10 +4587,10 @@ RectTransform:
   m_LocalScale: {x: 0.91161, y: 0.91161, z: 0.91161}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6713703455543308262}
   - {fileID: 6713703455114336750}
+  - {fileID: 6713703455543308262}
   m_Father: {fileID: 6713703455806769621}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4898,7 +4898,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6713703456094809326}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5505,7 +5505,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -978.78613}
+  m_AnchoredPosition: {x: 0, y: -978.7863}
   m_SizeDelta: {x: 1172.4708, y: 2981.9204}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6713703454841204911
@@ -6786,7 +6786,7 @@ GameObject:
   - component: {fileID: 6713703455114336748}
   - component: {fileID: 6713703455114336751}
   m_Layer: 5
-  m_Name: Cost Icon
+  m_Name: Axe Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6801,11 +6801,11 @@ RectTransform:
   m_GameObject: {fileID: 6713703455114336745}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.13616623, y: 0.13616624, z: 0.13616626}
+  m_LocalScale: {x: 0.13, y: 0.13, z: 0.13}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6713703454635588538}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7109,7 +7109,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6713703455806769621}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7531,7 +7531,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6713703454493744997}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -8470,7 +8470,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6713703454635588538}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -9145,10 +9145,10 @@ GameObject:
   - component: {fileID: 6713703455713135835}
   - component: {fileID: 6713703455713135836}
   - component: {fileID: 6713703455713135839}
-  - component: {fileID: 6713703455713135838}
-  - component: {fileID: 6713703455713135833}
-  - component: {fileID: 6713703455713135832}
+  - component: {fileID: 4532743049178706469}
+  - component: {fileID: 7360898287667011622}
   - component: {fileID: 261909441}
+  - component: {fileID: 186967091908596363}
   m_Layer: 5
   m_Name: Speed Upgrade
   m_TagString: Untagged
@@ -9171,10 +9171,10 @@ RectTransform:
   - {fileID: 6713703455183685295}
   - {fileID: 6713703454038208331}
   - {fileID: 6713703455318498457}
-  - {fileID: 6713703454493744997}
   - {fileID: 6713703456080358990}
   - {fileID: 6713703456001668505}
   - {fileID: 6713703456069271313}
+  - {fileID: 6713703454493744997}
   m_Father: {fileID: 6713703454839527853}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9221,7 +9221,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6713703455713135838
+--- !u!114 &4532743049178706469
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9264,8 +9264,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6713703455713135839}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &6713703455713135833
+      m_Calls:
+      - m_Target: {fileID: 186967091908596363}
+        m_TargetAssemblyTypeName: Article, Assembly-CSharp
+        m_MethodName: UpgradeSpeedPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7360898287667011622
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9282,7 +9294,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 6713703455713135832}
+        - m_Target: {fileID: 186967091908596363}
           m_TargetAssemblyTypeName: Article, Assembly-CSharp
           m_MethodName: EnterArticle
           m_Mode: 1
@@ -9298,7 +9310,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 6713703455713135832}
+        - m_Target: {fileID: 186967091908596363}
           m_TargetAssemblyTypeName: Article, Assembly-CSharp
           m_MethodName: ExitArticle
           m_Mode: 1
@@ -9310,23 +9322,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &6713703455713135832
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6713703455713135834}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 682dd9d7d6e11e9489cb86d430f43a38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _borderSelected: {fileID: 6713703456069271318}
-  _border: {fileID: 6713703456001668510}
-  _buttonSounds:
-  - {fileID: 8300000, guid: f72da4d9866258f409aa35a972acbee1, type: 3}
-  - {fileID: 8300000, guid: 9932426cac418da4db48b5e6eacba22f, type: 3}
 --- !u!82 &261909441
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9423,6 +9418,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &186967091908596363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6713703455713135834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 682dd9d7d6e11e9489cb86d430f43a38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _borderSelected: {fileID: 6713703456069271318}
+  _border: {fileID: 6713703456001668510}
+  _buttonSounds:
+  - {fileID: 8300000, guid: f72da4d9866258f409aa35a972acbee1, type: 3}
+  - {fileID: 8300000, guid: 9932426cac418da4db48b5e6eacba22f, type: 3}
 --- !u!1 &6713703455730489341
 GameObject:
   m_ObjectHideFlags: 0
@@ -9664,7 +9676,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6713703456094809326}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9746,10 +9758,10 @@ RectTransform:
   - {fileID: 6713703455379517115}
   - {fileID: 6713703455065519650}
   - {fileID: 6713703454947980901}
-  - {fileID: 6713703454635588538}
   - {fileID: 6713703454468943824}
   - {fileID: 6713703455963193570}
   - {fileID: 6713703455218042461}
+  - {fileID: 6713703454635588538}
   m_Father: {fileID: 6713703454839527853}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9839,7 +9851,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6713703455806769609}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6713703455806769610}
+        m_TargetAssemblyTypeName: Article, Assembly-CSharp
+        m_MethodName: UpgradeAxe
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6713703455806769611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10212,7 +10236,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6713703456094809326}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10288,7 +10312,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6713703455877735398}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -10420,10 +10444,10 @@ RectTransform:
   m_LocalScale: {x: 0.91161, y: 0.91161, z: 0.91161}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6713703455857637908}
   - {fileID: 3237622131154807876}
+  - {fileID: 6713703455857637908}
   m_Father: {fileID: 6713703456094809326}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10786,7 +10810,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6713703455806769621}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10862,7 +10886,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6713703455713135835}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10966,7 +10990,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8666667, g: 0.23529412, b: 0.23529412, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -11090,7 +11114,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6713703455713135835}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11166,7 +11190,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6713703455713135835}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11248,10 +11272,10 @@ RectTransform:
   - {fileID: 6713703455504980905}
   - {fileID: 6713703455666642606}
   - {fileID: 6713703454432740978}
-  - {fileID: 6713703455877735398}
   - {fileID: 6713703455798430514}
   - {fileID: 6713703455840794647}
   - {fileID: 6713703454714881247}
+  - {fileID: 6713703455877735398}
   m_Father: {fileID: 6713703454839527853}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11341,7 +11365,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6713703456094809314}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6713703456094809327}
+        m_TargetAssemblyTypeName: Article, Assembly-CSharp
+        m_MethodName: UpgradeRegenerate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6713703456094809324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11931,6 +11967,16 @@ MonoBehaviour:
   _amountRopes: 60
   _txtAmountRopes: {fileID: 4111330263695042304}
   _txtCostRopes: {fileID: 6713703454951844647}
+  _boxes:
+  - {fileID: 6713703455114336751}
+  - {fileID: 7358578265553842543}
+  - {fileID: 2787242590900293635}
+  - {fileID: 3994143651853126342}
+  - {fileID: 1162717361489328139}
+  - {fileID: 4417872281190506453}
+  axeUpgraded: 1
+  speedPlayerUpgraded: 0
+  regenerateUpgraded: 0
   _sounds:
   - {fileID: 8300000, guid: e7fb482ed391db14eaa3a2b698127e2c, type: 3}
   - {fileID: 8300000, guid: cd6388049e89dcd4b87be60d97951369, type: 3}
@@ -12773,7 +12819,7 @@ GameObject:
   - component: {fileID: 2962220817013759553}
   - component: {fileID: 2787242590900293635}
   m_Layer: 5
-  m_Name: Cost Icon
+  m_Name: Tree Box Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12792,7 +12838,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6713703455877735398}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
