@@ -4,8 +4,6 @@ using DG.Tweening;
 
 public class ButtonMainMenu : MonoBehaviour
 {
-    private MainMenu _mainMenu;
-
     [Header("AUDIOS")]
     [SerializeField] AudioClip[] _buttonSounds;
     private AudioSource _myAudio;
@@ -18,7 +16,6 @@ public class ButtonMainMenu : MonoBehaviour
     private void Awake()
     {
         _myAudio = GetComponent<AudioSource>();
-        _mainMenu = FindObjectOfType<MainMenu>();
     }
 
     public void ButtonEnter()
@@ -37,5 +34,21 @@ public class ButtonMainMenu : MonoBehaviour
     {
         _textButton.fontMaterial = _styleButtonExit.material;
         transform.DOScale(0.3f, 0.5f);
+    }
+
+    public void ButtonEnterPause()
+    {
+        if (_buttonSounds.Length > 0)
+        {
+            int random = Random.Range(0, _buttonSounds.Length);
+            _myAudio.PlayOneShot(_buttonSounds[random]);
+        }
+
+        _textButton.fontMaterial = _styleButtonEnter.material;
+    }
+
+    public void ButtonExitPause()
+    {
+        _textButton.fontMaterial = _styleButtonExit.material;
     }
 }
