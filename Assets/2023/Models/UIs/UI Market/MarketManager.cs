@@ -1,15 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using DG.Tweening;
 
-public class MarketManager : MonoBehaviour
+public class MarketManager : MonoBehaviour, IScrollHandler
 {
     private Character _player;
     private CharacterInventory _inventory;
 
     [SerializeField] GameObject _canvas;
+    [SerializeField] Image _intro;
     [SerializeField] TMP_Text _textInventory;
 
     [Header("NAILS")]
@@ -20,9 +22,17 @@ public class MarketManager : MonoBehaviour
     [SerializeField] int _costRopes = 100;
     [SerializeField] int _amountRopes = 60;
 
+    [Header("DEFAULT ARTICLES LOCKED")]
+    [SerializeField] Button[] _articlesLocked;
+    [SerializeField] EventTrigger[] _eventTriggerArticles;
+
     [Header("AUDIO")]
     [SerializeField] AudioClip[] _sounds;
     private AudioSource _myAudio;
+
+    [Header("SCROLLS CONFIG")]
+    [SerializeField] Scrollbar _scrollbar;
+    [SerializeField] float _scrollSpeed = 0.1f;
 
     private void Awake()
     {
@@ -33,13 +43,39 @@ public class MarketManager : MonoBehaviour
 
     private void Start()
     {
-        
+        _intro.gameObject.SetActive(false);
         _canvas.SetActive(false);
+
+        foreach (var article in _articlesLocked)
+        {
+            article.enabled = false;
+        }
+
+        foreach (var item in _eventTriggerArticles)
+        {
+            item.enabled = false;
+        }
     }
 
     private void Update()
     {
         if (_canvas.activeSelf) _textInventory.text = "$ " + _inventory.money.ToString();
+
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            foreach (var article in _articlesLocked)
+            {
+                article.enabled = true;
+            }
+
+            foreach (var item in _eventTriggerArticles)
+            {
+                item.enabled = true;
+            }
+        }
+
+
     }
 
     public void BuyNails()
@@ -54,11 +90,7 @@ public class MarketManager : MonoBehaviour
 
     public void OpenMarket()
     {
-        _canvas.SetActive(true);
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
-        _player.speed = 0;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        StartCoroutine(OpenMarketCoroutine());
     }
 
     public void ExitMarket()
@@ -79,23 +111,45 @@ public class MarketManager : MonoBehaviour
             print("COMPRE MATERIAL");
         }
 
-        else 
+        else
         {
             _myAudio.PlayOneShot(_sounds[0]);
             print("TE FALTA PLATA");
-        }              
+        }
+    }
+
+    private IEnumerator OpenMarketCoroutine()
+    {
+        _intro.gameObject.SetActive(true);
+        _intro.transform.DOScale(100f, 2f);
+        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.speed = 0;
+        yield return new WaitForSeconds(1f);
+        _intro.gameObject.SetActive(false);
+        _intro.transform.DOScale(0f, 2f);
+        _canvas.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null)
-        {
-            _canvas.SetActive(true);
-            player.FreezePlayer(RigidbodyConstraints.FreezeAll);
-            player.speed = 0;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
+        if (player != null) StartCoroutine(OpenMarketCoroutine());
+    }
+
+    public void OnScroll(PointerEventData eventData)
+    {
+        // Obtén el valor actual del Scrollbar
+        float currentValue = _scrollbar.value;
+
+        // Ajusta el valor del Scrollbar en función del desplazamiento de la rueda del mouse
+        currentValue += eventData.scrollDelta.y * _scrollSpeed;
+
+        // Asegúrate de que el valor esté dentro del rango válido (entre 0 y 1)
+        currentValue = Mathf.Clamp01(currentValue);
+
+        // Asigna el nuevo valor al Scrollbar
+        _scrollbar.value = currentValue;
     }
 }

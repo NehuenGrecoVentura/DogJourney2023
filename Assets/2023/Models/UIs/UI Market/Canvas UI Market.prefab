@@ -10893,6 +10893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvas: {fileID: 6713703454944805640}
+  _intro: {fileID: 0}
   _textInventory: {fileID: 9184599071327076095}
   _costNails: 50
   _amountNails: 20
@@ -10901,7 +10902,6 @@ MonoBehaviour:
   _sounds:
   - {fileID: 8300000, guid: e7fb482ed391db14eaa3a2b698127e2c, type: 3}
   - {fileID: 8300000, guid: cd6388049e89dcd4b87be60d97951369, type: 3}
-  _articles: {fileID: 6713703454839527852}
 --- !u!82 &1467196758
 AudioSource:
   m_ObjectHideFlags: 0
