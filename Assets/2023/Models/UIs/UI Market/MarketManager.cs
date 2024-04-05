@@ -13,7 +13,9 @@ public class MarketManager : MonoBehaviour, IScrollHandler
     private HitBar[] _hitBars;
     private SaplingTree[] _sapling;
     private Trunks[] _trunks;
+    private Dog[] _dogs;
 
+    [SerializeField] GameObject[] _dogUpgrade;
     [SerializeField] GameObject _canvas;
     [SerializeField] Image _intro;
     [SerializeField] TMP_Text _textInventory;
@@ -56,6 +58,7 @@ public class MarketManager : MonoBehaviour, IScrollHandler
         _hitBars = FindObjectsOfType<HitBar>();
         _sapling = FindObjectsOfType<SaplingTree>();
         _trunks = FindObjectsOfType<Trunks>();
+        _dogs = FindObjectsOfType<Dog>();
     }
 
     private void Start()
@@ -63,6 +66,9 @@ public class MarketManager : MonoBehaviour, IScrollHandler
         _intialScale = transform.localScale;
         _intro.gameObject.SetActive(false);
         _canvas.SetActive(false);
+
+        foreach (var dog in _dogUpgrade)
+            dog.SetActive(false);
     }
 
     private void Update()
@@ -118,6 +124,8 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 
     #endregion
 
+    #region UPGRADES PLAYER
+
     public void UpgradeAxe()
     {
         foreach (var tree in _allTrees)
@@ -151,18 +159,44 @@ public class MarketManager : MonoBehaviour, IScrollHandler
         _myAudio.PlayOneShot(_sounds[1]);
     }
 
+    #endregion
+
     public void UpgradeTrolley()
     {
-        if (_inventory.upgradeLoot)
-        {
-            foreach (var trunk in _trunks)
-                trunk.isUpgraded = true;
+        foreach (var trunk in _trunks)
+            trunk.isUpgraded = true;
 
-            Destroy(_boxes[3].gameObject);
-            _myAudio.PlayOneShot(_sounds[1]);
+        Destroy(_boxes[3].gameObject);
+        _myAudio.PlayOneShot(_sounds[1]);
+    }
+
+    public void UpgradeSpeedDog()
+    {
+        foreach (var dog in _dogs)
+        {
+            dog.speedNormal = 15f;
+            dog.speedRun = 20f;
         }
 
-        else ErrorUpgrade(2);
+        Destroy(_boxes[4].gameObject);
+        _myAudio.PlayOneShot(_sounds[1]);
+    }
+
+    public void UpgradeDog()
+    {
+        foreach (var dog in _dogUpgrade)
+            dog.SetActive(true);
+
+        Destroy(_boxes[5].gameObject);
+        _myAudio.PlayOneShot(_sounds[1]);
+
+    }
+
+    public void SellWood()
+    {
+        _inventory.money += 100;
+        _inventory.greenTrees -= 10;
+        _myAudio.PlayOneShot(_sounds[1]);
     }
 
     public void ErrorUpgrade(int indexBox)
@@ -216,7 +250,6 @@ public class MarketManager : MonoBehaviour, IScrollHandler
             });
         }
     }
-
 
     private IEnumerator OpenMarketCoroutine()
     {

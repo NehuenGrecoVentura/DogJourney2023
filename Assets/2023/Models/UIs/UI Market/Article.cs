@@ -102,6 +102,40 @@ public class Article : MonoBehaviour
 
     public void UpgradeTrolley()
     {
-        
+        if (_inventory.upgradeLoot)
+        {
+            _market.UpgradeTrolley();
+            Success();
+        }
+
+        else _market.ErrorUpgrade(3);
+    }
+
+    public void UpgradeSpeedDog()
+    {
+        if (_inventory.upgradeLoot)
+        {
+            _market.UpgradeSpeedDog();
+            Success();
+        }
+
+        else _market.ErrorUpgrade(4);
+    }
+
+    public void UpgradeDog()
+    {
+        if (_inventory.upgradeLoot)
+        {
+            _market.UpgradeSpeedDog();
+            Success();
+        }
+
+        else _market.ErrorUpgrade(5);
+    }
+
+    public void SellWood()
+    {
+        if (_inventory.greenTrees >= 10) _market.SellWood();
+        else _market.ErrorUpgrade(6);
     }
 }
