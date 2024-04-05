@@ -16,9 +16,10 @@ public class ModelDog
     public event Action EventIdle, EventWalk;
     private OrderDog _order;
     private Transform _posTeletransport;
+    private Camera _camPlayer;
 
     public ModelDog(NavMeshAgent agent, Vector3 targetDist, bool scared, Transform[] scaredPoints, float speedNormal, float speedRun, float offSpeed, float distToPlayer, float targetRadius, GameObject target, 
-        Transform transform, Character player, OrderDog order, Transform posTeletransport)
+        Transform transform, Character player, OrderDog order, Transform posTeletransport, Camera camPlayer)
     {
         _agent = agent;
         _targetDist = targetDist;
@@ -35,6 +36,7 @@ public class ModelDog
         _order = order;
         _posTeletransport = posTeletransport;
         _offSpeed = offSpeed;
+        _camPlayer = camPlayer;
     }
 
     public void Scared()
