@@ -33,6 +33,7 @@ public class MarketManager : MonoBehaviour
 
     private void Start()
     {
+        
         _canvas.SetActive(false);
     }
 

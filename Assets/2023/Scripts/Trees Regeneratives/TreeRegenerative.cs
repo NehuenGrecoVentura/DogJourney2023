@@ -66,7 +66,6 @@ public class TreeRegenerative : MonoBehaviour
             else if (Input.GetKey(_inputInteractive) && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
             {
                 player.HitTree();
-                //_doTween.Shake(gameObject.transform);
             }
 
             else

@@ -26,7 +26,6 @@ public class SaplingTree : MonoBehaviour
 
     private void Awake()
     {
-
         _camPlayer = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
     }
 

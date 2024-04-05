@@ -1,4 +1,6 @@
 using UnityEngine;
+using DG.Tweening;
+using System.Collections;
 
 public class Trunks : MonoBehaviour
 {
@@ -6,17 +8,39 @@ public class Trunks : MonoBehaviour
     [SerializeField] KeyCode _buttonInteractive;
     [HideInInspector] public bool isUpgraded = false;
     private CharacterInventory _inventory;
+
     private DoTweenTest _doTweenMessage;
+    private DoTweenManager _doTweenManager;
+    private TrolleyWood _trolley;
+    [SerializeField] float _jumpForce = 2f;
+    [SerializeField] float _duration = 1f;
+    [SerializeField] int _counts = 1;
+    public GameObject[] _logs;
+
+    private Vector3[] _initiaPos;
 
     private void Awake()
     {
         _inventory = FindObjectOfType<CharacterInventory>();
         _doTweenMessage = FindObjectOfType<DoTweenTest>();
+        _doTweenManager = FindObjectOfType<DoTweenManager>();
+        _trolley = FindObjectOfType<TrolleyWood>();
     }
 
     void Start()
     {
         _iconInteractive.SetActive(false);
+        SetInitialPos();
+    }
+
+    private void SetInitialPos()
+    {
+        _initiaPos = new Vector3[_logs.Length];
+
+        for (int i = 0; i < _logs.Length; i++)
+        {
+            _initiaPos[i] = _logs[i].transform.position;
+        }
     }
 
     public void UpgradeTrolley()
@@ -63,9 +87,28 @@ public class Trunks : MonoBehaviour
         if (dog != null)
         {
             UpgradeTrolley();
-            gameObject.SetActive(false);
+
+            for (int i = 0; i < _logs.Length; i++)
+            {
+                _doTweenManager.JumpEffect(_logs[i].transform, _trolley.gameObject.transform.position, _jumpForce, _counts, _duration);
+            }
+
+            StartCoroutine(RecollectLogs());
         }
     }
+
+    private IEnumerator RecollectLogs()
+    {
+        yield return new WaitForSeconds(_duration);
+
+        for (int i = 0; i < _logs.Length; i++)
+        {
+            _logs[i].transform.position = _initiaPos[i];
+        }
+
+        gameObject.SetActive(false);
+    }
+
 
     private void OnTriggerStay(Collider other)
     {

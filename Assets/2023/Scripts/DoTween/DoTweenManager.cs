@@ -11,6 +11,11 @@ public class DoTweenManager : MonoBehaviour
         obj.DOShakeRotation(_duration, _shakeStrenght);
     }
 
+    public void JumpEffect(Transform obj, Vector3 endPos, float jumpForce, int jumpCount, float duration)
+    {
+        obj.DOJump(endPos, jumpForce, jumpCount, duration);
+    }
+
     public void EffectScale(Transform obj)
     {
         Sequence sequence = DOTween.Sequence();
