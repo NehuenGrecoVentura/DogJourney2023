@@ -34,7 +34,6 @@ public class MainMenu : MonoBehaviour
         {
             Destroy(_txtPressButton);
             _mainMenu.gameObject.SetActive(true);
-            //_backgroundButton.gameObject.SetActive(true);
         }
 
         if (Input.GetKeyDown(KeyCode.Escape) && _isOptions) BackToMenu();

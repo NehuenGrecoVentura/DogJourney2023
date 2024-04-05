@@ -22,9 +22,9 @@ public class MarketManager : MonoBehaviour, IScrollHandler
     [SerializeField] int _costRopes = 100;
     [SerializeField] int _amountRopes = 60;
 
-    [Header("DEFAULT ARTICLES LOCKED")]
-    [SerializeField] Button[] _articlesLocked;
-    [SerializeField] EventTrigger[] _eventTriggerArticles;
+    //[Header("DEFAULT ARTICLES LOCKED")]
+    //[SerializeField] Button[] _articlesLocked;
+    //[SerializeField] EventTrigger[] _eventTriggerArticles;
 
     [Header("AUDIO")]
     [SerializeField] AudioClip[] _sounds;
@@ -33,6 +33,12 @@ public class MarketManager : MonoBehaviour, IScrollHandler
     [Header("SCROLLS CONFIG")]
     [SerializeField] Scrollbar _scrollbar;
     [SerializeField] float _scrollSpeed = 0.1f;
+
+    [Header("EXIT BUTTON")]
+    [SerializeField] TMP_Text _txtButtonExit;
+    [SerializeField] TMP_FontAsset _styleSelected;
+    [SerializeField] TMP_FontAsset _styleNormal;
+    private Vector3 _intialScale;
 
     private void Awake()
     {
@@ -43,40 +49,33 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 
     private void Start()
     {
+        _intialScale = transform.localScale;
         _intro.gameObject.SetActive(false);
         _canvas.SetActive(false);
 
-        foreach (var article in _articlesLocked)
-        {
-            article.enabled = false;
-        }
+        //foreach (var article in _articlesLocked)
+        //    article.enabled = false;
 
-        foreach (var item in _eventTriggerArticles)
-        {
-            item.enabled = false;
-        }
+        //foreach (var item in _eventTriggerArticles)
+        //    item.enabled = false;
     }
 
     private void Update()
     {
         if (_canvas.activeSelf) _textInventory.text = "$ " + _inventory.money.ToString();
 
+        if (Input.GetKeyDown(KeyCode.J)) ExitMarket();
+        //if (Input.GetKeyDown(KeyCode.C))
+        //{
+        //    foreach (var article in _articlesLocked)
+        //        article.enabled = true;
 
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            foreach (var article in _articlesLocked)
-            {
-                article.enabled = true;
-            }
-
-            foreach (var item in _eventTriggerArticles)
-            {
-                item.enabled = true;
-            }
-        }
-
-
+        //    foreach (var item in _eventTriggerArticles)
+        //        item.enabled = true;
+        //}
     }
+
+    #region EVENT TRIGGER
 
     public void BuyNails()
     {
@@ -95,11 +94,32 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 
     public void ExitMarket()
     {
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
-        _player.speed = _player.speedAux;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        StartCoroutine(ExitMarketCoroutine());
     }
+
+    private void ButtonExitEvents(TMP_FontAsset style, Vector3 scale)
+    {
+        _txtButtonExit.fontMaterial = style.material;
+        _txtButtonExit.transform.localScale = scale;
+
+        if (_sounds.Length > 0)
+        {
+            int random = Random.Range(2, 3);
+            _myAudio.PlayOneShot(_sounds[random]);
+        }
+    }
+
+    public void ExitButtonEnter()
+    {
+        ButtonExitEvents(_styleSelected, new Vector3(transform.localScale.x + 0.2f, transform.localScale.y + 0.2f, transform.localScale.z + 0.2f));
+    }
+
+    public void ExitButtonExit()
+    {
+        ButtonExitEvents(_styleNormal, _intialScale);
+    }
+
+    #endregion
 
     private void BuyMaterial(int cost, ref int materialInInvetory, int addMaterial)
     {
@@ -132,6 +152,20 @@ public class MarketManager : MonoBehaviour, IScrollHandler
         Cursor.visible = true;
     }
 
+    private IEnumerator ExitMarketCoroutine()
+    {
+        _intro.gameObject.SetActive(true);
+        _intro.transform.DOScale(100f, 0f);
+        _intro.transform.DOScale(0f, 2f);
+        _canvas.gameObject.SetActive(false);
+        yield return new WaitForSeconds(2f);
+        _intro.gameObject.SetActive(false);
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.speed = _player.speedAux;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
@@ -140,16 +174,9 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 
     public void OnScroll(PointerEventData eventData)
     {
-        // Obtén el valor actual del Scrollbar
         float currentValue = _scrollbar.value;
-
-        // Ajusta el valor del Scrollbar en función del desplazamiento de la rueda del mouse
         currentValue += eventData.scrollDelta.y * _scrollSpeed;
-
-        // Asegúrate de que el valor esté dentro del rango válido (entre 0 y 1)
         currentValue = Mathf.Clamp01(currentValue);
-
-        // Asigna el nuevo valor al Scrollbar
         _scrollbar.value = currentValue;
     }
 }
