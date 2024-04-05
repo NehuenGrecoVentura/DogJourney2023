@@ -17,10 +17,12 @@ public class MarketManager : MonoBehaviour, IScrollHandler
     [Header("NAILS")]
     [SerializeField] int _costNails = 50;
     [SerializeField] int _amountNails = 20;
+    [SerializeField] TMP_Text _txtAmountNails;
 
     [Header("ROPES")]
     [SerializeField] int _costRopes = 100;
     [SerializeField] int _amountRopes = 60;
+    [SerializeField] TMP_Text _txtAmountRopes;
 
     //[Header("DEFAULT ARTICLES LOCKED")]
     //[SerializeField] Button[] _articlesLocked;
@@ -79,12 +81,12 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 
     public void BuyNails()
     {
-        BuyMaterial(_costNails, ref _inventory.nails, _amountNails);
+        BuyMaterial(_costNails, ref _inventory.nails, _amountNails, _txtAmountNails);
     }
 
     public void BuyRopes()
     {
-        BuyMaterial(_costNails, ref _inventory.ropes, _amountRopes);
+        BuyMaterial(_costNails, ref _inventory.ropes, _amountRopes, _txtAmountRopes);
     }
 
     public void OpenMarket()
@@ -121,7 +123,7 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 
     #endregion
 
-    private void BuyMaterial(int cost, ref int materialInInvetory, int addMaterial)
+    private void BuyMaterial(int cost, ref int materialInInvetory, int addMaterial, TMP_Text textAmount)
     {
         if (_inventory.money >= cost)
         {
@@ -129,6 +131,20 @@ public class MarketManager : MonoBehaviour, IScrollHandler
             materialInInvetory += addMaterial;
             _inventory.money -= cost;
             print("COMPRE MATERIAL");
+
+            textAmount.transform.DOScale(new Vector3(0.5f, 0.5f, 0.5f), 0.5f)
+            .OnComplete(() =>
+            {
+                // Cambiar el color del texto a verde
+                textAmount.DOColor(Color.green, 0.5f);
+
+                textAmount.transform.DOScale(new Vector3(0.17f, 0.17f, 0.17f), 0.5f)
+                    .OnComplete(() =>
+                    {
+                        // Cambiar el color del texto a negro
+                        textAmount.DOColor(Color.black, 1f);
+                    });
+            });
         }
 
         else
@@ -137,6 +153,7 @@ public class MarketManager : MonoBehaviour, IScrollHandler
             print("TE FALTA PLATA");
         }
     }
+
 
     private IEnumerator OpenMarketCoroutine()
     {
