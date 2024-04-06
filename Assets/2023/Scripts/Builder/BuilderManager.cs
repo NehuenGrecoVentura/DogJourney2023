@@ -11,9 +11,11 @@ public class BuilderManager : MonoBehaviour
     [Header("ITEMS")]
     public int _amountItem1;
     public int _amountItem2;
-    [SerializeField] MeshRenderer _item1;
-    [SerializeField] MeshRenderer _item2;
+    //[SerializeField] MeshRenderer _item1;
+    //[SerializeField] MeshRenderer _item2;
 
+    [SerializeField] SpriteRenderer _item1;
+    [SerializeField] SpriteRenderer _item2;
 
     [SerializeField] KeyCode _keyInteractive = KeyCode.Space;
 
@@ -27,7 +29,6 @@ public class BuilderManager : MonoBehaviour
     private Character _player;
     private bool _playCinematic = false;
     public CharacterInventory _inventory;
-    //public bool _isBuilding = false;
     [SerializeField] GameObject _canvasQuest;
 
     [Header("RADAR")]
@@ -108,8 +109,10 @@ public class BuilderManager : MonoBehaviour
     {
         if (Input.GetKey(_keyInteractive))
         {
-            if (item1 < _amountItem1) _item1.material.color = Color.red;
-            if (item2 < _amountItem2) _item2.material.color = Color.red;
+            //if (item1 < _amountItem1) _item1.material.color = Color.red;
+            if (item1 < _amountItem1) _item1.color = Color.red;
+            //if (item2 < _amountItem2) _item2.material.color = Color.red;
+            if (item2 < _amountItem2) _item2.color = Color.red;
 
             else if (item1 >= _amountItem1 && item2 >= _amountItem2 && !_player.isConstruct)
             {
@@ -124,8 +127,8 @@ public class BuilderManager : MonoBehaviour
         else
         {
             _iconsMaterials.SetActive(true);
-            _item1.material.color = Color.white;
-            _item2.material.color = Color.white;
+            _item1.color = Color.white;
+            _item2.color = Color.white;
         }
     }
 
@@ -134,6 +137,8 @@ public class BuilderManager : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
+            _item1.material.color = Color.white;
+            _item2.material.color = Color.white;
             _iconsMaterials.SetActive(false);
             _player.isConstruct = false;
         }   
