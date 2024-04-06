@@ -13,8 +13,17 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] TMP_Text _txtPressButton;
     [SerializeField] TMP_Text[] _txtsMainMenu;
+    [SerializeField] TMP_Text _txtBack;
     [SerializeField] TMP_FontAsset _styleButtonEnter;
     [SerializeField] TMP_FontAsset _styleButtonExit;
+
+    [SerializeField] AudioClip[] _sounds;
+    private AudioSource _myAudio;
+
+    private void Awake()
+    {
+        _myAudio = GetComponent<AudioSource>();
+    }
 
     private void Start()
     {
@@ -77,8 +86,26 @@ public class MainMenu : MonoBehaviour
             .SetLoops(-1, LoopType.Yoyo); // -1 para un loop infinito
     }
 
-    public void ButtonSelect()
+    private void ButtonEvents(TMP_FontAsset style, Vector3 scale, float duration)
     {
+        _txtBack.fontMaterial = style.material;
+        _txtBack.transform.localScale = scale;
+        _txtBack.transform.DOScale(scale, duration);
 
+        if (_sounds.Length > 0)
+        {
+            int random = Random.Range(2, 3);
+            _myAudio.PlayOneShot(_sounds[random]);
+        }
     }
+
+    public void EventButtonEnter()
+    {
+        ButtonEvents(_styleButtonEnter, new Vector3(0.9f, 0.9f, 0.9f) ,0.5f);
+    }
+    public void EventButtonExit()
+    {
+        ButtonEvents(_styleButtonExit, new Vector3(0.8f, 0.8f, 0.8f), 0.5f);
+    }
+
 }
