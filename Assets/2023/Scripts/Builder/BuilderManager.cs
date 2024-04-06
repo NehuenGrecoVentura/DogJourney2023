@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 
 public class BuilderManager : MonoBehaviour
@@ -11,9 +10,6 @@ public class BuilderManager : MonoBehaviour
     [Header("ITEMS")]
     public int _amountItem1;
     public int _amountItem2;
-    //[SerializeField] MeshRenderer _item1;
-    //[SerializeField] MeshRenderer _item2;
-
     [SerializeField] SpriteRenderer _item1;
     [SerializeField] SpriteRenderer _item2;
 
@@ -109,9 +105,7 @@ public class BuilderManager : MonoBehaviour
     {
         if (Input.GetKey(_keyInteractive))
         {
-            //if (item1 < _amountItem1) _item1.material.color = Color.red;
             if (item1 < _amountItem1) _item1.color = Color.red;
-            //if (item2 < _amountItem2) _item2.material.color = Color.red;
             if (item2 < _amountItem2) _item2.color = Color.red;
 
             else if (item1 >= _amountItem1 && item2 >= _amountItem2 && !_player.isConstruct)
