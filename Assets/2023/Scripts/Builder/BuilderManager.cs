@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class BuilderManager : MonoBehaviour
 {
@@ -48,6 +49,9 @@ public class BuilderManager : MonoBehaviour
         _iconsMaterials.SetActive(false);
         _objToBuild.SetActive(false);
         _cinematic.SetActive(false);
+
+        _item1.transform.localScale = Vector3.zero;
+        _item2.transform.localScale = Vector3.zero;
     }
     private void Update()
     {
@@ -121,6 +125,8 @@ public class BuilderManager : MonoBehaviour
         else
         {
             _iconsMaterials.SetActive(true);
+            _item1.transform.DOScale(1.5f, 0.5f);
+            _item2.transform.DOScale(1.5f, 0.5f);
             _item1.color = Color.white;
             _item2.color = Color.white;
         }
@@ -133,8 +139,19 @@ public class BuilderManager : MonoBehaviour
         {
             _item1.material.color = Color.white;
             _item2.material.color = Color.white;
-            _iconsMaterials.SetActive(false);
+            //_item1.transform.DOScale(0f, 0.5f);
+            //_item2.transform.DOScale(0f, 0.5f);
+            StartCoroutine(ExitCoroutine());
+            //_iconsMaterials.SetActive(false);
             _player.isConstruct = false;
         }   
+    }
+
+    private IEnumerator ExitCoroutine()
+    {
+        _item1.transform.DOScale(0f, 0.5f);
+        _item2.transform.DOScale(0f, 0.5f);
+        yield return new WaitForSeconds(0.6f);
+        _iconsMaterials.SetActive(false);
     }
 }
