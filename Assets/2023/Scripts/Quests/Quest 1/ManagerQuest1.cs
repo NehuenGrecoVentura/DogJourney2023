@@ -16,6 +16,8 @@ public class ManagerQuest1 : MonoBehaviour
     [SerializeField] Transform _boxPos;
     private LocationQuest _radar;
 
+    [SerializeField] TMP_Text _txtTask;
+
     private void Awake()
     {
         _questUI = FindObjectOfType<QuestUI>();
@@ -27,13 +29,14 @@ public class ManagerQuest1 : MonoBehaviour
     private void Update()
     {
         CheckWoods();
+        
     }
 
     private void CheckWoods()
     {
-        //_textWoods.text = "WOODS: " + _inventory.greenTrees.ToString() + " /" + "10";
+        _txtTask.text = "Collect the woods " + "(" + _inventory.greenTrees.ToString() + "/6)";
 
-        if (_inventory.greenTrees >= 10)
+        if (_inventory.greenTrees >= 5)
         {
             _questUI.TaskCompleted(2);
             _questUI.AddNewTask(3, _thirdTextQuest);
