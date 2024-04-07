@@ -131,7 +131,7 @@ public class BoxWoods : MonoBehaviour
 
         if (player != null)
         {
-            if (_inventory.greenTrees >= 10)
+            if (_inventory.greenTrees >= 5)
             {
                 if (Input.GetKeyDown(_keyInteractive))
                     StartCoroutine(RunTruck());
