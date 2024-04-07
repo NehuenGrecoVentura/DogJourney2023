@@ -18,9 +18,11 @@ public class Trunks : MonoBehaviour
     public GameObject[] _logs;
 
     private Vector3[] _initiaPos;
+    private Collider _myCol;
 
     private void Awake()
     {
+        _myCol = GetComponent<Collider>();
         _inventory = FindObjectOfType<CharacterInventory>();
         _doTweenMessage = FindObjectOfType<DoTweenTest>();
         _doTweenManager = FindObjectOfType<DoTweenManager>();
@@ -51,7 +53,7 @@ public class Trunks : MonoBehaviour
             // Si no compré el upgrade, entonces junta de a uno.
             if (!isUpgraded)
             {
-                _inventory.greenTrees += 1;
+                _inventory.greenTrees++;
                 _doTweenMessage.ShowUI("+ 1");
             }
 
@@ -87,6 +89,7 @@ public class Trunks : MonoBehaviour
         if (dog != null)
         {
             UpgradeTrolley();
+            _myCol.enabled = false;
 
             for (int i = 0; i < _logs.Length; i++)
             {
@@ -106,6 +109,7 @@ public class Trunks : MonoBehaviour
             _logs[i].transform.position = _initiaPos[i];
         }
 
+        _myCol.enabled = true;
         gameObject.SetActive(false);
     }
 
