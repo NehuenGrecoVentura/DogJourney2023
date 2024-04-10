@@ -5,11 +5,6 @@ public class NPCManager : MonoBehaviour
     public string nameNPC;
     public Dialogue _dialogue;
 
-    //private void Awake()
-    //{
-    //    _dialogue = FindObjectOfType<Dialogue>();
-    //}
-
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();

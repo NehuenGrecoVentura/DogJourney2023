@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 
@@ -12,9 +13,9 @@ public class Dialogue : MonoBehaviour
     [SerializeField] TMP_Text _dialogueText;
     [SerializeField] TMP_Text _nameNPCText;
     [SerializeField] float _typingTime = 0.05f;
+    public Button buttonConfirm;
     private bool _didDialogueStart;
     private int _index;
-    private Vector3 _initialScaleArrow;
     private Character _player;
     private CameraOrbit _cam;
 
@@ -26,15 +27,15 @@ public class Dialogue : MonoBehaviour
 
     void Start()
     {
+        buttonConfirm.gameObject.SetActive(false);
         _boxDialogue.SetActive(false);
-        _initialScaleArrow = _arrowTransform.transform.localScale;
     }
 
     void Update()
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.E))
         {
-            if (!_didDialogueStart) StartDialogue();                
+            if (!_didDialogueStart) StartDialogue();
             else if (_dialogueText.text == _lines[_index]) NextDialogueLine();
 
             else
@@ -65,19 +66,20 @@ public class Dialogue : MonoBehaviour
     private void NextDialogueLine()
     {
         _index++;
-
         if (_index < _lines.Length) StartCoroutine(ShowLine());
+        else if (_index == _lines.Length) buttonConfirm.gameObject.SetActive(true);
+        else Close();
+    }
 
-        else
-        {
-            _player.speed = _player.speedAux;
-            _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
-            _cam.enabled = true;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            _didDialogueStart = false;
-            _boxDialogue.SetActive(false);
-        }
+    public void Close()
+    {
+        _player.speed = _player.speedAux;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _cam.enabled = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        _didDialogueStart = false;
+        _boxDialogue.SetActive(false);
     }
 
     private IEnumerator ShowLine()
@@ -85,11 +87,11 @@ public class Dialogue : MonoBehaviour
         _dialogueText.text = string.Empty;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-
+     
         foreach (char ch in _lines[_index])
         {
             _dialogueText.text += ch;
-            yield return new WaitForSeconds(_typingTime);
+            yield return new WaitForSeconds(_typingTime);  
         }
     }
 }
