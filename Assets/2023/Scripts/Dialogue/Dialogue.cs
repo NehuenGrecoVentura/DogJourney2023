@@ -9,7 +9,7 @@ public class Dialogue : MonoBehaviour
     public bool playerInRange = false;
     [SerializeField] GameObject _boxDialogue;
     [SerializeField] Transform _arrowTransform;
-    [SerializeField, TextArea(4, 6)] string[] _lines;
+    [TextArea(4, 6)] public string[] _lines;
     [SerializeField] TMP_Text _dialogueText;
     [SerializeField] TMP_Text _nameNPCText;
     [SerializeField] float _typingTime = 0.05f;
