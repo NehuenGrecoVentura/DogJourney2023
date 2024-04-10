@@ -9,7 +9,7 @@ public class QuestBroom : NPCManager
     [SerializeField] DogEnter _dogEnter;
     private Collider _col;
     private QuestUI _questUI;
-    
+    public bool broomFind = false;
 
     private void Awake()
     {

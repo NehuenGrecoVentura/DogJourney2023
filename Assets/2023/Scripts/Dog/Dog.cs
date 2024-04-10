@@ -21,7 +21,7 @@ public class Dog : MonoBehaviour
     public float offSpeed;
     [SerializeField] float _distToPlayer;
     [SerializeField] float _targetRadius;
-    [SerializeField] GameObject _target;
+    public GameObject _target;
     [SerializeField] Transform _posTeletransport;
 
     [Header("TELETRANSPORT")]
