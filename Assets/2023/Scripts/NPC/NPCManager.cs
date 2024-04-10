@@ -19,4 +19,10 @@ public class NPCManager : MonoBehaviour
             _dialogue.Set(nameNPC);
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null) _dialogue.playerInRange = false;
+    }
 }
