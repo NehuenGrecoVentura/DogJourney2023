@@ -107,4 +107,9 @@ public class Character : MonoBehaviour
         var pick = other.GetComponent<IPick>();
         if (pick != null) pick.Pick();
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.gameObject.name);
+    }
 }
