@@ -15,6 +15,14 @@ public class Dialogue : MonoBehaviour
     private bool _didDialogueStart;
     private int _index;
     private Vector3 _initialScaleArrow;
+    private Character _player;
+    private CameraOrbit _cam;
+
+    private void Awake()
+    {
+        _player = FindObjectOfType<Character>();
+        _cam = FindObjectOfType<CameraOrbit>();
+    }
 
     void Start()
     {
@@ -26,12 +34,7 @@ public class Dialogue : MonoBehaviour
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.E))
         {
-            if (!_didDialogueStart)
-            {
-                StartDialogue();
-                _arrowTransform.DOScale(new Vector3(1.03f, 0.51f, 0.97f), 1f).SetLoops(-1, LoopType.Yoyo);
-            }
-                
+            if (!_didDialogueStart) StartDialogue();                
             else if (_dialogueText.text == _lines[_index]) NextDialogueLine();
 
             else
@@ -49,6 +52,10 @@ public class Dialogue : MonoBehaviour
 
     private void StartDialogue()
     {
+        _player.speed = 0;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _cam.enabled = false;
+        _arrowTransform.DOScale(new Vector3(1.03f, 0.51f, 0.97f), 1f).SetLoops(-1, LoopType.Yoyo);
         _didDialogueStart = true;
         _boxDialogue.SetActive(true);
         _index = 0;
@@ -63,6 +70,11 @@ public class Dialogue : MonoBehaviour
 
         else
         {
+            _player.speed = _player.speedAux;
+            _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+            _cam.enabled = true;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             _didDialogueStart = false;
             _boxDialogue.SetActive(false);
         }
@@ -71,7 +83,8 @@ public class Dialogue : MonoBehaviour
     private IEnumerator ShowLine()
     {
         _dialogueText.text = string.Empty;
-        
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
         foreach (char ch in _lines[_index])
         {

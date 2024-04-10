@@ -3,12 +3,12 @@ using UnityEngine;
 public class NPCManager : MonoBehaviour
 {
     public string nameNPC;
-    private Dialogue _dialogue;
+    public Dialogue _dialogue;
 
-    private void Awake()
-    {
-        _dialogue = FindObjectOfType<Dialogue>();
-    }
+    //private void Awake()
+    //{
+    //    _dialogue = FindObjectOfType<Dialogue>();
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
