@@ -3,19 +3,32 @@ using UnityEngine;
 
 public class DogEnter : MonoBehaviour
 {
+    [SerializeField] GameObject _broomPrefab;
     [SerializeField] Transform _posSpawn;
-    [SerializeField] GameObject _prefab;
     [SerializeField] KeyCode _keyInteract = KeyCode.Q;
     [SerializeField] Dog _dog;
     [SerializeField] Transform _enterPos;
     [SerializeField] Transform _exitPos;
+    
     private Collider _myCol;
     private QuestUI _questUI;
+    public bool broomPicked = false;
+    private Manager _gm;
+    private LocationQuest _radar;
+
+    [Header("NEXT QUEST")]
+    [SerializeField] Collider _colTableQuest;
+    private QuestBroom _maryNPC;
+    private TableQuest _nextQuest;
 
     private void Awake()
     {
         _myCol = GetComponent<Collider>();
         _questUI = FindObjectOfType<QuestUI>();
+        _gm = FindObjectOfType<Manager>();
+        _radar = FindObjectOfType<LocationQuest>();
+        _maryNPC = FindObjectOfType<QuestBroom>();
+        _nextQuest = FindObjectOfType<TableQuest>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -28,16 +41,34 @@ public class DogEnter : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && broomPicked)
+            ActiveNextQuest();
+    }
+
+    public void ActiveNextQuest()
+    {
+        _radar.target = _nextQuest.gameObject.transform;
+        //_prefab.SetActive(false);
+        Destroy(_broomPrefab);
+        _gm.QuestCompleted();
+        _colTableQuest.enabled = true;
+        Destroy(gameObject);
+    }
+
     private IEnumerator Search()
     {
         Destroy(_myCol);
         _dog.gameObject.SetActive(false);
         yield return new WaitForSeconds(5f);
+        _radar.target = _maryNPC.gameObject.transform;
         _dog.gameObject.SetActive(true);
-        Instantiate(_prefab, _posSpawn);
+        _broomPrefab.SetActive(true);
         _dog._target.transform.position = _exitPos.position;
         _dog.OrderGo();
         _questUI.TaskCompleted(1);
         _questUI.AddNewTask(2, "Returns the broom to its owner");
+        broomPicked = true;
     }
 }
