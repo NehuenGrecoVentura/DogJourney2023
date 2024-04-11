@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using TMPro;
 
 public class DogEnter : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class DogEnter : MonoBehaviour
     private Character _player;
     [SerializeField] Camera _mainCam;
     [SerializeField] GameObject _message;
+    [SerializeField] string _messageBroomFind;
+    [SerializeField] TMP_Text _textMessage;
 
     [Header("NEXT QUEST")]
     [SerializeField] Collider _colTableQuest;
@@ -95,6 +98,7 @@ public class DogEnter : MonoBehaviour
         _message.transform.DOScale(1f, 0.5f);
         PlayCinematic(true, false, 0, RigidbodyConstraints.FreezeAll, false);
         yield return new WaitForSeconds(5f);
+        _message.transform.DOScale(0, 0.5f);
         _message.SetActive(false);
         PlayCinematic(false, true, _player.speedAux, RigidbodyConstraints.FreezeRotation, true);
     }
@@ -105,13 +109,19 @@ public class DogEnter : MonoBehaviour
         Destroy(_myCol);
         _dog.gameObject.SetActive(false);
         yield return new WaitForSeconds(5f);
-        PlayCinematic(false, true, _player.speedAux, RigidbodyConstraints.FreezeRotation, true);
-        Destroy(_cinematic);
-        _radar.target = _maryNPC.gameObject.transform;
+        _message.SetActive(true);
+        _message.transform.DOScale(1, 0.5f);
+        _textMessage.text = _messageBroomFind;
         _dog.gameObject.SetActive(true);
         _broomPrefab.SetActive(true);
         _dog._target.transform.position = _exitPos.position;
         _dog.OrderGo();
+        yield return new WaitForSeconds(3f);
+        _message.transform.DOScale(0, 0.5f);
+        _message.SetActive(false);
+        PlayCinematic(false, true, _player.speedAux, RigidbodyConstraints.FreezeRotation, true);
+        Destroy(_cinematic);
+        _radar.target = _maryNPC.gameObject.transform;
         _questUI.TaskCompleted(1);
         _questUI.AddNewTask(2, "Returns the broom to its owner");
         broomPicked = true;
