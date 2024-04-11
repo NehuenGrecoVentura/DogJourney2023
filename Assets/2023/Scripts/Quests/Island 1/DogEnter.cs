@@ -95,7 +95,6 @@ public class DogEnter : MonoBehaviour
     public void ActiveNextQuest()
     {
         _mainCam.gameObject.SetActive(true);
-        Destroy(_camEnding);
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _colTableQuest.enabled = true;
@@ -104,7 +103,7 @@ public class DogEnter : MonoBehaviour
         _gm.QuestCompleted();
         Destroy(_broomPrefab);
         Destroy(_maryNPC);
-        Destroy(gameObject);
+        Destroy(_endingQuestPos.transform.parent.gameObject);
     }
 
     private void PlayCinematic(bool playCinematic, bool mainCam, float speedPlayer, RigidbodyConstraints rb, bool questUI)
