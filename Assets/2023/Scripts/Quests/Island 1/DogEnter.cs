@@ -49,10 +49,11 @@ public class DogEnter : MonoBehaviour
 
     public void ActiveNextQuest()
     {
-        _radar.target = _nextQuest.gameObject.transform;
-        Destroy(_broomPrefab);
-        _gm.QuestCompleted();
         _colTableQuest.enabled = true;
+        _nextQuest.enabled = true;
+        _radar.target = _nextQuest.gameObject.transform;
+        _gm.QuestCompleted();
+        Destroy(_broomPrefab);
         Destroy(_maryNPC);
         Destroy(gameObject);
     }

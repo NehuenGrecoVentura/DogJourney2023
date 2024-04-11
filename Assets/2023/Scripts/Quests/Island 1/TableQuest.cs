@@ -27,13 +27,10 @@ public class TableQuest : NPCManager
 
     private void Start()
     {
-        _myCol.enabled = false;
         _buttonConfirm.onClick.AddListener(() => Confirm());
 
         for (int i = 0; i < _dialogue._lines.Length; i++)
-        {
             _dialogue._lines[i] = _lines[i];
-        }
     }
 
     private void Update()
