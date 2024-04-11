@@ -1,34 +1,50 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 
 public class DogEnter : MonoBehaviour
 {
+    [Header("SPAWN BROOM")]
     [SerializeField] GameObject _broomPrefab;
     [SerializeField] Transform _posSpawn;
+    public bool broomPicked = false;
+
+    [Header("INTERACT")]
     [SerializeField] KeyCode _keyInteract = KeyCode.Q;
-    [SerializeField] Dog _dog;
+    [SerializeField] GameObject _iconInterct;
+    private bool _firstContact = false;
+
+    [Header("CAMS")]
+    [SerializeField] Camera _mainCam;
+    [SerializeField] Camera _camEnding;
+
+    [Header("ENTER/EXIT")]
     [SerializeField] Transform _enterPos;
     [SerializeField] Transform _exitPos;
-    [SerializeField] GameObject _cinematic;
+    [SerializeField] Transform _endingQuestPos;
 
-    private bool _firstContact = false;
-    private Collider _myCol;
-    private QuestUI _questUI;
-    public bool broomPicked = false;
-    private Manager _gm;
-    private LocationQuest _radar;
-    private Character _player;
-    [SerializeField] Camera _mainCam;
+    [Header("MESSAGE")]
+    [SerializeField] GameObject _cinematic;
     [SerializeField] GameObject _message;
     [SerializeField] string _messageBroomFind;
     [SerializeField] TMP_Text _textMessage;
+    [SerializeField] Image _fadeOut;
 
+    [Header("DOG")]
+    [SerializeField] Dog _dog;
+    
+    private Collider _myCol;
+    private Manager _gm;
+    private LocationQuest _radar;
+    private Character _player;
+    
     [Header("NEXT QUEST")]
     [SerializeField] Collider _colTableQuest;
     private QuestBroom _maryNPC;
     private TableQuest _nextQuest;
+    private QuestUI _questUI;
 
     private void Awake()
     {
@@ -44,6 +60,7 @@ public class DogEnter : MonoBehaviour
     private void Start()
     {
         _message.transform.DOScale(0f, 0f);
+        _fadeOut.color = new Color(0,0,0,0);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -59,21 +76,28 @@ public class DogEnter : MonoBehaviour
 
         if (player != null && !_firstContact)
         {
-            //_message.SetActive(true);
             StartCoroutine(Message());
-            
             _firstContact = true;
         }
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && broomPicked)
-            ActiveNextQuest();
+        if (Input.GetKeyDown(KeyCode.Space) && broomPicked) 
+            StartCoroutine(Ending());
+    }
+
+    public void EndingQuest()
+    {
+        StartCoroutine(Ending());
     }
 
     public void ActiveNextQuest()
     {
+        _mainCam.gameObject.SetActive(true);
+        Destroy(_camEnding);
+        _player.speed = _player.speedAux;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _colTableQuest.enabled = true;
         _nextQuest.enabled = true;
         _radar.target = _nextQuest.gameObject.transform;
@@ -98,6 +122,7 @@ public class DogEnter : MonoBehaviour
         _message.transform.DOScale(1f, 0.5f);
         PlayCinematic(true, false, 0, RigidbodyConstraints.FreezeAll, false);
         yield return new WaitForSeconds(5f);
+        _iconInterct.SetActive(true);
         _message.transform.DOScale(0, 0.5f);
         _message.SetActive(false);
         PlayCinematic(false, true, _player.speedAux, RigidbodyConstraints.FreezeRotation, true);
@@ -125,5 +150,20 @@ public class DogEnter : MonoBehaviour
         _questUI.TaskCompleted(1);
         _questUI.AddNewTask(2, "Returns the broom to its owner");
         broomPicked = true;
+    }
+
+    private IEnumerator Ending()
+    {
+        _fadeOut.DOColor(Color.black, 1f);
+        _player.speed = 0;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        yield return new WaitForSeconds(1f);
+        _fadeOut.DOColor(new Color(0,0,0,0), 1f);
+        _mainCam.gameObject.SetActive(false);
+        _camEnding.gameObject.SetActive(true);
+        _player.gameObject.transform.position = _endingQuestPos.position;
+        _player.gameObject.transform.LookAt(_maryNPC.gameObject.transform);
+        yield return new WaitForSeconds(5f);
+        ActiveNextQuest();
     }
 }

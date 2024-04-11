@@ -49,7 +49,7 @@ public class QuestBroom : NPCManager
             if (Input.GetKeyDown(KeyCode.E) && _dogEnter.broomPicked)
             {
                 _dogEnter.ActiveNextQuest();
-                Destroy(this);
+                Destroy(this, 6f);
             }   
         }
     }
