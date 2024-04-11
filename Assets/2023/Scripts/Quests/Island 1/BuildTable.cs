@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
@@ -15,12 +14,14 @@ public class BuildTable : MonoBehaviour
     private CharacterInventory _inventory;
     private Character _player;
     private Collider _myCol;
+    private Manager _gm;
 
     private void Awake()
     {
         _myCol = GetComponent<Collider>();
         _inventory = FindObjectOfType<CharacterInventory>();
         _player = FindObjectOfType<Character>();
+        _gm = FindObjectOfType<Manager>();
     }
 
     private void Start()
@@ -28,6 +29,7 @@ public class BuildTable : MonoBehaviour
         _iconWood.gameObject.SetActive(false);
         _iconNail.gameObject.SetActive(false);
         _tablePrefab.SetActive(false);
+        _myCol.enabled = false;
     }
 
     private void Construct()
@@ -42,11 +44,13 @@ public class BuildTable : MonoBehaviour
         _inventory.greenTrees -= _totalWoods;
         _inventory.nails -= _totalNails;
         Destroy(_myCol);
+        _gm.QuestCompleted();
         Destroy(this);
     }
 
     private IEnumerator Build()
     {
+        Destroy(_icon);
         _iconWood.gameObject.SetActive(false);
         _iconNail.gameObject.SetActive(false);
         _player.isConstruct = true;
@@ -98,8 +102,7 @@ public class BuildTable : MonoBehaviour
                     _iconNail.gameObject.SetActive(false);
                     StartCoroutine(Build());
                 }
-     
-                    
+                      
                 else
                 {
                     if (_inventory.nails < _totalNails) _iconNail.color = Color.red;
