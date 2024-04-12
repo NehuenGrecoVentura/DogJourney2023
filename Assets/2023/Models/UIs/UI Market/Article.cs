@@ -16,6 +16,7 @@ public class Article : MonoBehaviour
     private MarketManager _market;
     private EventTrigger _myEvent;
     private Button _myButton;
+    private Image _myImage;
 
     private CharacterInventory _inventory;
 
@@ -23,6 +24,7 @@ public class Article : MonoBehaviour
     {
         _myAudio = GetComponent<AudioSource>();
         _myEvent = GetComponent<EventTrigger>();
+        _myImage = GetComponent<Image>();
         _myButton = GetComponent<Button>();
         _market = FindObjectOfType<MarketManager>();
         _inventory = FindObjectOfType<CharacterInventory>();
@@ -56,14 +58,27 @@ public class Article : MonoBehaviour
         ButtonSelectStatus(true, false, 7f, 0.5f);
     }
 
+
+    public void EnterUprade()
+    {
+        if (_inventory.upgradeLoot) EnterArticle();
+    }
+
+    public void ExitUpgrade()
+    {
+        if (_inventory.upgradeLoot) ExitArticle();
+    }
+
+
+
     private void Success()
     {
         _border.color = Color.green;
         _border.gameObject.SetActive(true);
         Destroy(_borderSelected.gameObject);
         Destroy(_myEvent);
-        Destroy(_myButton);
         _inventory.upgradeLoot = false;
+        _market.CheckUpgrades();
         Destroy(this);
     }
 

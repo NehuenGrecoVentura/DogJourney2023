@@ -49,6 +49,10 @@ public class MarketManager : MonoBehaviour, IScrollHandler
     [SerializeField] TMP_FontAsset _styleNormal;
     private Vector3 _intialScale;
 
+    [Header("CHECK UPGRADES")]
+    [SerializeField] Button[] _buttonUpgrades;
+    [SerializeField] Image[] _buttonImagesUpgrades;
+
     private void Awake()
     {
         _myAudio = GetComponent<AudioSource>();
@@ -140,6 +144,7 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 
         Destroy(_boxes[0].gameObject);
         _myAudio.PlayOneShot(_sounds[1]);
+
     }
 
     public void UpgradeSpeedPlayer()
@@ -258,6 +263,8 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 
     private IEnumerator OpenMarketCoroutine()
     {
+        CheckUpgrades();
+        _scrollbar.value = 1;
         _intro.gameObject.SetActive(true);
         _intro.transform.DOScale(100f, 2f);
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
@@ -291,5 +298,26 @@ public class MarketManager : MonoBehaviour, IScrollHandler
         currentValue += eventData.scrollDelta.y * _scrollSpeed;
         currentValue = Mathf.Clamp01(currentValue);
         _scrollbar.value = currentValue;
+    }
+
+    public void CheckUpgrades()
+    {
+        if (_inventory.upgradeLoot)
+        {
+            foreach (var button in _buttonUpgrades)
+                button.enabled = true;
+
+            foreach (var image in _buttonImagesUpgrades)
+                image.enabled = false;
+        }
+
+        else
+        {
+            foreach (var button in _buttonUpgrades)
+                button.enabled = false;
+
+            foreach (var image in _buttonImagesUpgrades)
+                image.enabled = true;
+        }
     }
 }
