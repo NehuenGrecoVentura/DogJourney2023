@@ -6,6 +6,7 @@ using DG.Tweening;
 
 public class TableQuest : NPCManager
 {
+    
     [SerializeField] Button _buttonConfirm;
     [SerializeField] int _totalWoods = 5;
     [SerializeField] string _taskBackToBuild;
@@ -47,6 +48,8 @@ public class TableQuest : NPCManager
 
         for (int i = 0; i < _dialogue._lines.Length; i++)
             _dialogue._lines[i] = _lines[i];
+
+        _dialogue.gameObject.SetActive(true);
     }
 
     private void Update()
