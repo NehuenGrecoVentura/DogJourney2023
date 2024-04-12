@@ -4,7 +4,7 @@ public class NPCManager : MonoBehaviour
 {
     public string nameNPC;
     public Dialogue _dialogue;
-
+    
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
