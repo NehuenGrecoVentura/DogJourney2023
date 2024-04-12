@@ -6,11 +6,13 @@ using UnityEngine;
 public class FishingMinigame : MonoBehaviour
 {
     //CameraControl
+    [Header("CAMERA CONTROL")]
     [SerializeField]  private GameObject camer1; //Camara del juego
     [SerializeField]  private GameObject camer2; //Camara del minijuego
     [SerializeField] private Character _character; //Control del player
 
     //FishMove
+    [Header("FISH MOVE")]
     [SerializeField] private Transform topPoint;  // posicion mas arriba de la barra
     [SerializeField] private Transform BotPoint; //posicion mas abajo de la barra
     [SerializeField] private GameObject Fish; // el pez
@@ -22,11 +24,13 @@ public class FishingMinigame : MonoBehaviour
     [SerializeField] private float FishSpeedMult; // Multiplicador de velocidad del pez
     
     //Hook move
+    [Header("HOOK MOVE")]
     [SerializeField] private Transform HookTrasn; //El gancho
     [SerializeField] private float HookPower; //Cuanto sube el gancho
     [SerializeField] private float GravityPower; //Cuanto baja el gancho
     
     //Catch
+    [Header("CATCH")]
     [SerializeField] private GameObject ChargeBar; //Barra de progreso
     [SerializeField] private float Capture; //Porcentaje de la barra
     [SerializeField] private float Distance; //Distancia entre el gancho y el pez medido en eje Y
@@ -34,15 +38,17 @@ public class FishingMinigame : MonoBehaviour
     [SerializeField] private float CaptureRange; //Rango en la que el pez es atrapado
     
     // Reset
+    [Header("RESET")]
     [SerializeField] private Transform StartPos; //Posicion inicial de las cosas
     [SerializeField] private bool Gaming; // Si tas en el minijuego o no
-    // Start is called before the first frame update
-    void Start()
+
+    private LocationQuest _radar;
+
+    private void Awake()
     {
-        
+        _radar = FindObjectOfType<LocationQuest>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         CameraChange();
@@ -52,7 +58,6 @@ public class FishingMinigame : MonoBehaviour
             playerControl();
             Catch();
         }
-
     }
 
     void FishMove() //Movimiento del pes
@@ -140,15 +145,22 @@ public class FishingMinigame : MonoBehaviour
             {
                 camer1.SetActive(false);
                 camer2.SetActive(true);
-                _character.enabled = false;
-            
+                //_character.enabled = false;
+
+                _character.speed = 0;
+                _character.FreezePlayer(RigidbodyConstraints.FreezeAll);
+                _radar.StatusRadar(false);
             }
 
             if (Gaming == false)
             {
                 camer1.SetActive(true);
                 camer2.SetActive(false);
-                _character.enabled = true;
+                //_character.enabled = true;
+
+                _character.speed = _character.speedAux;
+                _character.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+                _radar.StatusRadar(true);
             }
         }
         
