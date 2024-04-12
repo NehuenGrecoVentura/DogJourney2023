@@ -6,10 +6,17 @@ public class MarketPlace : MonoBehaviour
     [SerializeField] Transform _exitPos;
     private LocationQuest _radar;
 
+    [SerializeField] GameObject _ui;
+
     private void Awake()
     {
         _market = FindObjectOfType<MarketManager>();
         _radar = FindObjectOfType<LocationQuest>();
+    }
+
+    private void Start()
+    {
+        _ui.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -17,6 +24,7 @@ public class MarketPlace : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
+            _ui.SetActive(true);
             _market.OpenMarket();
             _radar.StatusRadar(false);
         }   

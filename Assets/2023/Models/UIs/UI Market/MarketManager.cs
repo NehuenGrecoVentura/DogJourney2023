@@ -71,9 +71,12 @@ public class MarketManager : MonoBehaviour, IScrollHandler
             dog.SetActive(false);
     }
 
+
     private void Update()
     {
         if (_canvas.activeSelf) _textInventory.text = "$ " + _inventory.money.ToString();
+
+        if (Input.GetKeyDown(KeyCode.K)) OpenMarket();
     }
 
     #region EVENT TRIGGER
