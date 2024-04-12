@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QuestBroom : NPCManager
+public class QuestBroom : MonoBehaviour
 {
     [SerializeField] Button _buttonConfirm;
     [SerializeField] DogEnter _dogEnter;
@@ -13,6 +13,8 @@ public class QuestBroom : NPCManager
     private LocationQuest _radar;
     private TableQuest _nextQuest;
     public bool broomFind = false;
+    [SerializeField] string _nameNPC = "Mary";
+    private Dialogue _dialogue;
 
     private void Awake()
     {
@@ -20,6 +22,7 @@ public class QuestBroom : NPCManager
         _questUI = FindObjectOfType<QuestUI>();
         _radar = FindObjectOfType<LocationQuest>();
         _nextQuest = FindObjectOfType<TableQuest>();
+        _dialogue = FindObjectOfType<Dialogue>();
     }
 
     private void Start()
@@ -52,5 +55,21 @@ public class QuestBroom : NPCManager
                 Destroy(this, 6f);
             }   
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null)
+        {
+            _dialogue.playerInRange = true;
+            _dialogue.Set(_nameNPC);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null) _dialogue.playerInRange = false;
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using DG.Tweening;
+using TMPro;
 
 public class BoxWoods : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class BoxWoods : MonoBehaviour
     [SerializeField] GameObject _iconQuest2Mail;
     [SerializeField] Animator[] _animGates;
     [SerializeField] AudioClip _soundNotification;
+    [SerializeField] Camera _maryCam;
     private AudioSource _myAudio;
 
     [Header("RADAR")]
@@ -85,28 +87,30 @@ public class BoxWoods : MonoBehaviour
 
     public void FinishQuest()
     {
-        _messageSlide.ShowMessage(_messageSlideText, _iconTAB);
-        _radar.StatusRadar(true);
-        _radar.target = _nextPos;
-        Destroy(_animTruck.gameObject);
-        Destroy(_camCinematic.gameObject);
-        _camPlayer.gameObject.SetActive(true);
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
-        _player.speed = _player.speedAux;
-        
-        foreach (var item in _canvasQuests)
-            item.gameObject.SetActive(false);
+        //_messageSlide.ShowMessage(_messageSlideText, _iconTAB);
+        //_radar.StatusRadar(true);
+        //_radar.target = _nextPos;
+        //Destroy(_animTruck.gameObject);
+        //Destroy(_camCinematic.gameObject);
+        //_camPlayer.gameObject.SetActive(true);
+        //_player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        //_player.speed = _player.speedAux;
 
-        foreach (var anim in _animGates)
-            anim.enabled = true;
+        //foreach (var item in _canvasQuests)
+        //    item.gameObject.SetActive(false);
 
-        _gameManager.QuestCompleted();
-        _iconQuest2Mail.SetActive(true);
+        //foreach (var anim in _animGates)
+        //    anim.enabled = true;
 
-        _inventory.money += _rewardMoney;
-        Destroy(_arrow);
-        Destroy(_iconInteractive);
-        Destroy(gameObject);
+        //_gameManager.QuestCompleted();
+        //_iconQuest2Mail.SetActive(true);
+
+        //_inventory.money += _rewardMoney;
+        //Destroy(_arrow);
+        //Destroy(_iconInteractive);
+        //Destroy(gameObject);
+
+        StartCoroutine(NextQuest());
     }
 
     private void PlayCinematic()
@@ -163,5 +167,41 @@ public class BoxWoods : MonoBehaviour
         PlayCinematic();
         yield return new WaitForSeconds(_timeCinematic);
         FinishQuest();
+    }
+
+    private IEnumerator NextQuest()
+    {
+        _messageSlide.ShowMessage(_messageSlideText, _iconTAB);
+        _radar.StatusRadar(true);
+        _radar.target = _nextPos;
+        Destroy(_animTruck.gameObject);
+        Destroy(_camCinematic.gameObject);
+        _camPlayer.gameObject.SetActive(true);
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.speed = _player.speedAux;
+
+        foreach (var item in _canvasQuests)
+            item.gameObject.SetActive(false);
+
+        foreach (var anim in _animGates)
+            anim.enabled = true;
+
+        _gameManager.QuestCompleted();
+        _iconQuest2Mail.SetActive(true);
+        _inventory.money += _rewardMoney;
+        Destroy(_arrow);
+        Destroy(_iconInteractive);
+        yield return new WaitForSeconds(1f);
+        QuestBroom mary = FindObjectOfType<QuestBroom>();
+        _radar.target = mary.gameObject.transform;
+        mary.gameObject.GetComponent<BoxCollider>().enabled = true;
+        mary.enabled = true;
+        _camPlayer.gameObject.SetActive(false);
+        _maryCam.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        _camPlayer.gameObject.SetActive(true);
+        _maryCam.gameObject.SetActive(false);
+        
+        Destroy(gameObject);
     }
 }

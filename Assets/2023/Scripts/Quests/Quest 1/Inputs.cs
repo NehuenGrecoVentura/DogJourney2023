@@ -8,7 +8,7 @@ public class Inputs : MonoBehaviour
     private PickAxe _axe;    
     private bool _w, _a, _s, _d;
 
-    [SerializeField] GameObject _tutorialTrees;
+    //[SerializeField] GameObject _tutorialTrees;
     [SerializeField] Image[] _keys;
     [SerializeField] TMP_Text _text;
     [SerializeField] Button _buttonSellWoods;
@@ -33,7 +33,7 @@ public class Inputs : MonoBehaviour
     {
         _axe.enabled = false;
         _mailQuest1.enabled = false;
-        _tutorialTrees.SetActive(false);
+        //_tutorialTrees.SetActive(false);
         _buttonSellWoods.gameObject.SetActive(false);
         _tutorialAddDog.SetActive(false);
         _womanInMarket.SetActive(false);
