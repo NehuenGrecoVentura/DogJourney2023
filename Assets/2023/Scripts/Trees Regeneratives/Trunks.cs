@@ -32,6 +32,7 @@ public class Trunks : MonoBehaviour
     void Start()
     {
         _iconInteractive.SetActive(false);
+        _iconInteractive.transform.DOScale(0, 0);
         SetInitialPos();
     }
 
@@ -121,8 +122,11 @@ public class Trunks : MonoBehaviour
         if (player != null)
         {
             if (!Input.GetKeyDown(_buttonInteractive))
+            {
                 _iconInteractive.SetActive(true);
-
+                _iconInteractive.transform.DOScale(1.25f, 0.5f);
+            }
+                
             else _iconInteractive.SetActive(false);
         }
     }
@@ -130,6 +134,6 @@ public class Trunks : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null) _iconInteractive.SetActive(false);
+        if (player != null) _iconInteractive.transform.DOScale(0f, 0.5f);
     }
 }

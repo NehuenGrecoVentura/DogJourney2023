@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class PickAxe : MonoBehaviour, IPick
 {
@@ -36,6 +37,7 @@ public class PickAxe : MonoBehaviour, IPick
     {
         _col.enabled = false;
         _iconInteractive.SetActive(false);
+        _iconInteractive.transform.localScale = new Vector3(0, 0, 0);
         _axes[0].SetActive(false);
 
         foreach (var anim in _animGates)
@@ -60,12 +62,16 @@ public class PickAxe : MonoBehaviour, IPick
             Destroy(this);
         }
 
-        else _iconInteractive.SetActive(true);
+        else
+        {
+            _iconInteractive.SetActive(true);
+            _iconInteractive.transform.DOScale(1.25f, 0.5f);
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null) _iconInteractive.SetActive(false);
-    }
+        if (player != null) _iconInteractive.transform.DOScale(0f, 0.5f);
+    } 
 }

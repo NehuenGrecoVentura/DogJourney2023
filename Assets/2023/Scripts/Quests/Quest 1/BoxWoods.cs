@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class BoxWoods : MonoBehaviour
 {
@@ -61,6 +62,7 @@ public class BoxWoods : MonoBehaviour
     {
         _truckSource.Stop();
         _iconInteractive.SetActive(false);
+        _iconInteractive.transform.localScale = new Vector3(0, 0, 0);
         _arrow.SetActive(false);
         _animTruck.enabled = false;
         _cinematic.SetActive(false);
@@ -136,7 +138,11 @@ public class BoxWoods : MonoBehaviour
                 if (Input.GetKeyDown(_keyInteractive))
                     StartCoroutine(RunTruck());
 
-                else _iconInteractive.SetActive(true);
+                else
+                {
+                    _iconInteractive.SetActive(true);
+                    _iconInteractive.transform.DOScale(1f, 0.5f);
+                }     
             }
         }
     }
@@ -144,7 +150,7 @@ public class BoxWoods : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null) _iconInteractive.SetActive(false);
+        if (player != null) _iconInteractive.transform.DOScale(0f, 0.5f);
     }
 
     private IEnumerator RunTruck()
