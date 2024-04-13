@@ -128,8 +128,11 @@ public class DogEnter : MonoBehaviour
     private IEnumerator Message()
     {
         _message.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 125f);
-        _textMessage.rectTransform.anchoredPosition = new Vector2(2.3927f, _textMessage.rectTransform.anchoredPosition.y);
-        _textMessage.rectTransform.sizeDelta = new Vector2(1302.908f, _textMessage.rectTransform.sizeDelta.y);
+        //_textMessage.rectTransform.anchoredPosition = new Vector2(2.3927f, _textMessage.rectTransform.anchoredPosition.y);
+        _textMessage.rectTransform.anchoredPosition = new Vector2(0.2341f, _textMessage.rectTransform.anchoredPosition.y);
+        //_textMessage.rectTransform.sizeDelta = new Vector2(1302.908f, _textMessage.rectTransform.sizeDelta.y);
+        _textMessage.rectTransform.sizeDelta = new Vector2(1030.737f, _textMessage.rectTransform.sizeDelta.y);
+        _textMessage.fontSize = 40;
         _textMessage.alignment = TextAlignmentOptions.TopLeft;
         _textName.text = "TIP";
         _iconMessage.gameObject.SetActive(false);

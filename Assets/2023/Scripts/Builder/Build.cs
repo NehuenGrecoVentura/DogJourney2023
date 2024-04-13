@@ -21,14 +21,14 @@ public class Build : BuilderManager
         {
             BuildObj(_inventory.nails, _inventory.greenTrees);
 
-            if (!_firstContact && gameObject.name != "Build Stairs")
-            {
-                _messageSlide.ShowMessage(_messageText, _iconMarket);
-                _firstContact = true;
-            }
+            //if (!_firstContact && gameObject.name != "Build Stairs")
+            //{
+            //    _messageSlide.ShowMessage(_messageText, _iconMarket);
+            //    _firstContact = true;
+            //}
 
-            if(_inventory.nails >= _amountItem1 && _inventory.greenTrees >= _amountItem2)
-                _messageSlide.ShowMessage("PRESS TO BUILD", _iconBridge);
+            //if(_inventory.nails >= _amountItem1 && _inventory.greenTrees >= _amountItem2)
+            //    _messageSlide.ShowMessage("PRESS TO BUILD", _iconBridge);
         }
     }
 }
