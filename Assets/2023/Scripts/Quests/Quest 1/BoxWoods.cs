@@ -1,7 +1,8 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
-using TMPro;
+
 
 public class BoxWoods : MonoBehaviour
 {
@@ -46,6 +47,8 @@ public class BoxWoods : MonoBehaviour
     [SerializeField] Transform _posEndQuick;
     [SerializeField] Dog _dog;
     [SerializeField] DogBall _dogBall;
+    [SerializeField] Camera _dogCam;
+    [SerializeField] Image _fadeOut;
 
     private QuestUI _questUI;
     private CharacterInventory _inventory;
@@ -92,11 +95,30 @@ public class BoxWoods : MonoBehaviour
 
         if (_inventory.greenTrees >= 5 && Input.GetKeyDown(KeyCode.Space))
         {
-            _dog.quickEnd = true;
-            //_dogBall.gameObject.transform.position = new Vector3(0.68f, 5.65f, -7.3f);
-            _dog.OrderGoQuick(_posEndQuick);
+            //_fadeOut.color = new Color(0, 0, 0, 0);
+            //_dog.quickEnd = true;
+            //_dog.OrderGoQuick(_posEndQuick);
+
+            StartCoroutine(QuickEndCoroutine());
         }
 
+    }
+
+    private IEnumerator QuickEndCoroutine()
+    {
+        _player.speed = 0;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _fadeOut.color = new Color(0, 0, 0, 0);
+        _dog.quickEnd = true;
+        _dog.OrderGoQuick(_posEndQuick);
+        _camPlayer.gameObject.SetActive(false);
+        _dogCam.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        _fadeOut.DOColor(Color.black, 1f);
+        yield return new WaitForSeconds(2f);
+        _fadeOut.DOColor(new Color(0, 0, 0, 0), 1f);
+        
+        StartCoroutine(RunTruck());
     }
 
     public void FinishQuest()
@@ -150,9 +172,10 @@ public class BoxWoods : MonoBehaviour
 
     private IEnumerator RunTruck()
     {
+        _dogCam.gameObject.SetActive(false);
         _play = true;
         _truckSource.Play();
-        _inventory.greenTrees -= 10;
+        _inventory.greenTrees -= 5;
         if (_inventory.greenTrees < 0) _inventory.greenTrees = 0;
         _iconInteractive.SetActive(false);
         PlayCinematic();
@@ -162,6 +185,7 @@ public class BoxWoods : MonoBehaviour
 
     private IEnumerator NextQuest()
     {
+        _dog.quickEnd = false;
         _play = false;
         _messageSlide.ShowMessage(_messageSlideText, _iconTAB);
         _radar.StatusRadar(true);

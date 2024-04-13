@@ -37,6 +37,7 @@ public class DogEnter : MonoBehaviour
 
     [Header("DOG")]
     [SerializeField] Dog _dog;
+    [SerializeField] Camera _camDog;
     
     private Collider _myCol;
     private Manager _gm;
@@ -48,6 +49,7 @@ public class DogEnter : MonoBehaviour
     private QuestBroom _maryNPC;
     private TableQuest _nextQuest;
     private QuestUI _questUI;
+    private CameraOrbit _camPlayer;
 
     private void Awake()
     {
@@ -58,6 +60,7 @@ public class DogEnter : MonoBehaviour
         _maryNPC = FindObjectOfType<QuestBroom>();
         _nextQuest = FindObjectOfType<TableQuest>();
         _player = FindObjectOfType<Character>();
+        _camPlayer = FindObjectOfType<CameraOrbit>();
     }
 
     private void Start()
@@ -97,6 +100,9 @@ public class DogEnter : MonoBehaviour
 
     public void ActiveNextQuest()
     {
+        _camDog.gameObject.SetActive(false);
+        _camPlayer.gameObject.SetActive(true);
+        _dog.quickEnd = false;
         _mainCam.gameObject.SetActive(true);
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
@@ -165,6 +171,11 @@ public class DogEnter : MonoBehaviour
 
     private IEnumerator Ending()
     {
+        _camDog.gameObject.SetActive(true);
+        _camPlayer.gameObject.SetActive(false);
+        _dog.quickEnd = true;
+        _dog.OrderGoQuick(_maryNPC.gameObject.transform);
+        yield return new WaitForSeconds(2f);
         _fadeOut.DOColor(Color.black, 1f);
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
