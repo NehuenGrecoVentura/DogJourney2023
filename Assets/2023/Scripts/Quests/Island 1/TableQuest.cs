@@ -4,7 +4,7 @@ using System.Collections;
 using TMPro;
 using DG.Tweening;
 
-public class TableQuest : NPCManager
+public class TableQuest : MonoBehaviour
 {
     
     [SerializeField] Button _buttonConfirm;
@@ -23,6 +23,8 @@ public class TableQuest : NPCManager
     [SerializeField] GameObject _message;
     [SerializeField] TMP_Text _textMessage;
     [SerializeField] string[] _messages;
+    [SerializeField] string _nameNPC = "Peter";
+    [SerializeField] Dialogue _dialogue;
 
     [Header("CINEMATIC")]
     [SerializeField] Camera _camCinematic;
@@ -73,10 +75,6 @@ public class TableQuest : NPCManager
     {
         _questCurrent = true;
         _dialogue.Close();
-        //_questUI.ActiveUIQuest("Making the table", "Get wood (" + _inventory.greenTrees.ToString() + "/" + _totalWoods.ToString() + ")",
-        //    "Get nails (" + _inventory.nails.ToString() + "/" + _totalNails.ToString() + ")",
-        //    string.Empty);
-
 
         _questUI.ActiveUIQuest("Making the table", "Get wood (" + _inventory.greenTrees.ToString() + "/" + _totalWoods.ToString() + ")",
             string.Empty,
@@ -85,6 +83,16 @@ public class TableQuest : NPCManager
         _buttonConfirm.gameObject.SetActive(false);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null)
+        {
+            _dialogue.gameObject.SetActive(true);
+            _dialogue.playerInRange = true;
+            _dialogue.Set(_nameNPC);
+        }
+    }
 
     private void OnTriggerStay(Collider other)
     {
@@ -97,6 +105,12 @@ public class TableQuest : NPCManager
                 if (Input.GetKeyDown(_keyInteract)) StartCoroutine(TutorialBuild());
             }
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null) _dialogue.playerInRange = false;
     }
 
     private IEnumerator TutorialBuild()

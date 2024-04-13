@@ -26,7 +26,6 @@ public class QuestBroom : MonoBehaviour
 
     private void Start()
     {
-        //_dialogue.gameObject.SetActive(false);
         _col.enabled = false;
         _buttonConfirm.onClick.AddListener(() => Confirm());
         _nextQuest.enabled = false;
