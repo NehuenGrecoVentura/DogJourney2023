@@ -15,6 +15,7 @@ public class DogEnter : MonoBehaviour
     [SerializeField] KeyCode _keyInteract = KeyCode.Q;
     [SerializeField] GameObject _iconInterct;
     private bool _firstContact = false;
+    private bool _secondContact = false;
 
     [Header("CAMS")]
     [SerializeField] Camera _mainCam;
@@ -30,6 +31,7 @@ public class DogEnter : MonoBehaviour
     [SerializeField] GameObject _message;
     [SerializeField] string _messageBroomFind;
     [SerializeField] string _tutorialEnterDog;
+    [SerializeField] string _messageWin;
     [SerializeField] TMP_Text _textMessage;
     [SerializeField] TMP_Text _textName;
     [SerializeField] Image _fadeOut;
@@ -87,6 +89,27 @@ public class DogEnter : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null && _firstContact && !_secondContact)
+        {
+            if (Input.GetKeyDown(_keyInteract))
+            {
+                _iconInterct.SetActive(false);
+                _secondContact = true;
+            }
+                
+            //else _iconInterct.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null) _iconInterct.SetActive(false);
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && broomPicked) 
@@ -138,14 +161,12 @@ public class DogEnter : MonoBehaviour
         _iconMessage.gameObject.SetActive(false);
         _message.SetActive(true);
         _textMessage.text = _tutorialEnterDog;
-        _message.transform.DOScale(1f, 0.5f);
-        
+        _message.transform.DOScale(1f, 0.5f);     
         PlayCinematic(true, false, 0, RigidbodyConstraints.FreezeAll, false);
         yield return new WaitForSeconds(5f);
-        _iconInterct.SetActive(true);
         _message.transform.DOScale(0, 0.5f);
-        _message.SetActive(false);
         PlayCinematic(false, true, _player.speedAux, RigidbodyConstraints.FreezeRotation, true);
+        _iconInterct.SetActive(true);
     }
 
     private IEnumerator Search()
@@ -163,7 +184,6 @@ public class DogEnter : MonoBehaviour
         _dog.OrderGo();
         yield return new WaitForSeconds(3f);
         _message.transform.DOScale(0, 0.5f);
-        _message.SetActive(false);
         PlayCinematic(false, true, _player.speedAux, RigidbodyConstraints.FreezeRotation, true);
         Destroy(_cinematic);
         _radar.target = _maryNPC.gameObject.transform;
@@ -189,7 +209,11 @@ public class DogEnter : MonoBehaviour
         _camEnding.gameObject.SetActive(true);
         _player.gameObject.transform.position = _endingQuestPos.position;
         _player.gameObject.transform.LookAt(_maryNPC.gameObject.transform);
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(1f);
+        _textMessage.text = _messageWin;
+        _message.transform.DOScale(1f, 0.5f);
+        yield return new WaitForSeconds(4f);
+        _message.transform.DOScale(0f, 0.5f);
         ActiveNextQuest();
     }
 }
