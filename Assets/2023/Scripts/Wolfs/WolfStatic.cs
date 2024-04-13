@@ -44,7 +44,7 @@ public class WolfStatic : MonoBehaviour
         {
             _myAudio.PlayOneShot(_soundWolf);
             transform.LookAt(player.gameObject.transform.position);
-            _manager.GameOver(_gameOver, 1f, "YOU ALARMED THE WOLF!", restartPlayer);
+            _manager.GameOver(_gameOver, 1f, "Careful! The wolf has detected you", restartPlayer);
         }
 
         if (rabbit != null && rabbit.rabbitPicked)
