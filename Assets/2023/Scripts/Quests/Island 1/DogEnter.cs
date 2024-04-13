@@ -120,11 +120,16 @@ public class DogEnter : MonoBehaviour
 
     private IEnumerator Message()
     {
+        _message.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 125f);
+        _textMessage.rectTransform.anchoredPosition = new Vector2(2.3927f, _textMessage.rectTransform.anchoredPosition.y);
+        _textMessage.rectTransform.sizeDelta = new Vector2(1302.908f, _textMessage.rectTransform.sizeDelta.y);
+        _textMessage.alignment = TextAlignmentOptions.TopLeft;
         _textName.text = "TIP";
         _iconMessage.gameObject.SetActive(false);
         _message.SetActive(true);
         _textMessage.text = _tutorialEnterDog;
         _message.transform.DOScale(1f, 0.5f);
+        
         PlayCinematic(true, false, 0, RigidbodyConstraints.FreezeAll, false);
         yield return new WaitForSeconds(5f);
         _iconInterct.SetActive(true);
@@ -140,7 +145,7 @@ public class DogEnter : MonoBehaviour
         _dog.gameObject.SetActive(false);
         yield return new WaitForSeconds(5f);
         _message.SetActive(true);
-        _message.transform.DOScale(1, 0.5f);
+        _message.transform.DOScale(0.5f, 0.5f);
         _textMessage.text = _messageBroomFind;
         _dog.gameObject.SetActive(true);
         _broomPrefab.SetActive(true);
