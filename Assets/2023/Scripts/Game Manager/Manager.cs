@@ -26,6 +26,7 @@ public class Manager : MonoBehaviour
     [SerializeField] TMP_Text _textGameOver;
     private CameraOrbit _cam;
     private bool _isGameOver = false;
+    private WolfSleeping[] _allWolfs;
 
     [Header("TREES SHADERS")]
     [SerializeField] Material _greenTreesShader;
@@ -45,6 +46,7 @@ public class Manager : MonoBehaviour
         _player = FindObjectOfType<Character>();
         _cam = FindObjectOfType<CameraOrbit>();
         _questUI = FindObjectOfType<QuestUI>();
+        _allWolfs = FindObjectsOfType<WolfSleeping>();
 
         _allDecals = GameObject.FindGameObjectsWithTag("Tree Decals");
         _greenTrees = GameObject.FindGameObjectsWithTag("Green Leaves");
@@ -121,23 +123,69 @@ public class Manager : MonoBehaviour
         StartCoroutine(ShowGameOver(cinematicGameOver, time, textGameOver, posRestart));
     }
 
-    private IEnumerator ShowGameOver(GameObject cinematicGameOver, float time, string textGameOver, Transform posRestart)
+    //private IEnumerator ShowGameOver(GameObject cinematicGameOver, float time, string messageGameOver, Transform posRestart)
+    //{
+    //    _cam.gameObject.SetActive(false);
+
+    //    //_player.enabled = false;
+    //    _player.speed = 0;
+    //    _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+
+    //    cinematicGameOver.SetActive(true);
+    //    yield return new WaitForSeconds(time);
+    //    _gameOver.SetActive(true);
+    //    _textGameOver.text = messageGameOver;
+    //    _isGameOver = true;
+    //    yield return new WaitForSeconds(3f);
+    //    RestartCheckpoint(cinematicGameOver, posRestart);
+    //}
+
+    private IEnumerator ShowGameOver(GameObject cinematicGameOver, float time, string messageGameOver, Transform posRestart)
     {
         _cam.gameObject.SetActive(false);
-        _player.enabled = false;
+
+        //_player.enabled = false;
+        _player.speed = 0;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+
         cinematicGameOver.SetActive(true);
         yield return new WaitForSeconds(time);
         _gameOver.SetActive(true);
-        _textGameOver.text = textGameOver;
+        _textGameOver.text = messageGameOver;
         _isGameOver = true;
         yield return new WaitForSeconds(3f);
-        RestartCheckpoint(cinematicGameOver, posRestart);
+        _cam.gameObject.SetActive(true);
+        _player.speed = _player.speedAux;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        cinematicGameOver.SetActive(false);
+        _gameOver.SetActive(false);
+        _player.gameObject.transform.position = posRestart.position;
+        _restart.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        _restart.SetActive(false);
+        _isGameOver = false;
     }
 
-    private IEnumerator Restart(GameObject cinematicGameOver, Transform posRestart)
+
+
+
+
+
+    public IEnumerator Restart(GameObject cinematicGameOver, Transform posRestart)
     {
+
+        foreach (var wolf in _allWolfs)
+        {
+            wolf.wakeUp = false;
+        }
+
         _cam.gameObject.SetActive(true);
-        _player.enabled = true;
+
+        //_player.enabled = true;
+
+        _player.speed = _player.speedAux;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+
         cinematicGameOver.SetActive(false);
         _gameOver.SetActive(false);
         _player.gameObject.transform.position = posRestart.position;
