@@ -145,7 +145,7 @@ public class DogEnter : MonoBehaviour
         _dog.gameObject.SetActive(false);
         yield return new WaitForSeconds(5f);
         _message.SetActive(true);
-        _message.transform.DOScale(0.5f, 0.5f);
+        _message.transform.DOScale(1f, 0.5f);
         _textMessage.text = _messageBroomFind;
         _dog.gameObject.SetActive(true);
         _broomPrefab.SetActive(true);
