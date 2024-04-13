@@ -27,10 +27,13 @@ public class Inputs : MonoBehaviour
     [SerializeField] Image[] _iconsControls;
     [SerializeField] Transform[] _parentsIcons;
 
+    private TutorialAddDog _dog2;
+
     private void Awake()
     {
         _axe = FindObjectOfType<PickAxe>();
         _radar = FindObjectOfType<LocationQuest>();
+        _dog2 = FindObjectOfType<TutorialAddDog>();
     }
 
     void Start()
@@ -40,7 +43,6 @@ public class Inputs : MonoBehaviour
             item.color = new Color(0, 0, 0, 0);
             item.DOFade(0.5f, 1f);
         }
-
 
         foreach (var item in _parentsIcons)
         {
@@ -57,7 +59,8 @@ public class Inputs : MonoBehaviour
             item.transform.DOMoveX(134, 1f);
         }
 
-
+        _dog2.enabled = false;
+        _dog2.gameObject.SetActive(false);
         _axe.enabled = false;
         _mailQuest1.enabled = false;
         _tutorialAddDog.SetActive(false);
