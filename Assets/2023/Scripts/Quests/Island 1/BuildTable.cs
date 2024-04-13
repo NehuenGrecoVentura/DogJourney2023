@@ -14,6 +14,9 @@ public class BuildTable : MonoBehaviour
     private CharacterInventory _inventory;
     private Character _player;
     private Collider _myCol;
+
+    [Header("NEXT QUEST")]
+    [SerializeField] Animator[] _animDoors;
     private Manager _gm;
 
     private void Awake()
@@ -34,6 +37,12 @@ public class BuildTable : MonoBehaviour
 
     private void Construct()
     {
+        foreach (var door in _animDoors)
+            door.enabled = true;
+
+        LocationQuest radar = FindObjectOfType<LocationQuest>();
+        FirstMarket nextPos = FindObjectOfType<FirstMarket>();
+        radar.target = nextPos.gameObject.transform;
         _player.isConstruct = false;
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);

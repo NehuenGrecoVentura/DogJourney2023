@@ -140,11 +140,12 @@ public class TableQuest : MonoBehaviour
         _message.transform.DOScale(1f, 1f);
         _textMessage.text = _messages[2];
         yield return new WaitForSeconds(4f);
+        _message.transform.DOScale(0f, 0.5f);
         _camPlayer.gameObject.SetActive(true);
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _colTable.enabled = true;
-        Destroy(_message.transform.parent.gameObject);
+        //Destroy(_message.transform.parent.gameObject);
         Destroy(_camCinematic.gameObject);
         Destroy(this);
     }

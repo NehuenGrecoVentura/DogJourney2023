@@ -107,6 +107,7 @@ public class DogEnter : MonoBehaviour
         Destroy(_broomPrefab);
         Destroy(_maryNPC);
         Destroy(_endingQuestPos.transform.parent.gameObject);
+        Destroy(gameObject);
     }
 
     private void PlayCinematic(bool playCinematic, bool mainCam, float speedPlayer, RigidbodyConstraints rb, bool questUI)
