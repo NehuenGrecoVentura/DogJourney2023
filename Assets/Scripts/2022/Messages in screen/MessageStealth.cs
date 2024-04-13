@@ -1,58 +1,38 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
-using TMPro;
+using DG.Tweening;
 
 public class MessageStealth : MonoBehaviour
 {
-    [Header("CANVAS CONFIG")]
-    [SerializeField] private GameObject _canvasKey;
-    [SerializeField] private GameObject _canvasStealth;
+    [Header("MESSAGE")]
+    [SerializeField] GameObject _boxMessage;
+    private Collider _myCol;
 
-    [Header("UI CONFIG")]
-    [SerializeField] private Image _iconKey;
-    [SerializeField] private TMP_Text _text;
-    [SerializeField] private float _timeInScreen = 4f;
-
-    private bool _messageActive = false;
+    private void Awake()
+    {
+        _myCol = GetComponent<Collider>();
+    }
 
     void Start()
     {
-        _canvasKey.SetActive(false);
+        _boxMessage.gameObject.SetActive(false);
+        _boxMessage.transform.DOScale(0, 0);
     }
 
-    void Update()
-    {
-        if (_messageActive && Input.GetKey(KeyCode.LeftControl))
-        {
-            _iconKey.color = Color.green;
-            _text.color = Color.green;
-            _text.fontSize = 36;
-            _text.text = "GOOD";
-            StartCoroutine(HideMessage());
-        }
-
-        else if (_messageActive && Input.GetKeyDown(KeyCode.LeftControl))
-            _iconKey.color = Color.yellow;
-    }
-
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null)
-        {
-            if (!_messageActive)
-            {
-                _canvasKey.SetActive(true);
-                _messageActive = true;
-            }
-        }
+        if (player != null) StartCoroutine(Display());
     }
 
-    IEnumerator HideMessage()
+    private IEnumerator Display()
     {
-        yield return new WaitForSeconds(_timeInScreen);
-        Destroy(_canvasStealth);
+        Destroy(_myCol);
+        _boxMessage.gameObject.SetActive(true);
+        _boxMessage.transform.DOScale(0.8f, 0.5f);
+        yield return new WaitForSeconds(4f);
+        _boxMessage.GetComponent<RectTransform>().DOMoveY(-1000, 1f);
+        Destroy(_boxMessage, 2f);
         Destroy(this);
     }
 }
