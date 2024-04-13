@@ -29,7 +29,7 @@ public class BoxWoods : MonoBehaviour
     [Header("NEXT QUEST")]
     [SerializeField] int _rewardMoney = 100;
     [SerializeField] GameObject _iconQuest2Mail;
-    //[SerializeField] Animator[] _animGates;
+    [SerializeField] Animator[] _animGates;
     [SerializeField] AudioClip _soundNotification;
     [SerializeField] Camera _maryCam;
     private AudioSource _myAudio;
@@ -70,8 +70,8 @@ public class BoxWoods : MonoBehaviour
         _cinematic.SetActive(false);
         _camCinematic.gameObject.SetActive(false);
 
-        //foreach (var anim in _animGates)
-        //    anim.enabled = false;
+        foreach (var anim in _animGates)
+            anim.enabled = false;
     }
 
     private void Update()
@@ -161,8 +161,8 @@ public class BoxWoods : MonoBehaviour
         foreach (var item in _canvasQuests)
             item.gameObject.SetActive(false);
 
-        //foreach (var anim in _animGates)
-        //    anim.enabled = true;
+        foreach (var anim in _animGates)
+            anim.enabled = true;
 
         _gameManager.QuestCompleted();
         _iconQuest2Mail.SetActive(true);

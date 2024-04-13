@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class CinematicBoxWolf : CinematicManager
 {
@@ -21,6 +22,16 @@ public class CinematicBoxWolf : CinematicManager
     [SerializeField] string _messageText;
     private MessageSlide _messageSlide;
 
+    [Header("MESSAGE")]
+    [SerializeField] GameObject _boxMessage;
+    [SerializeField] TMP_Text _textMessage;
+    [SerializeField] TMP_Text _textName;
+    [SerializeField, TextArea(4, 6)] string _message;
+
+
+
+
+
     private void Awake()
     {
         _cinematic = GetComponent<TestCinematic>();
@@ -38,6 +49,10 @@ public class CinematicBoxWolf : CinematicManager
 
     public IEnumerator StarCinematic()
     {
+        _textMessage.text = _message;
+        _textName.text = "Tip";
+        _boxMessage.transform.DOScale(1f, 0.5f);
+
         _radar.StatusRadar(false);
         Destroy(_col);
         ObjStatus(false);
@@ -45,13 +60,14 @@ public class CinematicBoxWolf : CinematicManager
         _player.speed = 0;
         _cinematic.StartCinematic(_cinematicPlay, durationCinematic);
         yield return new WaitForSeconds(durationCinematic);
+        _boxMessage.transform.DOScale(0f, 0.5f);
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _player.speed = _player.speedAux;
         ObjStatus(true);
         _questUI.AddNewTask(2, _newTask);
         _questUI.ActiveUIQuest("The Box", "Recover the box", _newTask, "");
         _radar.StatusRadar(true);
-        _messageSlide.ShowMessage(_messageText, _iconWolf);
+        //_messageSlide.ShowMessage(_messageText, _iconWolf);
         Destroy(_cinematic);        
         Destroy(this);
     }

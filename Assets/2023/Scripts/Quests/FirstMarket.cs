@@ -52,7 +52,7 @@ public class FirstMarket : MonoBehaviour
         _camFocusMarket.gameObject.SetActive(false);
         player.speed = player.speedAux;
         player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
-        _myCol.enabled = false;
+        _myCol.enabled = true;
         Destroy(this);
     }
 }
