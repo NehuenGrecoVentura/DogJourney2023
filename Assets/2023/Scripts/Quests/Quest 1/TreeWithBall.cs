@@ -6,22 +6,23 @@ public class TreeWithBall : MonoBehaviour
     [SerializeField] DogBall _dogBall;
     private TreeRegenerative _tree;
     private OrderDog _orders;
+    [SerializeField] CinematicTrunks _cinemTrunks;
 
     [Header("MESSAGE")]
     [SerializeField] string _messageText;
     [SerializeField] Sprite _iconMessage;
-    private MessageSlide _message;
 
     private void Awake()
     {
         _tree = GetComponent<TreeRegenerative>();
-        _message = FindObjectOfType<MessageSlide>();
         _orders = FindObjectOfType<OrderDog>();
     }
 
     private void Start()
     {
         _dogBall.enabled = false;
+        _cinemTrunks.enabled = false;
+        _cinemTrunks.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -32,8 +33,9 @@ public class TreeWithBall : MonoBehaviour
                 gate.enabled = true;
 
             _dogBall.enabled = true;
-            _message.ShowMessage(_messageText, _iconMessage);
             _orders.activeOrders = true;
+            _cinemTrunks.gameObject.SetActive(true);
+            _cinemTrunks.enabled = true;
             Destroy(this);
         }
     }
