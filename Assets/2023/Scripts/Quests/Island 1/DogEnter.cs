@@ -29,8 +29,11 @@ public class DogEnter : MonoBehaviour
     [SerializeField] GameObject _cinematic;
     [SerializeField] GameObject _message;
     [SerializeField] string _messageBroomFind;
+    [SerializeField] string _tutorialEnterDog;
     [SerializeField] TMP_Text _textMessage;
+    [SerializeField] TMP_Text _textName;
     [SerializeField] Image _fadeOut;
+    [SerializeField] Image _iconMessage;
 
     [Header("DOG")]
     [SerializeField] Dog _dog;
@@ -117,7 +120,10 @@ public class DogEnter : MonoBehaviour
 
     private IEnumerator Message()
     {
+        _textName.text = "TIP";
+        _iconMessage.gameObject.SetActive(false);
         _message.SetActive(true);
+        _textMessage.text = _tutorialEnterDog;
         _message.transform.DOScale(1f, 0.5f);
         PlayCinematic(true, false, 0, RigidbodyConstraints.FreezeAll, false);
         yield return new WaitForSeconds(5f);

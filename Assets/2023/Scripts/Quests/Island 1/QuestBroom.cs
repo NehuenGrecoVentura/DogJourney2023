@@ -14,7 +14,7 @@ public class QuestBroom : MonoBehaviour
     private TableQuest _nextQuest;
     public bool broomFind = false;
     [SerializeField] string _nameNPC = "Mary";
-    [SerializeField] private Dialogue _dialogue;
+    [SerializeField] Dialogue _dialogue;
 
     private void Awake()
     {
@@ -22,7 +22,6 @@ public class QuestBroom : MonoBehaviour
         _questUI = FindObjectOfType<QuestUI>();
         _radar = FindObjectOfType<LocationQuest>();
         _nextQuest = FindObjectOfType<TableQuest>();
-        //_dialogue = FindObjectOfType<Dialogue>();
     }
 
     private void Start()
@@ -38,6 +37,7 @@ public class QuestBroom : MonoBehaviour
 
     public void Confirm()
     {
+        _dogEnter.enabled = true;
         _radar.target = _dogEnter.gameObject.transform;
         _dialogue.Close();
         _col.enabled = true;
