@@ -15,9 +15,13 @@ public class QuestBroom : MonoBehaviour
     public bool broomFind = false;
     [SerializeField] string _nameNPC = "Mary";
     [SerializeField] Dialogue _dialogue;
+    [SerializeField] GameObject _broomPrefab;
+    [SerializeField] RuntimeAnimatorController[] _animController;
+    private Animator _myAnim;
 
     private void Awake()
     {
+        _myAnim = GetComponent<Animator>();
         _col = _dogEnter.gameObject.GetComponent<Collider>();
         _questUI = FindObjectOfType<QuestUI>();
         _radar = FindObjectOfType<LocationQuest>();
@@ -26,6 +30,8 @@ public class QuestBroom : MonoBehaviour
 
     private void Start()
     {
+        _myAnim.runtimeAnimatorController = _animController[1];
+        _broomPrefab.SetActive(false);
         _col.enabled = false;
         _buttonConfirm.onClick.AddListener(() => Confirm());
         _nextQuest.enabled = false;
@@ -51,10 +57,17 @@ public class QuestBroom : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E) && _dogEnter.broomPicked)
             {
+                ChangeController();
                 _dogEnter.ActiveNextQuest();
                 Destroy(this, 6f);
             }
         }
+    }
+
+    public void ChangeController()
+    {
+        _myAnim.runtimeAnimatorController = _animController[0];
+        _broomPrefab.SetActive(true);
     }
 
     private void OnTriggerEnter(Collider other)

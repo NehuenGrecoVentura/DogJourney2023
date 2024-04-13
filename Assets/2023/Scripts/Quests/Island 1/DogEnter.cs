@@ -184,6 +184,7 @@ public class DogEnter : MonoBehaviour
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
         yield return new WaitForSeconds(1f);
         _fadeOut.DOColor(new Color(0,0,0,0), 1f);
+        _maryNPC.ChangeController();
         _mainCam.gameObject.SetActive(false);
         _camEnding.gameObject.SetActive(true);
         _player.gameObject.transform.position = _endingQuestPos.position;
