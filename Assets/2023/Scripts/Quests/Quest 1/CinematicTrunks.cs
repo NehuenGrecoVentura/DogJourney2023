@@ -15,6 +15,17 @@ public class CinematicTrunks : MonoBehaviour
     [SerializeField] string _message;
     [SerializeField] string _name;
 
+    private Character _player;
+    private CameraOrbit _camPlayer;
+    private QuestUI _questUI;
+
+    private void Awake()
+    {
+        _player = FindObjectOfType<Character>();
+        _camPlayer = FindObjectOfType<CameraOrbit>();
+        _questUI = FindObjectOfType<QuestUI>();
+    }
+
     void Start()
     {
         StartCoroutine(Play());
@@ -22,33 +33,27 @@ public class CinematicTrunks : MonoBehaviour
 
     private IEnumerator Play()
     {
-        _messageText.text = _message;
-        _messageNameText.text = _name;
-        _iconMessage.sprite = _iconSpaceBar;
-
-        _boxMessage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 125f);
-        _messageText.rectTransform.anchoredPosition = new Vector2(91.42871f, _messageText.rectTransform.anchoredPosition.y);
-        _messageText.rectTransform.sizeDelta = new Vector2(988.358f, _messageText.rectTransform.sizeDelta.y);
-        _messageText.alignment = TextAlignmentOptions.TopLeft;
-
-        Character player = FindObjectOfType<Character>();
-        CameraOrbit camPlayer = FindObjectOfType<CameraOrbit>();
-        
+        _questUI.UIStatus(false);
         _camTrunks.gameObject.SetActive(true);
-        camPlayer.gameObject.SetActive(false);
-        player.speed = 0;
-        player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _camPlayer.gameObject.SetActive(false);
+        _player.speed = 0;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
 
-        yield return new WaitForSeconds(2f);
+        _boxMessage.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
+
+        yield return new WaitForSeconds(4f);
         _boxMessage.SetActive(true);
-        _boxMessage.transform.DOScale(1f, 0.5f);
+        _boxMessage.GetComponent<RectTransform>().DOScale(0.8f, 0.5f);
 
-        yield return new WaitForSeconds(3f);
-        _boxMessage.transform.DOScale(0f, 0.5f);
+
+        yield return new WaitForSeconds(4f);
+        //_boxMessage.transform.DOScale(0f, 0.5f);
+        _boxMessage.GetComponent<RectTransform>().DOScale(0f, 0.5f);
         _camTrunks.gameObject.SetActive(false);
-        camPlayer.gameObject.SetActive(true);
-        player.speed = player.speedAux;
-        player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _camPlayer.gameObject.SetActive(true);
+        _player.speed = _player.speedAux;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _questUI.UIStatus(true);
         Destroy(gameObject);
     }
 }
