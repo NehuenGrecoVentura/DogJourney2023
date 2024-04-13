@@ -2,13 +2,13 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class Inputs : MonoBehaviour
 {
     private PickAxe _axe;    
     private bool _w, _a, _s, _d;
 
-    //[SerializeField] GameObject _tutorialTrees;
     [SerializeField] Image[] _keys;
     [SerializeField] TMP_Text _text;
     [SerializeField] Button _buttonSellWoods;
@@ -23,6 +23,10 @@ public class Inputs : MonoBehaviour
     [SerializeField] Transform _nextPos;
     private LocationQuest _radar;
 
+    [Header("ICONS CONTROLS")]
+    [SerializeField] Image[] _iconsControls;
+    [SerializeField] Transform[] _parentsIcons;
+
     private void Awake()
     {
         _axe = FindObjectOfType<PickAxe>();
@@ -31,10 +35,31 @@ public class Inputs : MonoBehaviour
 
     void Start()
     {
+        foreach (var item in _iconsControls)
+        {
+            item.color = new Color(0, 0, 0, 0);
+            item.DOFade(0.5f, 1f);
+        }
+
+
+        foreach (var item in _parentsIcons)
+        {
+            // Obtener la posición actual del RectTransform
+            Vector3 nuevaPosicion = item.GetComponent<RectTransform>().anchoredPosition;
+
+            // Ajustar la posición en el eje X
+            nuevaPosicion.x = -100;
+
+            // Aplicar la nueva posición al RectTransform
+            item.GetComponent<RectTransform>().anchoredPosition = nuevaPosicion;
+
+
+            item.transform.DOMoveX(134, 1f);
+        }
+
+
         _axe.enabled = false;
         _mailQuest1.enabled = false;
-        //_tutorialTrees.SetActive(false);
-        _buttonSellWoods.gameObject.SetActive(false);
         _tutorialAddDog.SetActive(false);
         _womanInMarket.SetActive(false);
         _radar.StatusRadar(false);
@@ -92,10 +117,16 @@ public class Inputs : MonoBehaviour
     private IEnumerator NextMessage()
     {
         yield return new WaitForSeconds(_timeToNextMessage);
+
+        foreach (var item in _parentsIcons)
+        {
+            item.transform.DOMoveX(-1000, 1f);
+        }
+
         NextStep(true);
         _mailQuest1.enabled = true;
         _radar.StatusRadar(true);
         _radar.target = _nextPos;
-        Destroy(gameObject);
+        Destroy(gameObject, 1.5f);
     }
 }

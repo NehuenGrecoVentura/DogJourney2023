@@ -24,11 +24,14 @@ public class DoTweenTest : MonoBehaviour
 
     private IEnumerator ShowUICoroutine(string amount)
     {
+        Vector3 initialPos = _object.GetComponent<RectTransform>().anchoredPosition;
+        initialPos.x = _posHide;
+        _object.GetComponent<RectTransform>().anchoredPosition = initialPos;
         _textAmount.text = amount;
         _object.gameObject.SetActive(true);
-        _object.DOMoveX(_endPosX, _duration);
+        _object.transform.DOMoveX(_endPosX, 1f);
         yield return new WaitForSeconds(_timeInScreen);
-        _object.DOMoveX(_posHide, _duration);
+        _object.transform.DOMoveX(initialPos.x, 1f);
         yield return new WaitForSeconds(1f);
         _object.gameObject.SetActive(false);
     }
