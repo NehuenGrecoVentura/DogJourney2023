@@ -91,6 +91,35 @@ public class ModelDog
         }
     }
 
+    public IEnumerator OrderGOQick(Transform posQuick)
+    {
+        if (_order.activeOrders)
+        {
+            yield return new WaitForEndOfFrame();
+            _target.GetComponent<MeshRenderer>().enabled = true;
+            _target.transform.position = new Vector3(posQuick.position.x, 0, posQuick.position.z);
+
+            while (true)
+            {
+                if (_target != null)
+                {
+                    _agent.destination = _target.transform.position;
+                    _targetDist = _target.transform.position - _myTransform.position;
+                    EventWalk?.Invoke();
+
+                    if (_targetDist.magnitude <= _targetRadius)
+                    {
+                        EventIdle?.Invoke();
+                        _target.GetComponent<MeshRenderer>().enabled = false;
+                        yield return null;
+                    }
+                }
+
+                yield return null;
+            }
+        }
+    }
+
     public void OrderStay()
     {
         if (_order.activeOrders)

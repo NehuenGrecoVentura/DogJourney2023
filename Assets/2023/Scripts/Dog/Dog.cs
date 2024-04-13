@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class Dog : MonoBehaviour
 {
@@ -27,7 +28,8 @@ public class Dog : MonoBehaviour
     [Header("TELETRANSPORT")]
     [SerializeField] Camera _camPlayer;
     [SerializeField] float _offsetDistance = 2f;
-    private Vector3 _teletransportPos = new Vector3(); 
+    private Vector3 _teletransportPos = new Vector3();
+    public bool quickEnd = false;
 
     private void Awake()
     {
@@ -49,7 +51,7 @@ public class Dog : MonoBehaviour
         //_model.OffScreenSpeed();
 
 
-        if (!IsInView() && IsFarEnough() && _order.activeOrders)
+        if (!IsInView() && IsFarEnough() && _order.activeOrders && !quickEnd)
         {
 
             transform.position = _posTeletransport.position;
@@ -59,8 +61,16 @@ public class Dog : MonoBehaviour
 
     public void OrderGo()
     {
-        StartCoroutine(_model.OrderGO());
+        if(!quickEnd) StartCoroutine(_model.OrderGO());
+        
     }
+
+    public void OrderGoQuick(Transform quickPos)
+    {
+        if (quickEnd) StartCoroutine(_model.OrderGOQick(quickPos));
+    }
+
+
 
     public void Stop()
     {

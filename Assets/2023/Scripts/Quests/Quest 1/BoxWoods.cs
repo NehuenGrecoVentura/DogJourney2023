@@ -42,6 +42,11 @@ public class BoxWoods : MonoBehaviour
     [SerializeField] GameObject _arrow;
     [SerializeField] GameObject _box;
 
+    [Header("QUICK END")]
+    [SerializeField] Transform _posEndQuick;
+    [SerializeField] Dog _dog;
+    [SerializeField] DogBall _dogBall;
+
     private QuestUI _questUI;
     private CharacterInventory _inventory;
     private Character _player;
@@ -83,6 +88,15 @@ public class BoxWoods : MonoBehaviour
                 rueda.transform.Rotate(Vector3.forward * _speedWheels * Time.deltaTime);
             }
         }
+
+
+        if (_inventory.greenTrees >= 5 && Input.GetKeyDown(KeyCode.Space))
+        {
+            _dog.quickEnd = true;
+            //_dogBall.gameObject.transform.position = new Vector3(0.68f, 5.65f, -7.3f);
+            _dog.OrderGoQuick(_posEndQuick);
+        }
+
     }
 
     public void FinishQuest()
@@ -123,7 +137,7 @@ public class BoxWoods : MonoBehaviour
                 {
                     _iconInteractive.SetActive(true);
                     _iconInteractive.transform.DOScale(1f, 0.5f);
-                }     
+                }
             }
         }
     }
@@ -179,7 +193,7 @@ public class BoxWoods : MonoBehaviour
         yield return new WaitForSeconds(2f);
         _camPlayer.gameObject.SetActive(true);
         _maryCam.gameObject.SetActive(false);
-        
+
         Destroy(gameObject);
     }
 }
