@@ -33,8 +33,14 @@ public class TableQuest : MonoBehaviour
     private Character _player;
     private Collider _colTable;
 
+    [Header("ANIM")]
+    [SerializeField] RuntimeAnimatorController[] _animController;
+    private Animator _myAnim;
+    private Vector3 _initialPos;
+
     private void Awake()
     {
+        _myAnim = GetComponent<Animator>();
         _myCol = GetComponent<Collider>();
         _questUI = FindObjectOfType<QuestUI>();
         _inventory = FindObjectOfType<CharacterInventory>();
@@ -45,6 +51,9 @@ public class TableQuest : MonoBehaviour
 
     private void Start()
     {
+        _initialPos = transform.position;
+        transform.position = new Vector3(transform.position.x - 1f, transform.position.y, transform.position.z);
+        _myAnim.runtimeAnimatorController = _animController[1];
         _buttonConfirm.onClick.AddListener(() => Confirm());
         _message.transform.localScale = new Vector3(0, 0, 0);
 
@@ -123,6 +132,8 @@ public class TableQuest : MonoBehaviour
         _message.transform.DOScale(1f, 1f);
         _textMessage.text = _messages[0];
         yield return new WaitForSeconds(3f);
+        transform.position = _initialPos;
+        _myAnim.runtimeAnimatorController = _animController[0];
         _iconTable.SetActive(true);
         _camPlayer.gameObject.SetActive(false);
         _camCinematic.gameObject.SetActive(true);
