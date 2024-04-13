@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class CheatManager : MonoBehaviour
 {
@@ -20,6 +22,11 @@ public class CheatManager : MonoBehaviour
     [Header("TELETRANSOPORT")]
     [SerializeField] Transform _posTeletransport;
     [SerializeField] KeyCode _keyTeletransport = KeyCode.T;
+
+    [Header("MESSAGE BOX")]
+    [SerializeField] TMP_Text _textMessage;
+    [SerializeField] GameObject _boxMessage;
+    [SerializeField] Image _iconMessage;
 
     private void Awake()
     {
@@ -61,6 +68,14 @@ public class CheatManager : MonoBehaviour
                     if (item.activeSelf || !item.activeSelf) Destroy(item);
 
                 _ordersDogs.activeOrders = true;
+
+                _boxMessage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 125f);
+                _textMessage.rectTransform.anchoredPosition = new Vector2(0.2341f, _textMessage.rectTransform.anchoredPosition.y);
+                _textMessage.rectTransform.sizeDelta = new Vector2(1030.737f, _textMessage.rectTransform.sizeDelta.y);
+                _textMessage.fontSize = 40;
+                _textMessage.alignment = TextAlignmentOptions.TopLeft;
+                _iconMessage.gameObject.SetActive(false);
+
                 _quest1Skiped = true;
             }
         }

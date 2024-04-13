@@ -19,9 +19,10 @@ public class TableQuest : MonoBehaviour
 
     [SerializeField, TextArea(4, 6)] string[] _lines;
 
-
+    [Header("DIALOGS")]
     [SerializeField] GameObject _message;
     [SerializeField] TMP_Text _textMessage;
+    [SerializeField] TMP_Text _textName;
     [SerializeField] string[] _messages;
     [SerializeField] string _nameNPC = "Peter";
     [SerializeField] Dialogue _dialogue;
@@ -51,6 +52,7 @@ public class TableQuest : MonoBehaviour
 
     private void Start()
     {
+        _textName.text = _nameNPC;
         _initialPos = transform.position;
         transform.position = new Vector3(transform.position.x - 1f, transform.position.y, transform.position.z);
         _myAnim.runtimeAnimatorController = _animController[1];
@@ -156,7 +158,6 @@ public class TableQuest : MonoBehaviour
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _colTable.enabled = true;
-        //Destroy(_message.transform.parent.gameObject);
         Destroy(_camCinematic.gameObject);
         Destroy(this);
     }

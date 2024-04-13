@@ -1,26 +1,14 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 
-public class CinematicBoxWolf : CinematicManager
+public class CinematicBoxWolf : MonoBehaviour
 {
-    [SerializeField] GameObject _cinematicPlay;
+    [Header("TASKS")]
     [SerializeField] Collider _col;    
-    [SerializeField] WolfStatic _wolfStatic;
     [SerializeField] string _newTask;
     [SerializeField] TMP_Text _textPhase2;
-    
-    private Character _player;
-    private TestCinematic _cinematic;
-    private LocationQuest _radar;
-    private QuestUI _questUI;
-
-    [Header("MESSAGE SLIDE")]
-    [SerializeField] Sprite _iconWolf;
-    [SerializeField] string _messageText;
-    private MessageSlide _messageSlide;
 
     [Header("MESSAGE")]
     [SerializeField] GameObject _boxMessage;
@@ -28,47 +16,49 @@ public class CinematicBoxWolf : CinematicManager
     [SerializeField] TMP_Text _textName;
     [SerializeField, TextArea(4, 6)] string _message;
 
+    [Header("CINEMATIC")]
+    [SerializeField] GameObject _cinematic;
+    private CameraOrbit _camPlayer;
 
-
-
+    private Character _player;
+    private LocationQuest _radar;
+    private QuestUI _questUI;
 
     private void Awake()
     {
-        _cinematic = GetComponent<TestCinematic>();
-
-        _messageSlide = FindObjectOfType<MessageSlide>();
         _radar = FindObjectOfType<LocationQuest>();
         _player = FindObjectOfType<Character>();
         _questUI = FindObjectOfType<QuestUI>();
+        _camPlayer = FindObjectOfType<CameraOrbit>();
     }
 
     private void Start()
     {
-        _cinematicPlay.SetActive(false);
+        _cinematic.SetActive(false);
     }
 
     public IEnumerator StarCinematic()
     {
+        _camPlayer.gameObject.SetActive(false);
+        _cinematic.SetActive(true);
         _textMessage.text = _message;
         _textName.text = "Tip";
-        _boxMessage.transform.DOScale(1f, 0.5f);
-
         _radar.StatusRadar(false);
         Destroy(_col);
-        ObjStatus(false);
         _player.FreezePlayer(RigidbodyConstraints.FreezePosition);
         _player.speed = 0;
-        _cinematic.StartCinematic(_cinematicPlay, durationCinematic);
-        yield return new WaitForSeconds(durationCinematic);
-        _boxMessage.transform.DOScale(0f, 0.5f);
+        yield return new WaitForSeconds(8f);
+        _boxMessage.gameObject.SetActive(true);
+        _boxMessage.transform.DOScale(1f, 0.5f);
+        yield return new WaitForSeconds(6f);
+        Destroy(_cinematic);
+        _camPlayer.gameObject.SetActive(true);
+        _boxMessage.transform.DOScale(0f, 0f);
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _player.speed = _player.speedAux;
-        ObjStatus(true);
         _questUI.AddNewTask(2, _newTask);
         _questUI.ActiveUIQuest("The Box", "Recover the box", _newTask, "");
         _radar.StatusRadar(true);
-        //_messageSlide.ShowMessage(_messageText, _iconWolf);
-        Destroy(_cinematic);        
         Destroy(this);
     }
 
