@@ -87,29 +87,6 @@ public class BoxWoods : MonoBehaviour
 
     public void FinishQuest()
     {
-        //_messageSlide.ShowMessage(_messageSlideText, _iconTAB);
-        //_radar.StatusRadar(true);
-        //_radar.target = _nextPos;
-        //Destroy(_animTruck.gameObject);
-        //Destroy(_camCinematic.gameObject);
-        //_camPlayer.gameObject.SetActive(true);
-        //_player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
-        //_player.speed = _player.speedAux;
-
-        //foreach (var item in _canvasQuests)
-        //    item.gameObject.SetActive(false);
-
-        //foreach (var anim in _animGates)
-        //    anim.enabled = true;
-
-        //_gameManager.QuestCompleted();
-        //_iconQuest2Mail.SetActive(true);
-
-        //_inventory.money += _rewardMoney;
-        //Destroy(_arrow);
-        //Destroy(_iconInteractive);
-        //Destroy(gameObject);
-
         StartCoroutine(NextQuest());
     }
 
@@ -171,6 +148,7 @@ public class BoxWoods : MonoBehaviour
 
     private IEnumerator NextQuest()
     {
+        _play = false;
         _messageSlide.ShowMessage(_messageSlideText, _iconTAB);
         _radar.StatusRadar(true);
         _radar.target = _nextPos;

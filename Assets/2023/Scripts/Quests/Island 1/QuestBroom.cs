@@ -7,14 +7,14 @@ public class QuestBroom : MonoBehaviour
 {
     [SerializeField] Button _buttonConfirm;
     [SerializeField] DogEnter _dogEnter;
-    [SerializeField, TextArea(4,6)] string[] _lines;
+    [SerializeField, TextArea(4, 6)] string[] _lines;
     private Collider _col;
     private QuestUI _questUI;
     private LocationQuest _radar;
     private TableQuest _nextQuest;
     public bool broomFind = false;
     [SerializeField] string _nameNPC = "Mary";
-    private Dialogue _dialogue;
+    [SerializeField] private Dialogue _dialogue;
 
     private void Awake()
     {
@@ -22,11 +22,12 @@ public class QuestBroom : MonoBehaviour
         _questUI = FindObjectOfType<QuestUI>();
         _radar = FindObjectOfType<LocationQuest>();
         _nextQuest = FindObjectOfType<TableQuest>();
-        _dialogue = FindObjectOfType<Dialogue>();
+        //_dialogue = FindObjectOfType<Dialogue>();
     }
 
     private void Start()
     {
+        //_dialogue.gameObject.SetActive(false);
         _col.enabled = false;
         _buttonConfirm.onClick.AddListener(() => Confirm());
         _nextQuest.enabled = false;
@@ -53,7 +54,7 @@ public class QuestBroom : MonoBehaviour
             {
                 _dogEnter.ActiveNextQuest();
                 Destroy(this, 6f);
-            }   
+            }
         }
     }
 
@@ -62,6 +63,7 @@ public class QuestBroom : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
+            _dialogue.gameObject.SetActive(true);
             _dialogue.playerInRange = true;
             _dialogue.Set(_nameNPC);
         }

@@ -14,6 +14,7 @@ public class Dialogue : MonoBehaviour
     [SerializeField] TMP_Text _nameNPCText;
     [SerializeField] float _typingTime = 0.05f;
     public Button buttonConfirm;
+    [SerializeField] Button _buttonCancel;
     private bool _didDialogueStart;
     private int _index;
     private Character _player;
@@ -29,6 +30,8 @@ public class Dialogue : MonoBehaviour
     {
         buttonConfirm.gameObject.SetActive(false);
         _boxDialogue.SetActive(false);
+        _buttonCancel.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     void Update()
@@ -67,7 +70,12 @@ public class Dialogue : MonoBehaviour
     {
         _index++;
         if (_index < _lines.Length) StartCoroutine(ShowLine());
-        else if (_index == _lines.Length) buttonConfirm.gameObject.SetActive(true);
+        else if (_index == _lines.Length)
+        {
+            buttonConfirm.gameObject.SetActive(true);
+            _buttonCancel.gameObject.SetActive(true);
+        }
+            
         else Close();
     }
 
@@ -79,6 +87,8 @@ public class Dialogue : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         _didDialogueStart = false;
+        buttonConfirm.gameObject.SetActive(false);
+        _buttonCancel.gameObject.SetActive(false);
         _boxDialogue.SetActive(false);
     }
 
