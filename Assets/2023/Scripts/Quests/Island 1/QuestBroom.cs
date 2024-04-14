@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,14 +6,16 @@ public class QuestBroom : MonoBehaviour
     [SerializeField] Button _buttonConfirm;
     [SerializeField] DogEnter _dogEnter;
     [SerializeField, TextArea(4, 6)] string[] _lines;
+
     private Collider _col;
     private QuestUI _questUI;
     private LocationQuest _radar;
     private TableQuest _nextQuest;
-    public bool broomFind = false;
+
     [SerializeField] string _nameNPC = "Mary";
     [SerializeField] Dialogue _dialogue;
     [SerializeField] GameObject _broomPrefab;
+    [SerializeField] GameObject _broomPrefabDog;
     [SerializeField] RuntimeAnimatorController[] _animController;
     private Animator _myAnim;
 
@@ -24,6 +24,7 @@ public class QuestBroom : MonoBehaviour
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
     private BoxCollider _myCol;
     private bool _activeQuest = false;
+    private bool _ending = false;
 
     private void Awake()
     {
@@ -37,6 +38,7 @@ public class QuestBroom : MonoBehaviour
 
     private void Start()
     {
+        _dialogue.canTalk = true;
         _iconInteract.SetActive(false);
         _myAnim.runtimeAnimatorController = _animController[1];
         _broomPrefab.SetActive(false);
@@ -68,22 +70,23 @@ public class QuestBroom : MonoBehaviour
         {
             if (Input.GetKeyDown(_keyInteract) && _dogEnter.broomPicked)
             {
-                Destroy(_myCol);
-                Destroy(_iconInteract);
-
-                ChangeController();
-                _dogEnter.ActiveNextQuest();
+                _dogEnter.EndingNormal();
+                Destroy(_myCol, 6f);
                 Destroy(this, 6f);
             }
 
-            if(!_activeQuest && !_dogEnter.broomPicked && !Input.GetKeyDown(KeyCode.F)) _iconInteract.SetActive(true);
+            if(!_activeQuest && !_dogEnter.broomPicked && !Input.GetKeyDown(KeyCode.F) && !_ending || _activeQuest && _dogEnter.broomPicked && !_ending) 
+                _iconInteract.SetActive(true);
         }
     }
 
     public void ChangeController()
     {
+        _broomPrefabDog.SetActive(false);
         _myAnim.runtimeAnimatorController = _animController[0];
         _broomPrefab.SetActive(true);
+        _ending = true;
+        Destroy(_iconInteract);
     }
 
     private void OnTriggerEnter(Collider other)

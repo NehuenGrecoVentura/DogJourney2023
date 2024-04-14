@@ -56,6 +56,7 @@ public class TableQuest : MonoBehaviour
 
     private void Start()
     {
+        _dialogue.canTalk = true;
         _textName.text = _nameNPC;
         _initialPos = transform.position;
         transform.position = new Vector3(transform.position.x - 1f, transform.position.y, transform.position.z);

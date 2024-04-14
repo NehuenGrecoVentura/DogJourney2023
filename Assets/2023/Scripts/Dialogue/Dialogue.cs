@@ -20,6 +20,7 @@ public class Dialogue : MonoBehaviour
     private Character _player;
     private CameraOrbit _cam;
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
+    public bool canTalk = false;
 
     private void Awake()
     {
@@ -37,7 +38,7 @@ public class Dialogue : MonoBehaviour
 
     void Update()
     {
-        if (playerInRange && Input.GetKeyDown(_keyInteract))
+        if (playerInRange && Input.GetKeyDown(_keyInteract) && canTalk)
         {
             if (!_didDialogueStart) StartDialogue();
             else if (_dialogueText.text == _lines[_index]) NextDialogueLine();
@@ -91,6 +92,7 @@ public class Dialogue : MonoBehaviour
         buttonConfirm.gameObject.SetActive(false);
         _buttonCancel.gameObject.SetActive(false);
         _boxDialogue.SetActive(false);
+        canTalk = false;
     }
 
     private IEnumerator ShowLine()

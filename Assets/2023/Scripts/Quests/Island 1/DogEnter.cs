@@ -218,4 +218,33 @@ public class DogEnter : MonoBehaviour
         _message.transform.DOScale(0f, 0.5f);
         ActiveNextQuest();
     }
+
+
+    public void EndingNormal()
+    {
+        StartCoroutine(EndingNormalCoroutine());
+    }
+
+    private IEnumerator EndingNormalCoroutine()
+    {
+        _dog.quickEnd = true;
+        _dog.OrderGoQuick(_maryNPC.gameObject.transform);
+        _fadeOut.DOColor(Color.black, 1f);
+        _player.speed = 0;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        yield return new WaitForSeconds(1f);
+        _fadeOut.DOColor(new Color(0, 0, 0, 0), 1f);
+        _maryNPC.ChangeController();
+        _mainCam.gameObject.SetActive(false);
+        _camEnding.gameObject.SetActive(true);
+        _player.gameObject.transform.position = _endingQuestPos.position;
+        _player.gameObject.transform.LookAt(_maryNPC.gameObject.transform);
+        yield return new WaitForSeconds(1f);
+        _message.SetActive(true);
+        _textMessage.text = _messageWin;
+        _message.transform.DOScale(1f, 0.5f);
+        yield return new WaitForSeconds(4f);
+        _message.transform.DOScale(0f, 0.5f);
+        ActiveNextQuest();
+    }
 }
