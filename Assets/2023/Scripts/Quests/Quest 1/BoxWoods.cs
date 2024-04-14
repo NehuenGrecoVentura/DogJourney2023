@@ -48,7 +48,10 @@ public class BoxWoods : MonoBehaviour
     [SerializeField] Dog _dog;
     [SerializeField] DogBall _dogBall;
     [SerializeField] Camera _dogCam;
+    [SerializeField] Camera _dogTutorial;
     [SerializeField] Image _fadeOut;
+    [SerializeField] GameObject _boxTutorial;
+    private bool _tutorialQuick = false;
 
     private QuestUI _questUI;
     private CharacterInventory _inventory;
@@ -93,16 +96,39 @@ public class BoxWoods : MonoBehaviour
         }
 
 
-        if (_inventory.greenTrees >= 5 && Input.GetKeyDown(KeyCode.Space))
+        if (_inventory.greenTrees >= 5)
         {
             //_fadeOut.color = new Color(0, 0, 0, 0);
             //_dog.quickEnd = true;
             //_dog.OrderGoQuick(_posEndQuick);
-
-            StartCoroutine(QuickEndCoroutine());
+            if (Input.GetKeyDown(KeyCode.Space)) StartCoroutine(QuickEndCoroutine());
+            else
+            {
+                if (!_tutorialQuick)
+                {
+                    StartCoroutine(TutorialQuick());
+                    _tutorialQuick = true;
+                }
+            }
         }
-
     }
+
+    private IEnumerator TutorialQuick()
+    {
+        _boxTutorial.transform.DOScale(0, 0);
+        _camPlayer.gameObject.SetActive(false);
+        _dogTutorial.gameObject.SetActive(true);
+        _player.speed = 0;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        yield return new WaitForSeconds(1f);
+        _boxTutorial.gameObject.SetActive(true);
+        _boxTutorial.transform.DOScale(0.8f, 1f);
+        yield return new WaitForSeconds(3f);
+        _boxTutorial.gameObject.SetActive(false);
+        _camPlayer.gameObject.SetActive(true);
+        _dogTutorial.gameObject.SetActive(false);
+    }
+
 
     private IEnumerator QuickEndCoroutine()
     {
@@ -112,12 +138,14 @@ public class BoxWoods : MonoBehaviour
         _dog.quickEnd = true;
         _dog.OrderGoQuick(_posEndQuick);
         _camPlayer.gameObject.SetActive(false);
+        StopCoroutine(TutorialQuick());
+        _dogTutorial.gameObject.SetActive(false);
         _dogCam.gameObject.SetActive(true);
         yield return new WaitForSeconds(2f);
         _fadeOut.DOColor(Color.black, 1f);
         yield return new WaitForSeconds(2f);
         _fadeOut.DOColor(new Color(0, 0, 0, 0), 1f);
-        
+
         StartCoroutine(RunTruck());
     }
 
@@ -217,7 +245,7 @@ public class BoxWoods : MonoBehaviour
         yield return new WaitForSeconds(2f);
         _camPlayer.gameObject.SetActive(true);
         _maryCam.gameObject.SetActive(false);
-
+        Destroy(_dogTutorial.gameObject);
         Destroy(gameObject);
     }
 }
