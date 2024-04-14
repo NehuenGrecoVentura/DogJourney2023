@@ -59,7 +59,7 @@ public class CinematicTree : CinematicManager, ICinematic
         _gm.GreenTreesShader();
         ObjStatus(true);
         //_tutorialTree.gameObject.SetActive(true);
-        _message.transform.DOScale(0f, 0.5f);
+        _message.transform.DOScale(0f, 0.1f);
         Destroy(gameObject);
     }
 
