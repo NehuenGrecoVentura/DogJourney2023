@@ -5,8 +5,7 @@ using TMPro;
 using DG.Tweening;
 
 public class TableQuest : MonoBehaviour
-{
-    
+{    
     [SerializeField] Button _buttonConfirm;
     [SerializeField] int _totalWoods = 5;
     [SerializeField] string _taskBackToBuild;
@@ -56,6 +55,8 @@ public class TableQuest : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(LookToPlayer());
+
         _dialogue.canTalk = true;
         _textName.text = _nameNPC;
         _initialPos = transform.position;
@@ -103,6 +104,7 @@ public class TableQuest : MonoBehaviour
             string.Empty);
 
         _buttonConfirm.gameObject.SetActive(false);
+        _myAnim.SetBool("Quest", true);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -141,8 +143,18 @@ public class TableQuest : MonoBehaviour
         }
     }
 
+    private IEnumerator LookToPlayer()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.1f);
+            transform.LookAt(_player.gameObject.transform.position);
+        }
+    }
+
     private IEnumerator TutorialBuild()
     {
+        StopCoroutine(LookToPlayer());
         _inventory.nails = 10;
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
