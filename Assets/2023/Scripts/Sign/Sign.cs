@@ -1,15 +1,16 @@
 using System.Collections;
 using UnityEngine;
+using DG.Tweening;
 
 public class Sign : MonoBehaviour
 {
     [SerializeField] float _timeInScreen = 3f;
-    [SerializeField] GameObject _canvasMessage;
+    [SerializeField] RectTransform _canvasMessage;
     [SerializeField] Collider _col;
 
     void Start()
     {
-        _canvasMessage.SetActive(false);
+        _canvasMessage.gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -21,9 +22,11 @@ public class Sign : MonoBehaviour
     private IEnumerator ShowMessage()
     {
         Destroy(_col);
-        _canvasMessage.SetActive(true);
+        _canvasMessage.gameObject.SetActive(true);
+        _canvasMessage.DOAnchorPosY(-70f, 0.5f);
         yield return new WaitForSeconds(_timeInScreen);
-        Destroy(_canvasMessage);
+        _canvasMessage.DOAnchorPosY(-1000f, 0.5f);
+        Destroy(_canvasMessage.transform.parent.gameObject, 1f);
         Destroy(this);
     }
 }
