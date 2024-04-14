@@ -19,8 +19,15 @@ public class QuestBroom : MonoBehaviour
     [SerializeField] RuntimeAnimatorController[] _animController;
     private Animator _myAnim;
 
+    [Header("INTERACT")]
+    [SerializeField] GameObject _iconInteract;
+    [SerializeField] KeyCode _keyInteract = KeyCode.F;
+    private BoxCollider _myCol;
+    private bool _activeQuest = false;
+
     private void Awake()
     {
+        _myCol = GetComponent<BoxCollider>();
         _myAnim = GetComponent<Animator>();
         _col = _dogEnter.gameObject.GetComponent<Collider>();
         _questUI = FindObjectOfType<QuestUI>();
@@ -30,6 +37,7 @@ public class QuestBroom : MonoBehaviour
 
     private void Start()
     {
+        _iconInteract.SetActive(false);
         _myAnim.runtimeAnimatorController = _animController[1];
         _broomPrefab.SetActive(false);
         _col.enabled = false;
@@ -42,6 +50,9 @@ public class QuestBroom : MonoBehaviour
 
     public void Confirm()
     {
+        _iconInteract.SetActive(false);
+        _myCol.enabled = false;
+        _activeQuest = true;
         _dogEnter.enabled = true;
         _radar.target = _dogEnter.gameObject.transform;
         _dialogue.Close();
@@ -55,12 +66,18 @@ public class QuestBroom : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
-            if (Input.GetKeyDown(KeyCode.E) && _dogEnter.broomPicked)
+            if (Input.GetKeyDown(_keyInteract) && _dogEnter.broomPicked)
             {
+                Destroy(_myCol);
+                Destroy(_iconInteract);
+
                 ChangeController();
                 _dogEnter.ActiveNextQuest();
                 Destroy(this, 6f);
             }
+
+
+            if(!_activeQuest && !_dogEnter.broomPicked && !Input.GetKeyDown(KeyCode.F)) _iconInteract.SetActive(true);
         }
     }
 
@@ -84,6 +101,10 @@ public class QuestBroom : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null) _dialogue.playerInRange = false;
+        if (player != null)
+        {
+            if(_activeQuest || !_activeQuest) _iconInteract.SetActive(false);
+            _dialogue.playerInRange = false;
+        }    
     }
 }

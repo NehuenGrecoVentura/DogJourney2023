@@ -10,10 +10,10 @@ public class TableQuest : MonoBehaviour
     [SerializeField] Button _buttonConfirm;
     [SerializeField] int _totalWoods = 5;
     [SerializeField] string _taskBackToBuild;
-    [SerializeField] KeyCode _keyInteract = KeyCode.E;
+    
     private QuestUI _questUI;
     private CharacterInventory _inventory;
-    private Collider _myCol;
+    //private Collider _myCol;
     private LocationQuest _radar;
     private bool _questCurrent = false;
 
@@ -39,10 +39,16 @@ public class TableQuest : MonoBehaviour
     private Animator _myAnim;
     private Vector3 _initialPos;
 
+    [Header("INTERACT")]
+    [SerializeField] GameObject _iconInteract;
+    [SerializeField] KeyCode _keyInteract = KeyCode.F;
+    private BoxCollider _myCol;
+
     private void Awake()
     {
         _myAnim = GetComponent<Animator>();
-        _myCol = GetComponent<Collider>();
+        //_myCol = GetComponent<Collider>();
+        _myCol = GetComponent<BoxCollider>();
         _questUI = FindObjectOfType<QuestUI>();
         _inventory = FindObjectOfType<CharacterInventory>();
         _radar = FindObjectOfType<LocationQuest>();
@@ -62,7 +68,8 @@ public class TableQuest : MonoBehaviour
         for (int i = 0; i < _dialogue._lines.Length; i++)
             _dialogue._lines[i] = _lines[i];
 
-        _dialogue.gameObject.SetActive(true);
+        _dialogue.gameObject.SetActive(false);
+        _iconInteract.SetActive(false);
     }
 
     private void Update()
@@ -77,16 +84,21 @@ public class TableQuest : MonoBehaviour
             {
                 _questUI.TaskCompleted(1);
                 _questUI.AddNewTask(2, _taskBackToBuild);
+                _myCol.enabled = true;
                 _questCurrent = false;
             }
+
+            else _myCol.enabled = false;
         }
     }
 
     public void Confirm()
     {
+        _myCol.enabled = false;
+        _iconInteract.SetActive(false);
         _questCurrent = true;
         _dialogue.Close();
-
+        
         _questUI.ActiveUIQuest("Making the table", "Get wood (" + _inventory.greenTrees.ToString() + "/" + _totalWoods.ToString() + ")",
             string.Empty,
             string.Empty);
@@ -115,13 +127,19 @@ public class TableQuest : MonoBehaviour
                 _dialogue.playerInRange = false;
                 if (Input.GetKeyDown(_keyInteract)) StartCoroutine(TutorialBuild());
             }
+
+            if (!Input.GetKeyDown(_keyInteract)) _iconInteract.SetActive(true);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null) _dialogue.playerInRange = false;
+        if (player != null)
+        {
+            _iconInteract.SetActive(false);
+            _dialogue.playerInRange = false;
+        }
     }
 
     private IEnumerator TutorialBuild()
@@ -130,6 +148,7 @@ public class TableQuest : MonoBehaviour
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
         Destroy(_myCol);
+        Destroy(_iconInteract);
         _message.SetActive(true);
         _message.transform.DOScale(1f, 1f);
         _textMessage.text = _messages[0];

@@ -19,6 +19,7 @@ public class Dialogue : MonoBehaviour
     private int _index;
     private Character _player;
     private CameraOrbit _cam;
+    [SerializeField] KeyCode _keyInteract = KeyCode.F;
 
     private void Awake()
     {
@@ -36,7 +37,7 @@ public class Dialogue : MonoBehaviour
 
     void Update()
     {
-        if (playerInRange && Input.GetKeyDown(KeyCode.E))
+        if (playerInRange && Input.GetKeyDown(_keyInteract))
         {
             if (!_didDialogueStart) StartDialogue();
             else if (_dialogueText.text == _lines[_index]) NextDialogueLine();

@@ -114,6 +114,7 @@ public class DogEnter : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && broomPicked) 
             StartCoroutine(Ending());
+
     }
 
     public void EndingQuest()
@@ -190,6 +191,7 @@ public class DogEnter : MonoBehaviour
         _questUI.TaskCompleted(1);
         _questUI.AddNewTask(2, "Returns the broom to its owner");
         broomPicked = true;
+        _maryNPC.gameObject.GetComponent<BoxCollider>().enabled = true;
     }
 
     private IEnumerator Ending()
