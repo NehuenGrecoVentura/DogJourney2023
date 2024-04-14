@@ -1,25 +1,20 @@
 using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class Barriel : MonoBehaviour
 {
     [SerializeField] Animator _animBarriel;
 
     [Header("MESSAGE")]
-    [SerializeField] string _stringMessage;
-    [SerializeField] Sprite _iconMessage;
+    [SerializeField] GameObject _boxMessage;
     private bool _firstContact = false;
-    private MessageSlide _message;
-    
-
-    private void Awake()
-    {
-        _message = FindObjectOfType<MessageSlide>();
-    }
 
     void Start()
     {
         _animBarriel.enabled = false;
+        _boxMessage.SetActive(false);
+        _boxMessage.transform.DOScale(0, 0);
     }
 
     public void UpBarriel(float time)
@@ -43,9 +38,16 @@ public class Barriel : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null && !_firstContact)
         {
-            _message.ShowMessage(_stringMessage, _iconMessage);
+            StartCoroutine(ShowMessage());
             _firstContact = true;
-        }
-            
+        }   
+    }
+
+    private IEnumerator ShowMessage()
+    {
+        _boxMessage.gameObject.SetActive(true);
+        _boxMessage.transform.DOScale(0.5f, 0.5f);
+        yield return new WaitForSeconds(3f);
+        _boxMessage.transform.DOScale(0f, 0.5f);
     }
 }
