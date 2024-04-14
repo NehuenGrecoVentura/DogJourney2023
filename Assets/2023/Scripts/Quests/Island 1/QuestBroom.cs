@@ -64,7 +64,7 @@ public class QuestBroom : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null)
+        if (player != null && _myCol.enabled)
         {
             if (Input.GetKeyDown(_keyInteract) && _dogEnter.broomPicked)
             {
@@ -75,7 +75,6 @@ public class QuestBroom : MonoBehaviour
                 _dogEnter.ActiveNextQuest();
                 Destroy(this, 6f);
             }
-
 
             if(!_activeQuest && !_dogEnter.broomPicked && !Input.GetKeyDown(KeyCode.F)) _iconInteract.SetActive(true);
         }
@@ -90,7 +89,7 @@ public class QuestBroom : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null)
+        if (player != null && _myCol.enabled)
         {
             _dialogue.gameObject.SetActive(true);
             _dialogue.playerInRange = true;

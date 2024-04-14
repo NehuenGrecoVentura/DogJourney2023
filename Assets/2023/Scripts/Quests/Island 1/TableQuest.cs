@@ -13,7 +13,6 @@ public class TableQuest : MonoBehaviour
     
     private QuestUI _questUI;
     private CharacterInventory _inventory;
-    //private Collider _myCol;
     private LocationQuest _radar;
     private bool _questCurrent = false;
 
@@ -47,7 +46,6 @@ public class TableQuest : MonoBehaviour
     private void Awake()
     {
         _myAnim = GetComponent<Animator>();
-        //_myCol = GetComponent<Collider>();
         _myCol = GetComponent<BoxCollider>();
         _questUI = FindObjectOfType<QuestUI>();
         _inventory = FindObjectOfType<CharacterInventory>();
@@ -109,7 +107,7 @@ public class TableQuest : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null)
+        if (player != null && _myCol.enabled)
         {
             _dialogue.gameObject.SetActive(true);
             _dialogue.playerInRange = true;
@@ -120,7 +118,7 @@ public class TableQuest : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null)
+        if (player != null && _myCol.enabled)
         {
             if (!_questCurrent && _inventory.greenTrees >= _totalWoods)
             {
@@ -135,7 +133,7 @@ public class TableQuest : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null)
+        if (player != null && _myCol.enabled)
         {
             _iconInteract.SetActive(false);
             _dialogue.playerInRange = false;
