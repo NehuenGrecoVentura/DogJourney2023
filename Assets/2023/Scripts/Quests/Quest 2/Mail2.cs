@@ -31,8 +31,8 @@ public class Mail2 : MailQuest
     [Header("NEXT QUEST")]
     [SerializeField] GameObject _npcMarket;
     [SerializeField] MarketShop _market;
-    [SerializeField] Sprite _iconMessage;
-    [SerializeField] string _messageText;
+    //[SerializeField] Sprite _iconMessage;
+    //[SerializeField] string _messageText;
     [SerializeField] Transform _posMarket;
     [SerializeField] GameObject _broom;
 
@@ -42,7 +42,7 @@ public class Mail2 : MailQuest
     [SerializeField] Dog _dog;
     [SerializeField] Image _fadeOut;
     [SerializeField] Transform _quickPos;
-    [SerializeField] GameObject _finalDialog;
+    [SerializeField] RectTransform _finalDialog;
     private CameraOrbit _camPlayer;
 
     [Header("RADAR")]
@@ -75,7 +75,7 @@ public class Mail2 : MailQuest
         _iconInteract.SetActive(false);
         _broom.SetActive(false);
         
-        _finalDialog.SetActive(false);
+        _finalDialog.gameObject.SetActive(false);
 
         //Cams
         _camFocus.gameObject.SetActive(false);
@@ -126,6 +126,8 @@ public class Mail2 : MailQuest
         //_buttonRope.GetComponent<Image>().sprite = _ropeUnlocked;
         //_buttonAddDog.gameObject.SetActive(true);
         _iconInteract.SetActive(false);
+        _player.speed = _player.speedAux;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         Destroy(_camFocus.gameObject);
         Destroy(this);
     }
@@ -168,6 +170,8 @@ public class Mail2 : MailQuest
 
     private IEnumerator Ending()
     {
+        _finalDialog.DOAnchorPosY(-70f, 0);
+        _finalDialog.DOScale(0, 0);
         _camPlayer.gameObject.SetActive(false);
         _dogCam.gameObject.SetActive(true);
         _dog.quickEnd = true;
@@ -183,10 +187,10 @@ public class Mail2 : MailQuest
         _player.gameObject.transform.position = _quickPos.position;
         _player.gameObject.transform.LookAt(gameObject.transform.position);
         yield return new WaitForSeconds(1f);
-        _finalDialog.SetActive(true);
-        _finalDialog.transform.DOScale(1f, 0.5f);
+        _finalDialog.gameObject.SetActive(true);
+        _finalDialog.DOScale(0.8f, 0.5f);
         yield return new WaitForSeconds(4f);
-        _finalDialog.transform.DOScale(0f, 0.5f);
+        _finalDialog.DOScale(0f, 0.5f);
         FinishQuest();
     }
 }
