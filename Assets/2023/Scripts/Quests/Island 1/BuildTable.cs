@@ -17,6 +17,7 @@ public class BuildTable : MonoBehaviour
 
     [Header("NEXT QUEST")]
     [SerializeField] Animator[] _animDoors;
+    [SerializeField] RectTransform _boxTAB;
     private Manager _gm;
 
     private void Awake()
@@ -32,6 +33,7 @@ public class BuildTable : MonoBehaviour
         _iconWood.gameObject.SetActive(false);
         _iconNail.gameObject.SetActive(false);
         _tablePrefab.SetActive(false);
+        _boxTAB.gameObject.SetActive(false);
         _myCol.enabled = false;
     }
 
@@ -40,6 +42,8 @@ public class BuildTable : MonoBehaviour
         foreach (var door in _animDoors)
             door.enabled = true;
 
+        _boxTAB.gameObject.SetActive(true);
+        _boxTAB.DOAnchorPosY(-70, 0);
         LocationQuest radar = FindObjectOfType<LocationQuest>();
         FirstMarket nextPos = FindObjectOfType<FirstMarket>();
         radar.target = nextPos.gameObject.transform;
@@ -54,7 +58,9 @@ public class BuildTable : MonoBehaviour
         _inventory.nails -= _totalNails;
         Destroy(_myCol);
         _gm.QuestCompleted();
-        Destroy(this);
+        _boxTAB.DOAnchorPosY(-1000, 0.5f);
+        Destroy(_boxTAB.transform.parent.gameObject, 1f);
+        Destroy(this, 1f);
     }
 
     private IEnumerator Build()
@@ -80,7 +86,30 @@ public class BuildTable : MonoBehaviour
         }
 
         // Destruye el objeto después de tres segundos
-        Construct();
+        //Construct();
+
+        foreach (var door in _animDoors)
+            door.enabled = true;
+
+        
+        LocationQuest radar = FindObjectOfType<LocationQuest>();
+        FirstMarket nextPos = FindObjectOfType<FirstMarket>();
+        radar.target = nextPos.gameObject.transform;
+        _player.isConstruct = false;
+        _player.speed = _player.speedAux;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _tablePrefab.SetActive(true);
+        Destroy(_iconNail.gameObject);
+        Destroy(_iconWood.gameObject);
+        Destroy(_icon);
+        _inventory.greenTrees -= _totalWoods;
+        _inventory.nails -= _totalNails;
+        Destroy(_myCol);
+        _gm.QuestCompleted();
+        _boxTAB.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        Destroy(_boxTAB.transform.parent.gameObject);
+        Destroy(this);
     }
 
     private void OnTriggerEnter(Collider other)
