@@ -56,6 +56,7 @@ public class Dog : MonoBehaviour
 
             transform.position = _posTeletransport.position;
             _target.transform.position = _posTeletransport.position;
+            Stop();
         }
 
         //if (_player.gameObject.transform.position.y > 18f) Stop();

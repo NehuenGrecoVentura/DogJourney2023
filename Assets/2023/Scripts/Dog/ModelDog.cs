@@ -82,6 +82,7 @@ public class ModelDog
                     {
                         EventIdle?.Invoke();
                         _target.GetComponent<MeshRenderer>().enabled = false;
+                        OrderStay();
                         yield return null;
                     }
                 }
@@ -111,6 +112,7 @@ public class ModelDog
                     {
                         EventIdle?.Invoke();
                         _target.GetComponent<MeshRenderer>().enabled = false;
+                        OrderStay();
                         yield return null;
                     }
                 }
