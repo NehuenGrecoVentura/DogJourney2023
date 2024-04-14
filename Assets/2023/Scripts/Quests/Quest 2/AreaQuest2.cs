@@ -27,8 +27,6 @@ public class AreaQuest2 : MonoBehaviour
     private void Start()
     {
         _cinematicRabbit.SetActive(false);
-        _textMessage.text = _message;
-        _textName.text = _name;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -44,6 +42,9 @@ public class AreaQuest2 : MonoBehaviour
 
     private IEnumerator FocusPuzzle()
     {
+        _textMessage.text = _message;
+        _textName.text = _name;
+
         _camPlayer.gameObject.SetActive(false);
         _cinematicRabbit.SetActive(true);
         yield return new WaitForSeconds(1.5f);
