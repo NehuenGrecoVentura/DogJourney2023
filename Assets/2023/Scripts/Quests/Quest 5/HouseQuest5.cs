@@ -117,7 +117,7 @@ public class HouseQuest5 : MailQuest
         Confirm(_letter);
         _quest.gameObject.SetActive(true);
         _quest.QuestStatus(true, true, true, false);
-        Destroy(iconQuest);
+        //Destroy(iconQuest);
         _questActive = true;
     }
 

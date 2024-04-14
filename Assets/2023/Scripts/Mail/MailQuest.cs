@@ -6,7 +6,7 @@ using DG.Tweening;
 public class MailQuest : MonoBehaviour
 {
     public KeyCode _keyInteractive = KeyCode.Return;
-    public GameObject iconQuest;
+    //public GameObject iconQuest;
     public TMP_Text[] questsTexts;
     public Image[] imageStatusPhase;
     public Image iconQuestActive;
@@ -23,7 +23,7 @@ public class MailQuest : MonoBehaviour
 
     public void ShowTasks()
     {
-        Destroy(iconQuest);
+        //Destroy(iconQuest);
         _questUI.ActiveUIQuest(nameQuest, tasks[0], tasks[1], tasks[2]);
     }
 
@@ -34,7 +34,7 @@ public class MailQuest : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         Destroy(letterQuest);
-        Destroy(iconQuest);
+        //Destroy(iconQuest);
     }
 
     public void EventEnter()

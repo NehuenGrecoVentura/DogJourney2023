@@ -69,7 +69,7 @@ public class Mail2 : MailQuest
 
     void Start()
     {
-        iconQuest.SetActive(false);
+        //iconQuest.SetActive(false);
         _letterQuest.SetActive(false);
         iconQuestActive.sprite = _newIconQuest;
         _iconInteract.SetActive(false);

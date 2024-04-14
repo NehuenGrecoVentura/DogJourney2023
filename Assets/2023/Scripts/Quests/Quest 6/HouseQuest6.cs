@@ -140,7 +140,7 @@ public class HouseQuest6 : MailQuest
         Confirm(_letter);
         _quest.gameObject.SetActive(true);
         _quest.QuestStatus(true, true, true, true);
-        Destroy(iconQuest);
+        //Destroy(iconQuest);
         questsTexts[0].text = nameQuest;
 
         foreach (var item in _gates.puzzleQuest6)
