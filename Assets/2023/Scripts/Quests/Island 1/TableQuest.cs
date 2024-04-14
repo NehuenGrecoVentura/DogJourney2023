@@ -42,6 +42,8 @@ public class TableQuest : MonoBehaviour
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
     private BoxCollider _myCol;
 
+    [SerializeField] Transform _messageNails;
+
     private void Awake()
     {
         _myAnim = GetComponent<Animator>();
@@ -70,6 +72,8 @@ public class TableQuest : MonoBehaviour
 
         _dialogue.gameObject.SetActive(false);
         _iconInteract.SetActive(false);
+        _messageNails.gameObject.SetActive(false);
+        _messageNails.DOMoveX(-1000f, 0.5f);
     }
 
     private void Update()
@@ -158,7 +162,6 @@ public class TableQuest : MonoBehaviour
 
     private IEnumerator TutorialBuild()
     {
-        
         _inventory.nails = 10;
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
@@ -193,6 +196,18 @@ public class TableQuest : MonoBehaviour
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _colTable.enabled = true;
         Destroy(_camCinematic.gameObject);
+
+        Vector3 initialPos = _messageNails.GetComponent<RectTransform>().anchoredPosition;
+        initialPos.x = -1000f;
+        _messageNails.GetComponent<RectTransform>().anchoredPosition = initialPos;
+        _messageNails.gameObject.SetActive(true);
+        _messageNails.transform.DOMoveX(1150f, 1f);
+        yield return new WaitForSeconds(2f);
+        _messageNails.transform.DOMoveX(initialPos.x, 1f);
+        yield return new WaitForSeconds(3f);
+        _messageNails.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(0.5f);
         Destroy(this);
     }
 }
