@@ -33,8 +33,6 @@ public class BoxQuest2 : Box
             _myAudio.PlayOneShot(_soundNotification);
             _radar.target = _nextPos;
             inventory.upgradeLoot = true;
-            //_questManager.FirstSuccess(_textPick);
-            //_questManager.InitialSecondPhase(_textNextStage);
             _questUI.TaskCompleted(1);
             _questUI.AddNewTask(3, _textNextStage);
             _animNPCQuest2.SetBool("Quest", false);
