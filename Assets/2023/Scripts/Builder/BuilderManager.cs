@@ -26,7 +26,7 @@ public class BuilderManager : MonoBehaviour
     private Character _player;
     private bool _playCinematic = false;
     public CharacterInventory _inventory;
-    [SerializeField] GameObject _canvasQuest;
+    //[SerializeField] GameObject _canvasQuest;
 
     [Header("RADAR")]
     [SerializeField] Transform _posRadar;
@@ -35,6 +35,8 @@ public class BuilderManager : MonoBehaviour
     [Header("AUDIO")]
     [SerializeField] AudioClip _audioBuild;
     private AudioSource _myAudio;
+
+    [SerializeField] QuestUI _questUI;
 
     void Start()
     {
@@ -63,8 +65,9 @@ public class BuilderManager : MonoBehaviour
     }
     private IEnumerator Construct()
     {
+        _questUI.UIStatus(false);
         _myAudio.PlayOneShot(_audioBuild);
-        _canvasQuest.SetActive(false);
+        //_canvasQuest.SetActive(false);
         _radar.StatusRadar(false);
         _iconsMaterials.SetActive(false);
         _playCinematic = true;
@@ -82,8 +85,9 @@ public class BuilderManager : MonoBehaviour
         yield return new WaitForSeconds(_timeToBuild);
         _camPlayer.gameObject.SetActive(true);
         _radar.StatusRadar(true);
+        _questUI.UIStatus(true);
         _radar.target = _posRadar;
-        if (gameObject.name == "Build Stairs") _canvasQuest.SetActive(true);
+        //if (gameObject.name == "Build Stairs") //_canvasQuest.SetActive(true);
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _player.speed = _player.speedAux;
         Destroy(_iconsMaterials);

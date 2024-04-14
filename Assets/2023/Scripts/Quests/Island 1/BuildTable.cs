@@ -37,32 +37,6 @@ public class BuildTable : MonoBehaviour
         _myCol.enabled = false;
     }
 
-    private void Construct()
-    {
-        foreach (var door in _animDoors)
-            door.enabled = true;
-
-        _boxTAB.gameObject.SetActive(true);
-        _boxTAB.DOAnchorPosY(-70, 0);
-        LocationQuest radar = FindObjectOfType<LocationQuest>();
-        FirstMarket nextPos = FindObjectOfType<FirstMarket>();
-        radar.target = nextPos.gameObject.transform;
-        _player.isConstruct = false;
-        _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
-        _tablePrefab.SetActive(true);
-        Destroy(_iconNail.gameObject);
-        Destroy(_iconWood.gameObject);
-        Destroy(_icon);
-        _inventory.greenTrees -= _totalWoods;
-        _inventory.nails -= _totalNails;
-        Destroy(_myCol);
-        _gm.QuestCompleted();
-        _boxTAB.DOAnchorPosY(-1000, 0.5f);
-        Destroy(_boxTAB.transform.parent.gameObject, 1f);
-        Destroy(this, 1f);
-    }
-
     private IEnumerator Build()
     {
         Destroy(_icon);
@@ -104,6 +78,8 @@ public class BuildTable : MonoBehaviour
         Destroy(_icon);
         _inventory.greenTrees -= _totalWoods;
         _inventory.nails -= _totalNails;
+        if (_inventory.greenTrees <= 0) _inventory.greenTrees = 0;
+        if (_inventory.nails <= 0) _inventory.nails = 0;
         Destroy(_myCol);
         _gm.QuestCompleted();
         _boxTAB.gameObject.SetActive(true);
