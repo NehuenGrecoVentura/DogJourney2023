@@ -51,17 +51,19 @@ public class Dog : MonoBehaviour
         //_model.OffScreenSpeed();
 
 
-        if (!IsInView() && IsFarEnough() && _order.activeOrders && !quickEnd)
+        if (!IsInView() && IsFarEnough() && _order.activeOrders && !quickEnd && _player.gameObject.transform.position.y < 18f)
         {
 
             transform.position = _posTeletransport.position;
             _target.transform.position = _posTeletransport.position;
         }
+
+        //if (_player.gameObject.transform.position.y > 18f) Stop();
     }
 
     public void OrderGo()
     {
-        if(!quickEnd) StartCoroutine(_model.OrderGO());
+        if(!quickEnd && _player.transform.position.y < 18f) StartCoroutine(_model.OrderGO());
         
     }
 

@@ -15,21 +15,21 @@ public class OrderDog : MonoBehaviour
 
     private void Update()
     {
+        if (activeOrders)
+        {
+            if (transform.position.y >= 18f)
+            {
 
-        //if (activeOrders)
-        //{
-        //    if (transform.position.y >= 18f)
-        //    {
-        //        foreach (var dog in _dogs)
-        //            dog.enabled = false;
-        //    }
+                foreach (var dog in _dogs)
+                    dog.Stop();//dog.enabled = false;
+            }
 
-        //    else
-        //    {
-        //        foreach (var dog in _dogs)
-        //            dog.enabled = true;
-        //    }
-        //}
+            //else
+            //{
+            //    foreach (var dog in _dogs)
+            //        dog.enabled = true;
+            //}
+        }
     }
 
     public void CallDog()

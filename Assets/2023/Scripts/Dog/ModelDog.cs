@@ -126,36 +126,36 @@ public class ModelDog
             _target.transform.position = _myTransform.position;
     }
 
-    public void OffScreenSpeed()
-    {
+    //public void OffScreenSpeed()
+    //{
         
         
-            float distanceToPlayer = Vector3.Distance(_myTransform.position, _player.gameObject.transform.position);
-            if (distanceToPlayer >= _distToPlayer)
-            {
-                _agent.speed = _offSpeed;
-            }
-            if (distanceToPlayer <= _distToPlayer)
-            {
-                _agent.speed = _speedNormal;
-            }
+    //        float distanceToPlayer = Vector3.Distance(_myTransform.position, _player.gameObject.transform.position);
+    //        if (distanceToPlayer >= _distToPlayer)
+    //        {
+    //            _agent.speed = _offSpeed;
+    //        }
+    //        if (distanceToPlayer <= _distToPlayer)
+    //        {
+    //            _agent.speed = _speedNormal;
+    //        }
         
        
         
-    }
+    //}
 
-    public void TeletransportToPlayer()
-    {
-        if (_order.activeOrders && _player.gameObject.transform.position.y < 17f)
-        {
-            float distanceToPlayer = Vector3.Distance(_myTransform.position, _player.gameObject.transform.position);
-            if (distanceToPlayer > _distToPlayer)
-            {
-                _myTransform.position = _posTeletransport.position;
-                _target.transform.position = _myTransform.transform.position;
-            }
-        }
+    //public void TeletransportToPlayer()
+    //{
+    //    if (_order.activeOrders && _player.gameObject.transform.position.y < 17f)
+    //    {
+    //        float distanceToPlayer = Vector3.Distance(_myTransform.position, _player.gameObject.transform.position);
+    //        if (distanceToPlayer > _distToPlayer)
+    //        {
+    //            _myTransform.position = _posTeletransport.position;
+    //            _target.transform.position = _myTransform.transform.position;
+    //        }
+    //    }
 
-        else _myTransform.position = _myTransform.position;
-    }
+    //    else _myTransform.position = _myTransform.position;
+    //}
 }
