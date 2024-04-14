@@ -39,6 +39,7 @@ public class WolfStatic : MonoBehaviour
     {
         var player = other.GetComponent<Character>();
         var rabbit = other.GetComponent<Rabbit>();
+        var dog = other.GetComponent<Dog>();
 
         if (player != null && !player.rabbitPicked)
         {
@@ -55,6 +56,12 @@ public class WolfStatic : MonoBehaviour
             Destroy(rabbit.gameObject);
             _rabbitFollow.SetActive(true);
             StartCoroutine(PursuitRabbit());
+        }
+
+        if(dog != null)
+        {
+            dog.scared = true;
+            dog.Scared();
         }
     }
 

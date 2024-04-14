@@ -61,6 +61,27 @@ public class ModelDog
         }
     }
 
+    public IEnumerator ScaredCoroutine()
+    {
+        if (_scared && _order.activeOrders)
+        {
+            _agent.speed = _speedRun;
+            int aux = UnityEngine.Random.Range(0, _scaredPoints.Length);
+            _target.transform.position = _scaredPoints[aux].transform.position;
+            _agent.destination = _target.transform.position;
+            _targetDist = _target.transform.position - _myTransform.position;
+
+            while (_targetDist.magnitude > _targetRadius && (_targetDist.x > 3 || _targetDist.z > 3))
+            {
+                yield return null;
+                _targetDist = _target.transform.position - _myTransform.position;
+            }
+
+            _scared = false;
+            _agent.speed = _speedNormal;
+        }
+    }
+
     public IEnumerator OrderGO()
     {
         if (_order.activeOrders)

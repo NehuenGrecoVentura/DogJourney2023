@@ -51,7 +51,7 @@ public class Dog : MonoBehaviour
         //_model.OffScreenSpeed();
 
 
-        if (!IsInView() && IsFarEnough() && _order.activeOrders && !quickEnd && _player.gameObject.transform.position.y < 18f)
+        if (!IsInView() && IsFarEnough() && _order.activeOrders && !quickEnd && _player.gameObject.transform.position.y < 18f && !scared)
         {
 
             transform.position = _posTeletransport.position;
@@ -59,12 +59,20 @@ public class Dog : MonoBehaviour
             Stop();
         }
 
+        if (scared && transform.position == _target.gameObject.transform.position) scared = false;
+
         //if (_player.gameObject.transform.position.y > 18f) Stop();
+    }
+
+    public void Scared()
+    {
+        //StopCoroutine(_model.OrderGO());
+        if(scared) StartCoroutine(_model.OrderGOQick(_scaredPoints[0]));
     }
 
     public void OrderGo()
     {
-        if(!quickEnd && _player.transform.position.y < 18f) StartCoroutine(_model.OrderGO());
+        if(!quickEnd && _player.transform.position.y < 18f && !scared) StartCoroutine(_model.OrderGO());
         
     }
 
