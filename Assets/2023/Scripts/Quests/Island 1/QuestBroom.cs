@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class QuestBroom : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class QuestBroom : MonoBehaviour
     private BoxCollider _myCol;
     private bool _activeQuest = false;
     private bool _ending = false;
+    private Character _player;
 
     private void Awake()
     {
@@ -34,10 +36,12 @@ public class QuestBroom : MonoBehaviour
         _questUI = FindObjectOfType<QuestUI>();
         _radar = FindObjectOfType<LocationQuest>();
         _nextQuest = FindObjectOfType<TableQuest>();
+        _player = FindObjectOfType<Character>();
     }
 
     private void Start()
     {
+        StartCoroutine(LookToPlayer());
         _dialogue.canTalk = true;
         _iconInteract.SetActive(false);
         _myAnim.runtimeAnimatorController = _animController[1];
@@ -48,6 +52,15 @@ public class QuestBroom : MonoBehaviour
 
         for (int i = 0; i < _dialogue._lines.Length; i++)
             _dialogue._lines[i] = _lines[i];
+    }
+
+    private IEnumerator LookToPlayer()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.1f);
+            transform.LookAt(_player.gameObject.transform);
+        }
     }
 
     public void Confirm()
@@ -61,6 +74,7 @@ public class QuestBroom : MonoBehaviour
         _col.enabled = true;
         _questUI.ActiveUIQuest("The Hidden Broom", "Find the lost broom", string.Empty, string.Empty);
         _buttonConfirm.gameObject.SetActive(false);
+        _myAnim.SetBool("Quest", true);
     }
 
     private void OnTriggerStay(Collider other)
@@ -82,6 +96,7 @@ public class QuestBroom : MonoBehaviour
 
     public void ChangeController()
     {
+        StopCoroutine(LookToPlayer());
         _broomPrefabDog.SetActive(false);
         _myAnim.runtimeAnimatorController = _animController[0];
         _broomPrefab.SetActive(true);
