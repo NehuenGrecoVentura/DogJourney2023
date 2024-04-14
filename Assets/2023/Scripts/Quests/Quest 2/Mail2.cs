@@ -44,6 +44,7 @@ public class Mail2 : MailQuest
     [SerializeField] Transform _quickPos;
     [SerializeField] RectTransform _finalDialog;
     private CameraOrbit _camPlayer;
+    private bool _finish = false;
 
     [Header("RADAR")]
     [SerializeField] Transform _boxPos;
@@ -147,7 +148,7 @@ public class Mail2 : MailQuest
                 _questActive = true;
             }
 
-            else if (_inventory.upgradeLoot && _questActive)
+            else if (_inventory.upgradeLoot && _questActive && !_finish)
                 _iconInteract.SetActive(true);
         }
     }
@@ -158,7 +159,7 @@ public class Mail2 : MailQuest
         if (player != null)
         {
             if (Input.GetKeyDown(_keyFinishQuest) && _inventory.upgradeLoot && _questActive)
-                if (Input.GetKeyDown(_keyFinishQuest)) FinishQuest();
+                if (Input.GetKeyDown(_keyFinishQuest)) StartCoroutine(EndingNormal()); //FinishQuest();
         }
     }
 
@@ -182,6 +183,32 @@ public class Mail2 : MailQuest
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
         yield return new WaitForSeconds(1f);
         _fadeOut.DOColor(new Color(0, 0, 0, 0), 1f);
+        _dogCam.gameObject.SetActive(false);
+        _camFocus.gameObject.SetActive(true);
+        _player.gameObject.transform.position = _quickPos.position;
+        _player.gameObject.transform.LookAt(gameObject.transform.position);
+        yield return new WaitForSeconds(1f);
+        _finalDialog.gameObject.SetActive(true);
+        _finalDialog.DOScale(0.8f, 0.5f);
+        yield return new WaitForSeconds(4f);
+        _finalDialog.DOScale(0f, 0.5f);
+        FinishQuest();
+    }
+
+    private IEnumerator EndingNormal()
+    {
+        _finish = true;
+        _finalDialog.DOAnchorPosY(-70f, 0);
+        _finalDialog.DOScale(0, 0);
+        _dog.quickEnd = true;
+        _dog.OrderGoQuick(_quickPos);
+        //yield return new WaitForSeconds(2f);
+        _fadeOut.DOColor(Color.black, 1f);
+        _player.speed = 0;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        yield return new WaitForSeconds(1f);
+        _fadeOut.DOColor(new Color(0, 0, 0, 0), 1f);
+        _camPlayer.gameObject.SetActive(false);
         _dogCam.gameObject.SetActive(false);
         _camFocus.gameObject.SetActive(true);
         _player.gameObject.transform.position = _quickPos.position;
