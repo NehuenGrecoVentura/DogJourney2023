@@ -126,7 +126,11 @@ public class TableQuest : MonoBehaviour
             if (!_questCurrent && _inventory.greenTrees >= _totalWoods)
             {
                 _dialogue.playerInRange = false;
-                if (Input.GetKeyDown(_keyInteract)) StartCoroutine(TutorialBuild());
+                if (Input.GetKeyDown(_keyInteract))
+                {
+                    StopCoroutine(LookToPlayer());
+                    StartCoroutine(TutorialBuild());
+                }
             }
 
             if (!Input.GetKeyDown(_keyInteract)) _iconInteract.SetActive(true);
@@ -147,14 +151,14 @@ public class TableQuest : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.01f);
             transform.LookAt(_player.gameObject.transform.position);
         }
     }
 
     private IEnumerator TutorialBuild()
     {
-        StopCoroutine(LookToPlayer());
+        
         _inventory.nails = 10;
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);

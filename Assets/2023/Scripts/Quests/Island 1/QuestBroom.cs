@@ -56,9 +56,10 @@ public class QuestBroom : MonoBehaviour
 
     private IEnumerator LookToPlayer()
     {
+        yield return new WaitForSeconds(3f);
         while (true)
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.01f);
             transform.LookAt(_player.gameObject.transform);
         }
     }
@@ -84,6 +85,7 @@ public class QuestBroom : MonoBehaviour
         {
             if (Input.GetKeyDown(_keyInteract) && _dogEnter.broomPicked)
             {
+                StopCoroutine(LookToPlayer());
                 _dogEnter.EndingNormal();
                 Destroy(_myCol, 6f);
                 Destroy(this, 6f);
