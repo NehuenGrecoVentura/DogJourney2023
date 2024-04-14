@@ -127,6 +127,8 @@ public class BoxWoods : MonoBehaviour
         _boxTutorial.gameObject.SetActive(false);
         _camPlayer.gameObject.SetActive(true);
         _dogTutorial.gameObject.SetActive(false);
+        _player.speed = _player.speedAux;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
     }
 
 
