@@ -52,7 +52,7 @@ public class NPCFishing : MonoBehaviour
         if (_questActive)
         {
 
-            _fishing.FishQuest(_keyInteract);
+            _fishing.FishQuest(KeyCode.Y);
 
         }
     }
