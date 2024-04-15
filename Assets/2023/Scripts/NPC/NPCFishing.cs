@@ -24,8 +24,14 @@ public class NPCFishing : MonoBehaviour
     [Header("FISHING")]
     private FishingMinigame _fishing;
 
+    [Header("AUDIO")]
+    [SerializeField] AudioClip _soundConfirm;
+    private AudioSource _myAudio;
+
+
     private void Awake()
     {
+        _myAudio = GetComponent<AudioSource>();
         _dialogue = FindObjectOfType<Dialogue>();
         _fishing = FindObjectOfType<FishingMinigame>();
     }
@@ -53,6 +59,7 @@ public class NPCFishing : MonoBehaviour
 
     private void Confirm()
     {
+        _myAudio.PlayOneShot(_soundConfirm);
         _questActive = true;
         _buttonConfirm.gameObject.SetActive(false);
         _dialogue.Close();

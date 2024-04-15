@@ -219,7 +219,7 @@ public class BoxWoods : MonoBehaviour
     {
         _dog.quickEnd = false;
         _play = false;
-        _messageSlide.ShowMessage(_messageSlideText, _iconTAB);
+        //_messageSlide.ShowMessage(_messageSlideText, _iconTAB);
         _radar.StatusRadar(true);
         _radar.target = _nextPos;
         Destroy(_animTruck.gameObject);

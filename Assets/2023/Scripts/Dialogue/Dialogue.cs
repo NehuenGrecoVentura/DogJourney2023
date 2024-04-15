@@ -13,8 +13,11 @@ public class Dialogue : MonoBehaviour
     [SerializeField] TMP_Text _dialogueText;
     [SerializeField] TMP_Text _nameNPCText;
     [SerializeField] float _typingTime = 0.05f;
+
+    [Header("BUTTONS")]
     public Button buttonConfirm;
     [SerializeField] Button _buttonCancel;
+
     private bool _didDialogueStart;
     private int _index;
     private Character _player;
@@ -23,6 +26,8 @@ public class Dialogue : MonoBehaviour
     public bool canTalk = false;
 
     private AudioSource _myAudio;
+    [SerializeField] AudioClip _talkSound;
+    [SerializeField] AudioClip[] _buttonsSounds;
 
     private void Awake()
     {
@@ -99,9 +104,32 @@ public class Dialogue : MonoBehaviour
         canTalk = false;
     }
 
+
+    public void EnterButton()
+    {
+        if (_buttonsSounds.Length > 0)
+        {
+            int random = Random.Range(0, _buttonsSounds.Length);
+            _myAudio.PlayOneShot(_buttonsSounds[random]);
+        }
+
+        ButtonSelectStatus(1.5f, 0.5f);
+    }
+
+    public void ExitButton()
+    {
+        ButtonSelectStatus(1.3005f, 0.5f);
+    }
+
+    private void ButtonSelectStatus(float scale, float time)
+    {
+
+        transform.DOScale(scale, time);
+    }
+
     private IEnumerator ShowLine()
     {
-        _myAudio.Play();
+        _myAudio.PlayOneShot(_talkSound);
         _dialogueText.text = string.Empty;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
