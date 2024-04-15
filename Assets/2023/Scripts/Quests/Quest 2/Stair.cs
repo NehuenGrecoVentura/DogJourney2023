@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using DG.Tweening;
 
 public class Stair : MonoBehaviour
 {
@@ -14,15 +15,34 @@ public class Stair : MonoBehaviour
     [SerializeField] Transform _initialPos;
     [SerializeField] Collider _colPosEnd;
 
-    [Header("MESSAGE SLIDE")]
-    [SerializeField] Sprite _iconMessage;
-    private MessageSlide _messageSlide;
+    [Header("MESSAGE")]
+    [SerializeField] RectTransform _boxSpace;
+    private float _time = 3f;
 
     private void Awake()
     {
         _player = FindObjectOfType<Character>();
-        _messageSlide = FindObjectOfType<MessageSlide>();
     }
+
+    private void Start()
+    {
+        _boxSpace.gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (_firstContact)
+        {
+            _boxSpace.gameObject.SetActive(true);
+            _time -= Time.deltaTime;
+            if (_time <= 0)
+            {
+                _boxSpace.gameObject.SetActive(false);
+                _time = 0;
+            }
+        }
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -39,7 +59,8 @@ public class Stair : MonoBehaviour
 
             if (!_firstContact)
             {
-                _messageSlide.ShowMessage("TO UP", _iconMessage);
+                //_messageSlide.ShowMessage("TO UP", _iconMessage);
+                //StartCoroutine(ShowSPACE());
                 _firstContact = true;
             }
         }
@@ -76,7 +97,7 @@ public class Stair : MonoBehaviour
                 player.gameObject.transform.position = _posEnd.position;
                 _isUp = false;
                 StopCoroutine(Climb());
-            } 
+            }
         }
     }
 
