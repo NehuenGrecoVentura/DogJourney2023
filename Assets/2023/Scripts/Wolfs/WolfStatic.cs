@@ -60,6 +60,7 @@ public class WolfStatic : MonoBehaviour
 
         if(dog != null)
         {
+            _myAudio.PlayOneShot(_soundWolf);
             dog.scared = true;
             dog.Scared();
         }

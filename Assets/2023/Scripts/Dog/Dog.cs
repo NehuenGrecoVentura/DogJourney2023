@@ -31,9 +31,14 @@ public class Dog : MonoBehaviour
     private Vector3 _teletransportPos = new Vector3();
     public bool quickEnd = false;
 
+    [Header("AUDIO")]
+    [SerializeField] AudioClip _soundScared;
+    private AudioSource _myAudio;
+
     private void Awake()
     {
         _myAgent = GetComponent<NavMeshAgent>();
+        _myAudio = GetComponent<AudioSource>();
 
         _player = FindObjectOfType<Character>();
         _order = FindObjectOfType<OrderDog>();
@@ -67,12 +72,13 @@ public class Dog : MonoBehaviour
     public void Scared()
     {
         //StopCoroutine(_model.OrderGO());
+        _myAudio.PlayOneShot(_soundScared);
         if(scared) StartCoroutine(_model.OrderGOQick(_scaredPoints[0]));
     }
 
     public void OrderGo()
     {
-        if(!quickEnd && _player.transform.position.y < 18f && !scared) StartCoroutine(_model.OrderGO());
+        if (!quickEnd && _player.transform.position.y < 18f && !scared) StartCoroutine(_model.OrderGO());
         
     }
 
