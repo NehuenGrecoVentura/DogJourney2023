@@ -51,6 +51,8 @@ public class BoxWoods : MonoBehaviour
     [SerializeField] Image _fadeOut;
     [SerializeField] GameObject _boxTutorial;
     private bool _tutorialQuick = false;
+    [SerializeField] AudioSource _dogAudio;
+    [SerializeField] AudioClip _quickSound;
 
     private QuestUI _questUI;
     private CharacterInventory _inventory;
@@ -133,6 +135,7 @@ public class BoxWoods : MonoBehaviour
 
     private IEnumerator QuickEndCoroutine()
     {
+        _dogAudio.PlayOneShot(_quickSound);
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
         _fadeOut.color = new Color(0, 0, 0, 0);
