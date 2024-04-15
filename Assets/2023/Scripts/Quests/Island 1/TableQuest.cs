@@ -44,8 +44,14 @@ public class TableQuest : MonoBehaviour
 
     [SerializeField] Transform _messageNails;
 
+    [Header("AUDIO")]
+    [SerializeField] AudioClip _soundMessage;
+    [SerializeField] AudioClip _soundConfirm;
+    private AudioSource _myAudio;
+
     private void Awake()
     {
+        _myAudio = GetComponent<AudioSource>();
         _myAnim = GetComponent<Animator>();
         _myCol = GetComponent<BoxCollider>();
         _questUI = FindObjectOfType<QuestUI>();
@@ -59,6 +65,7 @@ public class TableQuest : MonoBehaviour
     {
         StartCoroutine(LookToPlayer());
 
+        _myAudio.Stop();
         _dialogue.canTalk = true;
         _textName.text = _nameNPC;
         _initialPos = transform.position;
@@ -98,6 +105,7 @@ public class TableQuest : MonoBehaviour
 
     public void Confirm()
     {
+        _myAudio.PlayOneShot(_soundConfirm);
         _myCol.enabled = false;
         _iconInteract.SetActive(false);
         _questCurrent = true;
@@ -167,6 +175,7 @@ public class TableQuest : MonoBehaviour
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
         Destroy(_myCol);
         Destroy(_iconInteract);
+        _myAudio.PlayOneShot(_soundMessage);
         _message.SetActive(true);
         _message.transform.DOScale(1f, 1f);
         _textMessage.text = _messages[0];
@@ -179,6 +188,7 @@ public class TableQuest : MonoBehaviour
         _message.SetActive(false);
         _message.transform.localScale = new Vector3(0, 0, 0);
         yield return new WaitForSeconds(3f);
+        _myAudio.PlayOneShot(_soundMessage);
         _message.SetActive(true);
         _message.transform.DOScale(1f, 1f);
         _textMessage.text = _messages[1];
@@ -186,6 +196,7 @@ public class TableQuest : MonoBehaviour
         _message.SetActive(false);
         _message.transform.localScale = new Vector3(0, 0, 0);
         yield return new WaitForSeconds(0.1f);
+        _myAudio.PlayOneShot(_soundMessage);
         _message.SetActive(true);
         _message.transform.DOScale(1f, 1f);
         _textMessage.text = _messages[2];

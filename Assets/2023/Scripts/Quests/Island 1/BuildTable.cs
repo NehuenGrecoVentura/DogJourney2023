@@ -21,8 +21,11 @@ public class BuildTable : MonoBehaviour
     [SerializeField] GameObject _npcFish;
     private Manager _gm;
 
+    private AudioSource _myAudio;
+
     private void Awake()
     {
+        _myAudio = GetComponent<AudioSource>();
         _myCol = GetComponent<Collider>();
         _inventory = FindObjectOfType<CharacterInventory>();
         _player = FindObjectOfType<Character>();
@@ -37,10 +40,12 @@ public class BuildTable : MonoBehaviour
         _tablePrefab.SetActive(false);
         _boxTAB.gameObject.SetActive(false);
         _myCol.enabled = false;
+        _myAudio.Stop();
     }
 
     private IEnumerator Build()
     {
+        _myAudio.Play();
         Destroy(_icon);
         _iconWood.gameObject.SetActive(false);
         _iconNail.gameObject.SetActive(false);

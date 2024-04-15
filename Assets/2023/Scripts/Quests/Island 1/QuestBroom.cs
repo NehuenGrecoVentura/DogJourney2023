@@ -12,6 +12,7 @@ public class QuestBroom : MonoBehaviour
     private QuestUI _questUI;
     private LocationQuest _radar;
     private TableQuest _nextQuest;
+    private AudioSource _myAudio;
 
     [SerializeField] string _nameNPC = "Mary";
     [SerializeField] Dialogue _dialogue;
@@ -30,6 +31,7 @@ public class QuestBroom : MonoBehaviour
 
     private void Awake()
     {
+        _myAudio = GetComponent<AudioSource>();
         _myCol = GetComponent<BoxCollider>();
         _myAnim = GetComponent<Animator>();
         _col = _dogEnter.gameObject.GetComponent<Collider>();
@@ -42,6 +44,7 @@ public class QuestBroom : MonoBehaviour
     private void Start()
     {
         //StartCoroutine(LookToPlayer());
+        _myAudio.Stop();
         _dialogue.canTalk = true;
         _iconInteract.SetActive(false);
         _myAnim.runtimeAnimatorController = _animController[1];
@@ -66,6 +69,7 @@ public class QuestBroom : MonoBehaviour
 
     public void Confirm()
     {
+        _myAudio.Play();
         _iconInteract.SetActive(false);
         _myCol.enabled = false;
         _activeQuest = true;
