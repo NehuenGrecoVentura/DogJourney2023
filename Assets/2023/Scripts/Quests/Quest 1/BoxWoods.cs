@@ -29,7 +29,6 @@ public class BoxWoods : MonoBehaviour
 
     [Header("NEXT QUEST")]
     [SerializeField] int _rewardMoney = 100;
-    [SerializeField] GameObject _iconQuest2Mail;
     [SerializeField] Animator[] _animGates;
     [SerializeField] AudioClip _soundNotification;
     [SerializeField] Camera _maryCam;
@@ -233,7 +232,6 @@ public class BoxWoods : MonoBehaviour
             anim.enabled = true;
 
         _gameManager.QuestCompleted();
-        _iconQuest2Mail.SetActive(true);
         _inventory.money += _rewardMoney;
         Destroy(_arrow);
         Destroy(_iconInteractive);
