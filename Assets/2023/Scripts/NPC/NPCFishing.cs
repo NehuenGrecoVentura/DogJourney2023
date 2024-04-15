@@ -47,15 +47,15 @@ public class NPCFishing : MonoBehaviour
             _dialogue._lines[i] = _lines[i];
     }
 
-    private void Update()
-    {
-        if (_questActive)
-        {
+    //private void Update()
+    //{
+    //    if (_questActive)
+    //    {
 
-            _fishing.FishQuest(KeyCode.Y);
+    //        //_fishing.FishQuest(KeyCode.Y);
 
-        }
-    }
+    //    }
+    //}
 
     private void Confirm()
     {
