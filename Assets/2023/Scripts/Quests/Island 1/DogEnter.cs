@@ -40,11 +40,14 @@ public class DogEnter : MonoBehaviour
     [Header("DOG")]
     [SerializeField] Dog _dog;
     [SerializeField] Camera _camDog;
+    [SerializeField] AudioSource _audioDog;
     
     private Collider _myCol;
     private Manager _gm;
     private LocationQuest _radar;
     private Character _player;
+    private AudioSource _myAudio;
+    [SerializeField] AudioClip _soundQuick;
     
     [Header("NEXT QUEST")]
     [SerializeField] Collider _colTableQuest;
@@ -55,6 +58,7 @@ public class DogEnter : MonoBehaviour
 
     private void Awake()
     {
+        _myAudio = GetComponent<AudioSource>();
         _myCol = GetComponent<Collider>();
         _questUI = FindObjectOfType<QuestUI>();
         _gm = FindObjectOfType<Manager>();
@@ -69,6 +73,8 @@ public class DogEnter : MonoBehaviour
     {
         _message.transform.DOScale(0f, 0f);
         _fadeOut.color = new Color(0,0,0,0);
+        _myAudio.Stop();
+        _audioDog.Stop();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -151,6 +157,7 @@ public class DogEnter : MonoBehaviour
 
     private IEnumerator Message()
     {
+        _myAudio.Play();
         _message.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 125f);
         //_textMessage.rectTransform.anchoredPosition = new Vector2(2.3927f, _textMessage.rectTransform.anchoredPosition.y);
         _textMessage.rectTransform.anchoredPosition = new Vector2(0.2341f, _textMessage.rectTransform.anchoredPosition.y);
@@ -175,7 +182,10 @@ public class DogEnter : MonoBehaviour
         PlayCinematic(true, false, 0, RigidbodyConstraints.FreezeAll, false);
         Destroy(_myCol);
         _dog.gameObject.SetActive(false);
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(2f);
+        _audioDog.Play();
+        yield return new WaitForSeconds(2f);
+        _myAudio.Play();
         _message.SetActive(true);
         _message.transform.DOScale(1f, 0.5f);
         _textMessage.text = _messageBroomFind;
@@ -196,6 +206,7 @@ public class DogEnter : MonoBehaviour
 
     private IEnumerator Ending()
     {
+        _audioDog.PlayOneShot(_soundQuick);
         _camDog.gameObject.SetActive(true);
         _camPlayer.gameObject.SetActive(false);
         _dog.quickEnd = true;
@@ -213,6 +224,7 @@ public class DogEnter : MonoBehaviour
         _player.gameObject.transform.LookAt(_maryNPC.gameObject.transform);
         yield return new WaitForSeconds(1f);
         _textMessage.text = _messageWin;
+        _myAudio.Play();
         _message.transform.DOScale(1f, 0.5f);
         yield return new WaitForSeconds(4f);
         _message.transform.DOScale(0f, 0.5f);

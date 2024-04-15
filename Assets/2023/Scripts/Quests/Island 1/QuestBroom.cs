@@ -41,7 +41,7 @@ public class QuestBroom : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(LookToPlayer());
+        //StartCoroutine(LookToPlayer());
         _dialogue.canTalk = true;
         _iconInteract.SetActive(false);
         _myAnim.runtimeAnimatorController = _animController[1];
@@ -54,7 +54,7 @@ public class QuestBroom : MonoBehaviour
             _dialogue._lines[i] = _lines[i];
     }
 
-    private IEnumerator LookToPlayer()
+    public IEnumerator LookToPlayer()
     {
         yield return new WaitForSeconds(3f);
         while (true)
@@ -76,6 +76,7 @@ public class QuestBroom : MonoBehaviour
         _questUI.ActiveUIQuest("The Hidden Broom", "Find the lost broom", string.Empty, string.Empty);
         _buttonConfirm.gameObject.SetActive(false);
         _myAnim.SetBool("Quest", true);
+        StopCoroutine(LookToPlayer());
     }
 
     private void OnTriggerStay(Collider other)

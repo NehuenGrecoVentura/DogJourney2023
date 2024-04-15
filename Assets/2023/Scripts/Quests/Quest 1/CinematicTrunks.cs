@@ -18,9 +18,11 @@ public class CinematicTrunks : MonoBehaviour
     private Character _player;
     private CameraOrbit _camPlayer;
     private QuestUI _questUI;
+    private AudioSource _myAudio;
 
     private void Awake()
     {
+        _myAudio = GetComponent<AudioSource>();
         _player = FindObjectOfType<Character>();
         _camPlayer = FindObjectOfType<CameraOrbit>();
         _questUI = FindObjectOfType<QuestUI>();
@@ -33,6 +35,7 @@ public class CinematicTrunks : MonoBehaviour
 
     private IEnumerator Play()
     {
+        _myAudio.Stop();
         _questUI.UIStatus(false);
         _camTrunks.gameObject.SetActive(true);
         _camPlayer.gameObject.SetActive(false);
@@ -42,9 +45,9 @@ public class CinematicTrunks : MonoBehaviour
         _boxMessage.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
 
         yield return new WaitForSeconds(4f);
+        _myAudio.Play();
         _boxMessage.SetActive(true);
         _boxMessage.GetComponent<RectTransform>().DOScale(0.8f, 0.5f);
-
 
         yield return new WaitForSeconds(4f);
         //_boxMessage.transform.DOScale(0f, 0.5f);

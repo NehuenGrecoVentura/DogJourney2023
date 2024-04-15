@@ -22,8 +22,11 @@ public class Dialogue : MonoBehaviour
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
     public bool canTalk = false;
 
+    private AudioSource _myAudio;
+
     private void Awake()
     {
+        _myAudio = GetComponent<AudioSource>();
         _player = FindObjectOfType<Character>();
         _cam = FindObjectOfType<CameraOrbit>();
     }
@@ -34,6 +37,7 @@ public class Dialogue : MonoBehaviour
         _boxDialogue.SetActive(false);
         _buttonCancel.gameObject.SetActive(false);
         gameObject.SetActive(false);
+        _myAudio.Stop();
     }
 
     void Update()
@@ -97,6 +101,7 @@ public class Dialogue : MonoBehaviour
 
     private IEnumerator ShowLine()
     {
+        _myAudio.Play();
         _dialogueText.text = string.Empty;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
