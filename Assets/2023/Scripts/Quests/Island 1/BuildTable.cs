@@ -18,6 +18,7 @@ public class BuildTable : MonoBehaviour
     [Header("NEXT QUEST")]
     [SerializeField] Animator[] _animDoors;
     [SerializeField] RectTransform _boxTAB;
+    [SerializeField] GameObject _npcFish;
     private Manager _gm;
 
     private void Awake()
@@ -30,6 +31,7 @@ public class BuildTable : MonoBehaviour
 
     private void Start()
     {
+        _npcFish.SetActive(false);
         _iconWood.gameObject.SetActive(false);
         _iconNail.gameObject.SetActive(false);
         _tablePrefab.SetActive(false);
@@ -84,6 +86,7 @@ public class BuildTable : MonoBehaviour
         _gm.QuestCompleted();
         _boxTAB.gameObject.SetActive(true);
         yield return new WaitForSeconds(3f);
+        _npcFish.SetActive(true);
         Destroy(_boxTAB.transform.parent.gameObject);
         Destroy(this);
     }
