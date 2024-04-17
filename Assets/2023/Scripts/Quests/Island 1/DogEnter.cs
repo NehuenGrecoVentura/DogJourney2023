@@ -41,6 +41,8 @@ public class DogEnter : MonoBehaviour
     [SerializeField] Dog _dog;
     [SerializeField] Camera _camDog;
     [SerializeField] AudioSource _audioDog;
+    [SerializeField] DogBall _dogBall;
+    [SerializeField] GameObject _dogBroomCinematic;
     
     private Collider _myCol;
     private Manager _gm;
@@ -75,6 +77,7 @@ public class DogEnter : MonoBehaviour
         _fadeOut.color = new Color(0,0,0,0);
         _myAudio.Stop();
         _audioDog.Stop();
+        _dogBroomCinematic.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -105,8 +108,6 @@ public class DogEnter : MonoBehaviour
                 _iconInterct.SetActive(false);
                 _secondContact = true;
             }
-                
-            //else _iconInterct.SetActive(true);
         }
     }
 
@@ -120,7 +121,6 @@ public class DogEnter : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && broomPicked) 
             StartCoroutine(Ending());
-
     }
 
     public void EndingQuest()
@@ -146,22 +146,11 @@ public class DogEnter : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void PlayCinematic(bool playCinematic, bool mainCam, float speedPlayer, RigidbodyConstraints rb, bool questUI)
-    {
-        _questUI.UIStatus(questUI);
-        _cinematic.SetActive(playCinematic);
-        _mainCam.gameObject.SetActive(mainCam);
-        _player.speed = speedPlayer;
-        _player.FreezePlayer(rb);
-    }
-
     private IEnumerator Message()
     {
         _myAudio.Play();
         _message.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 125f);
-        //_textMessage.rectTransform.anchoredPosition = new Vector2(2.3927f, _textMessage.rectTransform.anchoredPosition.y);
         _textMessage.rectTransform.anchoredPosition = new Vector2(0.2341f, _textMessage.rectTransform.anchoredPosition.y);
-        //_textMessage.rectTransform.sizeDelta = new Vector2(1302.908f, _textMessage.rectTransform.sizeDelta.y);
         _textMessage.rectTransform.sizeDelta = new Vector2(1030.737f, _textMessage.rectTransform.sizeDelta.y);
         _textMessage.fontSize = 40;
         _textMessage.alignment = TextAlignmentOptions.TopLeft;
@@ -169,19 +158,37 @@ public class DogEnter : MonoBehaviour
         _iconMessage.gameObject.SetActive(false);
         _message.SetActive(true);
         _textMessage.text = _tutorialEnterDog;
-        _message.transform.DOScale(1f, 0.5f);     
-        PlayCinematic(true, false, 0, RigidbodyConstraints.FreezeAll, false);
+        _message.transform.DOScale(1f, 0.5f);
+
+        _questUI.UIStatus(false);
+        _cinematic.SetActive(true);
+        _mainCam.gameObject.SetActive(false);
+        _player.speed = 0;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+
         yield return new WaitForSeconds(5f);
         _message.transform.DOScale(0, 0.5f);
-        PlayCinematic(false, true, _player.speedAux, RigidbodyConstraints.FreezeRotation, true);
+
+        _questUI.UIStatus(true);
+        _cinematic.SetActive(false);
+        _mainCam.gameObject.SetActive(true);
+        _player.speed = _player.speedAux;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+
         _iconInterct.SetActive(true);
     }
 
     private IEnumerator Search()
     {
-        PlayCinematic(true, false, 0, RigidbodyConstraints.FreezeAll, false);
+        _questUI.UIStatus(false);
+        _dogBroomCinematic.SetActive(true);
+        _mainCam.gameObject.SetActive(false);
+        _player.speed = 0;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+
         Destroy(_myCol);
-        _dog.gameObject.SetActive(false);
+        _dogBall.gameObject.transform.position = _enterPos.position;
+
         yield return new WaitForSeconds(2f);
         _audioDog.Play();
         yield return new WaitForSeconds(2f);
@@ -195,7 +202,13 @@ public class DogEnter : MonoBehaviour
         _dog.OrderGo();
         yield return new WaitForSeconds(3f);
         _message.transform.DOScale(0, 0.5f);
-        PlayCinematic(false, true, _player.speedAux, RigidbodyConstraints.FreezeRotation, true);
+
+        _questUI.UIStatus(true);
+        Destroy(_dogBroomCinematic);
+        _mainCam.gameObject.SetActive(true);
+        _player.speed = _player.speedAux;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+
         Destroy(_cinematic);
         _radar.target = _maryNPC.gameObject.transform;
         _questUI.TaskCompleted(1);
