@@ -24,6 +24,7 @@ public class QuestBroom : MonoBehaviour
     [Header("INTERACT")]
     [SerializeField] GameObject _iconInteract;
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
+    [SerializeField] Dog _dog;
     private BoxCollider _myCol;
     private bool _activeQuest = false;
     private bool _ending = false;
@@ -88,7 +89,7 @@ public class QuestBroom : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null && _myCol.enabled)
         {
-            if (Input.GetKeyDown(_keyInteract) && _dogEnter.broomPicked)
+            if (Input.GetKeyDown(_keyInteract) && _dogEnter.broomPicked && !_dog.quickEnd)
             {
                 StopCoroutine(LookToPlayer());
                 _dogEnter.EndingNormal();
