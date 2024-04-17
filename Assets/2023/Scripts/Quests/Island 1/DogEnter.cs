@@ -161,14 +161,13 @@ public class DogEnter : MonoBehaviour
         _textMessage.alignment = TextAlignmentOptions.TopLeft;
         _textName.text = "TIP";
         _iconMessage.gameObject.SetActive(false);
-       
-        
         _textMessage.text = _tutorialEnterDog;
 
         _message.DOAnchorPosY(-1000f, 0f);
         yield return new WaitForSeconds(0.1f);
+        _message.localScale = new Vector3(1, 1, 1);
         _message.gameObject.SetActive(true);
-        _message.DOAnchorPosY(-100f, 0.5f);
+        _message.DOAnchorPosY(70f, 0.5f);
         
         _questUI.UIStatus(false);
         _cinematic.SetActive(true);
@@ -178,6 +177,7 @@ public class DogEnter : MonoBehaviour
 
         yield return new WaitForSeconds(5f);
         _message.DOAnchorPosY(-1000f, 0f);
+        _message.gameObject.SetActive(false);
 
         _questUI.UIStatus(true);
         _cinematic.SetActive(false);
@@ -195,27 +195,25 @@ public class DogEnter : MonoBehaviour
         _mainCam.gameObject.SetActive(false);
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
-
         Destroy(_myCol);
         _dogBall.gameObject.transform.position = _enterPos.position;
-
         yield return new WaitForSeconds(2f);
         _audioDog.Play();
         yield return new WaitForSeconds(2f);
         _myAudio.Play();
+
         _message.gameObject.SetActive(true);
-        //_message.transform.DOScale(1f, 0.5f);
-        _message.GetComponent<RectTransform>().DOAnchorPosY(-100f, 0.5f);
+        _message.DOAnchorPosY(70f, 0.5f);
+
         _textMessage.text = _messageBroomFind;
         _dog.gameObject.SetActive(true);
         _broomPrefab.SetActive(true);
         _dog._target.transform.position = _exitPos.position;
         _dog.OrderGo();
         yield return new WaitForSeconds(3f);
-        //_message.transform.DOScale(0, 0.5f);
-
-        _message.GetComponent<RectTransform>().DOAnchorPosY(-1000f, 0.5f);
+        _message.DOAnchorPosY(-1000f, 0f);
         _message.gameObject.SetActive(false);
+
         _questUI.UIStatus(true);
         Destroy(_dogBroomCinematic);
         _mainCam.gameObject.SetActive(true);
@@ -251,9 +249,16 @@ public class DogEnter : MonoBehaviour
         yield return new WaitForSeconds(1f);
         _textMessage.text = _messageWin;
         _myAudio.Play();
-        _message.transform.DOScale(1f, 0.5f);
+        //_message.transform.DOScale(1f, 0.5f);
+        _message.gameObject.SetActive(true);
+        _message.DOAnchorPosY(70f, 0.5f);
+
+
         yield return new WaitForSeconds(4f);
-        _message.transform.DOScale(0f, 0.5f);
+        //_message.transform.DOScale(0f, 0.5f);
+        _message.DOAnchorPosY(-1000f, 0f);
+        _message.gameObject.SetActive(false);
+
         ActiveNextQuest();
     }
 
@@ -278,11 +283,17 @@ public class DogEnter : MonoBehaviour
         _player.gameObject.transform.position = _endingQuestPos.position;
         _player.gameObject.transform.LookAt(_maryNPC.gameObject.transform);
         yield return new WaitForSeconds(1f);
-        _message.gameObject.SetActive(true);
+        //_message.gameObject.SetActive(true);
         _textMessage.text = _messageWin;
-        _message.transform.DOScale(1f, 0.5f);
+        //_message.transform.DOScale(1f, 0.5f);
+
+
+        _message.gameObject.SetActive(true);
+        _message.DOAnchorPosY(70f, 0.5f);
         yield return new WaitForSeconds(4f);
-        _message.transform.DOScale(0f, 0.5f);
+        //_message.transform.DOScale(0f, 0.5f);
+        _message.DOAnchorPosY(-1000f, 0f);
+        _message.gameObject.SetActive(false);
         ActiveNextQuest();
     }
 }
