@@ -18,7 +18,7 @@ public class TableQuest : MonoBehaviour
     [SerializeField, TextArea(4, 6)] string[] _lines;
 
     [Header("DIALOGS")]
-    [SerializeField] GameObject _message;
+    [SerializeField] RectTransform _message;
     [SerializeField] TMP_Text _textMessage;
     [SerializeField] TMP_Text _textName;
     [SerializeField] string[] _messages;
@@ -72,7 +72,6 @@ public class TableQuest : MonoBehaviour
         transform.position = new Vector3(transform.position.x - 1f, transform.position.y, transform.position.z);
         _myAnim.runtimeAnimatorController = _animController[1];
         _buttonConfirm.onClick.AddListener(() => Confirm());
-        _message.transform.localScale = new Vector3(0, 0, 0);
 
         for (int i = 0; i < _dialogue._lines.Length; i++)
             _dialogue._lines[i] = _lines[i];
@@ -81,6 +80,9 @@ public class TableQuest : MonoBehaviour
         _iconInteract.SetActive(false);
         _messageNails.gameObject.SetActive(false);
         _messageNails.DOMoveX(-1000f, 0.5f);
+
+        _message.DOAnchorPosY(-1000f, 0f);
+        _message.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -176,8 +178,15 @@ public class TableQuest : MonoBehaviour
         Destroy(_myCol);
         Destroy(_iconInteract);
         _myAudio.PlayOneShot(_soundMessage);
-        _message.SetActive(true);
-        _message.transform.DOScale(1f, 1f);
+
+
+        yield return new WaitForSeconds(0.1f);
+
+        _message.gameObject.SetActive(true);
+        _message.localScale = new Vector3(1, 1, 1);
+        _message.DOAnchorPosY(70f, 0.5f);
+        
+
         _textMessage.text = _messages[0];
         yield return new WaitForSeconds(3f);
         transform.position = _initialPos;
@@ -185,23 +194,23 @@ public class TableQuest : MonoBehaviour
         _iconTable.SetActive(true);
         _camPlayer.gameObject.SetActive(false);
         _camCinematic.gameObject.SetActive(true);
-        _message.SetActive(false);
-        _message.transform.localScale = new Vector3(0, 0, 0);
+        _message.gameObject.SetActive(false);
+        _message.DOAnchorPosY(-1000f, 0f);
         yield return new WaitForSeconds(3f);
         _myAudio.PlayOneShot(_soundMessage);
-        _message.SetActive(true);
-        _message.transform.DOScale(1f, 1f);
+        _message.gameObject.SetActive(true);
+        _message.DOAnchorPosY(70f, 0.5f);
         _textMessage.text = _messages[1];
         yield return new WaitForSeconds(6f);
-        _message.SetActive(false);
-        _message.transform.localScale = new Vector3(0, 0, 0);
+        _message.gameObject.SetActive(false);
+        _message.DOAnchorPosY(-1000f, 0f);
         yield return new WaitForSeconds(0.1f);
         _myAudio.PlayOneShot(_soundMessage);
-        _message.SetActive(true);
-        _message.transform.DOScale(1f, 1f);
+        _message.gameObject.SetActive(true);
+        _message.DOAnchorPosY(70f, 0.5f);
         _textMessage.text = _messages[2];
         yield return new WaitForSeconds(4f);
-        _message.transform.DOScale(0f, 0.5f);
+        _message.DOAnchorPosY(-1000f, 0.5f);
         _camPlayer.gameObject.SetActive(true);
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
