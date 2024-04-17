@@ -10,7 +10,7 @@ public class AreaQuest2 : MonoBehaviour
     private CameraOrbit _camPlayer;
 
     [Header("MESSAGE")]
-    [SerializeField] GameObject _boxMessage;
+    [SerializeField] RectTransform _boxMessage;
     [SerializeField] TMP_Text _textMessage;
     [SerializeField] TMP_Text _textName;
     [SerializeField, TextArea(4,6)] string _message;
@@ -45,17 +45,24 @@ public class AreaQuest2 : MonoBehaviour
         _textMessage.text = _message;
         _textName.text = _name;
 
+        _boxMessage.localScale = new Vector3(1, 1, 1);
+        _boxMessage.DOAnchorPosY(-1000f, 0f);
         _camPlayer.gameObject.SetActive(false);
         _cinematicRabbit.SetActive(true);
         yield return new WaitForSeconds(1.5f);
-        _boxMessage.SetActive(true);
-        _boxMessage.transform.DOScale(1f, 0.5f);
+        _boxMessage.gameObject.SetActive(true);
+        //_boxMessage.transform.DOScale(1f, 0.5f);
+        _boxMessage.DOAnchorPosY(70f, 0.5f);
         yield return new WaitForSeconds(5f);
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
-        _boxMessage.transform.DOScale(0, 0.5f);
+        //_boxMessage.transform.DOScale(0, 0.5f);
+        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+
         _camPlayer.gameObject.SetActive(true);
         Destroy(_cinematicRabbit);
-        Destroy(this);
+        yield return new WaitForSeconds(0.5f);
+        _boxMessage.gameObject.SetActive(false);
+        Destroy(this, 0.5f);
     }
 }

@@ -11,7 +11,7 @@ public class CinematicBoxWolf : MonoBehaviour
     [SerializeField] TMP_Text _textPhase2;
 
     [Header("MESSAGE")]
-    [SerializeField] GameObject _boxMessage;
+    [SerializeField] RectTransform _boxMessage;
     [SerializeField] TMP_Text _textMessage;
     [SerializeField] TMP_Text _textName;
     [SerializeField, TextArea(4, 6)] string _message;
@@ -39,6 +39,10 @@ public class CinematicBoxWolf : MonoBehaviour
 
     public IEnumerator StarCinematic()
     {
+        _boxMessage.DOAnchorPosY(-1000f, 0);
+        _boxMessage.localScale = new Vector3(1, 1, 1);
+
+        _questUI.UIStatus(false);
         _camPlayer.gameObject.SetActive(false);
         _cinematic.SetActive(true);
         _textMessage.text = _message;
@@ -47,15 +51,23 @@ public class CinematicBoxWolf : MonoBehaviour
         Destroy(_col);
         _player.FreezePlayer(RigidbodyConstraints.FreezePosition);
         _player.speed = 0;
+
         yield return new WaitForSeconds(8f);
         _boxMessage.gameObject.SetActive(true);
-        _boxMessage.transform.DOScale(1f, 0.5f);
+        _boxMessage.DOAnchorPosY(70f, 0.5f);
+        //_boxMessage.transform.DOScale(1f, 0.5f);
+
         yield return new WaitForSeconds(6f);
         Destroy(_cinematic);
         _camPlayer.gameObject.SetActive(true);
-        _boxMessage.transform.DOScale(0f, 0f);
+        //_boxMessage.transform.DOScale(0f, 0f);
+        _boxMessage.gameObject.SetActive(false);
+        _boxMessage.DOAnchorPosY(-1000f, 0f);
+
+
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _player.speed = _player.speedAux;
+        _questUI.UIStatus(true);
         _questUI.AddNewTask(2, _newTask);
         _questUI.ActiveUIQuest("The Box", "Recover the box", _newTask, "");
         _radar.StatusRadar(true);
