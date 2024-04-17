@@ -7,11 +7,10 @@ public class CinematicTree : CinematicManager, ICinematic
     [SerializeField] Collider _colFirstTree;
     [SerializeField] GameObject _cinematicPlay;
     [SerializeField] Character _player;
-    [SerializeField] GameObject _message;
+    [SerializeField] RectTransform _message;
 
     private Collider _col;
     private TestCinematic _cinematic;
-    private TutorialTree _tutorialTree;
     private Manager _gm;
     private TreeRegenerative[] _greenTrees;
 
@@ -24,7 +23,6 @@ public class CinematicTree : CinematicManager, ICinematic
         _col = GetComponent<Collider>();
 
         _greenTrees = FindObjectsOfType<TreeRegenerative>();
-        _tutorialTree = FindObjectOfType<TutorialTree>();
         _radar = FindObjectOfType<LocationQuest>();
         _gm = FindObjectOfType<Manager>();
     }
@@ -32,20 +30,19 @@ public class CinematicTree : CinematicManager, ICinematic
     private void Start()
     {
         _cinematicPlay.SetActive(false);
-        _message.SetActive(false);
-        _message.transform.DOScale(0, 0);
+        _message.gameObject.SetActive(false);
+        _message.DOAnchorPosY(-1000f, 1f);
     }
 
     public IEnumerator StarCinematic(float duration)
     {
-        _message.SetActive(true);
+        _message.gameObject.SetActive(true);
         _radar.StatusRadar(false);
         ObjStatus(false);
         _cinematic.StartCinematic(_cinematicPlay, durationCinematic);
         _colFirstTree.enabled = true;
         Destroy(_col);
-
-        _message.transform.DOScale(0.5f, 1.5f);
+        _message.DOAnchorPosY(-170f, 1f);
 
         yield return new WaitForSeconds(duration);
 
@@ -58,8 +55,10 @@ public class CinematicTree : CinematicManager, ICinematic
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _gm.GreenTreesShader();
         ObjStatus(true);
-        //_tutorialTree.gameObject.SetActive(true);
         _message.transform.DOScale(0f, 0.1f);
+
+        _message.DOAnchorPosY(-1000f, 1f);
+        _message.gameObject.SetActive(false);
         Destroy(gameObject);
     }
 

@@ -49,7 +49,7 @@ public class BoxWoods : MonoBehaviour
     [SerializeField] Camera _dogCam;
     [SerializeField] Camera _dogTutorial;
     [SerializeField] Image _fadeOut;
-    [SerializeField] GameObject _boxTutorial;
+    [SerializeField] RectTransform _boxTutorial;
     private bool _tutorialQuick = false;
     [SerializeField] AudioSource _dogAudio;
     [SerializeField] AudioClip _quickSound;
@@ -81,6 +81,7 @@ public class BoxWoods : MonoBehaviour
         _animTruck.enabled = false;
         _cinematic.SetActive(false);
         _camCinematic.gameObject.SetActive(false);
+        
 
         foreach (var anim in _animGates)
             anim.enabled = false;
@@ -99,9 +100,6 @@ public class BoxWoods : MonoBehaviour
 
         if (_inventory.greenTrees >= 5)
         {
-            //_fadeOut.color = new Color(0, 0, 0, 0);
-            //_dog.quickEnd = true;
-            //_dog.OrderGoQuick(_posEndQuick);
             if (Input.GetKeyDown(KeyCode.Space)) StartCoroutine(QuickEndCoroutine());
             else
             {
@@ -116,14 +114,14 @@ public class BoxWoods : MonoBehaviour
 
     private IEnumerator TutorialQuick()
     {
-        _boxTutorial.transform.DOScale(0, 0);
+        _boxTutorial.gameObject.SetActive(true);
+        _boxTutorial.DOAnchorPosY(-1000f, 0f);
         _camPlayer.gameObject.SetActive(false);
         _dogTutorial.gameObject.SetActive(true);
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
         yield return new WaitForSeconds(1f);
-        _boxTutorial.gameObject.SetActive(true);
-        _boxTutorial.transform.DOScale(0.8f, 1f);
+        _boxTutorial.DOAnchorPosY(-100f, 0.5f);
         yield return new WaitForSeconds(3f);
         _boxTutorial.gameObject.SetActive(false);
         _camPlayer.gameObject.SetActive(true);
@@ -149,7 +147,6 @@ public class BoxWoods : MonoBehaviour
         _fadeOut.DOColor(Color.black, 1f);
         yield return new WaitForSeconds(2f);
         _fadeOut.DOColor(new Color(0, 0, 0, 0), 1f);
-
         StartCoroutine(RunTruck());
     }
 
@@ -219,7 +216,6 @@ public class BoxWoods : MonoBehaviour
     {
         _dog.quickEnd = false;
         _play = false;
-        //_messageSlide.ShowMessage(_messageSlideText, _iconTAB);
         _radar.StatusRadar(true);
         _radar.target = _nextPos;
         Destroy(_animTruck.gameObject);

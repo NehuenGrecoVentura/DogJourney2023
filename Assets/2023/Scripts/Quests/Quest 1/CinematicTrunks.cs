@@ -41,17 +41,13 @@ public class CinematicTrunks : MonoBehaviour
         _camPlayer.gameObject.SetActive(false);
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
-
-        _boxMessage.GetComponent<RectTransform>().localScale = new Vector3(0, 0, 0);
-
+        _boxMessage.GetComponent<RectTransform>().DOAnchorPosY(-1000f, 1f);
         yield return new WaitForSeconds(4f);
         _myAudio.Play();
         _boxMessage.SetActive(true);
-        _boxMessage.GetComponent<RectTransform>().DOScale(0.8f, 0.5f);
-
+        _boxMessage.GetComponent<RectTransform>().DOAnchorPosY(-170f, 1f);
         yield return new WaitForSeconds(4f);
-        //_boxMessage.transform.DOScale(0f, 0.5f);
-        _boxMessage.GetComponent<RectTransform>().DOScale(0f, 0.5f);
+        _boxMessage.GetComponent<RectTransform>().DOAnchorPosY(-1000f, 0.5f);
         _camTrunks.gameObject.SetActive(false);
         _camPlayer.gameObject.SetActive(true);
         _player.speed = _player.speedAux;
