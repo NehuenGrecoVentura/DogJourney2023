@@ -159,7 +159,7 @@ public class Mail2 : MailQuest
         if (player != null)
         {
             if (Input.GetKeyDown(_keyFinishQuest) && _inventory.upgradeLoot && _questActive)
-                if (Input.GetKeyDown(_keyFinishQuest)) StartCoroutine(EndingNormal()); //FinishQuest();
+                if (Input.GetKeyDown(_keyFinishQuest) && !_dog.quickEnd) StartCoroutine(EndingNormal()); //FinishQuest();
         }
     }
 
