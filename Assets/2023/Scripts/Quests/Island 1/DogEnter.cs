@@ -28,7 +28,7 @@ public class DogEnter : MonoBehaviour
 
     [Header("MESSAGE")]
     [SerializeField] GameObject _cinematic;
-    [SerializeField] GameObject _message;
+    [SerializeField] RectTransform _message;
     [SerializeField] string _messageBroomFind;
     [SerializeField] string _tutorialEnterDog;
     [SerializeField] string _messageWin;
@@ -73,7 +73,10 @@ public class DogEnter : MonoBehaviour
 
     private void Start()
     {
-        _message.transform.DOScale(0f, 0f);
+        _message.DOAnchorPosY(-1000f, 0f);
+        _message.gameObject.SetActive(false);
+
+
         _fadeOut.color = new Color(0,0,0,0);
         _myAudio.Stop();
         _audioDog.Stop();
@@ -149,17 +152,24 @@ public class DogEnter : MonoBehaviour
     private IEnumerator Message()
     {
         _myAudio.Play();
-        _message.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 125f);
+
+
+        _message.anchoredPosition = new Vector2(0f, 125f);
         _textMessage.rectTransform.anchoredPosition = new Vector2(0.2341f, _textMessage.rectTransform.anchoredPosition.y);
         _textMessage.rectTransform.sizeDelta = new Vector2(1030.737f, _textMessage.rectTransform.sizeDelta.y);
         _textMessage.fontSize = 40;
         _textMessage.alignment = TextAlignmentOptions.TopLeft;
         _textName.text = "TIP";
         _iconMessage.gameObject.SetActive(false);
-        _message.SetActive(true);
+       
+        
         _textMessage.text = _tutorialEnterDog;
-        _message.transform.DOScale(1f, 0.5f);
 
+        _message.DOAnchorPosY(-1000f, 0f);
+        yield return new WaitForSeconds(0.1f);
+        _message.gameObject.SetActive(true);
+        _message.DOAnchorPosY(-100f, 0.5f);
+        
         _questUI.UIStatus(false);
         _cinematic.SetActive(true);
         _mainCam.gameObject.SetActive(false);
@@ -167,7 +177,7 @@ public class DogEnter : MonoBehaviour
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
 
         yield return new WaitForSeconds(5f);
-        _message.transform.DOScale(0, 0.5f);
+        _message.DOAnchorPosY(-1000f, 0f);
 
         _questUI.UIStatus(true);
         _cinematic.SetActive(false);
@@ -193,16 +203,19 @@ public class DogEnter : MonoBehaviour
         _audioDog.Play();
         yield return new WaitForSeconds(2f);
         _myAudio.Play();
-        _message.SetActive(true);
-        _message.transform.DOScale(1f, 0.5f);
+        _message.gameObject.SetActive(true);
+        //_message.transform.DOScale(1f, 0.5f);
+        _message.GetComponent<RectTransform>().DOAnchorPosY(-100f, 0.5f);
         _textMessage.text = _messageBroomFind;
         _dog.gameObject.SetActive(true);
         _broomPrefab.SetActive(true);
         _dog._target.transform.position = _exitPos.position;
         _dog.OrderGo();
         yield return new WaitForSeconds(3f);
-        _message.transform.DOScale(0, 0.5f);
+        //_message.transform.DOScale(0, 0.5f);
 
+        _message.GetComponent<RectTransform>().DOAnchorPosY(-1000f, 0.5f);
+        _message.gameObject.SetActive(false);
         _questUI.UIStatus(true);
         Destroy(_dogBroomCinematic);
         _mainCam.gameObject.SetActive(true);
@@ -265,7 +278,7 @@ public class DogEnter : MonoBehaviour
         _player.gameObject.transform.position = _endingQuestPos.position;
         _player.gameObject.transform.LookAt(_maryNPC.gameObject.transform);
         yield return new WaitForSeconds(1f);
-        _message.SetActive(true);
+        _message.gameObject.SetActive(true);
         _textMessage.text = _messageWin;
         _message.transform.DOScale(1f, 0.5f);
         yield return new WaitForSeconds(4f);
