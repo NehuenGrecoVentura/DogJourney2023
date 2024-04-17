@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using AmplifyShaderEditor;
+using DG.Tweening;
 
 public class Dog : MonoBehaviour
 {
@@ -35,6 +37,11 @@ public class Dog : MonoBehaviour
     [SerializeField] AudioClip _soundScared;
     private AudioSource _myAudio;
 
+    [Header("Carrito")] 
+    [SerializeField] private Transform DesiredPoint;
+    [SerializeField] private Transform DestinationPoint;
+    [SerializeField] private float TroleyTime;
+
     private void Awake()
     {
         _myAgent = GetComponent<NavMeshAgent>();
@@ -52,6 +59,7 @@ public class Dog : MonoBehaviour
 
     private void Update()
     {
+        DestinationPoint.DOMove(DesiredPoint.position,TroleyTime);
         //_model.TeletransportToPlayer();
         //_model.OffScreenSpeed();
 
@@ -78,7 +86,10 @@ public class Dog : MonoBehaviour
 
     public void OrderGo()
     {
-        if (!quickEnd && _player.transform.position.y < 18f && !scared) StartCoroutine(_model.OrderGO());
+        if (!quickEnd && _player.transform.position.y < 18f && !scared)
+        {
+            StartCoroutine(_model.OrderGO());
+        }
         
     }
 
@@ -95,13 +106,13 @@ public class Dog : MonoBehaviour
         _model.OrderStay();
     }
 
-    bool IsInView() // Chequeo si está dentro de la cámara
+    bool IsInView() // Chequeo si estï¿½ dentro de la cï¿½mara
     {
         Vector3 viewportPoint = _camPlayer.WorldToViewportPoint(transform.position);
         return viewportPoint.x > 0 && viewportPoint.x < 1 && viewportPoint.y > 0 && viewportPoint.y < 1;
     }
 
-    bool IsFarEnough() // Chequeo si el perro está lejos del player
+    bool IsFarEnough() // Chequeo si el perro estï¿½ lejos del player
     {
         float distance = Vector3.Distance(transform.position, _player.gameObject.transform.position);
         return distance > _distToPlayer;

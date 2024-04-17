@@ -24,6 +24,7 @@ public class FollowDogCarrito : MonoBehaviour
         }
         else
         {
+            
             _agent.destination = Dog.transform.position;
         } 
     }
