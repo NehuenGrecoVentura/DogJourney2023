@@ -77,6 +77,8 @@ public class Mail2 : MailQuest
         _broom.SetActive(false);
         
         _finalDialog.gameObject.SetActive(false);
+        _finalDialog.DOAnchorPosY(-1000f, 0f);
+        _finalDialog.localScale = new Vector3(0.8f, 0.8f, 0.8f);
 
         //Cams
         _camFocus.gameObject.SetActive(false);
@@ -171,8 +173,9 @@ public class Mail2 : MailQuest
 
     private IEnumerator Ending()
     {
-        _finalDialog.DOAnchorPosY(-70f, 0);
-        _finalDialog.DOScale(0, 0);
+        //_finalDialog.DOAnchorPosY(-70f, 0);
+        //_finalDialog.DOScale(0, 0);
+
         _camPlayer.gameObject.SetActive(false);
         _dogCam.gameObject.SetActive(true);
         _dog.quickEnd = true;
@@ -188,18 +191,26 @@ public class Mail2 : MailQuest
         _player.gameObject.transform.position = _quickPos.position;
         _player.gameObject.transform.LookAt(gameObject.transform.position);
         yield return new WaitForSeconds(1f);
+
+
+        //_finalDialog.gameObject.SetActive(true);
+        //_finalDialog.DOScale(0.8f, 0.5f);
+
+
         _finalDialog.gameObject.SetActive(true);
-        _finalDialog.DOScale(0.8f, 0.5f);
+        _finalDialog.DOAnchorPosY(-100f, 0.5f);
+
         yield return new WaitForSeconds(4f);
-        _finalDialog.DOScale(0f, 0.5f);
+        //_finalDialog.DOScale(0f, 0.5f);
+        _finalDialog.DOAnchorPosY(-1000f, 0.5f);
         FinishQuest();
     }
 
     private IEnumerator EndingNormal()
     {
         _finish = true;
-        _finalDialog.DOAnchorPosY(-70f, 0);
-        _finalDialog.DOScale(0, 0);
+        //_finalDialog.DOAnchorPosY(-70f, 0);
+        //_finalDialog.DOScale(0, 0);
         _dog.quickEnd = true;
         _dog.OrderGoQuick(_quickPos);
         //yield return new WaitForSeconds(2f);
@@ -214,10 +225,16 @@ public class Mail2 : MailQuest
         _player.gameObject.transform.position = _quickPos.position;
         _player.gameObject.transform.LookAt(gameObject.transform.position);
         yield return new WaitForSeconds(1f);
+        //_finalDialog.gameObject.SetActive(true);
+        //_finalDialog.DOScale(0.8f, 0.5f);
+
         _finalDialog.gameObject.SetActive(true);
-        _finalDialog.DOScale(0.8f, 0.5f);
+        _finalDialog.DOAnchorPosY(-100f, 0.5f);
+
         yield return new WaitForSeconds(4f);
-        _finalDialog.DOScale(0f, 0.5f);
+        //_finalDialog.DOScale(0f, 0.5f);
+        _finalDialog.DOAnchorPosY(-1000f, 0.5f);
+
         FinishQuest();
     }
 }
