@@ -7,7 +7,7 @@ public class FirstMarket : MonoBehaviour
 {
     [SerializeField] Camera _camFocusMarket;
     [SerializeField] MarketPlace _market;
-    [SerializeField] GameObject _boxMessage;
+    [SerializeField] RectTransform _boxMessage;
     [SerializeField] TMP_Text _textMessage;
     [SerializeField] TMP_Text _textName;
     [SerializeField, TextArea(4,6)] string _message;
@@ -38,8 +38,10 @@ public class FirstMarket : MonoBehaviour
         _myCol.enabled = false;
         _textMessage.text = _message;
         _textName.text = "Tip";
-        _boxMessage.SetActive(true);
-        _boxMessage.transform.DOScale(1f, 0.5f);
+
+        _boxMessage.gameObject.SetActive(true);
+        _boxMessage.DOAnchorPosY(70f, 0.5f);
+        _boxMessage.localScale = new Vector3(1, 1, 1);
         Character player = FindObjectOfType<Character>();
         _camPlayer.gameObject.SetActive(false);
         _camFocusMarket.gameObject.SetActive(true);
@@ -47,7 +49,10 @@ public class FirstMarket : MonoBehaviour
         player.speed = 0;
         player.FreezePlayer(RigidbodyConstraints.FreezeAll);
         yield return new WaitForSeconds(6f);
-        _boxMessage.transform.DOScale(0f, 0.5f);
+        
+        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+        yield return new WaitForSeconds(0.5f);
+        _boxMessage.gameObject.SetActive(false);
         _camPlayer.gameObject.SetActive(true);
         _camFocusMarket.gameObject.SetActive(false);
         player.speed = player.speedAux;

@@ -27,6 +27,7 @@ public class Stair : MonoBehaviour
     private void Start()
     {
         _boxSpace.gameObject.SetActive(false);
+        _boxSpace.DOAnchorPosY(-1000f, 0f);
     }
 
     private void Update()
@@ -34,10 +35,14 @@ public class Stair : MonoBehaviour
         if (_firstContact)
         {
             _boxSpace.gameObject.SetActive(true);
+            _boxSpace.DOAnchorPosY(-100f, 0.5f);
+
+
             _time -= Time.deltaTime;
             if (_time <= 0)
             {
-                _boxSpace.gameObject.SetActive(false);
+                //_boxSpace.gameObject.SetActive(false);
+                _boxSpace.DOAnchorPosY(-1000f, 0.5f);
                 _time = 0;
             }
         }
