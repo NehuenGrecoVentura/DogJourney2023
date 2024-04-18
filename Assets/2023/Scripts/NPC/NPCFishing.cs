@@ -22,7 +22,7 @@ public class NPCFishing : MonoBehaviour
     private bool _questActive = false;
 
     [Header("FISHING")]
-    private FishingMinigame _fishing;
+   [SerializeField] private FishingMinigame _fishing;
 
     [Header("AUDIO")]
     [SerializeField] AudioClip _soundConfirm;
@@ -57,12 +57,14 @@ public class NPCFishing : MonoBehaviour
     //    }
     //}
 
-    private void Confirm()
+    public void Confirm()
     {
         _myAudio.PlayOneShot(_soundConfirm);
+        _fishing.Start = true;
         _questActive = true;
         _buttonConfirm.gameObject.SetActive(false);
         _dialogue.Close();
+        
     }
 
     private void OnTriggerEnter(Collider other)

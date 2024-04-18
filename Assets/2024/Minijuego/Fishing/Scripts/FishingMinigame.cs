@@ -34,7 +34,12 @@ public class FishingMinigame : MonoBehaviour
     [SerializeField] private GameObject ChargeBar; //Barra de progreso
     [SerializeField] private float Capture; //Porcentaje de la barra
     [SerializeField] private float Distance; //Distancia entre el gancho y el pez medido en eje Y
-    [SerializeField] private float Difficulty; //Dificultad, cuanto mas alto, mas rapido se desaparece la barra y mas tarda en cargarse
+    [SerializeField] private float DifficultyCaptureMax; //Dificultad al atrapar
+    [SerializeField] private float DifficultyCaptureMin; //Dificultad al atrapar
+    [SerializeField] private float DifficultyCapture;
+    [SerializeField] private float DifficultyEscapeMax; //Dificultad del pez de escapar
+    [SerializeField] private float DifficultyEscapeMin; //Dificultad del pez de escapar
+    [SerializeField] private float DifficultyEscape;
     [SerializeField] private float CaptureRange; //Rango en la que el pez es atrapado
 
     // Reset
@@ -42,7 +47,15 @@ public class FishingMinigame : MonoBehaviour
     [SerializeField] private Transform StartPos; //Posicion inicial de las cosas
     [SerializeField] public bool Gaming; // Si tas en el minijuego o no
 
+
+    [Header("Victory")] 
+    [SerializeField] private bool Victory; //Si el bool es true gano el juego, si perdio va a ser false
+
+    [SerializeField] private float CaptureResetScore; //a cuanto se va a reiniciar el capture
     private LocationQuest _radar;
+    [SerializeField] public bool Start;
+    private int overWatch;
+    
 
     private void Awake()
     {
@@ -82,21 +95,27 @@ public class FishingMinigame : MonoBehaviour
         Distance = Fish.transform.position.y - HookTrasn.position.y;
         if (Distance < CaptureRange && Distance > -CaptureRange) //Si esta dentro del rango capture crece
         {
-            Capture += Time.deltaTime / Difficulty;
+            Capture += Time.deltaTime / DifficultyCapture;
         }
         else //Si esta fuera del rango capture disminuye
         {
-            Capture -= Time.deltaTime * Difficulty;
+            Capture -= Time.deltaTime * DifficultyEscape;
         }
 
         if (Capture > 1) //Clamp de capture en max
         {
             Capture = 1;
+            Debug.Log("Winner");
+            Victory = true;
+            Quit();
         }
 
         if (Capture < 0) // Clamp de capture en min
         {
             Capture = 0;
+            Debug.Log("Loser");
+            Victory = false;
+            Quit();
         }
         ChargeBar.transform.localScale = new Vector3(2, Capture, 0.8f); // el 2 y el 0.8 son los valores que tienen en el editor
     }
@@ -126,12 +145,14 @@ public class FishingMinigame : MonoBehaviour
 
     void CameraChange() //Cambiar a minijuego / juego
     {
-        if (Input.GetKeyDown(KeyCode.Y)) //Aca se cambia todo
-        {
+        //if (Input.GetKeyDown(KeyCode.Y)) //Aca se cambia todo
+       if(Start && overWatch == 0) //Para iniciar,que algun codigo ponga start en true
+       {
+           overWatch++;
             if (Gaming == true)
             {
                 Gaming = false;
-                Capture = 0.5f;
+                Capture = CaptureResetScore;
                 fishDestination.transform.position = StartPos.position;
                 FishTimer = 0;
                 HookTrasn.position = StartPos.position;
@@ -150,6 +171,9 @@ public class FishingMinigame : MonoBehaviour
                 _character.speed = 0;
                 _character.FreezePlayer(RigidbodyConstraints.FreezeAll);
                 _radar.StatusRadar(false);
+                
+                DifficultyCapture = Random.Range(DifficultyCaptureMin, DifficultyCaptureMax);
+                DifficultyEscape = Random.Range(DifficultyEscapeMin, DifficultyEscapeMax);
             }
 
             if (Gaming == false)
@@ -172,7 +196,7 @@ public class FishingMinigame : MonoBehaviour
             if (Gaming == true)
             {
                 Gaming = false;
-                Capture = 0.5f;
+                Capture = CaptureResetScore;
                 fishDestination.transform.position = StartPos.position;
                 FishTimer = 0;
                 HookTrasn.position = StartPos.position;
@@ -205,5 +229,23 @@ public class FishingMinigame : MonoBehaviour
             }
         }
     }
+
+    void Quit()
+    {
+        overWatch = 0;
+        Start = false;
+        Gaming = false;
+        Capture = CaptureResetScore;
+        fishDestination.transform.position = StartPos.position;
+        FishTimer = 0;
+        HookTrasn.position = StartPos.position;
+        Fish.transform.position = StartPos.position;
+        camer1.SetActive(true);
+        camer2.SetActive(false);
+        _character.speed = _character.speedAux;
+        _character.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _radar.StatusRadar(true);
+    }
 }
+
 
