@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class QuestFence : MonoBehaviour
 {
@@ -11,12 +12,15 @@ public class QuestFence : MonoBehaviour
 
     [Header("QUEST")]
     [SerializeField] int _woodsRequired = 5;
+    [SerializeField] GameObject _iconBuild;
 
     [Header("DIALOG")]
     [SerializeField, TextArea(4, 6)] string[] _lines;
     [SerializeField] string _nameNPC;
     [SerializeField] Button _buttonConfirm;
     [SerializeField] RectTransform _message;
+    [SerializeField] TMP_Text _textMessage;
+    [SerializeField, TextArea(4,6)] string _messageBuild;
     private Dialogue _dialogue;
 
     [Header("AUDIOS")]
@@ -119,6 +123,8 @@ public class QuestFence : MonoBehaviour
     private IEnumerator ShowMessage()
     {
         Destroy(_myCol);
+        _textMessage.text = _messageBuild;
+        _iconBuild.SetActive(true);
         _iconInteract.SetActive(false);
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);

@@ -2,21 +2,33 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class RepairFence : MonoBehaviour
 {
     [SerializeField] GameObject _iconMaterial;
     [SerializeField] GameObject _cinematic;
     [SerializeField] Image _fadeOut;
+    [SerializeField] GameObject _fencesRepared;
+    [SerializeField] GameObject _fencesBroken;
     private CameraOrbit _camPlayer;
     private Character _player;
     private Collider _myCol;
+    private Manager _gm;
+    private MeshRenderer _myMesh;
+
+    [SerializeField] RectTransform _message;
+    [SerializeField, TextArea(6, 4)] string _messageEnd;
+    [SerializeField] TMP_Text _textEnd;
 
     private void Awake()
     {
         _myCol = GetComponent<Collider>();
+        _myMesh = GetComponent<MeshRenderer>();
+
         _camPlayer = FindObjectOfType<CameraOrbit>();
         _player = FindObjectOfType<Character>();
+        _gm = FindObjectOfType<Manager>();
     }
 
     private void Start()
@@ -48,7 +60,7 @@ public class RepairFence : MonoBehaviour
     {
         Destroy(_myCol);
         Destroy(_iconMaterial.gameObject);
-
+        _myMesh.enabled = false;
         _player.isConstruct = true;
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
@@ -74,12 +86,31 @@ public class RepairFence : MonoBehaviour
         
         //yield return new WaitForSeconds(4f);
         _fadeOut.DOColor(Color.clear, 2f);
+        Destroy(_fencesBroken);
+        _fencesRepared.SetActive(true);
         yield return new WaitForSeconds(2);
         _player.isConstruct = false;
+
+        _textEnd.text = _messageEnd;
+        _message.DOAnchorPosY(-1000f, 0f);
+        _message.localScale = new Vector3(1, 1, 1);
+        _message.gameObject.SetActive(true);
+        _message.DOAnchorPosY(70f, 0.5f);
+
+
+        yield return new WaitForSeconds(5f);
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _camPlayer.gameObject.SetActive(true);
+
+
+        _message.gameObject.SetActive(false);
+        _message.DOAnchorPosY(-1000f, 0f);
+
+
         Destroy(_cinematic);
+        _gm.QuestCompleted();
         Destroy(this);
+
     }
 }
