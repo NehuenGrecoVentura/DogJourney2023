@@ -74,6 +74,11 @@ public class Dog : MonoBehaviour
         if (scared && transform.position == _target.gameObject.transform.position) scared = false;
 
         //if (_player.gameObject.transform.position.y > 18f) Stop();
+
+
+        float distance = Vector3.Distance(transform.position, _target.transform.position);
+        if (distance <= 2.5f) Stop();
+
     }
 
     public void Scared()

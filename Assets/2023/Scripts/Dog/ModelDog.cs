@@ -146,7 +146,10 @@ public class ModelDog
     public void OrderStay()
     {
         if (_order.activeOrders)
+        {
             _target.transform.position = _myTransform.position;
+            EventIdle?.Invoke();
+        }
     }
 
     //public void OffScreenSpeed()

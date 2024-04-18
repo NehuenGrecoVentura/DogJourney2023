@@ -44,6 +44,7 @@ public class DogEnter : MonoBehaviour
     [SerializeField] AudioSource _audioDog;
     [SerializeField] DogBall _dogBall;
     [SerializeField] GameObject _dogBroomCinematic;
+    [SerializeField] Animator _animDog;
     
     private Collider _myCol;
     private Manager _gm;
@@ -213,7 +214,10 @@ public class DogEnter : MonoBehaviour
         _myAudio.PlayOneShot(_searchSound);
 
         yield return new WaitForSeconds(2f);
-        //_myAudio.Play();
+        _animDog.enabled = false;
+        yield return new WaitForSeconds(0.1f);
+        _animDog.enabled = true;
+
         _myAudio.Stop();
         _myAudio.PlayOneShot(_messageSound);
         _searchParticle.Stop();
@@ -222,7 +226,7 @@ public class DogEnter : MonoBehaviour
         _message.DOAnchorPosY(70f, 0.5f);
 
         _textMessage.text = _messageBroomFind;
-        _dog.gameObject.SetActive(true);
+        //_dog.gameObject.SetActive(true);
         _broomPrefab.SetActive(true);
         _dog._target.transform.position = _exitPos.position;
         _dog.OrderGo();
