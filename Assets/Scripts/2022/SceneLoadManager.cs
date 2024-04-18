@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using TMPro;
 
 public class SceneLoadManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class SceneLoadManager : MonoBehaviour
 
     [SerializeField] RectTransform _fadeOut;
     [SerializeField] Image _imageLoad;
+    [SerializeField] TMP_Text _textPercentage;
 
     public void SceneLoad(int sceneIndex)
     {
@@ -47,8 +49,8 @@ public class SceneLoadManager : MonoBehaviour
         while (!asyncOperation.isDone)
         {
             progress = Mathf.MoveTowards(progress, asyncOperation.progress, Time.deltaTime);
-            //_sliderloadBar.value = asyncOperation.progress / 0.9f;
             _sliderloadBar.value = progress;
+            _textPercentage.text = Mathf.RoundToInt(progress * 100).ToString() + "%";
             if (progress >= 0.9f) _sliderloadBar.value = 1;
             yield return null;
         }
