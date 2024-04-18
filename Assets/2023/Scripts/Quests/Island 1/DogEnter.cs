@@ -25,6 +25,7 @@ public class DogEnter : MonoBehaviour
     [SerializeField] Transform _enterPos;
     [SerializeField] Transform _exitPos;
     [SerializeField] Transform _endingQuestPos;
+    [SerializeField] ParticleSystem _searchParticle;
 
     [Header("MESSAGE")]
     [SerializeField] GameObject _cinematic;
@@ -48,7 +49,7 @@ public class DogEnter : MonoBehaviour
     private Manager _gm;
     private LocationQuest _radar;
     private Character _player;
-    private AudioSource _myAudio;
+    
     [SerializeField] AudioClip _soundQuick;
     
     [Header("NEXT QUEST")]
@@ -58,9 +59,13 @@ public class DogEnter : MonoBehaviour
     private QuestUI _questUI;
     private CameraOrbit _camPlayer;
 
+    [Header("MY AUDIO")]
+    [SerializeField] AudioSource _myAudio;
+    [SerializeField] AudioClip _messageSound;
+    [SerializeField] AudioClip _searchSound;
+
     private void Awake()
     {
-        _myAudio = GetComponent<AudioSource>();
         _myCol = GetComponent<Collider>();
         _questUI = FindObjectOfType<QuestUI>();
         _gm = FindObjectOfType<Manager>();
@@ -77,10 +82,13 @@ public class DogEnter : MonoBehaviour
         _message.gameObject.SetActive(false);
 
 
-        _fadeOut.color = new Color(0,0,0,0);
+        _fadeOut.color = new Color(0, 0, 0, 0);
         _myAudio.Stop();
         _audioDog.Stop();
         _dogBroomCinematic.SetActive(false);
+
+        _searchParticle.Stop();
+        _searchParticle.playbackSpeed = 4f;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -151,9 +159,9 @@ public class DogEnter : MonoBehaviour
 
     private IEnumerator Message()
     {
-        _myAudio.Play();
+        //_myAudio.Play();
 
-
+        _myAudio.PlayOneShot(_messageSound);
         _message.anchoredPosition = new Vector2(0f, 125f);
         _textMessage.rectTransform.anchoredPosition = new Vector2(0.2341f, _textMessage.rectTransform.anchoredPosition.y);
         _textMessage.rectTransform.sizeDelta = new Vector2(1030.737f, _textMessage.rectTransform.sizeDelta.y);
@@ -197,11 +205,19 @@ public class DogEnter : MonoBehaviour
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         Destroy(_myCol);
         _dogBall.gameObject.transform.position = _enterPos.position;
-        yield return new WaitForSeconds(2f);
-        _audioDog.Play();
-        yield return new WaitForSeconds(2f);
-        _myAudio.Play();
 
+        yield return new WaitForSeconds(1.5f);
+        _audioDog.Play();
+        _dog.Search();
+        _searchParticle.Play();
+        _myAudio.PlayOneShot(_searchSound);
+
+        yield return new WaitForSeconds(2f);
+        //_myAudio.Play();
+        _myAudio.Stop();
+        _myAudio.PlayOneShot(_messageSound);
+        _searchParticle.Stop();
+        
         _message.gameObject.SetActive(true);
         _message.DOAnchorPosY(70f, 0.5f);
 
@@ -248,7 +264,8 @@ public class DogEnter : MonoBehaviour
         _player.gameObject.transform.LookAt(_maryNPC.gameObject.transform);
         yield return new WaitForSeconds(1f);
         _textMessage.text = _messageWin;
-        _myAudio.Play();
+        //_myAudio.Play();
+        _myAudio.PlayOneShot(_messageSound);
         //_message.transform.DOScale(1f, 0.5f);
         _message.gameObject.SetActive(true);
         _message.DOAnchorPosY(70f, 0.5f);

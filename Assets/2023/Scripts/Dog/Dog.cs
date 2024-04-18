@@ -83,6 +83,11 @@ public class Dog : MonoBehaviour
         if(scared) StartCoroutine(_model.OrderGOQick(_scaredPoints[0]));
     }
 
+    public void Search()
+    {
+        _anim.Play("Search");
+    }
+
     public void OrderGo()
     {
         if (!quickEnd && _player.transform.position.y < 18f && !scared)
@@ -115,5 +120,11 @@ public class Dog : MonoBehaviour
     {
         float distance = Vector3.Distance(transform.position, _player.gameObject.transform.position);
         return distance > _distToPlayer;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        var player = collision.gameObject.GetComponent<Character>();
+        if (player != null) Stop();
     }
 }
