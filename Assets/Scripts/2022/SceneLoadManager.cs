@@ -15,13 +15,11 @@ public class SceneLoadManager : MonoBehaviour
 
     [SerializeField] RectTransform _fadeOut;
     [SerializeField] Image _imageLoad;
+    [SerializeField] Image _iconDog;
     [SerializeField] TMP_Text _textPercentage;
 
     public void SceneLoad(int sceneIndex)
     {
-        //_menu.SetActive(false);
-        //_panelLoadBar.SetActive(true);
-        //StartCoroutine(LoadAsync(sceneIndex));
         StartCoroutine(StartGame(sceneIndex));
     }
 
@@ -48,11 +46,17 @@ public class SceneLoadManager : MonoBehaviour
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneIndex);
         while (!asyncOperation.isDone)
         {
+            InvokeRepeating("ToggleImage", 0f, 2f);
             progress = Mathf.MoveTowards(progress, asyncOperation.progress, Time.deltaTime);
             _sliderloadBar.value = progress;
             _textPercentage.text = Mathf.RoundToInt(progress * 100).ToString() + "%";
             if (progress >= 0.9f) _sliderloadBar.value = 1;
             yield return null;
         }
+    }
+
+    void ToggleImage()
+    {
+        _iconDog.enabled = !_iconDog.enabled;
     }
 }
