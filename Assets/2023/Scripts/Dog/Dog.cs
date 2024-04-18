@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
-using AmplifyShaderEditor;
 using DG.Tweening;
 
 public class Dog : MonoBehaviour
