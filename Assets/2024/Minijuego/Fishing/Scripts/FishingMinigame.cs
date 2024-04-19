@@ -48,14 +48,14 @@ public class FishingMinigame : MonoBehaviour
     [SerializeField] public bool Gaming; // Si tas en el minijuego o no
 
 
-    [Header("Victory")] 
+    [Header("Victory")]
     [SerializeField] private bool Victory; //Si el bool es true gano el juego, si perdio va a ser false
 
     [SerializeField] private float CaptureResetScore; //a cuanto se va a reiniciar el capture
     private LocationQuest _radar;
-    [SerializeField] public bool Start;
+    public bool Start;
     private int overWatch;
-    
+
 
     private void Awake()
     {
@@ -146,9 +146,9 @@ public class FishingMinigame : MonoBehaviour
     void CameraChange() //Cambiar a minijuego / juego
     {
         //if (Input.GetKeyDown(KeyCode.Y)) //Aca se cambia todo
-       if(Start && overWatch == 0) //Para iniciar,que algun codigo ponga start en true
-       {
-           overWatch++;
+        if (Start && overWatch == 0) //Para iniciar,que algun codigo ponga start en true
+        {
+            overWatch++;
             if (Gaming == true)
             {
                 Gaming = false;
@@ -171,7 +171,7 @@ public class FishingMinigame : MonoBehaviour
                 _character.speed = 0;
                 _character.FreezePlayer(RigidbodyConstraints.FreezeAll);
                 _radar.StatusRadar(false);
-                
+
                 DifficultyCapture = Random.Range(DifficultyCaptureMin, DifficultyCaptureMax);
                 DifficultyEscape = Random.Range(DifficultyEscapeMin, DifficultyEscapeMax);
             }

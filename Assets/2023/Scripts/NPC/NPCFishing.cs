@@ -22,18 +22,20 @@ public class NPCFishing : MonoBehaviour
     private bool _questActive = false;
 
     [Header("FISHING")]
-   [SerializeField] private FishingMinigame _fishing;
+    [SerializeField] private FishingMinigame _fishing;
 
     [Header("AUDIO")]
     [SerializeField] AudioClip _soundConfirm;
     private AudioSource _myAudio;
+
+    [Header("CINEMATIC")]
+    [SerializeField] GameObject _cinematic;
 
 
     private void Awake()
     {
         _myAudio = GetComponent<AudioSource>();
         _dialogue = FindObjectOfType<Dialogue>();
-        _fishing = FindObjectOfType<FishingMinigame>();
     }
 
     void Start()
@@ -41,30 +43,17 @@ public class NPCFishing : MonoBehaviour
         _iconInteract.SetActive(false);
         _dialogue.canTalk = true;
         _dialogue.Set(_nameNPC);
-        _buttonConfirm.onClick.AddListener(() => Confirm());
-
-        for (int i = 0; i < _dialogue._lines.Length; i++)
-            _dialogue._lines[i] = _lines[i];
     }
 
-    //private void Update()
-    //{
-    //    if (_questActive)
-    //    {
-
-    //        //_fishing.FishQuest(KeyCode.Y);
-
-    //    }
-    //}
-
-    public void Confirm()
+    private void Confirm()
     {
-        _myAudio.PlayOneShot(_soundConfirm);
+        _dialogue.canTalk = false;
         _fishing.Start = true;
+        _myAudio.PlayOneShot(_soundConfirm);
         _questActive = true;
         _buttonConfirm.gameObject.SetActive(false);
         _dialogue.Close();
-        
+        _cinematic.SetActive(true);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -75,7 +64,18 @@ public class NPCFishing : MonoBehaviour
             _dialogue.playerInRange = true;
             _iconInteract.SetActive(true);
             _dialogue.gameObject.SetActive(true);
+            _buttonConfirm.onClick.AddListener(() => Confirm());
+
+            for (int i = 0; i < _dialogue._lines.Length; i++)
+                _dialogue._lines[i] = _lines[i];
         }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null && _questActive && Input.GetKeyDown(KeyCode.F))
+            _fishing.Start = true;
     }
 
     private void OnTriggerExit(Collider other)
