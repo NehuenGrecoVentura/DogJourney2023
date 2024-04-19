@@ -142,7 +142,8 @@ public class FishingMinigame : MonoBehaviour
             Victory = false;
             //Quit();
         }
-        ChargeBar.transform.localScale = new Vector3(2, Capture, 0.8f); // el 2 y el 0.8 son los valores que tienen en el editor
+        //ChargeBar.transform.localScale = new Vector3(2, Capture, 0.8f); // el 2 y el 0.8 son los valores que tienen en el editor
+        ChargeBar.transform.localScale = new Vector3(transform.localScale.x, Capture, 0.8f); // el 2 y el 0.8 son los valores que tienen en el editor
     }
 
 
