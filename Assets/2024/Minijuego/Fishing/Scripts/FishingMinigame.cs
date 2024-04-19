@@ -62,6 +62,7 @@ public class FishingMinigame : MonoBehaviour
     [SerializeField] GameObject _fishMesh;
     [SerializeField] SpriteRenderer _spriteFish;
     [SerializeField] SpriteRenderer _spriteFishWin;
+    [SerializeField] GameObject _canvasRenderFish;
 
     private void Awake()
     {
@@ -71,6 +72,7 @@ public class FishingMinigame : MonoBehaviour
     private void Start()
     {
         _spriteFishWin.transform.DOScale(0f, 0f);
+        _canvasRenderFish.SetActive(false);
     }
 
     void Update()
@@ -196,6 +198,7 @@ public class FishingMinigame : MonoBehaviour
         //if (Input.GetKeyDown(KeyCode.Y)) //Aca se cambia todo
         if (start && overWatch == 0) //Para iniciar,que algun codigo ponga start en true
         {
+            _canvasRenderFish.SetActive(true);
             overWatch++;
             if (Gaming == true)
             {
