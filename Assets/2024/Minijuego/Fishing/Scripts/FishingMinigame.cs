@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class FishingMinigame : MonoBehaviour
 {
@@ -56,9 +58,19 @@ public class FishingMinigame : MonoBehaviour
     public bool start;
     private int overWatch;
 
+    [Header("FISH MESH")]
+    [SerializeField] GameObject _fishMesh;
+    [SerializeField] SpriteRenderer _spriteFish;
+    [SerializeField] SpriteRenderer _spriteFishWin;
+
     private void Awake()
     {
         _radar = FindObjectOfType<LocationQuest>();
+    }
+
+    private void Start()
+    {
+        _spriteFishWin.transform.DOScale(0f, 0f);
     }
 
     void Update()
@@ -77,6 +89,8 @@ public class FishingMinigame : MonoBehaviour
 
         fishSpeed += Time.deltaTime * FishSpeedMult;
         FishTimer -= Time.deltaTime;
+        CheckDir();
+
         if (FishTimer < 0)
         {
             FishTimer = Random.Range(0.1f, 1) * TimeMult; //El pez tiene un nuevo random timer
@@ -87,6 +101,12 @@ public class FishingMinigame : MonoBehaviour
 
         Fish.transform.position =
             Vector3.Lerp(Fish.transform.position, fishDestination.transform.position, fishSpeed); //Movimiento del pez al objetivo
+    }
+
+    private void CheckDir()
+    {
+        if (Fish.transform.position.y > fishDestination.transform.position.y) _spriteFish.flipY = true;
+        else _spriteFish.flipY = false;
     }
 
     void Catch() //Atrapar al pez
@@ -106,7 +126,11 @@ public class FishingMinigame : MonoBehaviour
             Capture = 1;
             Debug.Log("Winner");
             Victory = true;
-            Quit();
+            StartCoroutine(Reset());
+            //Quit();
+            //_spriteFishWin.transform.DOScale(1f, 0.5f);
+            //Fish.SetActive(false);
+            //_spriteFishWin.transform.DOScale(1f, 0.5f).OnComplete(() => _spriteFishWin.transform.DOScale(0f, 1f));
         }
 
         if (Capture < 0) // Clamp de capture en min
@@ -114,11 +138,36 @@ public class FishingMinigame : MonoBehaviour
             Capture = 0;
             Debug.Log("Loser");
             Victory = false;
-            Quit();
+            //Quit();
         }
         ChargeBar.transform.localScale = new Vector3(2, Capture, 0.8f); // el 2 y el 0.8 son los valores que tienen en el editor
     }
 
+
+
+    private IEnumerator Reset()
+    {
+        if (Victory)
+        {
+            Gaming = false;
+            Fish.SetActive(false);
+            HookTrasn.gameObject.SetActive(false);
+            _spriteFishWin.transform.DOScale(1f, 0.5f).OnComplete(() => _spriteFishWin.transform.DOScale(0f, 1f));
+            yield return new WaitForSeconds(3f);
+            overWatch = 0;
+            start = false;
+            Gaming = false;
+            Capture = CaptureResetScore;
+            fishDestination.transform.position = StartPos.position;
+            FishTimer = 0;
+            HookTrasn.position = StartPos.position;
+            Fish.transform.position = StartPos.position;
+            Fish.SetActive(true);
+            HookTrasn.gameObject.SetActive(true);
+            Gaming = true;
+            Victory = false;
+        }
+    }
 
     void playerControl() //Subir o bajar la barra
     {
