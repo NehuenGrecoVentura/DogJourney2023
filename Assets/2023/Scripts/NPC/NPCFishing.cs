@@ -23,6 +23,7 @@ public class NPCFishing : MonoBehaviour
 
     [Header("FISHING")]
     [SerializeField] private FishingMinigame _fishing;
+    private TutorialFishing _tutorial;
 
     [Header("AUDIO")]
     [SerializeField] AudioClip _soundConfirm;
@@ -30,6 +31,7 @@ public class NPCFishing : MonoBehaviour
 
     private void Awake()
     {
+        _tutorial = GetComponent<TutorialFishing>();
         _myAudio = GetComponent<AudioSource>();
         _dialogue = FindObjectOfType<Dialogue>();
     }
@@ -39,16 +41,18 @@ public class NPCFishing : MonoBehaviour
         _iconInteract.SetActive(false);
         _dialogue.canTalk = true;
         _dialogue.Set(_nameNPC);
+        _tutorial.enabled = false;
     }
 
     private void Confirm()
     {
         _dialogue.canTalk = false;
-        _fishing.Start = true;
+        _fishing.start = true;
         _myAudio.PlayOneShot(_soundConfirm);
         _questActive = true;
         _buttonConfirm.gameObject.SetActive(false);
         _dialogue.Close();
+        _tutorial.enabled = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -70,7 +74,7 @@ public class NPCFishing : MonoBehaviour
     {
         var player = other.GetComponent<Character>();
         if (player != null && _questActive && Input.GetKeyDown(KeyCode.F))
-            _fishing.Start = true;
+            _fishing.start = true;
     }
 
     private void OnTriggerExit(Collider other)

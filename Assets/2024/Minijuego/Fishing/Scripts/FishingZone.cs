@@ -35,7 +35,7 @@ public class FishingZone : MonoBehaviour
     {
         if (CD <= 0)
         {
-            fishing.Start = true;
+            fishing.start = true;
             player.transform.position = outPoint.position;
             CD = Random.Range(MinCD, MaxCD);
         }

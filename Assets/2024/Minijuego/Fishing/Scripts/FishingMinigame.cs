@@ -53,9 +53,8 @@ public class FishingMinigame : MonoBehaviour
 
     [SerializeField] private float CaptureResetScore; //a cuanto se va a reiniciar el capture
     private LocationQuest _radar;
-    public bool Start;
+    public bool start;
     private int overWatch;
-
 
     private void Awake()
     {
@@ -146,7 +145,7 @@ public class FishingMinigame : MonoBehaviour
     void CameraChange() //Cambiar a minijuego / juego
     {
         //if (Input.GetKeyDown(KeyCode.Y)) //Aca se cambia todo
-        if (Start && overWatch == 0) //Para iniciar,que algun codigo ponga start en true
+        if (start && overWatch == 0) //Para iniciar,que algun codigo ponga start en true
         {
             overWatch++;
             if (Gaming == true)
@@ -233,7 +232,7 @@ public class FishingMinigame : MonoBehaviour
     void Quit()
     {
         overWatch = 0;
-        Start = false;
+        start = false;
         Gaming = false;
         Capture = CaptureResetScore;
         fishDestination.transform.position = StartPos.position;
