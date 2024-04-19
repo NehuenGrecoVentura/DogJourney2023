@@ -212,7 +212,7 @@ public class FishingMinigame : MonoBehaviour
             }
             if (Gaming == true)
             {
-                camer1.SetActive(false);
+                //camer1.SetActive(false);
                 camer2.SetActive(true);
                 //_character.enabled = false;
 
@@ -226,7 +226,7 @@ public class FishingMinigame : MonoBehaviour
 
             if (Gaming == false)
             {
-                camer1.SetActive(true);
+                //camer1.SetActive(true);
                 camer2.SetActive(false);
                 //_character.enabled = true;
 
