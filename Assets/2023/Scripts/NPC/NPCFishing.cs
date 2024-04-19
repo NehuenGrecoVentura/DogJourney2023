@@ -28,10 +28,6 @@ public class NPCFishing : MonoBehaviour
     [SerializeField] AudioClip _soundConfirm;
     private AudioSource _myAudio;
 
-    [Header("CINEMATIC")]
-    [SerializeField] GameObject _cinematic;
-
-
     private void Awake()
     {
         _myAudio = GetComponent<AudioSource>();
@@ -53,7 +49,6 @@ public class NPCFishing : MonoBehaviour
         _questActive = true;
         _buttonConfirm.gameObject.SetActive(false);
         _dialogue.Close();
-        _cinematic.SetActive(true);
     }
 
     private void OnTriggerEnter(Collider other)
