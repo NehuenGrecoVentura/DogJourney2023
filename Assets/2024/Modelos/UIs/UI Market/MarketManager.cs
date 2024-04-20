@@ -263,7 +263,7 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 
     private IEnumerator OpenMarketCoroutine()
     {
-        CheckUpgrades();
+        //CheckUpgrades();
         _scrollbar.value = 1;
         _intro.gameObject.SetActive(true);
         _intro.transform.DOScale(100f, 2f);

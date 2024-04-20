@@ -78,7 +78,7 @@ public class Article : MonoBehaviour
         Destroy(_borderSelected.gameObject);
         Destroy(_myEvent);
         _inventory.upgradeLoot = false;
-        _market.CheckUpgrades();
+        //_market.CheckUpgrades();
         Destroy(this);
     }
 
