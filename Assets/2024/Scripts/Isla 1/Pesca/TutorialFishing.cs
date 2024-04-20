@@ -128,6 +128,7 @@ public class TutorialFishing : MonoBehaviour
 
     private IEnumerator PlayCinematic()
     {
+        _questUI.UIStatus(false);
         _textName.text = "Alice";
         _player.SetFishingMode(true);
         _player.PlayAnim("Fish");
@@ -145,7 +146,7 @@ public class TutorialFishing : MonoBehaviour
         
         _myAudio.PlayOneShot(_introSound);
         _fadeOut.DOColor(Color.clear, 1f);
-        _questUI.UIStatus(false);
+        
         _camPlayer.gameObject.SetActive(false);
         _cinematic.SetActive(true);
         StartCoroutine(TutorialSpace());
