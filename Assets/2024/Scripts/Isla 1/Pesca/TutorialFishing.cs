@@ -159,6 +159,7 @@ public class TutorialFishing : MonoBehaviour
         _boxMessage.localScale = new Vector3(0.8f, 0.8f, 0.8f);
 
         // Tutorial SPACEBAR
+        _textName.text = "Alice";
         _boxMessage.gameObject.SetActive(true);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
         _myAudio.PlayOneShot(_messageSound);
@@ -166,14 +167,17 @@ public class TutorialFishing : MonoBehaviour
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
 
         // TUTRORIAL KEEP FISH
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         _message.text = _lines[1];
         _boxMessage.DOAnchorPosY(70f, 0.5f);
         _myAudio.PlayOneShot(_messageSound);
 
         // TUTORIAL SLIDER
-        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+
+
         yield return new WaitForSeconds(3f);
+        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+        yield return new WaitForSeconds(1f);
         _message.text = _lines[2];
         _arrow.DOColor(Color.white, 0.5f);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
@@ -182,8 +186,7 @@ public class TutorialFishing : MonoBehaviour
         yield return new WaitForSeconds(3f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
         _arrow.DOColor(Color.clear, 0.5f);
-
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
 
         // CONTEO
         _count[0].DOColor(Color.white, 0.5f);
