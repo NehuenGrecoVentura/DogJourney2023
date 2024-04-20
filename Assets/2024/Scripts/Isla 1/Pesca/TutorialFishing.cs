@@ -33,9 +33,19 @@ public class TutorialFishing : MonoBehaviour
     private LocationQuest _radar;
     private QuestFence _questFence;
 
+    private AudioSource _myAudio;
+    [SerializeField] AudioClip _introSound;
+    [SerializeField] AudioClip _messageSound;
+
+    [SerializeField] Transform _posNPC;
+    [SerializeField] Transform _posPlayer;
+
+
+    
 
     private void Awake()
     {
+        _myAudio = GetComponent<AudioSource>();
         _fishing = FindObjectOfType<FishingMinigame>();
         _camPlayer = FindObjectOfType<CameraOrbit>();
         _questUI = FindObjectOfType<QuestUI>();
@@ -78,6 +88,9 @@ public class TutorialFishing : MonoBehaviour
         _questActive = false;
 
         _message.text = _messageFinal;
+
+        _player.SetFishingMode(0, false);
+
         _player.gameObject.transform.LookAt(transform);
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
@@ -94,6 +107,7 @@ public class TutorialFishing : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         _boxMessage.gameObject.SetActive(true);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
+        _myAudio.PlayOneShot(_messageSound);
         yield return new WaitForSeconds(4f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f).OnComplete(() => _boxMessage.gameObject.SetActive(false));
         yield return new WaitForSeconds(0.6f);
@@ -106,12 +120,19 @@ public class TutorialFishing : MonoBehaviour
 
     private IEnumerator PlayCinematic()
     {
+
+        
+
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
 
         _questActive = true;
         _fadeOut.DOColor(Color.black, 1f);
         yield return new WaitForSeconds(2f);
+        _player.gameObject.transform.position = _posPlayer.transform.position;
+        transform.position = _posNPC.transform.position;
+        _player.SetFishingMode(1, true);
+        _myAudio.PlayOneShot(_introSound);
         _fadeOut.DOColor(Color.clear, 1f);
         _questUI.UIStatus(false);
         _camPlayer.gameObject.SetActive(false);
@@ -129,24 +150,29 @@ public class TutorialFishing : MonoBehaviour
         // Tutorial SPACEBAR
         _boxMessage.gameObject.SetActive(true);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
+        _myAudio.PlayOneShot(_messageSound);
         yield return new WaitForSeconds(3f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
 
         // TUTRORIAL KEEP FISH
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(3f);
         _message.text = _lines[1];
         _boxMessage.DOAnchorPosY(70f, 0.5f);
+        _myAudio.PlayOneShot(_messageSound);
 
         // TUTORIAL SLIDER
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(3f);
         _message.text = _lines[2];
         _arrow.DOColor(Color.white, 0.5f);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
+        _myAudio.PlayOneShot(_messageSound);
         _arrow.gameObject.SetActive(true);
         yield return new WaitForSeconds(3f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
         _arrow.DOColor(Color.clear, 0.5f);
+
+        yield return new WaitForSeconds(3f);
 
         // CONTEO
         _count[0].DOColor(Color.white, 0.5f);

@@ -70,8 +70,12 @@ public class FishingMinigame : MonoBehaviour
     [SerializeField] TMP_Text[] _textAmount;
     public int fishedPicked = 0;
 
+    [Header("AUDIOS")]
+    private AudioSource _myAudio;
+
     private void Awake()
     {
+        _myAudio = GetComponent<AudioSource>();
         _radar = FindObjectOfType<LocationQuest>();
     }
 
@@ -167,8 +171,10 @@ public class FishingMinigame : MonoBehaviour
             Gaming = false;
             Fish.SetActive(false);
             HookTrasn.gameObject.SetActive(false);
+            _myAudio.Play();
             _spriteFishWin.transform.DOScale(1f, 0.5f).OnComplete(() => _spriteFishWin.transform.DOScale(0f, 1f));
             yield return new WaitForSeconds(3f);
+            _myAudio.Stop();
             overWatch = 0;
             start = false;
             Gaming = false;
@@ -305,6 +311,7 @@ public class FishingMinigame : MonoBehaviour
         foreach (var item in _textAmount)
             item.gameObject.SetActive(false);
 
+        _myAudio.Stop();
         overWatch = 0;
         start = false;
         Gaming = false;

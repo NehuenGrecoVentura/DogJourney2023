@@ -18,9 +18,11 @@ public class Character : MonoBehaviour
     [HideInInspector] public float speedAux;
     [SerializeField] float _gravity = 9.7f;
     [SerializeField] Transform _camPos;
+
     public bool isClimb = false;
     public bool rabbitPicked = false;
     public bool isConstruct = false;
+    public bool isFishing = false;
 
     [SerializeField] AudioClip[] _soundsCall;
 
@@ -29,6 +31,9 @@ public class Character : MonoBehaviour
     [SerializeField] Transform _rayPoint1;
     [SerializeField] Transform _rayPoint2;
     private bool _test1, _test2;
+
+    [SerializeField] RuntimeAnimatorController[] _animController;
+    [SerializeField] GameObject _rod;
 
     private void Awake()
     {
@@ -69,8 +74,19 @@ public class Character : MonoBehaviour
 
         else
         {
-            if (!isConstruct) _myAnim.enabled = false;
-            else _myAnim.enabled = true;
+
+            if(_myAnim.runtimeAnimatorController = _animController[0])
+            {
+                if (!isConstruct) _myAnim.enabled = false;
+                else _myAnim.enabled = true;
+            }
+
+
+
+            
+                
+                
+                        
         }
     }
 
@@ -100,6 +116,13 @@ public class Character : MonoBehaviour
         _myRb.useGravity = false;
         _myRb.MovePosition(transform.position + Vector3.up * speedClimb * Time.fixedDeltaTime);
         transform.rotation = Quaternion.Euler(0, 90, 0);
+    }
+
+    public void SetFishingMode(int index, bool rodActive)
+    {
+        isFishing = rodActive;
+        _myAnim.runtimeAnimatorController = _animController[index];
+        _rod.SetActive(rodActive);
     }
 
     private void OnTriggerStay(Collider other)
