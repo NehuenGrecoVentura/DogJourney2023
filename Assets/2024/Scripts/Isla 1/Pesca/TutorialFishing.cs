@@ -89,7 +89,9 @@ public class TutorialFishing : MonoBehaviour
 
         _message.text = _messageFinal;
 
-        _player.SetFishingMode(0, false);
+        _player.SetFishingMode(false);
+        _player.GetComponent<Animator>().enabled = false;
+
 
         _player.gameObject.transform.LookAt(transform);
         _player.speed = 0;
@@ -103,7 +105,8 @@ public class TutorialFishing : MonoBehaviour
         _fadeOut.DOColor(Color.clear, 1f);
         
         _camPlayer.gameObject.SetActive(true);
-        
+        _player.GetComponent<Animator>().enabled = true;
+
         yield return new WaitForSeconds(0.5f);
         _boxMessage.gameObject.SetActive(true);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
@@ -120,18 +123,19 @@ public class TutorialFishing : MonoBehaviour
 
     private IEnumerator PlayCinematic()
     {
-
-        
+       
+        _player.SetFishingMode(true);
+        _player.PlayAnim("Fish");
 
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
-
         _questActive = true;
         _fadeOut.DOColor(Color.black, 1f);
         yield return new WaitForSeconds(2f);
+
         _player.gameObject.transform.position = _posPlayer.transform.position;
         transform.position = _posNPC.transform.position;
-        _player.SetFishingMode(1, true);
+        
         _myAudio.PlayOneShot(_introSound);
         _fadeOut.DOColor(Color.clear, 1f);
         _questUI.UIStatus(false);

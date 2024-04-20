@@ -75,18 +75,8 @@ public class Character : MonoBehaviour
         else
         {
 
-            if(_myAnim.runtimeAnimatorController = _animController[0])
-            {
-                if (!isConstruct) _myAnim.enabled = false;
-                else _myAnim.enabled = true;
-            }
-
-
-
-            
-                
-                
-                        
+            if (!isConstruct) _myAnim.enabled = false;
+            else _myAnim.enabled = true;
         }
     }
 
@@ -118,10 +108,9 @@ public class Character : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 90, 0);
     }
 
-    public void SetFishingMode(int index, bool rodActive)
+    public void SetFishingMode(bool rodActive)
     {
-        isFishing = rodActive;
-        _myAnim.runtimeAnimatorController = _animController[index];
+        isConstruct = rodActive;
         _rod.SetActive(rodActive);
     }
 

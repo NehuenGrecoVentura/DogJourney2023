@@ -76,17 +76,6 @@ public class NPCFishing : MonoBehaviour
         }
     }
 
-
-
-
-
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    var player = other.GetComponent<Character>();
-    //    if (player != null && !_questActive && Input.GetKeyDown(KeyCode.F))
-    //        _fishing.start = true;
-    //}
-
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<Character>();
