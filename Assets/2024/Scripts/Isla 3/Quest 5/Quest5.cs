@@ -21,19 +21,16 @@ public class Quest5 : MonoBehaviour
     [SerializeField] GameObject[] _nextQuest;
     [SerializeField] Transform _nextPos;
     private LocationQuest _map;
-    private Cheats _cheats;
 
     private void Awake()
     {
         _inventory = FindObjectOfType<Inventory>();
         _gm = FindObjectOfType<GManager>();
         _map = FindObjectOfType<LocationQuest>();
-        _cheats = FindObjectOfType<Cheats>();
     }
 
     private void Start()
     {
-        _cheats._quest5Cheated = true;
         _iconInteractive.SetActive(false);
         _canvasQuest[0].SetActive(true);
         _canvasQuest[1].SetActive(true);

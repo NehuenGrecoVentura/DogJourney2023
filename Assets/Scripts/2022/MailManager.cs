@@ -30,7 +30,6 @@ public class MailManager : MonoBehaviour
     [Header("REFERENCES CONFIG")]
     [SerializeField] Character2022 _player;
     [SerializeField] GameObject _nextQuest;
-    Cheats _cheats;
     Collider _col;
     Pause _pause;
     GoToQuest3 _goToQuest3;
@@ -40,7 +39,6 @@ public class MailManager : MonoBehaviour
         _myAudio = GetComponent<AudioSource>();
         _col = GetComponent<Collider>();
         _pause = FindObjectOfType<Pause>();
-        _cheats = FindObjectOfType<Cheats>();
         _goToQuest3 = FindObjectOfType<GoToQuest3>();
     }
 
@@ -73,7 +71,6 @@ public class MailManager : MonoBehaviour
             _text.text = _nextDescription;
             foreach (var obj in _objToDestroy) Destroy(obj.gameObject);
             _iconBox.gameObject.SetActive(true);
-            _cheats._quest2Cheated = true;
             Destroy(this);
         }
     }

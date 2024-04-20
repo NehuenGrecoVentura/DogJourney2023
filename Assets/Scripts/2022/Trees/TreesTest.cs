@@ -9,7 +9,6 @@ public class TreesTest : MonoBehaviour
     [SerializeField] private int MaxHitpoints;
     [SerializeField] private GameObject TreeFall;
     [SerializeField] private GameObject sapling;
-    [SerializeField] private Sapling _sapling;
     [SerializeField] private AudioSource _myAudio;
     [SerializeField] private AudioClip treeHit;
     [SerializeField] private AudioClip soundCutTree;
@@ -40,7 +39,6 @@ public class TreesTest : MonoBehaviour
         _myAudio.PlayOneShot(soundCutTree);
         TreeFall.SetActive(true);
         sapling.SetActive(true);
-        _sapling.setGrowTrue();
         HitPoints = MaxHitpoints;
         gameObject.SetActive(false);
     }

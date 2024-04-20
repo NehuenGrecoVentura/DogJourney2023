@@ -25,7 +25,6 @@ public class Quest4 : MonoBehaviour
     [SerializeField] GameObject _rewardMessage;
     [SerializeField] TMP_Text[] _textsReward;
     private LocationQuest _map;
-    private Cheats _cheats;
     
     [Header("REFS")]
     private Inventory _inventory;
@@ -36,12 +35,10 @@ public class Quest4 : MonoBehaviour
         _inventory = FindObjectOfType<Inventory>();
         _gm = FindObjectOfType<GManager>();
         _map = FindObjectOfType<LocationQuest>();
-        _cheats = FindObjectOfType<Cheats>();
     }
 
     private void Start()
     {
-        _cheats._quest4Cheated = true;
         _iconInteractive.SetActive(false);
         _canvasQuest4[5].SetActive(true);
         _canvasQuest4[6].SetActive(false);

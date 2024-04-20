@@ -8,7 +8,6 @@ public class IntroGame : MonoBehaviour
     [SerializeField] float _timeIntro = 14f;
     [SerializeField] GameObject[] _objsHidden;
     [SerializeField] KeyCode _buttonSkip = KeyCode.Space;
-    private Cheats _cheats;
     private Character2022 _player;
 
     [Header("ICONS")]
@@ -23,7 +22,6 @@ public class IntroGame : MonoBehaviour
         _billboardsGrass = FindObjectsOfType<BillboardGrass>();
         _icons = FindObjectsOfType<IconsInteractive>();
         _map = FindObjectOfType<LocationQuest>();
-        _cheats = FindObjectOfType<Cheats>();
         _player = FindObjectOfType<Character2022>();
     }
 
@@ -38,7 +36,6 @@ public class IntroGame : MonoBehaviour
     void IntroStatus(bool active)
     {
         _map.enabled = active;
-        _cheats.enabled = active;
         _player.enabled = active;
 
         foreach (var item in _billboards)

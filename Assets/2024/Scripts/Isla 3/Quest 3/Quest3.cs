@@ -19,7 +19,6 @@ public class Quest3 : MonoBehaviour
     [SerializeField] GameObject _colQuest4;
     [SerializeField] Transform _nextPos;
     LocationQuest _map;
-    private Cheats _cheats;
     private Inventory _inventory;
     private GateOil _gateOil;
 
@@ -27,7 +26,6 @@ public class Quest3 : MonoBehaviour
     {
         _gm = FindObjectOfType<GManager>();
         _map = FindObjectOfType<LocationQuest>();
-        _cheats = FindObjectOfType<Cheats>();
         _inventory = FindObjectOfType<Inventory>();
         _gateOil = FindObjectOfType<GateOil>();
     }
@@ -35,7 +33,6 @@ public class Quest3 : MonoBehaviour
     private void Start()
     {
         isQuest3 = true;
-        _cheats._quest3Cheated = true;
         _stagesQuest[1].SetActive(false);
         _stagesQuest[2].SetActive(false);
         _iconInteractive.SetActive(false);

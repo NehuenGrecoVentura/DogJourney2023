@@ -23,13 +23,11 @@ public class Quest6 : MonoBehaviour
     [SerializeField] Transform _nextPos;
     private LocationQuest _map;
     private GManager _gm;
-    private Cheats _cheats;
 
     private void Awake()
     {
         _inventory = FindObjectOfType<Inventory>();
         _gm = FindObjectOfType<GManager>();
-        _cheats = FindObjectOfType<Cheats>();
         _map = FindObjectOfType<LocationQuest>();
     }
 
@@ -49,7 +47,6 @@ public class Quest6 : MonoBehaviour
 
     void InitialDefault()
     {
-        _cheats._quest6Cheated = true;
         isQuest6 = true;
         _iconInteractive.SetActive(false);
 
