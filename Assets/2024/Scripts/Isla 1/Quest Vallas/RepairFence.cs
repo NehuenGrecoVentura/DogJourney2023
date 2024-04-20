@@ -25,10 +25,14 @@ public class RepairFence : MonoBehaviour
     private FirstMarket _market;
     private LocationQuest _radar;
 
+    private AudioSource _myAudio;
+
+
     private void Awake()
     {
         _myCol = GetComponent<Collider>();
         _myMesh = GetComponent<MeshRenderer>();
+        _myAudio = GetComponent<AudioSource>();
 
         _camPlayer = FindObjectOfType<CameraOrbit>();
         _player = FindObjectOfType<Character>();
@@ -41,6 +45,7 @@ public class RepairFence : MonoBehaviour
     {
         _iconMaterial.transform.DOScale(0f, 0f);
         _cinematic.SetActive(false);
+        _myAudio.Stop();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -64,6 +69,7 @@ public class RepairFence : MonoBehaviour
 
     private IEnumerator Repair()
     {
+        _myAudio.Play();
         Destroy(_myCol);
         Destroy(_iconMaterial.gameObject);
         _myMesh.enabled = false;
