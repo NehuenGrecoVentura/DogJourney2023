@@ -11,6 +11,7 @@ public class RepairFence : MonoBehaviour
     [SerializeField] Image _fadeOut;
     [SerializeField] GameObject _fencesRepared;
     [SerializeField] GameObject _fencesBroken;
+    [SerializeField] TMP_Text _textName;
     private CameraOrbit _camPlayer;
     private Character _player;
     private Collider _myCol;
@@ -69,6 +70,7 @@ public class RepairFence : MonoBehaviour
 
     private IEnumerator Repair()
     {
+        _textName.text = "Florist";
         _myAudio.Play();
         Destroy(_myCol);
         Destroy(_iconMaterial.gameObject);
