@@ -16,7 +16,7 @@ public class WolfPatrol2022 : MonoBehaviour
     [HideInInspector] public bool rabbitDetected = false;
     WolfPatrol2022 _patrol;
     WolfRabbit2022 _chaseRabbit;
-    public RabbitEscape2022 rabbitEscape;
+
 
     void Start()
     {
@@ -31,11 +31,6 @@ public class WolfPatrol2022 : MonoBehaviour
     {
         if (!_onSight) Patrol();
         else Chase();
-        if (rabbitDetected || rabbitEscape.escape)
-        {
-            _patrol.enabled = false;
-            _chaseRabbit.enabled = true;
-        }
     }
 
     void Patrol()

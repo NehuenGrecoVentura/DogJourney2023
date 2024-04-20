@@ -11,7 +11,7 @@ public class FOV : MonoBehaviour
 	public LayerMask obstacleMask;
 	[HideInInspector]
 	public List<Transform> visibleTargets = new List<Transform>();
-	private SensorWolf _sensorWolf;
+
 	private bool _playerDetected = false;
 	public Transform player;
 	public GameObject coneVision;

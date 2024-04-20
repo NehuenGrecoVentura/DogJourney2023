@@ -24,7 +24,6 @@ public class WolfPatrolNew : MonoBehaviour
     public AudioSource audioDog;
     public AudioClip dogScarySound;
     [Header("DETECTION RABBIT")]
-    public RabbitEscape _rabbit; // AGREGADOR POR NEHUEN
     public WolfChaseRabbit _chaseRabbit; // AGREGADOR POR NEHUEN
     public AudioSource audioRabbit;
     public AudioClip soundRabbit;
@@ -43,7 +42,6 @@ public class WolfPatrolNew : MonoBehaviour
     {
         if (_onSight) chase();
         if (!_onSight) patrol();
-        if (_rabbit.escape || _rabbitDetected) // AGREGADO POR NEHUEN
         {
             _chaseRabbit.enabled = true;
             _patrol.enabled = false;
