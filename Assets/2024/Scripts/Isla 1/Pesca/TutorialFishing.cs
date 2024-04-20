@@ -9,19 +9,72 @@ public class TutorialFishing : MonoBehaviour
 {
     [SerializeField] RectTransform _boxMessage;
     [SerializeField] TMP_Text _message;
-    [SerializeField, TextArea(4,6)] string[] _lines;
+    [SerializeField, TextArea(4, 6)] string[] _lines;
     [SerializeField] Image _arrow;
     [SerializeField] Image[] _count;
+    [SerializeField] int _totalFishes = 5;
+    [SerializeField] int _reward = 5;
     private FishingMinigame _fishing;
+    private CharacterInventory _inventory;
+    private Manager _gm;
+    private bool _questActive = true;
 
+    [Header("CINEMATIC")]
+    [SerializeField] GameObject _cinematic;
+    [SerializeField] Image _fadeOut;
+    private CameraOrbit _camPlayer;
+    private QuestUI _questUI;
+
+    [Header("MESSAGE FINAL")]
+    [SerializeField] TMP_Text _textMessage;
+    [SerializeField, TextArea(4,6)] string _messageFinal;
 
     private void Awake()
     {
         _fishing = FindObjectOfType<FishingMinigame>();
+        _camPlayer = FindObjectOfType<CameraOrbit>();
+        _questUI = FindObjectOfType<QuestUI>();
+        _inventory = FindObjectOfType<CharacterInventory>();
+        _gm = FindObjectOfType<Manager>();
     }
 
     private void Start()
     {
+        StartCoroutine(PlayCinematic());
+    }
+
+    private void Update()
+    {
+        if (_fishing.fishedPicked == _totalFishes && _questActive)
+        {
+            StartCoroutine(Ending());
+        }
+    }
+
+    private IEnumerator Ending()
+    {
+        _fishing.Gaming = false;
+        _questActive = false;
+        _fadeOut.DOColor(Color.black, 1f);
+        yield return new WaitForSeconds(2f);
+        _fishing.Quit();
+        _fadeOut.DOColor(Color.clear, 1f);
+        Destroy(_cinematic);
+        _camPlayer.gameObject.SetActive(true);
+        _inventory.money += _reward;
+        _gm.QuestCompleted();
+        Destroy(this);
+    }
+
+    private IEnumerator PlayCinematic()
+    {
+        _questActive = true;
+        _fadeOut.DOColor(Color.black, 1f);
+        yield return new WaitForSeconds(2f);
+        _fadeOut.DOColor(Color.clear, 1f);
+        _questUI.UIStatus(false);
+        _camPlayer.gameObject.SetActive(false);
+        _cinematic.SetActive(true);
         StartCoroutine(TutorialSpace());
     }
 
@@ -35,7 +88,7 @@ public class TutorialFishing : MonoBehaviour
         // Tutorial SPACEBAR
         _boxMessage.gameObject.SetActive(true);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
-        yield return new WaitForSeconds(3f);   
+        yield return new WaitForSeconds(3f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
 
         // TUTRORIAL KEEP FISH

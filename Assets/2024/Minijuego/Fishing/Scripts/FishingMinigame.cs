@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class FishingMinigame : MonoBehaviour
 {
@@ -57,12 +58,17 @@ public class FishingMinigame : MonoBehaviour
     private LocationQuest _radar;
     public bool start;
     private int overWatch;
+    
 
     [Header("FISH MESH")]
     [SerializeField] GameObject _fishMesh;
     [SerializeField] SpriteRenderer _spriteFish;
     [SerializeField] SpriteRenderer _spriteFishWin;
     [SerializeField] GameObject _canvasRenderFish;
+
+    [Header("UI")]
+    [SerializeField] TMP_Text[] _textAmount;
+    public int fishedPicked = 0;
 
     private void Awake()
     {
@@ -73,6 +79,9 @@ public class FishingMinigame : MonoBehaviour
     {
         _spriteFishWin.transform.DOScale(0f, 0f);
         _canvasRenderFish.SetActive(false);
+
+        foreach (var item in _textAmount)
+            item.gameObject.SetActive(false);
     }
 
     void Update()
@@ -152,6 +161,9 @@ public class FishingMinigame : MonoBehaviour
     {
         if (Victory)
         {
+            fishedPicked++;
+            _textAmount[1].text = fishedPicked.ToString();
+
             Gaming = false;
             Fish.SetActive(false);
             HookTrasn.gameObject.SetActive(false);
@@ -200,6 +212,10 @@ public class FishingMinigame : MonoBehaviour
         if (start && overWatch == 0) //Para iniciar,que algun codigo ponga start en true
         {
             _canvasRenderFish.SetActive(true);
+
+            foreach (var item in _textAmount)
+                item.gameObject.SetActive(true);
+
             overWatch++;
             if (Gaming == true)
             {
@@ -282,7 +298,7 @@ public class FishingMinigame : MonoBehaviour
         }
     }
 
-    void Quit()
+    public void Quit()
     {
         overWatch = 0;
         start = false;
