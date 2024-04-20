@@ -141,4 +141,17 @@ public class QuestFence : MonoBehaviour
         _message.gameObject.SetActive(false);  
         Destroy(this);
     }
+
+    public void CheatSkip()
+    {
+        Destroy(_myCol);
+        Destroy(_iconInteract);
+        Destroy(_iconBuild);
+        FirstMarket market = FindObjectOfType<FirstMarket>();
+        LocationQuest radar = FindObjectOfType<LocationQuest>();
+        Manager manager = FindObjectOfType<Manager>();
+        manager.QuestCompleted();
+        radar.target = market.gameObject.transform;
+        Destroy(this);
+    }
 }

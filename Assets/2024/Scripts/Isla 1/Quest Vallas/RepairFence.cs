@@ -62,16 +62,6 @@ public class RepairFence : MonoBehaviour
         if (player != null) _iconMaterial.transform.DOScale(0f, 0.5f);
     }
 
-
-    public void CheatSkip()
-    {
-        QuestFence npc = FindObjectOfType<QuestFence>();
-        if (npc != null) Destroy(npc);
-        else return;
-        _radar.target = _market.gameObject.transform;
-    }
-
-
     private IEnumerator Repair()
     {
         Destroy(_myCol);
@@ -128,6 +118,5 @@ public class RepairFence : MonoBehaviour
         _gm.QuestCompleted();
         _radar.target = _market.gameObject.transform;
         Destroy(this);
-
     }
 }

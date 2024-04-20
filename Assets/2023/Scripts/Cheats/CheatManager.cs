@@ -19,7 +19,7 @@ public class CheatManager : MonoBehaviour
     private DogEnter _questBroom;
     private BuildTable _questTable;
     private TutorialFishing _questFishing;
-    private RepairFence _questRepair;
+    private QuestFence _questRepair;
     private Mail2 _quest2;
     private bool _quest1Skiped, _quest2Skiped, _quest3Skiped, _quest4Skiped, _quest5Skiped = false;
 
@@ -42,7 +42,7 @@ public class CheatManager : MonoBehaviour
         _questBroom = FindObjectOfType<DogEnter>();
         _questTable = FindObjectOfType<BuildTable>();
         _questFishing = FindObjectOfType<TutorialFishing>();
-        _questRepair = FindObjectOfType<RepairFence>();
+        _questRepair = FindObjectOfType<QuestFence>();
     }
 
     void Update()
@@ -83,7 +83,7 @@ public class CheatManager : MonoBehaviour
                 _textMessage.fontSize = 40;
                 _textMessage.alignment = TextAlignmentOptions.TopLeft;
                 _iconMessage.gameObject.SetActive(false);
-
+                
                 _quest1Skiped = true;
             }
         }
