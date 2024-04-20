@@ -29,8 +29,18 @@ public class NPCFishing : MonoBehaviour
     [SerializeField] AudioClip _soundConfirm;
     private AudioSource _myAudio;
 
+    private Vector3 _initialPos;
+    private Vector3 _initialPosPlayer;
+    [SerializeField] Character _player;
+
+    [Header("ANIMS")]
+    [SerializeField] RuntimeAnimatorController[] _animController;
+    [SerializeField] GameObject _rod;
+    private Animator _myAnim;
+
     private void Awake()
     {
+        _myAnim = GetComponent<Animator>();
         _tutorial = GetComponent<TutorialFishing>();
         _myAudio = GetComponent<AudioSource>();
         _dialogue = FindObjectOfType<Dialogue>();
@@ -38,6 +48,7 @@ public class NPCFishing : MonoBehaviour
 
     void Start()
     {
+        _initialPos = transform.position;
         _iconInteract.SetActive(false);
         _dialogue.canTalk = true;
         _dialogue.Set(_nameNPC);
@@ -59,10 +70,30 @@ public class NPCFishing : MonoBehaviour
         _questActive = true;
         _buttonConfirm.gameObject.SetActive(false);
         _dialogue.Close();
+
+        _initialPosPlayer = _player.gameObject.transform.position;
+
         _tutorial.enabled = true;
         Destroy(_myCol);
         Destroy(_iconInteract);
+        //Destroy(this);
+    }
+
+    public void SetPos()
+    {
+        _myAnim.runtimeAnimatorController = _animController[0];
+        _rod.SetActive(true);
+
+        _player.gameObject.transform.position = _initialPosPlayer;
+        transform.position = _initialPos;
         Destroy(this);
+    }
+
+    public void SetAnimQuest()
+    {
+        _myAnim.runtimeAnimatorController = _animController[1];
+        _myAnim.SetBool("Quest", true);
+        _rod.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)

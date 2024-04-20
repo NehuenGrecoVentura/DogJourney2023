@@ -40,7 +40,7 @@ public class TutorialFishing : MonoBehaviour
     [SerializeField] Transform _posNPC;
     [SerializeField] Transform _posPlayer;
 
-
+    [SerializeField] NPCFishing _npc;
     
 
     private void Awake()
@@ -101,9 +101,13 @@ public class TutorialFishing : MonoBehaviour
         yield return new WaitForSeconds(2f);
         _fishing.Quit();
         _fadeOut.DOColor(Color.clear, 1f);
+        _npc.SetPos();
         yield return new WaitForSeconds(2f);
         _fadeOut.DOColor(Color.clear, 1f);
+
         
+
+
         _camPlayer.gameObject.SetActive(true);
         _player.GetComponent<Animator>().enabled = true;
 
@@ -126,6 +130,7 @@ public class TutorialFishing : MonoBehaviour
        
         _player.SetFishingMode(true);
         _player.PlayAnim("Fish");
+        _npc.SetAnimQuest();
 
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
