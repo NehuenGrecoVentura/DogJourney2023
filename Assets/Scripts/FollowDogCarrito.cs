@@ -11,6 +11,8 @@ public class FollowDogCarrito : MonoBehaviour
     [SerializeField] GameObject _player;
     [SerializeField] private GameObject Dog;
 
+    [SerializeField] float _dist; 
+
     private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -24,8 +26,13 @@ public class FollowDogCarrito : MonoBehaviour
         }
         else
         {
-            
-            _agent.destination = Dog.transform.position;
+
+            //_agent.destination = Dog.transform.position;
+
+            Vector3 targetPosition = Dog.transform.position - Dog.transform.forward * _dist;
+
+
+            _agent.SetDestination(targetPosition);
         } 
     }
 }

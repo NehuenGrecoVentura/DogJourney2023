@@ -77,7 +77,7 @@ public class Dog : MonoBehaviour
 
 
         float distance = Vector3.Distance(transform.position, _target.transform.position);
-        if (distance <= 2.5f) Stop();
+        if (distance <= 1.5f) Stop();
 
     }
 
