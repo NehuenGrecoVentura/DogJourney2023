@@ -19,6 +19,7 @@ public class BuildTable : MonoBehaviour
     [SerializeField] Animator[] _animDoors;
     [SerializeField] RectTransform _boxTAB;
     [SerializeField] GameObject _npcFish;
+    private LocationQuest _radar;
     private Manager _gm;
 
     private AudioSource _myAudio;
@@ -30,6 +31,7 @@ public class BuildTable : MonoBehaviour
         _inventory = FindObjectOfType<CharacterInventory>();
         _player = FindObjectOfType<Character>();
         _gm = FindObjectOfType<Manager>();
+        _radar = FindObjectOfType<LocationQuest>();
     }
 
     private void Start()
@@ -41,6 +43,30 @@ public class BuildTable : MonoBehaviour
         _boxTAB.gameObject.SetActive(false);
         _myCol.enabled = false;
         _myAudio.Stop();
+    }
+
+    public void CheatSkip()
+    {
+        foreach (var door in _animDoors)
+            door.enabled = true;
+
+        _player.isConstruct = false;
+        _player.speed = _player.speedAux;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _tablePrefab.SetActive(true);
+        Destroy(_iconNail.gameObject);
+        Destroy(_iconWood.gameObject);
+        Destroy(_icon);
+        _inventory.greenTrees -= _totalWoods;
+        _inventory.nails -= _totalNails;
+        if (_inventory.greenTrees <= 0) _inventory.greenTrees = 0;
+        if (_inventory.nails <= 0) _inventory.nails = 0;
+        Destroy(_myCol);
+        _gm.QuestCompleted();
+        _npcFish.SetActive(true);
+        _radar.target = _npcFish.transform;
+        Destroy(_boxTAB.transform.parent.gameObject);
+        Destroy(this);
     }
 
     private IEnumerator Build()
@@ -72,10 +98,7 @@ public class BuildTable : MonoBehaviour
         foreach (var door in _animDoors)
             door.enabled = true;
 
-        
-        LocationQuest radar = FindObjectOfType<LocationQuest>();
-        FirstMarket nextPos = FindObjectOfType<FirstMarket>();
-        radar.target = nextPos.gameObject.transform;
+     
         _player.isConstruct = false;
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
@@ -90,8 +113,9 @@ public class BuildTable : MonoBehaviour
         Destroy(_myCol);
         _gm.QuestCompleted();
         _boxTAB.gameObject.SetActive(true);
-        yield return new WaitForSeconds(3f);
         _npcFish.SetActive(true);
+        _radar.target = _npcFish.gameObject.transform;
+        yield return new WaitForSeconds(3f);
         Destroy(_boxTAB.transform.parent.gameObject);
         Destroy(this);
     }

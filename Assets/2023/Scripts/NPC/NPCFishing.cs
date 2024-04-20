@@ -47,6 +47,8 @@ public class NPCFishing : MonoBehaviour
 
         for (int i = 0; i < _dialogue._lines.Length; i++)
             _dialogue._lines[i] = _lines[i];
+
+        _dialogue.gameObject.SetActive(false);
     }
 
     private void Confirm()
@@ -70,18 +72,20 @@ public class NPCFishing : MonoBehaviour
         {
             _dialogue.gameObject.SetActive(true);
             _dialogue.playerInRange = true;
-            _dialogue.Set(_nameNPC);
             _iconInteract.SetActive(true);
-            
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        var player = other.GetComponent<Character>();
-        if (player != null && _questActive && Input.GetKeyDown(KeyCode.F))
-            _fishing.start = true;
-    }
+
+
+
+
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    var player = other.GetComponent<Character>();
+    //    if (player != null && !_questActive && Input.GetKeyDown(KeyCode.F))
+    //        _fishing.start = true;
+    //}
 
     private void OnTriggerExit(Collider other)
     {

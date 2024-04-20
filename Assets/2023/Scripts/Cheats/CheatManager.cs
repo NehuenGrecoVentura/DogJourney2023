@@ -16,8 +16,10 @@ public class CheatManager : MonoBehaviour
     private CharacterInventory _inventory;
     private OrderDog _ordersDogs;
     private BoxWoods _quest1;
+    private DogEnter _questBroom;
+    private BuildTable _questTable;
     private Mail2 _quest2;
-    private bool _quest1Skiped, _quest2Skiped = false;
+    private bool _quest1Skiped, _quest2Skiped, _quest3Skiped = false;
 
     [Header("TELETRANSOPORT")]
     [SerializeField] Transform _posTeletransport;
@@ -35,6 +37,8 @@ public class CheatManager : MonoBehaviour
         _ordersDogs = FindObjectOfType<OrderDog>();
         _quest1 = FindObjectOfType<BoxWoods>();
         _quest2 = FindObjectOfType<Mail2>();
+        _questBroom = FindObjectOfType<DogEnter>();
+        _questTable = FindObjectOfType<BuildTable>();
     }
 
     void Update()
@@ -58,7 +62,7 @@ public class CheatManager : MonoBehaviour
         if (Input.GetKeyDown(_keyTeletransport))
             transform.position = _posTeletransport.position;
 
-        if (Input.GetKeyDown(_keySkipQuest) && Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKey(_keySkipQuest) && Input.GetKeyDown(KeyCode.Alpha1))
         {
             if (!_quest1Skiped)
             {
@@ -80,18 +84,36 @@ public class CheatManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(_keySkipQuest) && Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKey(_keySkipQuest) && Input.GetKeyDown(KeyCode.Alpha2))
         {
-            if (_quest1Skiped && !_quest2Skiped)
+            if (_quest1Skiped)
             {
-                _quest2.FinishQuest();
-                _inventory.upgradeLoot = true;
-
-                foreach (var item in _quest2ObjsToDestroy)
-                    if (item.activeSelf || !item.activeSelf) Destroy(item);
-
+                _questBroom.ActiveNextQuest();
                 _quest2Skiped = true;
             }
         }
+
+        if (Input.GetKey(_keySkipQuest) && Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            if (_quest2Skiped)
+            {
+                _questTable.CheatSkip();
+                _quest3Skiped = true;
+            }
+        }
+
+        //if (Input.GetKeyDown(_keySkipQuest) && Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+        //    if (_quest1Skiped && !_quest2Skiped)
+        //    {
+        //        _quest2.FinishQuest();
+        //        _inventory.upgradeLoot = true;
+
+        //        foreach (var item in _quest2ObjsToDestroy)
+        //            if (item.activeSelf || !item.activeSelf) Destroy(item);
+
+        //        _quest2Skiped = true;
+        //    }
+        //}
     }
 }
