@@ -18,8 +18,10 @@ public class CheatManager : MonoBehaviour
     private BoxWoods _quest1;
     private DogEnter _questBroom;
     private BuildTable _questTable;
+    private TutorialFishing _questFishing;
+    private RepairFence _questRepair;
     private Mail2 _quest2;
-    private bool _quest1Skiped, _quest2Skiped, _quest3Skiped = false;
+    private bool _quest1Skiped, _quest2Skiped, _quest3Skiped, _quest4Skiped, _quest5Skiped = false;
 
     [Header("TELETRANSOPORT")]
     [SerializeField] Transform _posTeletransport;
@@ -39,6 +41,8 @@ public class CheatManager : MonoBehaviour
         _quest2 = FindObjectOfType<Mail2>();
         _questBroom = FindObjectOfType<DogEnter>();
         _questTable = FindObjectOfType<BuildTable>();
+        _questFishing = FindObjectOfType<TutorialFishing>();
+        _questRepair = FindObjectOfType<RepairFence>();
     }
 
     void Update()
@@ -102,18 +106,22 @@ public class CheatManager : MonoBehaviour
             }
         }
 
-        //if (Input.GetKeyDown(_keySkipQuest) && Input.GetKeyDown(KeyCode.Alpha2))
-        //{
-        //    if (_quest1Skiped && !_quest2Skiped)
-        //    {
-        //        _quest2.FinishQuest();
-        //        _inventory.upgradeLoot = true;
+        if (Input.GetKey(_keySkipQuest) && Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            if (_quest3Skiped)
+            {
+                _questFishing.CheatSkip();
+                _quest4Skiped = true;
+            }
+        }
 
-        //        foreach (var item in _quest2ObjsToDestroy)
-        //            if (item.activeSelf || !item.activeSelf) Destroy(item);
-
-        //        _quest2Skiped = true;
-        //    }
-        //}
+        if (Input.GetKey(_keySkipQuest) && Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            if (_quest4Skiped)
+            {
+                _questRepair.CheatSkip();
+                _quest5Skiped = true;
+            }
+        }
     }
 }

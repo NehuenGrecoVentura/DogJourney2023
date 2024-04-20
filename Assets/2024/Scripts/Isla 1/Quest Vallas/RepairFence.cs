@@ -21,6 +21,10 @@ public class RepairFence : MonoBehaviour
     [SerializeField, TextArea(6, 4)] string _messageEnd;
     [SerializeField] TMP_Text _textEnd;
 
+    [Header("NEXT QUEST")]
+    private FirstMarket _market;
+    private LocationQuest _radar;
+
     private void Awake()
     {
         _myCol = GetComponent<Collider>();
@@ -29,6 +33,8 @@ public class RepairFence : MonoBehaviour
         _camPlayer = FindObjectOfType<CameraOrbit>();
         _player = FindObjectOfType<Character>();
         _gm = FindObjectOfType<Manager>();
+        _radar = FindObjectOfType<LocationQuest>();
+        _market = FindObjectOfType<FirstMarket>();
     }
 
     private void Start()
@@ -55,6 +61,16 @@ public class RepairFence : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null) _iconMaterial.transform.DOScale(0f, 0.5f);
     }
+
+
+    public void CheatSkip()
+    {
+        QuestFence npc = FindObjectOfType<QuestFence>();
+        if (npc != null) Destroy(npc);
+        else return;
+        _radar.target = _market.gameObject.transform;
+    }
+
 
     private IEnumerator Repair()
     {
@@ -110,6 +126,7 @@ public class RepairFence : MonoBehaviour
 
         Destroy(_cinematic);
         _gm.QuestCompleted();
+        _radar.target = _market.gameObject.transform;
         Destroy(this);
 
     }

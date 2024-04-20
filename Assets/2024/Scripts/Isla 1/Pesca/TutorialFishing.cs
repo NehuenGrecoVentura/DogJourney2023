@@ -29,6 +29,11 @@ public class TutorialFishing : MonoBehaviour
     [Header("MESSAGE FINAL")]
     [SerializeField, TextArea(4,6)] string _messageFinal;
 
+    [Header("NEXT QUEST")]
+    private LocationQuest _radar;
+    private QuestFence _questFence;
+
+
     private void Awake()
     {
         _fishing = FindObjectOfType<FishingMinigame>();
@@ -37,6 +42,8 @@ public class TutorialFishing : MonoBehaviour
         _inventory = FindObjectOfType<CharacterInventory>();
         _gm = FindObjectOfType<Manager>();
         _player = FindObjectOfType<Character>();
+        _questFence = FindObjectOfType<QuestFence>();
+        _radar = FindObjectOfType<LocationQuest>();
     }
 
     private void Start()
@@ -50,6 +57,19 @@ public class TutorialFishing : MonoBehaviour
         {
             StartCoroutine(Ending());
         }
+    }
+
+    public void CheatSkip()
+    {
+        _gm.QuestCompleted();
+        _inventory.money += _reward;
+        _radar.target = _questFence.gameObject.transform;
+        _questFence.enabled = true;
+
+        NPCFishing npc = FindObjectOfType<NPCFishing>();
+        if (npc != null) Destroy(npc);
+        else return;
+        Destroy(this);
     }
 
     private IEnumerator Ending()
@@ -79,6 +99,8 @@ public class TutorialFishing : MonoBehaviour
         yield return new WaitForSeconds(0.6f);
         _gm.QuestCompleted();
         _inventory.money += _reward;
+        _radar.target = _questFence.gameObject.transform;
+        _questFence.enabled = true;
         Destroy(this);
     }
 
