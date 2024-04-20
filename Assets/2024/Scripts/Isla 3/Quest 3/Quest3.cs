@@ -19,14 +19,14 @@ public class Quest3 : MonoBehaviour
     [SerializeField] GameObject _colQuest4;
     [SerializeField] Transform _nextPos;
     LocationQuest _map;
-    private Inventory _inventory;
+    //private Inventory _inventory;
     private GateOil _gateOil;
 
     private void Awake()
     {
         _gm = FindObjectOfType<Manager>();
         _map = FindObjectOfType<LocationQuest>();
-        _inventory = FindObjectOfType<Inventory>();
+        //_inventory = FindObjectOfType<Inventory>();
         _gateOil = FindObjectOfType<GateOil>();
     }
 
@@ -41,8 +41,8 @@ public class Quest3 : MonoBehaviour
 
     private void Update()
     {
-        _textTrunks.text = "Reddish trunks " + _inventory.amountPurple.ToString() + "/" + totalAmount.ToString();
-        if (_inventory.amountPurple >= totalAmount) StageCompleted();
+        //_textTrunks.text = "Reddish trunks " + _inventory.amountPurple.ToString() + "/" + totalAmount.ToString();
+        //if (_inventory.amountPurple >= totalAmount) StageCompleted();
     }
 
     public void StageCompleted() // TERMINO DE JUNTAR TODAS LAS MADERAS ROJAS Y SE ACTUALIZA LA UI DE QUEST.
@@ -60,11 +60,11 @@ public class Quest3 : MonoBehaviour
         _gm.QuestCompleted();
         _colQuest4.SetActive(true);
         _map.target = _nextPos;
-        _inventory.amountOil++;
-        _inventory.amountPurple -= totalAmount;
+        //_inventory.amountOil++;
+       // _inventory.amountPurple -= totalAmount;
 
-        if (_inventory.amountPurple <= 0)
-            _inventory.amountPurple = 0;
+        //if (_inventory.amountPurple <= 0)
+          //  _inventory.amountPurple = 0;
 
         Destroy(_stagesQuest[3]);
         Destroy(_iconInteractive);
@@ -76,13 +76,13 @@ public class Quest3 : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
-            if (_inventory.amountPurple >= totalAmount)
-            {
-                if (!Input.GetKeyDown(_buttonInteractive))
-                    _iconInteractive.SetActive(true);
+            //if (_inventory.amountPurple >= totalAmount)
+            //{
+            //    if (!Input.GetKeyDown(_buttonInteractive))
+            //        _iconInteractive.SetActive(true);
 
-                else LevelCompleted();
-            }
+            //    else LevelCompleted();
+            //}
         }
     }
 

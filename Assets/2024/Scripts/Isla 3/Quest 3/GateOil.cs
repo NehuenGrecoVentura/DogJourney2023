@@ -29,7 +29,7 @@ public class GateOil : MonoBehaviour
     [SerializeField] Slider _slider;
     [SerializeField] GameObject _canvas;
     [SerializeField] GameObject _iconInteractive;
-    private Inventory _inventory;
+    //private Inventory _inventory;
     private Animator _myAnim;
     private bool _isMessage = false;
 
@@ -37,7 +37,7 @@ public class GateOil : MonoBehaviour
     {
         _myAnim = GetComponent<Animator>();
         _map = FindObjectOfType<LocationQuest>();
-        _inventory = FindObjectOfType<Inventory>();
+        //_inventory = FindObjectOfType<Inventory>();
     }
 
     private void Start()
@@ -75,26 +75,26 @@ public class GateOil : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        var player = other.GetComponent<Character>();
-        if (player != null)
-        {
-            if (_inventory.amountOil >= 4 && Input.GetKey(KeyCode.Space))
-                StartCoroutine(Open());
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    var player = other.GetComponent<Character>();
+    //    if (player != null)
+    //    {
+    //        if (_inventory.amountOil >= 4 && Input.GetKey(KeyCode.Space))
+    //            StartCoroutine(Open());
 
-            else if (_inventory.amountOil >= 4 && Input.GetKeyUp(KeyCode.Space))
-            {
-                StopAllCoroutines();
-                _slider.value = 0;
-                _canvas.SetActive(false);
-                _iconInteractive.SetActive(true);
-            }
+    //        else if (_inventory.amountOil >= 4 && Input.GetKeyUp(KeyCode.Space))
+    //        {
+    //            StopAllCoroutines();
+    //            _slider.value = 0;
+    //            _canvas.SetActive(false);
+    //            _iconInteractive.SetActive(true);
+    //        }
 
-            if (_inventory.amountOil >= 4 && !Input.GetKey(KeyCode.Space))
-                _iconInteractive.SetActive(true);
-        }
-    }
+    //        if (_inventory.amountOil >= 4 && !Input.GetKey(KeyCode.Space))
+    //            _iconInteractive.SetActive(true);
+    //    }
+    //}
 
     private void OnTriggerExit(Collider other)
     {
@@ -149,7 +149,7 @@ public class GateOil : MonoBehaviour
             _iconInteractive.SetActive(false);
             _slider.value += Time.deltaTime * 14.4f;
             yield return new WaitForSeconds(_timeToOpen);
-            _inventory.amountOil = 0;
+            //_inventory.amountOil = 0;
             _myAnim.enabled = true;
 
             foreach (var col in _myCols)

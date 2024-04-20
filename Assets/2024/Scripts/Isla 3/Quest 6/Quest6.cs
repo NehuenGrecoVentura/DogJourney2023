@@ -9,7 +9,7 @@ public class Quest6 : MonoBehaviour
     [SerializeField] int _amountNails = 30;
     public int totalRedTrees = 10;
     [HideInInspector] public bool isQuest6 = true;
-    private Inventory _inventory;
+    //private Inventory _inventory;
 
     [Header("TEXTS CONFIG")]
     [SerializeField] TMP_Text[] _textsQuests;
@@ -26,7 +26,7 @@ public class Quest6 : MonoBehaviour
 
     private void Awake()
     {
-        _inventory = FindObjectOfType<Inventory>();
+        //_inventory = FindObjectOfType<Inventory>();
         _gm = FindObjectOfType<Manager>();
         _map = FindObjectOfType<LocationQuest>();
     }
@@ -39,10 +39,10 @@ public class Quest6 : MonoBehaviour
     void Update()
     {
         TextsQuests();
-        StageGreenTrees();
-        StageNails();
-        StageRedTrees();
-        BackToHouse();
+        //StageGreenTrees();
+        //StageNails();
+        //StageRedTrees();
+        //BackToHouse();
     }
 
     void InitialDefault()
@@ -65,105 +65,105 @@ public class Quest6 : MonoBehaviour
 
     void TextsQuests()
     {
-        _textsQuests[0].text = "Green Trees: " + _inventory.amountWood.ToString() + "/" + _amountGreenTrees.ToString();
-        _textsQuests[1].text = "Purple Trees: " + _inventory.amountPurple.ToString() + "/" + totalRedTrees.ToString();
-        _textsQuests[2].text = "Nails: " + _inventory.amountnails.ToString() + "/" + _amountNails.ToString();
+        //_textsQuests[0].text = "Green Trees: " + _inventory.amountWood.ToString() + "/" + _amountGreenTrees.ToString();
+        //_textsQuests[1].text = "Purple Trees: " + _inventory.amountPurple.ToString() + "/" + totalRedTrees.ToString();
+        //_textsQuests[2].text = "Nails: " + _inventory.amountnails.ToString() + "/" + _amountNails.ToString();
     }
 
-    void StageGreenTrees()
-    {
-        if (_inventory.amountWood >= _amountGreenTrees)
-        {
-            _canvasQuest6[2].SetActive(false);
-            _canvasQuest6[3].SetActive(true);
-        }
+    //void StageGreenTrees()
+    //{
+    //    if (_inventory.amountWood >= _amountGreenTrees)
+    //    {
+    //        _canvasQuest6[2].SetActive(false);
+    //        _canvasQuest6[3].SetActive(true);
+    //    }
 
-        else
-        {
-            _canvasQuest6[2].SetActive(true);
-            _canvasQuest6[3].SetActive(false);
-        }
-    }
+    //    else
+    //    {
+    //        _canvasQuest6[2].SetActive(true);
+    //        _canvasQuest6[3].SetActive(false);
+    //    }
+    //}
 
-    public void StageRedTrees()
-    {
-        if (_inventory.amountPurple >= totalRedTrees)
-        {
-            _canvasQuest6[5].SetActive(false);
-            _canvasQuest6[6].SetActive(true);
-            isQuest6 = false;
-        }
+    //public void StageRedTrees()
+    //{
+    //    if (_inventory.amountPurple >= totalRedTrees)
+    //    {
+    //        _canvasQuest6[5].SetActive(false);
+    //        _canvasQuest6[6].SetActive(true);
+    //        isQuest6 = false;
+    //    }
 
-        else
-        {
-            _canvasQuest6[5].SetActive(true);
-            _canvasQuest6[6].SetActive(false);
-            isQuest6 = true;
-        }
-    }
+    //    else
+    //    {
+    //        _canvasQuest6[5].SetActive(true);
+    //        _canvasQuest6[6].SetActive(false);
+    //        isQuest6 = true;
+    //    }
+    //}
 
-    void StageNails()
-    {
-        if (_inventory.amountnails >= _amountNails)
-        {
-            _canvasQuest6[8].SetActive(false);
-            _canvasQuest6[9].SetActive(true);
-        }
+    //void StageNails()
+    //{
+    //    if (_inventory.amountnails >= _amountNails)
+    //    {
+    //        _canvasQuest6[8].SetActive(false);
+    //        _canvasQuest6[9].SetActive(true);
+    //    }
 
-        else
-        {
-            _canvasQuest6[8].SetActive(true);
-            _canvasQuest6[9].SetActive(false);
-        }
-    }
+    //    else
+    //    {
+    //        _canvasQuest6[8].SetActive(true);
+    //        _canvasQuest6[9].SetActive(false);
+    //    }
+    //}
 
-    void BackToHouse()
-    {
-        if (_inventory.amountnails >= _amountNails && _inventory.amountPurple >= totalRedTrees && _inventory.amountWood >= _amountGreenTrees)
-            _canvasQuest6[10].SetActive(true);
+    //void BackToHouse()
+    //{
+    //    if (_inventory.amountnails >= _amountNails && _inventory.amountPurple >= totalRedTrees && _inventory.amountWood >= _amountGreenTrees)
+    //        _canvasQuest6[10].SetActive(true);
 
-        else _canvasQuest6[10].SetActive(false);
-    }
+    //    else _canvasQuest6[10].SetActive(false);
+    //}
 
-    public void LevelCompleted()
-    {
-        _gm.QuestCompleted();
-        _map.target = _nextPos;
-        _inventory.amountOil++;
-        _inventory.amountnails -= _amountNails;
-        _inventory.amountPurple -= totalRedTrees;
-        _inventory.amountWood = -_amountGreenTrees;
+    //public void LevelCompleted()
+    //{
+    //    _gm.QuestCompleted();
+    //    _map.target = _nextPos;
+    //    _inventory.amountOil++;
+    //    _inventory.amountnails -= _amountNails;
+    //    _inventory.amountPurple -= totalRedTrees;
+    //    _inventory.amountWood = -_amountGreenTrees;
 
-        if (_inventory.amountnails <= 0) _inventory.amountnails = 0;
-        if (_inventory.amountPurple <= 0) _inventory.amountPurple = 0;
-        if (_inventory.amountWood <= 0) _inventory.amountWood = 0;
+    //    if (_inventory.amountnails <= 0) _inventory.amountnails = 0;
+    //    if (_inventory.amountPurple <= 0) _inventory.amountPurple = 0;
+    //    if (_inventory.amountWood <= 0) _inventory.amountWood = 0;
 
-        foreach (var item in _obsToDestroy)
-        {
-            Destroy(item.gameObject);
-        }
-    }
+    //    foreach (var item in _obsToDestroy)
+    //    {
+    //        Destroy(item.gameObject);
+    //    }
+    //}
 
-    private void OnTriggerStay(Collider other)
-    {
-        var player = other.GetComponent<Character>();
-        if (player != null)
-        {
-            if (_inventory.amountnails >= _amountNails && _inventory.amountPurple >= totalRedTrees && _inventory.amountWood >= _amountGreenTrees)
-            {
-                if (!Input.GetKeyDown(_buttonInteractive))
-                    _iconInteractive.SetActive(true);
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    var player = other.GetComponent<Character>();
+    //    if (player != null)
+    //    {
+    //        if (_inventory.amountnails >= _amountNails && _inventory.amountPurple >= totalRedTrees && _inventory.amountWood >= _amountGreenTrees)
+    //        {
+    //            if (!Input.GetKeyDown(_buttonInteractive))
+    //                _iconInteractive.SetActive(true);
 
-                else LevelCompleted();
-            }
+    //            else LevelCompleted();
+    //        }
 
-            else _iconInteractive.SetActive(false);
-        }
-    }
+    //        else _iconInteractive.SetActive(false);
+    //    }
+    //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        var player = other.GetComponent<Character>();
-        if (player != null) _iconInteractive.SetActive(false);
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    var player = other.GetComponent<Character>();
+    //    if (player != null) _iconInteractive.SetActive(false);
+    //}
 }

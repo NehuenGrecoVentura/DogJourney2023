@@ -3,12 +3,12 @@ using UnityEngine;
 public class ArrowQuest : MonoBehaviour
 {
     [SerializeField] int _rotX = -4;
-    Inventory _inventory;
+    //Inventory _inventory;
 
-    private void Start()
-    {
-        _inventory = FindObjectOfType<Inventory>();    
-    }
+    //private void Start()
+    //{
+    //    _inventory = FindObjectOfType<Inventory>();    
+    //}
 
     void Update()
     {
@@ -23,7 +23,7 @@ public class ArrowQuest : MonoBehaviour
 
     void DisabledArrow()
     {
-        if (_inventory.amountWood >= 100 && gameObject.name == "Arrow Tree") gameObject.SetActive(false);
-        else gameObject.SetActive(true);
+        //if (_inventory.amountWood >= 100 && gameObject.name == "Arrow Tree") gameObject.SetActive(false);
+        //else gameObject.SetActive(true);
     }
 }

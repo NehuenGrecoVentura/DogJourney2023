@@ -27,12 +27,12 @@ public class Quest4 : MonoBehaviour
     private LocationQuest _map;
     
     [Header("REFS")]
-    private Inventory _inventory;
+    //private Inventory _inventory;
     private Manager _gm;
 
     private void Awake()
     {
-        _inventory = FindObjectOfType<Inventory>();
+        //_inventory = FindObjectOfType<Inventory>();
         _gm = FindObjectOfType<Manager>();
         _map = FindObjectOfType<LocationQuest>();
     }
@@ -106,8 +106,8 @@ public class Quest4 : MonoBehaviour
                 _textsReward[0].text = "You won the bet."; 
                 _textsReward[1].text = "+$200";
                 _textsReward[1].color = Color.green;
-                _inventory.amountOil++;
-                _inventory.money += 200;
+                //_inventory.amountOil++;
+                //_inventory.money += 200;
                 _gm.QuestCompleted();
 
                 foreach (var quest5 in _nextQuest)
@@ -125,10 +125,10 @@ public class Quest4 : MonoBehaviour
                 _textsReward[0].text = "You lose the bet.";
                 _textsReward[1].text = "-$200";
                 _textsReward[1].color = Color.red;
-                _inventory.amountOil++;
-                _inventory.money -= 200;
-                if (_inventory.money <= 0)
-                    _inventory.money = 0;
+                //_inventory.amountOil++;
+                //_inventory.money -= 200;
+                //if (_inventory.money <= 0)
+                    //_inventory.money = 0;
 
                 _gm.QuestCompleted();
 
