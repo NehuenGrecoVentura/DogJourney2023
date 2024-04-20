@@ -130,6 +130,7 @@ public class TutorialFishing : MonoBehaviour
        
         _player.SetFishingMode(true);
         _player.PlayAnim("Fish");
+        _player.transform.rotation = Quaternion.Euler(0, 90, 0);
         _npc.SetAnimQuest();
 
         _player.speed = 0;
