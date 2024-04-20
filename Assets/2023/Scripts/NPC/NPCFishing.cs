@@ -42,6 +42,11 @@ public class NPCFishing : MonoBehaviour
         _dialogue.canTalk = true;
         _dialogue.Set(_nameNPC);
         _tutorial.enabled = false;
+
+        _buttonConfirm.onClick.AddListener(() => Confirm());
+
+        for (int i = 0; i < _dialogue._lines.Length; i++)
+            _dialogue._lines[i] = _lines[i];
     }
 
     private void Confirm()
@@ -63,13 +68,11 @@ public class NPCFishing : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
-            _dialogue.playerInRange = true;
-            _iconInteract.SetActive(true);
             _dialogue.gameObject.SetActive(true);
-            _buttonConfirm.onClick.AddListener(() => Confirm());
-
-            for (int i = 0; i < _dialogue._lines.Length; i++)
-                _dialogue._lines[i] = _lines[i];
+            _dialogue.playerInRange = true;
+            _dialogue.Set(_nameNPC);
+            _iconInteract.SetActive(true);
+            
         }
     }
 
