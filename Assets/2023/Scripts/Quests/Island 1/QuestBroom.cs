@@ -91,6 +91,7 @@ public class QuestBroom : MonoBehaviour
         {
             if (Input.GetKeyDown(_keyInteract) && _dogEnter.broomPicked && !_dog.quickEnd)
             {
+                SetName();
                 StopCoroutine(LookToPlayer());
                 _dogEnter.EndingNormal();
                 Destroy(_myCol, 6f);
@@ -100,6 +101,11 @@ public class QuestBroom : MonoBehaviour
             if(!_activeQuest && !_dogEnter.broomPicked && !Input.GetKeyDown(KeyCode.F) && !_ending || _activeQuest && _dogEnter.broomPicked && !_ending) 
                 _iconInteract.SetActive(true);
         }
+    }
+
+    public void SetName()
+    {
+        _dialogue.Set(_nameNPC);
     }
 
     public void ChangeController()

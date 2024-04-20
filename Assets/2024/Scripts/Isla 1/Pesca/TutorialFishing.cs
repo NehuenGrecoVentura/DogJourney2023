@@ -10,6 +10,7 @@ public class TutorialFishing : MonoBehaviour
     [SerializeField] RectTransform _boxMessage;
     [SerializeField] TMP_Text _message;
     [SerializeField, TextArea(4, 6)] string[] _lines;
+    [SerializeField] TMP_Text _textName;
     [SerializeField] Image _arrow;
     [SerializeField] Image[] _count;
     [SerializeField] int _totalFishes = 5;
@@ -86,7 +87,7 @@ public class TutorialFishing : MonoBehaviour
     {
         _fishing.Quit();
         _questActive = false;
-
+        _textName.text = "Alice";
         _message.text = _messageFinal;
 
         _player.SetFishingMode(false);
@@ -127,7 +128,7 @@ public class TutorialFishing : MonoBehaviour
 
     private IEnumerator PlayCinematic()
     {
-       
+        _textName.text = "Alice";
         _player.SetFishingMode(true);
         _player.PlayAnim("Fish");
         _player.transform.rotation = Quaternion.Euler(0, 90, 0);

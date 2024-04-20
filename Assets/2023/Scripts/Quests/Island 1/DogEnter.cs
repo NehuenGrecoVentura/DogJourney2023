@@ -268,15 +268,13 @@ public class DogEnter : MonoBehaviour
         _player.gameObject.transform.LookAt(_maryNPC.gameObject.transform);
         yield return new WaitForSeconds(1f);
         _textMessage.text = _messageWin;
-        //_myAudio.Play();
+        _maryNPC.SetName();
         _myAudio.PlayOneShot(_messageSound);
-        //_message.transform.DOScale(1f, 0.5f);
         _message.gameObject.SetActive(true);
         _message.DOAnchorPosY(70f, 0.5f);
 
 
         yield return new WaitForSeconds(4f);
-        //_message.transform.DOScale(0f, 0.5f);
         _message.DOAnchorPosY(-1000f, 0f);
         _message.gameObject.SetActive(false);
 
@@ -304,15 +302,11 @@ public class DogEnter : MonoBehaviour
         _player.gameObject.transform.position = _endingQuestPos.position;
         _player.gameObject.transform.LookAt(_maryNPC.gameObject.transform);
         yield return new WaitForSeconds(1f);
-        //_message.gameObject.SetActive(true);
+        _maryNPC.SetName();
         _textMessage.text = _messageWin;
-        //_message.transform.DOScale(1f, 0.5f);
-
-
         _message.gameObject.SetActive(true);
         _message.DOAnchorPosY(70f, 0.5f);
         yield return new WaitForSeconds(4f);
-        //_message.transform.DOScale(0f, 0.5f);
         _message.DOAnchorPosY(-1000f, 0f);
         _message.gameObject.SetActive(false);
         ActiveNextQuest();
