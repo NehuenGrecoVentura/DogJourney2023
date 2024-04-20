@@ -6,7 +6,7 @@ public class Quest3 : MonoBehaviour
     [SerializeField] TMP_Text _textTrunks;
     [SerializeField] GameObject[] _stagesQuest;
     [SerializeField] GameObject _mapGO;
-    private GManager _gm;
+    private Manager _gm;
     public bool isQuest3;
     public int totalAmount = 10;
 
@@ -24,7 +24,7 @@ public class Quest3 : MonoBehaviour
 
     private void Awake()
     {
-        _gm = FindObjectOfType<GManager>();
+        _gm = FindObjectOfType<Manager>();
         _map = FindObjectOfType<LocationQuest>();
         _inventory = FindObjectOfType<Inventory>();
         _gateOil = FindObjectOfType<GateOil>();
@@ -57,7 +57,7 @@ public class Quest3 : MonoBehaviour
     public void LevelCompleted()
     {
         _iconQuest4.SetActive(true);
-        _gm.LevelCompleted();
+        _gm.QuestCompleted();
         _colQuest4.SetActive(true);
         _map.target = _nextPos;
         _inventory.amountOil++;
@@ -73,7 +73,7 @@ public class Quest3 : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        var player = other.GetComponent<Character2022>();
+        var player = other.GetComponent<Character>();
         if (player != null)
         {
             if (_inventory.amountPurple >= totalAmount)
@@ -88,7 +88,7 @@ public class Quest3 : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        var player = other.GetComponent<Character2022>();
+        var player = other.GetComponent<Character>();
         if (player != null) _iconInteractive.SetActive(false);
     }
 }

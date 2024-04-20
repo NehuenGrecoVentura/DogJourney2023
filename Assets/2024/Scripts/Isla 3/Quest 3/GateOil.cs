@@ -63,7 +63,7 @@ public class GateOil : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        var player = collision.gameObject.GetComponent<Character2022>();
+        var player = collision.gameObject.GetComponent<Character>();
         if (player != null && !_isMessage)
         {
             _objsQuest3[0].SetActive(true);
@@ -77,7 +77,7 @@ public class GateOil : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        var player = other.GetComponent<Character2022>();
+        var player = other.GetComponent<Character>();
         if (player != null)
         {
             if (_inventory.amountOil >= 4 && Input.GetKey(KeyCode.Space))
@@ -98,7 +98,7 @@ public class GateOil : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        var player = other.GetComponent<Character2022>();
+        var player = other.GetComponent<Character>();
         if (player != null)
         {
             _slider.value = 0;

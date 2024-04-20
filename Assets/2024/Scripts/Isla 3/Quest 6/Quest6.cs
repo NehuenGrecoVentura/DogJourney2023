@@ -22,12 +22,12 @@ public class Quest6 : MonoBehaviour
     [SerializeField] GameObject[] _obsToDestroy;
     [SerializeField] Transform _nextPos;
     private LocationQuest _map;
-    private GManager _gm;
+    private Manager _gm;
 
     private void Awake()
     {
         _inventory = FindObjectOfType<Inventory>();
-        _gm = FindObjectOfType<GManager>();
+        _gm = FindObjectOfType<Manager>();
         _map = FindObjectOfType<LocationQuest>();
     }
 
@@ -127,7 +127,7 @@ public class Quest6 : MonoBehaviour
 
     public void LevelCompleted()
     {
-        _gm.LevelCompleted();
+        _gm.QuestCompleted();
         _map.target = _nextPos;
         _inventory.amountOil++;
         _inventory.amountnails -= _amountNails;
@@ -146,7 +146,7 @@ public class Quest6 : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        var player = other.GetComponent<Character2022>();
+        var player = other.GetComponent<Character>();
         if (player != null)
         {
             if (_inventory.amountnails >= _amountNails && _inventory.amountPurple >= totalRedTrees && _inventory.amountWood >= _amountGreenTrees)
@@ -163,7 +163,7 @@ public class Quest6 : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        var player = other.GetComponent<Character2022>();
+        var player = other.GetComponent<Character>();
         if (player != null) _iconInteractive.SetActive(false);
     }
 }

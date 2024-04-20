@@ -13,7 +13,7 @@ public class Quest5 : MonoBehaviour
     [SerializeField] GameObject _iconInteractive;
 
     [Header("REFS")]
-    private GManager _gm;
+    private Manager _gm;
     private Inventory _inventory;
 
     [Header("WIN")]
@@ -25,7 +25,7 @@ public class Quest5 : MonoBehaviour
     private void Awake()
     {
         _inventory = FindObjectOfType<Inventory>();
-        _gm = FindObjectOfType<GManager>();
+        _gm = FindObjectOfType<Manager>();
         _map = FindObjectOfType<LocationQuest>();
     }
 
@@ -78,7 +78,7 @@ public class Quest5 : MonoBehaviour
 
     public void SkipLevel()
     {
-        _gm.LevelCompleted();
+        _gm.QuestCompleted();
         _inventory.amountOil++;
         foreach (var item in _objsToDestroy)
             Destroy(item.gameObject);
@@ -101,7 +101,7 @@ public class Quest5 : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        var player = other.GetComponent<Character2022>();
+        var player = other.GetComponent<Character>();
         if (player != null)
         {
             if (_inventory.money >= _maxMoney && _inventory.amountnails >= _maxNails)
@@ -118,7 +118,7 @@ public class Quest5 : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        var player = other.GetComponent<Character2022>();
+        var player = other.GetComponent<Character>();
         if (player != null) _iconInteractive.SetActive(false);
     }
 }

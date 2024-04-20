@@ -42,7 +42,7 @@ public class MailQuest6 : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        var player = other.GetComponent<Character2022>();
+        var player = other.GetComponent<Character>();
         if (player != null)
         {
             _isReading = true;

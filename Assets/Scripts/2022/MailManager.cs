@@ -28,7 +28,7 @@ public class MailManager : MonoBehaviour
     [SerializeField] string _nextDescription;
 
     [Header("REFERENCES CONFIG")]
-    [SerializeField] Character2022 _player;
+    [SerializeField] Character _player;
     [SerializeField] GameObject _nextQuest;
     Collider _col;
     Pause _pause;
@@ -77,7 +77,7 @@ public class MailManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        var player = other.GetComponent<Character2022>();
+        var player = other.GetComponent<Character>();
         if (player != null)
         {
             _pause.Freeze();
@@ -85,7 +85,7 @@ public class MailManager : MonoBehaviour
             {
                 _pause.Freeze();
                 _player.speed = 0;
-                _player.EjecuteAnim("Idle");
+                _player.PlayAnim("Idle");
                 _mail.gameObject.SetActive(true);
             }
 

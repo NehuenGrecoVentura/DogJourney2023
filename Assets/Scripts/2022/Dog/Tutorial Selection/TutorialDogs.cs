@@ -18,7 +18,7 @@ public class TutorialDogs : MonoBehaviour
     [SerializeField] TMP_Text _textR;
     [SerializeField] bool _1, _2, _enter = false;
     [SerializeField] bool _tutorialR = false;
-    [SerializeField] Upgrade _upgradeAddDog;
+    //[SerializeField] Upgrade _upgradeAddDog;
 
     void Start()
     {
@@ -93,7 +93,7 @@ public class TutorialDogs : MonoBehaviour
             if (_countDown <= 0)
             {
                 _countDown = 0;
-                _upgradeAddDog.activeTutorialDogs = false;
+                //_upgradeAddDog.activeTutorialDogs = false;
                 Destroy(gameObject);
             }
         }

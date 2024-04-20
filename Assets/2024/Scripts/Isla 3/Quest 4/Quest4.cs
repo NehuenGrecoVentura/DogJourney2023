@@ -28,12 +28,12 @@ public class Quest4 : MonoBehaviour
     
     [Header("REFS")]
     private Inventory _inventory;
-    private GManager _gm;
+    private Manager _gm;
 
     private void Awake()
     {
         _inventory = FindObjectOfType<Inventory>();
-        _gm = FindObjectOfType<GManager>();
+        _gm = FindObjectOfType<Manager>();
         _map = FindObjectOfType<LocationQuest>();
     }
 
@@ -108,7 +108,7 @@ public class Quest4 : MonoBehaviour
                 _textsReward[1].color = Color.green;
                 _inventory.amountOil++;
                 _inventory.money += 200;
-                _gm.LevelCompleted();
+                _gm.QuestCompleted();
 
                 foreach (var quest5 in _nextQuest)
                     quest5.SetActive(true);
@@ -130,7 +130,7 @@ public class Quest4 : MonoBehaviour
                 if (_inventory.money <= 0)
                     _inventory.money = 0;
 
-                _gm.LevelCompleted();
+                _gm.QuestCompleted();
 
                 foreach (var quest5 in _nextQuest)
                     quest5.SetActive(true);
@@ -145,7 +145,7 @@ public class Quest4 : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        var player = other.GetComponent<Character2022>();
+        var player = other.GetComponent<Character>();
         if (player != null)
         {
             if (!Input.GetKeyDown(_buttonInteractive))
@@ -157,7 +157,7 @@ public class Quest4 : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        var player = other.GetComponent<Character2022>();
+        var player = other.GetComponent<Character>();
         if (player != null) _iconInteractive.SetActive(false);
     }
 }

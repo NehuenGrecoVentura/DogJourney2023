@@ -17,7 +17,7 @@ public class IconsInteractive : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        var player = other.GetComponent<Character2022>();
+        var player = other.GetComponent<Character>();
         if (player != null) transform.parent = null;
     }
 }
