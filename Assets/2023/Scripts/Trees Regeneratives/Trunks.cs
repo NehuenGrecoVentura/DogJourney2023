@@ -20,6 +20,8 @@ public class Trunks : MonoBehaviour
     private Vector3[] _initiaPos;
     private Collider _myCol;
 
+    private Vector3 _initialSize;
+
     private void Awake()
     {
         _myCol = GetComponent<Collider>();
@@ -34,6 +36,14 @@ public class Trunks : MonoBehaviour
         _iconInteractive.SetActive(false);
         _iconInteractive.transform.DOScale(0, 0);
         SetInitialPos();
+
+
+        _initialSize = new Vector3(3.879673f, 2.363775f, 4.577576f);
+
+        if (_myCol is BoxCollider)
+        {
+            ((BoxCollider)_myCol).size = _initialSize;
+        }
     }
 
     private void SetInitialPos()
@@ -110,6 +120,11 @@ public class Trunks : MonoBehaviour
             _logs[i].transform.position = _initiaPos[i];
         }
 
+        if (_myCol is BoxCollider)
+        {
+            ((BoxCollider)_myCol).size = _initialSize;
+        }
+
         _myCol.enabled = true;
         gameObject.SetActive(false);
     }
@@ -127,7 +142,20 @@ public class Trunks : MonoBehaviour
                 _iconInteractive.transform.DOScale(1.25f, 0.5f);
             }
                 
-            else _iconInteractive.SetActive(false);
+            else
+            {
+                _iconInteractive.SetActive(false);
+
+                Vector3 newSize = new Vector3(8f, 8f, 8f);
+
+                if (_myCol is BoxCollider)
+                {
+                    ((BoxCollider)_myCol).size = newSize;
+                }
+            }
+                
+                
+                
         }
     }
 
