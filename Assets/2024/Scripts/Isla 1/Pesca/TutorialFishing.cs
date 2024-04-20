@@ -23,10 +23,10 @@ public class TutorialFishing : MonoBehaviour
     [SerializeField] GameObject _cinematic;
     [SerializeField] Image _fadeOut;
     private CameraOrbit _camPlayer;
+    private Character _player;
     private QuestUI _questUI;
 
     [Header("MESSAGE FINAL")]
-    [SerializeField] TMP_Text _textMessage;
     [SerializeField, TextArea(4,6)] string _messageFinal;
 
     private void Awake()
@@ -36,6 +36,7 @@ public class TutorialFishing : MonoBehaviour
         _questUI = FindObjectOfType<QuestUI>();
         _inventory = FindObjectOfType<CharacterInventory>();
         _gm = FindObjectOfType<Manager>();
+        _player = FindObjectOfType<Character>();
     }
 
     private void Start()
@@ -53,21 +54,39 @@ public class TutorialFishing : MonoBehaviour
 
     private IEnumerator Ending()
     {
-        _fishing.Gaming = false;
+        _fishing.Quit();
         _questActive = false;
-        _fadeOut.DOColor(Color.black, 1f);
+
+        _message.text = _messageFinal;
+        _player.gameObject.transform.LookAt(transform);
+        _player.speed = 0;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+
+        _fadeOut.DOColor(Color.black, 1f).OnComplete(() => Destroy(_cinematic, 1f));
         yield return new WaitForSeconds(2f);
         _fishing.Quit();
         _fadeOut.DOColor(Color.clear, 1f);
-        Destroy(_cinematic);
+        yield return new WaitForSeconds(2f);
+        _fadeOut.DOColor(Color.clear, 1f);
+        
         _camPlayer.gameObject.SetActive(true);
-        _inventory.money += _reward;
+        
+        yield return new WaitForSeconds(0.5f);
+        _boxMessage.gameObject.SetActive(true);
+        _boxMessage.DOAnchorPosY(70f, 0.5f);
+        yield return new WaitForSeconds(4f);
+        _boxMessage.DOAnchorPosY(-1000f, 0.5f).OnComplete(() => _boxMessage.gameObject.SetActive(false));
+        yield return new WaitForSeconds(0.6f);
         _gm.QuestCompleted();
+        _inventory.money += _reward;
         Destroy(this);
     }
 
     private IEnumerator PlayCinematic()
     {
+        _player.speed = 0;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+
         _questActive = true;
         _fadeOut.DOColor(Color.black, 1f);
         yield return new WaitForSeconds(2f);

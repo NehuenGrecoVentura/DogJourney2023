@@ -53,6 +53,8 @@ public class NPCFishing : MonoBehaviour
         _buttonConfirm.gameObject.SetActive(false);
         _dialogue.Close();
         _tutorial.enabled = true;
+        Destroy(_myCol);
+        Destroy(_iconInteract);
         Destroy(this);
     }
 

@@ -300,6 +300,11 @@ public class FishingMinigame : MonoBehaviour
 
     public void Quit()
     {
+        _canvasRenderFish.SetActive(false);
+
+        foreach (var item in _textAmount)
+            item.gameObject.SetActive(false);
+
         overWatch = 0;
         start = false;
         Gaming = false;
