@@ -7,12 +7,6 @@ public class Interactor : MonoBehaviour
     private IInteractable _currentInteractable;
     private Transform _hand;
 
-    private void Start()
-    {
-        if (gameObject.TryGetComponent(out PlayerModel player))
-            _hand = player.Hand;
-    }
-
     public void OnInteract()
     {
         if (_currentInteractable == null) return;
