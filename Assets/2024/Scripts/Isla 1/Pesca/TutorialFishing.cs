@@ -11,7 +11,7 @@ public class TutorialFishing : MonoBehaviour
     [SerializeField] TMP_Text _message;
     [SerializeField, TextArea(4, 6)] string[] _lines;
     [SerializeField] TMP_Text _textName;
-    [SerializeField] Image _arrow;
+    [SerializeField] SpriteRenderer _arrow;
     [SerializeField] Image[] _count;
     [SerializeField] int _totalFishes = 5;
     [SerializeField] int _reward = 5;
