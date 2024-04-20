@@ -15,18 +15,11 @@ public class WolfLvl2 : MonoBehaviour
     private float _speed = 1f;
     private AudioSource _myAudio;
     public AudioClip soundDetected;
-    public ConeVision coneVision;
 
     void Start()
     {
         _myAudio = GetComponent<AudioSource>();
         alertIcon.gameObject.SetActive(false);
-    }
-
-    void Update()
-    {
-        if (coneVision.detected) chase();
-        if (!coneVision.detected) patrol();
     }
 
     public void OnTriggerEnter(Collider other)

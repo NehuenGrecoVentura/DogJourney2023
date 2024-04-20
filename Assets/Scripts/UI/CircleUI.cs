@@ -9,7 +9,6 @@ public class CircleUI : MonoBehaviour
     [SerializeField] float _speedToLose;
     float _initialTimeToLose;
     public Image circleBar;
-    public GameManager gameManager;
 
     private void Start()
     {
@@ -34,7 +33,6 @@ public class CircleUI : MonoBehaviour
         if (_timeToLose <= 0)
         {
             _timeToLose = 0;
-            gameManager.GameOver();
         }
     }
 
