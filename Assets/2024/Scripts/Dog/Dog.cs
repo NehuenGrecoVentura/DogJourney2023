@@ -66,9 +66,10 @@ public class Dog : MonoBehaviour
         if (!IsInView() && IsFarEnough() && _order.activeOrders && !quickEnd && _player.gameObject.transform.position.y < 18f && !scared)
         {
 
-            transform.position = _posTeletransport.position;
-            _target.transform.position = _posTeletransport.position;
-            Stop();
+            //transform.position = _posTeletransport.position;
+            //_target.transform.position = _posTeletransport.position;
+            _target.transform.position = _player.gameObject.transform.position;
+            //Stop();
         }
 
         if (scared && transform.position == _target.gameObject.transform.position) scared = false;
