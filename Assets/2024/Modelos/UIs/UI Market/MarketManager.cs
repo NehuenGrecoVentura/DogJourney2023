@@ -211,7 +211,7 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 
     public void ErrorUpgrade(int indexBox)
     {
-        _boxes[indexBox].transform.DOScale(0.5f, 0.5f).OnComplete(() =>
+        _boxes[indexBox].transform.DOScale(0.2f, 0.5f).OnComplete(() =>
         {
             _boxes[indexBox].transform.DOScale(0.13f, 0.5f);
         });
@@ -300,24 +300,24 @@ public class MarketManager : MonoBehaviour, IScrollHandler
         _scrollbar.value = currentValue;
     }
 
-    public void CheckUpgrades()
-    {
-        if (_inventory.upgradeLoot)
-        {
-            foreach (var button in _buttonUpgrades)
-                button.enabled = true;
+    //public void CheckUpgrades()
+    //{
+    //    if (_inventory.upgradeLoot)
+    //    {
+    //        foreach (var button in _buttonUpgrades)
+    //            button.enabled = true;
 
-            foreach (var image in _buttonImagesUpgrades)
-                image.enabled = false;
-        }
+    //        foreach (var image in _buttonImagesUpgrades)
+    //            image.enabled = false;
+    //    }
 
-        else
-        {
-            foreach (var button in _buttonUpgrades)
-                button.enabled = false;
+    //    else
+    //    {
+    //        foreach (var button in _buttonUpgrades)
+    //            button.enabled = false;
 
-            foreach (var image in _buttonImagesUpgrades)
-                image.enabled = true;
-        }
-    }
+    //        foreach (var image in _buttonImagesUpgrades)
+    //            image.enabled = true;
+    //    }
+    //}
 }

@@ -61,12 +61,12 @@ public class Article : MonoBehaviour
 
     public void EnterUprade()
     {
-        if (_inventory.upgradeLoot) EnterArticle();
+        EnterArticle();
     }
 
     public void ExitUpgrade()
     {
-        if (_inventory.upgradeLoot) ExitArticle();
+        ExitArticle();
     }
 
 
