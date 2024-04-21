@@ -85,7 +85,10 @@ public class BuilderManager : MonoBehaviour
         yield return new WaitForSeconds(_timeToBuild);
         _camPlayer.gameObject.SetActive(true);
         _radar.StatusRadar(true);
-        _questUI.UIStatus(true);
+
+        if (gameObject.name == "Build Stairs") _questUI.UIStatus(true);
+        else _questUI.UIStatus(false);
+
         _radar.target = _posRadar;
         //if (gameObject.name == "Build Stairs") //_canvasQuest.SetActive(true);
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);

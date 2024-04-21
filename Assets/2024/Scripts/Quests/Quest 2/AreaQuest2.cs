@@ -16,8 +16,8 @@ public class AreaQuest2 : MonoBehaviour
     [SerializeField, TextArea(4,6)] string _message;
     [SerializeField] string _name = "Tip";
     private Character _player;
-
-
+    private bool _firstContact = false;
+    
     private void Awake()
     {
         _camPlayer = FindObjectOfType<CameraOrbit>();
@@ -32,7 +32,7 @@ public class AreaQuest2 : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null)
+        if (player != null && !_firstContact)
         {
             player.speed = 0;
             player.FreezePlayer(RigidbodyConstraints.FreezeAll);
@@ -42,6 +42,7 @@ public class AreaQuest2 : MonoBehaviour
 
     private IEnumerator FocusPuzzle()
     {
+        _firstContact = true;
         _textMessage.text = _message;
         _textName.text = _name;
 
@@ -58,11 +59,10 @@ public class AreaQuest2 : MonoBehaviour
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         //_boxMessage.transform.DOScale(0, 0.5f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
-
         _camPlayer.gameObject.SetActive(true);
         Destroy(_cinematicRabbit);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.6f);
         _boxMessage.gameObject.SetActive(false);
-        Destroy(this, 0.5f);
+        Destroy(this);
     }
 }
