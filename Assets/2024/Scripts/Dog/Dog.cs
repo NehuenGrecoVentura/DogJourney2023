@@ -38,7 +38,12 @@ public class Dog : MonoBehaviour
 
     [Header("Carrito")] 
     [SerializeField] private Transform DesiredPoint;
+    [SerializeField] private Transform LeashPoint0;
+    [SerializeField] private Transform LeashPoint1;
+    [SerializeField] private Transform LeashPoint2;
+    [SerializeField] private Transform LeashPoint3;
     [SerializeField] private Transform DestinationPoint;
+    [SerializeField] private LineRenderer line;
     [SerializeField] private float TroleyTime;
 
     private void Awake()
@@ -58,7 +63,15 @@ public class Dog : MonoBehaviour
 
     private void Update()
     {
-        DestinationPoint.DOMove(DesiredPoint.position,TroleyTime);
+       // DestinationPoint.DOMove(DesiredPoint.position,TroleyTime);
+        DestinationPoint.DOMove(DesiredPoint.position,TroleyTime); //movimiento
+        //render LeashPoint
+        LeashPoint2.DOMove(LeashPoint1.position,TroleyTime);
+        LeashPoint1.DOMove(LeashPoint0.position,TroleyTime);
+        line.SetPosition(0,LeashPoint0.position);
+        line.SetPosition(1,LeashPoint1.position);
+        line.SetPosition(2,LeashPoint2.position);
+        line.SetPosition(3,LeashPoint3.position);
         //_model.TeletransportToPlayer();
         //_model.OffScreenSpeed();
 
