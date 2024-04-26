@@ -12562,8 +12562,6 @@ MonoBehaviour:
   - {fileID: 4535351043777966869}
   - {fileID: 4485954432556357324}
   - {fileID: 2756381799893371553}
-  logsPos: {x: 0, y: 0, z: 0}
-  trunksPos: {x: 0, y: 0, z: 0}
 --- !u!1 &6292513737030853545
 GameObject:
   m_ObjectHideFlags: 0
@@ -13863,8 +13861,6 @@ MonoBehaviour:
   backgroundBar: {fileID: 8063561984082688817}
   _circleDecal: {fileID: 4363762319186085542}
   isUpgraded: 0
-  _logs: []
-  _trunks: {fileID: 6292513738262893303}
 --- !u!1 &8476335367692825812
 GameObject:
   m_ObjectHideFlags: 0
@@ -14808,6 +14804,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Interact Q
+      objectReference: {fileID: 0}
+    - target: {fileID: 749534401438647485, guid: 87e6253e04e97f0419bca763716f92f4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 749534401438647486, guid: 87e6253e04e97f0419bca763716f92f4,
         type: 3}
