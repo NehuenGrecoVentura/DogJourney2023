@@ -78,6 +78,7 @@ public class QuestBroom : MonoBehaviour
         _radar.target = _dogEnter.gameObject.transform;
         _dialogue.Close();
         _col.enabled = true;
+        _dog.canTeletransport = false;
         _questUI.ActiveUIQuest("The Hidden Broom", "Find the lost broom", string.Empty, string.Empty);
         _buttonConfirm.gameObject.SetActive(false);
         _myAnim.SetBool("Quest", true);

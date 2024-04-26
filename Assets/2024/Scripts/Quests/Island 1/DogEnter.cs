@@ -142,6 +142,7 @@ public class DogEnter : MonoBehaviour
 
     public void ActiveNextQuest()
     {
+        _dog.canTeletransport = true;
         _camDog.gameObject.SetActive(false);
         _camPlayer.gameObject.SetActive(true);
         _dog.quickEnd = false;

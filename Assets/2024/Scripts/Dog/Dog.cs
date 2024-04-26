@@ -31,6 +31,7 @@ public class Dog : MonoBehaviour
     [SerializeField] float _offsetDistance = 2f;
     private Vector3 _teletransportPos = new Vector3();
     public bool quickEnd = false;
+    public bool canTeletransport = true;
 
     [Header("AUDIO")]
     [SerializeField] AudioClip _soundScared;
@@ -144,6 +145,6 @@ public class Dog : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         var player = collision.gameObject.GetComponent<Character>();
-        if (player != null) Stop();
+        if (player != null && canTeletransport) Stop();
     }
 }
