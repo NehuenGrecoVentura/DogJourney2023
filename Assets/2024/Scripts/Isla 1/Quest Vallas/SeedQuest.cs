@@ -6,6 +6,7 @@ using TMPro;
 
 public class SeedQuest : MonoBehaviour
 {
+    [SerializeField] GameObject _npc;
     [SerializeField] GameObject _cinematic;
     [SerializeField] CameraOrbit _camPlayer;
     [SerializeField] Character _player;
@@ -13,6 +14,8 @@ public class SeedQuest : MonoBehaviour
     [SerializeField] MeshRenderer _myMesh;
     [SerializeField] Image _fadeOut;
     [SerializeField] Manager _gm;
+    [SerializeField] Camera _camEnding;
+    [SerializeField] Transform _posEnd;
 
     [Header("MESSAGE")]
     [SerializeField] TMP_Text _text;
@@ -58,11 +61,10 @@ public class SeedQuest : MonoBehaviour
             yield return null;
         }
 
-
         _fadeOut.DOColor(Color.clear, 2f);
         yield return new WaitForSeconds(2);
         _player.isConstruct = false;
-
+        _npc.transform.LookAt(_player.gameObject.transform);
         _text.text = _messsageFinal;
         _message.DOAnchorPosY(-1000f, 0f);
         _message.localScale = new Vector3(1, 1, 1);
@@ -70,16 +72,35 @@ public class SeedQuest : MonoBehaviour
         _message.DOAnchorPosY(70f, 0.5f);
 
         yield return new WaitForSeconds(5f);
-        _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
-        _camPlayer.gameObject.SetActive(true);
-
         _message.gameObject.SetActive(false);
         _message.DOAnchorPosY(-1000f, 0f);
 
-        Destroy(_cinematic);
+        yield return new WaitForSeconds(1f);
+
+        _fadeOut.DOColor(Color.black, 2f).OnComplete(() =>
+        {
+            _player.gameObject.transform.position = _posEnd.position;
+            _camEnding.gameObject.SetActive(true);
+            Destroy(_cinematic);
+        });
+
+        yield return new WaitForSeconds(2f);
+        _npc.transform.LookAt(_player.gameObject.transform);
+        _fadeOut.DOColor(Color.clear, 2f);
+        yield return new WaitForSeconds(2);
+        _message.gameObject.SetActive(true);
+        _message.DOAnchorPosY(70f, 0.5f);
+        
+        yield return new WaitForSeconds(4f);
+        Destroy(_camEnding.gameObject);
+        _message.gameObject.SetActive(false);
+        _message.DOAnchorPosY(-1000f, 0f);
+        _camPlayer.gameObject.SetActive(true);
+        _player.gameObject.SetActive(true);
+        _player.speed = _player.speedAux;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _gm.QuestCompleted();
         _radar.target = _market.gameObject.transform;
-        Destroy(this);
+        Destroy(gameObject, 0.6f);
     }
 }
