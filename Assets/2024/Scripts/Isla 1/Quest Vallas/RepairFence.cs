@@ -8,6 +8,9 @@ public class RepairFence : MonoBehaviour
 {
     [SerializeField] GameObject _iconMaterial;
     [SerializeField] GameObject _cinematic;
+    [SerializeField] GameObject _cinematicSeed;
+    [SerializeField] GameObject _iconSeed;
+
     [SerializeField] Image _fadeOut;
     [SerializeField] GameObject _fencesRepared;
     [SerializeField] GameObject _fencesBroken;
@@ -15,16 +18,16 @@ public class RepairFence : MonoBehaviour
     private CameraOrbit _camPlayer;
     private Character _player;
     private Collider _myCol;
-    private Manager _gm;
+    //private Manager _gm;
     private MeshRenderer _myMesh;
 
     [SerializeField] RectTransform _message;
     [SerializeField, TextArea(6, 4)] string _messageEnd;
     [SerializeField] TMP_Text _textEnd;
 
-    [Header("NEXT QUEST")]
-    private FirstMarket _market;
-    private LocationQuest _radar;
+    //[Header("NEXT QUEST")]
+    //private FirstMarket _market;
+    //private LocationQuest _radar;
 
     private AudioSource _myAudio;
 
@@ -37,9 +40,9 @@ public class RepairFence : MonoBehaviour
 
         _camPlayer = FindObjectOfType<CameraOrbit>();
         _player = FindObjectOfType<Character>();
-        _gm = FindObjectOfType<Manager>();
-        _radar = FindObjectOfType<LocationQuest>();
-        _market = FindObjectOfType<FirstMarket>();
+        //_gm = FindObjectOfType<Manager>();
+        //_radar = FindObjectOfType<LocationQuest>();
+        //_market = FindObjectOfType<FirstMarket>();
     }
 
     private void Start()
@@ -47,6 +50,8 @@ public class RepairFence : MonoBehaviour
         _iconMaterial.transform.DOScale(0f, 0f);
         _cinematic.SetActive(false);
         _myAudio.Stop();
+        _iconSeed.SetActive(false);
+        _cinematicSeed.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -123,8 +128,10 @@ public class RepairFence : MonoBehaviour
 
 
         Destroy(_cinematic);
-        _gm.QuestCompleted();
-        _radar.target = _market.gameObject.transform;
-        Destroy(this);
+        //_gm.QuestCompleted();
+        //_radar.target = _market.gameObject.transform;
+        _iconSeed.SetActive(true);
+        //Destroy(this);
+        Destroy(gameObject);
     }
 }

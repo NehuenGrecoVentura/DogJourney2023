@@ -5,9 +5,17 @@ public class Bush : MonoBehaviour
 {
     [SerializeField] float _amountHit = 500f;
     [SerializeField] KeyCode _inputInteractive = KeyCode.Mouse0;
-    [SerializeField] DoTweenManager _message;
     [SerializeField] RectTransform _boxMessage;
     [SerializeField] TMP_Text _textAmount;
+
+    private DoTweenManager _message;
+    private CharacterInventory _invetory;
+
+    private void Awake()
+    {
+        _message = FindObjectOfType<DoTweenManager>();
+        _invetory = FindObjectOfType<CharacterInventory>();
+    }
 
     private void Start()
     {
@@ -25,7 +33,8 @@ public class Bush : MonoBehaviour
             if (_amountHit <= 0)
             {
                 _amountHit = 0;
-                _message.ShowUI("+2", _boxMessage, _textAmount);
+                _message.ShowUI("+1", _boxMessage, _textAmount);
+                _invetory.seeds++; 
                 Destroy(gameObject);
             }
         }

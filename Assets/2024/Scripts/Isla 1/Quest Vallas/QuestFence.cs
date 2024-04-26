@@ -20,8 +20,14 @@ public class QuestFence : MonoBehaviour
     [SerializeField] Button _buttonConfirm;
     [SerializeField] RectTransform _message;
     [SerializeField] TMP_Text _textMessage;
-    [SerializeField, TextArea(4,6)] string _messageBuild;
+    [SerializeField, TextArea(4, 6)] string _messageBuild;
+    [SerializeField] Image _fadeOut;
     private Dialogue _dialogue;
+
+    [Header("CAMERAS")]
+    [SerializeField] Camera _camNPC;
+    [SerializeField] Camera _camBush;
+    [SerializeField] CameraOrbit _camPlayer;
 
     [Header("AUDIOS")]
     [SerializeField] AudioClip _messageSound;
@@ -35,10 +41,16 @@ public class QuestFence : MonoBehaviour
 
     private bool _activeQuest = false;
     private bool _completedWoods = false;
+    private bool _completeSeeds = false;
+
     private Collider _myCol;
     private QuestUI _questUI;
     private CharacterInventory _inventory;
     private Character _player;
+
+    [Header("SEEDS")]
+    private bool _seedsActive = false;
+    private int _totalSeeds = 3;
 
     private void Awake()
     {
@@ -62,12 +74,23 @@ public class QuestFence : MonoBehaviour
 
     private void Update()
     {
-        if (_activeQuest && _inventory.greenTrees >= _woodsRequired && !_completedWoods)
+        if (_activeQuest && _inventory.greenTrees >= _woodsRequired && !_completedWoods && !_seedsActive)
         {
             _myCol.enabled = true;
             _questUI.TaskCompleted(1);
-            _questUI.AddNewTask(2, "Try to repair the fences");
+            _questUI.AddNewTask(2, "Go back to the florist");
             _completedWoods = true;
+        }
+
+        if (_seedsActive)
+            _questUI.AddNewTask(2, "Get seeds from the bushes (" + _inventory.seeds.ToString() + "/" + _totalSeeds.ToString() + ")");
+
+        if (_seedsActive && _inventory.seeds >= _totalSeeds && !_completeSeeds)
+        {
+            _myCol.enabled = true;
+            _questUI.TaskCompleted(2);
+            _questUI.AddNewTask(3, "Go back to the florist");
+            _completeSeeds = true;
         }
     }
 
@@ -103,10 +126,10 @@ public class QuestFence : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && _completedWoods)
+        if (player != null && Input.GetKeyDown(_keyInteract))
         {
-            if (Input.GetKeyDown(_keyInteract)) 
-                StartCoroutine(ShowMessage());
+            if (_completedWoods && !_seedsActive) StartCoroutine(ShowMessage());
+            else if (_completeSeeds && _seedsActive) StartCoroutine(MessageBuild());
         }
     }
 
@@ -122,24 +145,65 @@ public class QuestFence : MonoBehaviour
 
     private IEnumerator ShowMessage()
     {
-        Destroy(_myCol);
-        _textMessage.text = _messageBuild;
-        _iconBuild.SetActive(true);
+        _myCol.enabled = false;
+        _fadeOut.DOColor(Color.clear, 0f);
         _iconInteract.SetActive(false);
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
         _message.gameObject.SetActive(true);
         _message.localScale = new Vector3(1, 1, 1);
-        _message.gameObject.SetActive(true);
         _message.DOAnchorPosY(70f, 0.5f);
         yield return new WaitForSeconds(2f);
+        _message.DOAnchorPosY(-1000f, 0.5f).OnComplete(() => _fadeOut.DOColor(Color.black, 1f));
+        yield return new WaitForSeconds(2f);
+        _camPlayer.gameObject.SetActive(false);
+        _camBush.gameObject.SetActive(false);
+        _camNPC.gameObject.SetActive(true);
+        _fadeOut.DOColor(Color.clear, 1f);
         _message.gameObject.SetActive(true);
-        _message.DOAnchorPosY(-1000f, 0.5f);
+        _message.DOAnchorPosY(70f, 0.5f);
+        yield return new WaitForSeconds(4f);
+        _message.DOAnchorPosY(-1000f, 0.5f).OnComplete(() => _fadeOut.DOColor(Color.black, 1f));
+        yield return new WaitForSeconds(2f);
+        _fadeOut.DOColor(Color.clear, 1f);
+        _camPlayer.gameObject.SetActive(false);
+        _camNPC.gameObject.SetActive(false);
+        _camBush.gameObject.SetActive(true);
+        _message.gameObject.SetActive(true);
+        _message.DOAnchorPosY(70f, 0.5f);
+        yield return new WaitForSeconds(4f);
+        _message.DOAnchorPosY(-1000f, 0.5f).OnComplete(() => _fadeOut.DOColor(Color.black, 1f));
+        yield return new WaitForSeconds(2f);
+        _camPlayer.gameObject.SetActive(true);
+        _camBush.gameObject.SetActive(false);
+        _camNPC.gameObject.SetActive(false);
+        _fadeOut.DOColor(Color.clear, 1f);
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
-        yield return new WaitForSeconds(1f);
-        _message.gameObject.SetActive(false);  
-        Destroy(this);
+        _message.gameObject.SetActive(false);
+        _textMessage.text = _messageBuild;
+        _seedsActive = true;
+    }
+
+    private IEnumerator MessageBuild()
+    {
+        Destroy(_myCol);
+        _fadeOut.DOColor(Color.clear, 0f);
+        _iconInteract.SetActive(false);
+        _player.speed = 0;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _message.gameObject.SetActive(true);
+        _message.localScale = new Vector3(1, 1, 1);
+        _message.DOAnchorPosY(70f, 0.5f);
+        yield return new WaitForSeconds(2.5f);
+        _message.DOAnchorPosY(-1000f, 0.5f).OnComplete(() =>
+        {
+            _player.speed = _player.speedAux;
+            _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+            _message.gameObject.SetActive(false);
+            _iconBuild.gameObject.SetActive(true);
+            Destroy(this);
+        });
     }
 
     public void CheatSkip()
