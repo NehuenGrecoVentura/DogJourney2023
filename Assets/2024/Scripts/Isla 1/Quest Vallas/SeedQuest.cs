@@ -6,7 +6,7 @@ using TMPro;
 
 public class SeedQuest : MonoBehaviour
 {
-    [SerializeField] GameObject _npc;
+    
     [SerializeField] GameObject _cinematic;
     [SerializeField] CameraOrbit _camPlayer;
     [SerializeField] Character _player;
@@ -25,6 +25,13 @@ public class SeedQuest : MonoBehaviour
     [Header("NEXT QUEST")]
     [SerializeField] LocationQuest _radar;
     [SerializeField] FirstMarket _market;
+
+    [Header("NPC")]
+    [SerializeField] GameObject _npc;
+    [SerializeField] RuntimeAnimatorController _animReward;
+    [SerializeField] RuntimeAnimatorController _animNormal;
+    [SerializeField] GameObject _broom;
+    [SerializeField] GameObject _newAxe;
 
     private void OnTriggerStay(Collider other)
     {
@@ -85,7 +92,9 @@ public class SeedQuest : MonoBehaviour
         });
 
         yield return new WaitForSeconds(2f);
+        _newAxe.SetActive(true);
         _npc.transform.LookAt(_player.gameObject.transform);
+        _npc.GetComponent<Animator>().runtimeAnimatorController = _animReward;
         _fadeOut.DOColor(Color.clear, 2f);
         yield return new WaitForSeconds(2);
         _message.gameObject.SetActive(true);
@@ -93,6 +102,7 @@ public class SeedQuest : MonoBehaviour
         
         yield return new WaitForSeconds(4f);
         Destroy(_camEnding.gameObject);
+        Destroy(_newAxe);
         _message.gameObject.SetActive(false);
         _message.DOAnchorPosY(-1000f, 0f);
         _camPlayer.gameObject.SetActive(true);
@@ -101,6 +111,8 @@ public class SeedQuest : MonoBehaviour
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _gm.QuestCompleted();
         _radar.target = _market.gameObject.transform;
+        _npc.GetComponent<Animator>().runtimeAnimatorController = _animNormal;
+        _broom.SetActive(true);
         Destroy(gameObject, 0.6f);
     }
 }
