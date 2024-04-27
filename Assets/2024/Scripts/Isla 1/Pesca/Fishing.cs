@@ -7,16 +7,14 @@ using TMPro;
 public class Fishing : MonoBehaviour
 {
     private FishingMinigame _fishing;
-    [SerializeField] Camera _camFishing;
+    [SerializeField] Camera _camRender;
+    [SerializeField] Camera _myCam;
+    private Collider _myCol;
 
     private void Awake()
     {
+        _myCol = GetComponent<Collider>();
         _fishing = FindObjectOfType<FishingMinigame>();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-
     }
 
     private void OnTriggerStay(Collider other)
@@ -26,13 +24,22 @@ public class Fishing : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-                //_fishing.Victory = false;
-                //_fishing.Reset();
-
-                _fishing.start = true;
-                _fishing.Gaming = true;
-                _camFishing.enabled = true;
+                StartCoroutine(StartMiniGame());
             }
         }
     }
+
+    private IEnumerator StartMiniGame()
+    {
+        Destroy(_myCol);
+        _fishing.start = true;
+        yield return new WaitForSeconds(2f);
+        _fishing.Gaming = true;
+        _camRender.enabled = true;
+    }
+
+
+
+
+
 }

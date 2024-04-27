@@ -463,7 +463,7 @@ public class FishingMinigame : MonoBehaviour
 
     private void ActivateMinigameUI()
     {
-        //_canvasRenderFish.SetActive(true);
+        _canvasRenderFish.SetActive(true);
         foreach (TMP_Text text in _textAmount)
         {
             text.gameObject.SetActive(true);
@@ -472,7 +472,7 @@ public class FishingMinigame : MonoBehaviour
 
     public void Quit()
     {
-        //_canvasRenderFish.SetActive(false);
+        _canvasRenderFish.SetActive(false);
         foreach (TMP_Text text in _textAmount)
         {
             text.gameObject.SetActive(false);
