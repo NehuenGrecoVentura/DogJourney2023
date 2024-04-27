@@ -15,6 +15,7 @@ public class SeedQuest : MonoBehaviour
     [SerializeField] Image _fadeOut;
     [SerializeField] Manager _gm;
     [SerializeField] Camera _camEnding;
+    [SerializeField] Camera _camTree;
     [SerializeField] Transform _posEnd;
 
     [Header("MESSAGE")]
@@ -100,13 +101,37 @@ public class SeedQuest : MonoBehaviour
         _message.gameObject.SetActive(true);
         _message.DOAnchorPosY(70f, 0.5f);
         
+        
+        
         yield return new WaitForSeconds(4f);
-        Destroy(_camEnding.gameObject);
-        Destroy(_newAxe);
+        _message.DOAnchorPosY(-1000f, 0.5f);
+        _fadeOut.DOColor(Color.black, 2f).OnComplete(() =>
+        {
+            Destroy(_camEnding.gameObject);
+            _camTree.gameObject.SetActive(true);
+        });
+
+        yield return new WaitForSeconds(2f);
+        _fadeOut.DOColor(Color.clear, 2f);
+        yield return new WaitForSeconds(2f);
+        
+        _message.gameObject.SetActive(true);
+        _message.DOAnchorPosY(70f, 0.5f);
+        yield return new WaitForSeconds(5f);
+        _fadeOut.DOColor(Color.black, 2f);
+        yield return new WaitForSeconds(2f);
+        Destroy(_camTree.gameObject);
+        _fadeOut.DOColor(Color.clear, 2f);
+
+
+
+
+
         _message.gameObject.SetActive(false);
         _message.DOAnchorPosY(-1000f, 0f);
+        
+        Destroy(_newAxe);
         _camPlayer.gameObject.SetActive(true);
-        _player.gameObject.SetActive(true);
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _gm.QuestCompleted();
@@ -115,4 +140,21 @@ public class SeedQuest : MonoBehaviour
         _broom.SetActive(true);
         Destroy(gameObject, 0.6f);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
