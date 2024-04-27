@@ -42,7 +42,8 @@ public class TutorialFishing : MonoBehaviour
     [SerializeField] Transform _posPlayer;
 
     [SerializeField] NPCFishing _npc;
-    
+
+    public GameObject[] score;
 
     private void Awake()
     {
@@ -87,6 +88,8 @@ public class TutorialFishing : MonoBehaviour
     {
         //_fishing.Quit();
         _questActive = false;
+
+
         _textName.text = "Alice";
         _message.text = _messageFinal;
 
