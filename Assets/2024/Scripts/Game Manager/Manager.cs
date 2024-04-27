@@ -41,6 +41,7 @@ public class Manager : MonoBehaviour
     public bool amountUpgrade = false;
     public bool speedFishUpgrade = false;
     private FishingMinigame _fishingGame;
+    public int levelFishing = 1;
 
     private void Awake()
     {

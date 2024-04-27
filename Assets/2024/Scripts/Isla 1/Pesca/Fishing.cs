@@ -18,9 +18,17 @@ public class Fishing : MonoBehaviour
     [Header("FISHING")]
     [SerializeField] int _totalAmount = 3;
     private FishingMinigame _fishing;
+    private Manager _gm;
     private Character _player;
     private Collider _myCol;
     private bool _isActive = false;
+
+    [Header("MESSAGE")]
+    [SerializeField] RectTransform _boxMessage;
+    [SerializeField] Image _fadeOut;
+    [SerializeField] TMP_Text _textMessage;
+    [SerializeField] TMP_Text _textName;
+    [SerializeField, TextArea(4, 6)] string _message;
 
     private void Awake()
     {
@@ -29,6 +37,7 @@ public class Fishing : MonoBehaviour
         _fishing = FindObjectOfType<FishingMinigame>();
         _player = FindObjectOfType<Character>();
         _camPlayer = FindObjectOfType<CameraOrbit>();
+        _gm = FindObjectOfType<Manager>();
     }
 
     private void Start()
@@ -39,7 +48,8 @@ public class Fishing : MonoBehaviour
 
     private void Update()
     {
-        if (_isActive && _fishing.fishedPicked == _totalAmount) EndGame();
+        if (_isActive && _fishing.fishedPicked == _totalAmount) 
+            StartCoroutine(FinishMiniGame());
     }
 
     private void EndGame()
@@ -89,5 +99,26 @@ public class Fishing : MonoBehaviour
         yield return new WaitForSeconds(2f);
         _fishing.Gaming = true;
         _camRender.enabled = true;
+    }
+
+    private IEnumerator FinishMiniGame()
+    {
+        _isActive = false;
+        _fishing.Quit();
+        _gm.levelFishing++;
+        Destroy(_myCam.gameObject);
+        _camPlayer.gameObject.SetActive(true);
+
+        _textName.text = "Fisherman";
+        _textMessage.text = _message;
+        _boxMessage.localScale = new Vector3(1, 1, 1);
+        _boxMessage.gameObject.SetActive(true);
+        _boxMessage.DOAnchorPosY(70f, 0.5f);
+        yield return new WaitForSeconds(3f);
+        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+        yield return new WaitForSeconds(1f);
+        _boxMessage.gameObject.SetActive(false);
+        _player.speed = _player.speedAux;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
     }
 }
