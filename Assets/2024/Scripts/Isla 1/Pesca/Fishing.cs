@@ -40,8 +40,8 @@ public class Fishing : MonoBehaviour
         _iconInteract.SetActive(false);
         _rod.SetActive(false);
 
-        foreach (var item in _hud)
-            item.gameObject.SetActive(false);
+        //foreach (var item in _hud)
+        //    item.gameObject.SetActive(false);
     }
 
     private void Update()
