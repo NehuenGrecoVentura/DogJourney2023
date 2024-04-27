@@ -21,6 +21,7 @@ public class CheatManager : MonoBehaviour
     private TutorialFishing _questFishing;
     private QuestFence _questRepair;
     private Mail2 _quest2;
+    private TableQuest _tableQuest;
     private bool _quest1Skiped, _quest2Skiped, _quest3Skiped, _quest4Skiped, _quest5Skiped = false;
 
     [Header("TELETRANSOPORT")]
@@ -35,7 +36,7 @@ public class CheatManager : MonoBehaviour
     private void Awake()
     {
         _inventory = GetComponent<CharacterInventory>();
-
+        _tableQuest = FindObjectOfType<TableQuest>();
         _ordersDogs = FindObjectOfType<OrderDog>();
         _quest1 = FindObjectOfType<BoxWoods>();
         _quest2 = FindObjectOfType<Mail2>();
@@ -102,6 +103,7 @@ public class CheatManager : MonoBehaviour
             if (_quest2Skiped)
             {
                 _questTable.CheatSkip();
+                Destroy(_tableQuest);
                 _quest3Skiped = true;
             }
         }
@@ -120,6 +122,7 @@ public class CheatManager : MonoBehaviour
             if (_quest4Skiped)
             {
                 _questRepair.CheatSkip();
+                
                 _quest5Skiped = true;
             }
         }

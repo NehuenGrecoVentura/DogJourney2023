@@ -74,6 +74,7 @@ public class NPCFishing : MonoBehaviour
         _initialPosPlayer = _player.gameObject.transform.position;
 
         _tutorial.enabled = true;
+        _dialogue.playerInRange = false;
         Destroy(_myCol);
         Destroy(_iconInteract);
         //Destroy(this);
