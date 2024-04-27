@@ -120,6 +120,8 @@ public class Fishing : MonoBehaviour
         _hud[3].text = _message;
         _boxMessage.localScale = new Vector3(1, 1, 1);
         _boxMessage.gameObject.SetActive(true);
+        _hud[2].gameObject.SetActive(true);
+        _hud[3].gameObject.SetActive(true);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
         yield return new WaitForSeconds(3f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
