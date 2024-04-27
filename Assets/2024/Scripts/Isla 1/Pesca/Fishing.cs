@@ -40,6 +40,9 @@ public class Fishing : MonoBehaviour
     [SerializeField] GameObject _myRod;
     private Animator _myAnim;
 
+    [Header("SCORE")]
+    [SerializeField] TMP_Text[] _score;
+
     private void Awake()
     {
         _myCol = GetComponent<Collider>();
@@ -59,6 +62,8 @@ public class Fishing : MonoBehaviour
 
     private void Update()
     {
+        _score[1].text = _fishing.fishedPicked.ToString();
+
         if (_isActive && _fishing.fishedPicked == _totalAmount) 
             StartCoroutine(FinishMiniGame());
     }
@@ -87,6 +92,15 @@ public class Fishing : MonoBehaviour
 
     private IEnumerator StartMiniGame()
     {
+        _fadeOut.DOColor(Color.black, 1f);
+        yield return new WaitForSeconds(1f);
+        _fadeOut.DOColor(Color.clear, 1f);
+
+        foreach (var item in _score)
+        {
+            item.gameObject.SetActive(true);
+        }
+
         transform.rotation = _initialRot;
         transform.position = _posExit.position;
         _myAnim.runtimeAnimatorController = _animConrtollers[1];
@@ -114,10 +128,16 @@ public class Fishing : MonoBehaviour
     private IEnumerator FinishMiniGame()
     {
         _isActive = false;
-        _fishing.Quit();
-        _gm.levelFishing++;
 
+        foreach (var item in _score)
+        {
+            item.gameObject.SetActive(false);
+        }
+
+        _fishing.Quit();
+        _gm.levelFishing++; 
         _fadeOut.DOColor(Color.black, 1f);
+
         yield return new WaitForSeconds(1f);
         _myRod.SetActive(true);
         _myAnim.runtimeAnimatorController = _animConrtollers[0];
