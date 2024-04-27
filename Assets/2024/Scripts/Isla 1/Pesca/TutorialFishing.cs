@@ -119,10 +119,14 @@ public class TutorialFishing : MonoBehaviour
         yield return new WaitForSeconds(4f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f).OnComplete(() => _boxMessage.gameObject.SetActive(false));
         yield return new WaitForSeconds(0.6f);
+        //_player.speed = _player.speedAux;
+        //_player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+
         _gm.QuestCompleted();
         _inventory.money += _reward;
         _radar.target = _questFence.gameObject.transform;
         _questFence.enabled = true;
+        _fishing.fishedPicked = 0;
         Destroy(this);
     }
 

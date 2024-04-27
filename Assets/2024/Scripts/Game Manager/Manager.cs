@@ -37,8 +37,10 @@ public class Manager : MonoBehaviour
     private GameObject[] _purpleTrees;
     private TreeRegenerative[] _allTrees;
 
-    [Header("TREES")]
+    [Header("UPGRADES")]
     public bool amountUpgrade = false;
+    public bool speedFishUpgrade = false;
+    private FishingMinigame _fishingGame;
 
     private void Awake()
     {
@@ -50,6 +52,7 @@ public class Manager : MonoBehaviour
         _cam = FindObjectOfType<CameraOrbit>();
         _questUI = FindObjectOfType<QuestUI>();
         _allWolfs = FindObjectsOfType<WolfSleeping>();
+        _fishingGame = FindObjectOfType<FishingMinigame>();
 
         _allDecals = GameObject.FindGameObjectsWithTag("Tree Decals");
         _greenTrees = GameObject.FindGameObjectsWithTag("Green Leaves");
@@ -176,6 +179,15 @@ public class Manager : MonoBehaviour
             yield return new WaitForSeconds(_winTextTime);
             _winText.gameObject.SetActive(false);
             StopCoroutine(WinTimeInScreen());
+        }
+    }
+
+    public void UpgradeFishing()
+    {
+        if (!speedFishUpgrade)
+        {
+            _fishingGame.FishSpeedMult = 0.02f;
+            speedFishUpgrade = true;
         }
     }
 }

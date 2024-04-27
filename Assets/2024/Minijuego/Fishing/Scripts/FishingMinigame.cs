@@ -23,8 +23,8 @@ public class FishingMinigame : MonoBehaviour
     [SerializeField] GameObject fishDestination; //El vector random del pez
     float FishTimer; //El tiempo hasta que el pez se mueve
     [SerializeField] private float TimeMult;  // el multiplicador de cuanto tarda el pez en moverse 
-    float fishSpeed; //Velocidad del pez
-    [SerializeField] private float FishSpeedMult; // Multiplicador de velocidad del pez
+    public float fishSpeed; //Velocidad del pez
+    public float FishSpeedMult; // Multiplicador de velocidad del pez
 
     //Hook move
     [Header("HOOK MOVE")]
@@ -67,6 +67,7 @@ public class FishingMinigame : MonoBehaviour
     [SerializeField] GameObject _canvasRenderFish;
 
     [Header("UI")]
+    [SerializeField] Image[] _count;
     [SerializeField] TMP_Text[] _textAmount;
     public int fishedPicked = 0;
 
@@ -326,6 +327,37 @@ public class FishingMinigame : MonoBehaviour
         _character.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _radar.StatusRadar(true);
     }
+
+    public void ActiveCount()
+    {
+        StartCoroutine(StartCount());
+    }
+
+    private IEnumerator StartCount()
+    {
+        yield return new WaitForSeconds(1f);
+
+        _count[0].DOColor(Color.white, 0.5f);
+        yield return new WaitForSeconds(1f);
+        _count[0].DOColor(Color.clear, 0.5f);
+
+        _count[1].DOColor(Color.white, 0.5f);
+        yield return new WaitForSeconds(1f);
+        _count[1].DOColor(Color.clear, 0.5f);
+
+        _count[2].DOColor(Color.white, 0.5f);
+        yield return new WaitForSeconds(1f);
+        _count[2].DOColor(Color.clear, 0.5f);
+
+        _count[3].DOColor(Color.white, 0.5f);
+        yield return new WaitForSeconds(1f);
+        _count[3].DOColor(Color.clear, 0.5f);
+
+        yield return new WaitForSeconds(1f);
+
+        foreach (var item in _textAmount)
+            item.gameObject.SetActive(true);
+
+        Gaming = true;
+    }
 }
-
-
