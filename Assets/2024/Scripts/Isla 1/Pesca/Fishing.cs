@@ -7,17 +7,16 @@ using TMPro;
 public class Fishing : MonoBehaviour
 {
     private FishingMinigame _fishing;
-    private Dialogue _dialogue;
+    [SerializeField] Camera _camFishing;
 
     private void Awake()
     {
         _fishing = FindObjectOfType<FishingMinigame>();
-        _dialogue = FindObjectOfType<Dialogue>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        _dialogue.gameObject.SetActive(false);
+
     }
 
     private void OnTriggerStay(Collider other)
@@ -27,7 +26,12 @@ public class Fishing : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
+                //_fishing.Victory = false;
+                //_fishing.Reset();
+
                 _fishing.start = true;
+                _fishing.Gaming = true;
+                _camFishing.enabled = true;
             }
         }
     }

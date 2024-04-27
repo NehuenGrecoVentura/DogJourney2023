@@ -10,8 +10,12 @@ public class FishingMinigame : MonoBehaviour
 {
     //CameraControl
     [Header("CAMERA CONTROL")]
-    [SerializeField] private GameObject camer1; //Camara del juego
-    [SerializeField] private GameObject camer2; //Camara del minijuego
+    //[SerializeField] private GameObject camer1; //Camara del juego
+    //[SerializeField] private GameObject camer2; //Camara del minijuego
+
+    [SerializeField] CameraOrbit _camPlayer;
+    [SerializeField] Camera _camFish;
+
     [SerializeField] private Character _character; //Control del player
 
     //FishMove
@@ -52,7 +56,7 @@ public class FishingMinigame : MonoBehaviour
 
 
     [Header("Victory")]
-    [SerializeField] private bool Victory; //Si el bool es true gano el juego, si perdio va a ser false
+    public bool Victory; //Si el bool es true gano el juego, si perdio va a ser false
 
     [SerializeField] private float CaptureResetScore; //a cuanto se va a reiniciar el capture
     private LocationQuest _radar;
@@ -74,6 +78,214 @@ public class FishingMinigame : MonoBehaviour
     [Header("AUDIOS")]
     private AudioSource _myAudio;
 
+    //private void Awake()
+    //{
+    //    _myAudio = GetComponent<AudioSource>();
+    //    _radar = FindObjectOfType<LocationQuest>();
+    //}
+
+    //private void Start()
+    //{
+    //    _spriteFishWin.transform.DOScale(0f, 0f);
+    //    _canvasRenderFish.SetActive(false);
+
+    //    foreach (var item in _textAmount)
+    //        item.gameObject.SetActive(false);
+    //}
+
+    //void Update()
+    //{
+    //    CameraChange();
+    //    if (Gaming)
+    //    {
+    //        FishMove();
+    //        playerControl();
+    //        Catch();
+    //    }
+    //}
+
+    //void FishMove() //Movimiento del pes
+    //{
+
+    //    fishSpeed += Time.deltaTime * FishSpeedMult;
+    //    FishTimer -= Time.deltaTime;
+    //    CheckDir();
+
+    //    if (FishTimer < 0)
+    //    {
+    //        FishTimer = Random.Range(0.1f, 1) * TimeMult; //El pez tiene un nuevo random timer
+    //        fishSpeed = 0;
+    //        fishRandomPos = Random.Range(topPoint.position.y, BotPoint.position.y); //El pez va a un nuevo random entre bot y top
+    //        fishDestination.transform.position = new Vector3(BotPoint.position.x, fishRandomPos, BotPoint.position.z); // Muevo el objetivo del pez
+    //    }
+
+    //    Fish.transform.position =
+    //        Vector3.Lerp(Fish.transform.position, fishDestination.transform.position, fishSpeed); //Movimiento del pez al objetivo
+    //}
+
+    //private void CheckDir()
+    //{
+    //    if (Fish.transform.position.y > fishDestination.transform.position.y) _spriteFish.flipY = true;
+    //    else _spriteFish.flipY = false;
+    //}
+
+    //void Catch() //Atrapar al pez
+    //{
+    //    Distance = Fish.transform.position.y - HookTrasn.position.y;
+    //    if (Distance < CaptureRange && Distance > -CaptureRange) //Si esta dentro del rango capture crece
+    //    {
+    //        Capture += Time.deltaTime / DifficultyCapture;
+    //    }
+    //    else //Si esta fuera del rango capture disminuye
+    //    {
+    //        Capture -= Time.deltaTime * DifficultyEscape;
+    //    }
+
+    //    if (Capture > 1) //Clamp de capture en max
+    //    {
+    //        Capture = 1;
+    //        Debug.Log("Winner");
+    //        Victory = true;
+    //        StartCoroutine(Reset());
+    //        //Quit();
+    //        //_spriteFishWin.transform.DOScale(1f, 0.5f);
+    //        //Fish.SetActive(false);
+    //        //_spriteFishWin.transform.DOScale(1f, 0.5f).OnComplete(() => _spriteFishWin.transform.DOScale(0f, 1f));
+    //    }
+
+    //    if (Capture < 0) // Clamp de capture en min
+    //    {
+    //        Capture = 0;
+    //        Debug.Log("Loser");
+    //        Victory = false;
+    //        //Quit();
+    //    }
+    //    //ChargeBar.transform.localScale = new Vector3(2, Capture, 0.8f); // el 2 y el 0.8 son los valores que tienen en el editor
+    //    ChargeBar.transform.localScale = new Vector3(transform.localScale.x, Capture, 0.8f); // el 2 y el 0.8 son los valores que tienen en el editor
+    //}
+
+    //private IEnumerator Reset()
+    //{
+    //    if (Victory)
+    //    {
+    //        fishedPicked++;
+    //        _textAmount[1].text = fishedPicked.ToString();
+
+    //        Gaming = false;
+    //        Fish.SetActive(false);
+    //        HookTrasn.gameObject.SetActive(false);
+    //        _myAudio.Play();
+    //        _spriteFishWin.transform.DOScale(1f, 0.5f).OnComplete(() => _spriteFishWin.transform.DOScale(0f, 1f));
+    //        yield return new WaitForSeconds(3f);
+    //        _myAudio.Stop();
+    //        overWatch = 0;
+    //        start = false;
+    //        Gaming = false;
+    //        Capture = CaptureResetScore;
+    //        fishDestination.transform.position = StartPos.position;
+    //        FishTimer = 0;
+    //        HookTrasn.position = StartPos.position;
+    //        Fish.transform.position = StartPos.position;
+    //        Fish.SetActive(true);
+    //        HookTrasn.gameObject.SetActive(true);
+    //        Gaming = true;
+    //        Victory = false;
+    //    }
+    //}
+
+    //void playerControl() //Subir o bajar la barra
+    //{
+    //    //Cuando apretas espacio, el gancho sube
+    //    if (Input.GetKey(KeyCode.Space))  
+    //        HookTrasn.transform.position += Vector3.up * HookPower;
+
+    //    //Si soltas espacio el gancho baja
+    //    else HookTrasn.transform.position += Vector3.down * GravityPower;
+
+    //    //Clamp por arriba para que no se pase del top
+    //    if (HookTrasn.transform.position.y >= topPoint.position.y) 
+    //        HookTrasn.position = topPoint.position;
+
+    //    //Clamp abajo para que no se pase del bot
+    //    if (HookTrasn.transform.position.y <= BotPoint.position.y) 
+    //        HookTrasn.position = BotPoint.position;
+    //}
+
+    //void CameraChange() //Cambiar a minijuego / juego
+    //{
+    //    //if (Input.GetKeyDown(KeyCode.Y)) //Aca se cambia todo
+    //    if (start && overWatch == 0) //Para iniciar,que algun codigo ponga start en true
+    //    {
+    //        _canvasRenderFish.SetActive(true);
+
+    //        foreach (var item in _textAmount)
+    //            item.gameObject.SetActive(true);
+
+    //        overWatch++;
+    //        if (Gaming == true)
+    //        {
+    //            Gaming = false;
+    //            Capture = CaptureResetScore;
+    //            fishDestination.transform.position = StartPos.position;
+    //            FishTimer = 0;
+    //            HookTrasn.position = StartPos.position;
+    //            Fish.transform.position = StartPos.position;
+    //        }
+    //        else
+    //        {
+    //            Gaming = true;
+    //        }
+    //        if (Gaming == true)
+    //        {
+    //            //camer1.SetActive(false);
+    //            camer2.SetActive(true);
+    //            //_character.enabled = false;
+
+    //            _character.speed = 0;
+    //            _character.FreezePlayer(RigidbodyConstraints.FreezeAll);
+    //            _radar.StatusRadar(false);
+
+    //            DifficultyCapture = Random.Range(DifficultyCaptureMin, DifficultyCaptureMax);
+    //            DifficultyEscape = Random.Range(DifficultyEscapeMin, DifficultyEscapeMax);
+    //        }
+
+    //        if (Gaming == false)
+    //        {
+    //            //camer1.SetActive(true);
+    //            camer2.SetActive(false);
+    //            //_character.enabled = true;
+
+    //            _character.speed = _character.speedAux;
+    //            _character.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+    //            _radar.StatusRadar(true);
+    //        }
+    //    }
+    //}
+
+    //public void Quit()
+    //{
+    //    _canvasRenderFish.SetActive(false);
+
+    //    foreach (var item in _textAmount)
+    //        item.gameObject.SetActive(false);
+
+    //    _myAudio.Stop();
+    //    overWatch = 0;
+    //    start = false;
+    //    Gaming = false;
+    //    Capture = CaptureResetScore;
+    //    fishDestination.transform.position = StartPos.position;
+    //    FishTimer = 0;
+    //    HookTrasn.position = StartPos.position;
+    //    Fish.transform.position = StartPos.position;
+    //    camer1.SetActive(true);
+    //    camer2.SetActive(false);
+    //    _character.speed = _character.speedAux;
+    //    _character.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+    //    _radar.StatusRadar(true);
+    //    fishedPicked = 0;
+    //}
+
     private void Awake()
     {
         _myAudio = GetComponent<AudioSource>();
@@ -82,87 +294,96 @@ public class FishingMinigame : MonoBehaviour
 
     private void Start()
     {
+        _camFish.enabled = false;
         _spriteFishWin.transform.DOScale(0f, 0f);
-        _canvasRenderFish.SetActive(false);
+        //_canvasRenderFish.SetActive(false);
 
-        foreach (var item in _textAmount)
-            item.gameObject.SetActive(false);
+        foreach (TMP_Text text in _textAmount)
+        {
+            text.gameObject.SetActive(false);
+        }
     }
 
-    void Update()
+    private void Update()
     {
+        //CameraChange();
+        //if (Gaming)
+        //{
+        //    FishMove();
+        //    PlayerControl();
+        //    Catch();
+        //}
+
+
+
         CameraChange();
         if (Gaming)
         {
             FishMove();
-            playerControl();
+            PlayerControl();
             Catch();
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
-    void FishMove() //Movimiento del pes
+    private void FishMove()
     {
-
         fishSpeed += Time.deltaTime * FishSpeedMult;
         FishTimer -= Time.deltaTime;
         CheckDir();
 
         if (FishTimer < 0)
         {
-            FishTimer = Random.Range(0.1f, 1) * TimeMult; //El pez tiene un nuevo random timer
+            FishTimer = Random.Range(0.1f, 1) * TimeMult;
             fishSpeed = 0;
-            fishRandomPos = Random.Range(topPoint.position.y, BotPoint.position.y); //El pez va a un nuevo random entre bot y top
-            fishDestination.transform.position = new Vector3(BotPoint.position.x, fishRandomPos, BotPoint.position.z); // Muevo el objetivo del pez
+            float fishRandomPos = Random.Range(topPoint.position.y, BotPoint.position.y);
+            fishDestination.transform.position = new Vector3(BotPoint.position.x, fishRandomPos, BotPoint.position.z);
         }
 
-        Fish.transform.position =
-            Vector3.Lerp(Fish.transform.position, fishDestination.transform.position, fishSpeed); //Movimiento del pez al objetivo
+        Fish.transform.position = Vector3.Lerp(Fish.transform.position, fishDestination.transform.position, fishSpeed);
     }
 
     private void CheckDir()
     {
-        if (Fish.transform.position.y > fishDestination.transform.position.y) _spriteFish.flipY = true;
-        else _spriteFish.flipY = false;
+        _spriteFish.flipY = (Fish.transform.position.y > fishDestination.transform.position.y);
     }
 
-    void Catch() //Atrapar al pez
+    private void Catch()
     {
-        Distance = Fish.transform.position.y - HookTrasn.position.y;
-        if (Distance < CaptureRange && Distance > -CaptureRange) //Si esta dentro del rango capture crece
-        {
-            Capture += Time.deltaTime / DifficultyCapture;
-        }
-        else //Si esta fuera del rango capture disminuye
-        {
-            Capture -= Time.deltaTime * DifficultyEscape;
-        }
+        float distance = Fish.transform.position.y - HookTrasn.position.y;
 
-        if (Capture > 1) //Clamp de capture en max
+        if (Mathf.Abs(distance) < CaptureRange)
+            Capture += Time.deltaTime / Random.Range(DifficultyCaptureMin, DifficultyCaptureMax);
+        
+        else Capture -= Time.deltaTime * Random.Range(DifficultyEscapeMin, DifficultyEscapeMax);
+        Capture = Mathf.Clamp01(Capture);
+        ChargeBar.transform.localScale = new Vector3(transform.localScale.x, Capture, 0.8f);
+
+        if (Capture >= 1)
         {
-            Capture = 1;
-            Debug.Log("Winner");
             Victory = true;
-            StartCoroutine(Reset());
-            //Quit();
-            //_spriteFishWin.transform.DOScale(1f, 0.5f);
-            //Fish.SetActive(false);
-            //_spriteFishWin.transform.DOScale(1f, 0.5f).OnComplete(() => _spriteFishWin.transform.DOScale(0f, 1f));
+            StartCoroutine(ResetGame());
         }
-
-        if (Capture < 0) // Clamp de capture en min
+        else if (Capture <= 0)
         {
-            Capture = 0;
-            Debug.Log("Loser");
             Victory = false;
-            //Quit();
+            StartCoroutine(ResetGame());
         }
-        //ChargeBar.transform.localScale = new Vector3(2, Capture, 0.8f); // el 2 y el 0.8 son los valores que tienen en el editor
-        ChargeBar.transform.localScale = new Vector3(transform.localScale.x, Capture, 0.8f); // el 2 y el 0.8 son los valores que tienen en el editor
     }
 
-
-
-    private IEnumerator Reset()
+    private IEnumerator ResetGame()
     {
         if (Victory)
         {
@@ -178,7 +399,6 @@ public class FishingMinigame : MonoBehaviour
             _myAudio.Stop();
             overWatch = 0;
             start = false;
-            Gaming = false;
             Capture = CaptureResetScore;
             fishDestination.transform.position = StartPos.position;
             FishTimer = 0;
@@ -187,75 +407,52 @@ public class FishingMinigame : MonoBehaviour
             Fish.SetActive(true);
             HookTrasn.gameObject.SetActive(true);
             Gaming = true;
-            Victory = false;
         }
     }
 
-    void playerControl() //Subir o bajar la barra
+    public void Reset()
     {
-        if (Input.GetKey(KeyCode.Space))  //Cuando apretas espacio, el gancho sube
-        {
+        StartCoroutine(ResetGame());
+    }
+
+
+    private void PlayerControl()
+    {
+        if (Input.GetKey(KeyCode.Space))
             HookTrasn.transform.position += Vector3.up * HookPower;
-        }
-        else //Si soltas espacio el gancho baja
-        {
-            HookTrasn.transform.position += Vector3.down * GravityPower;
-        }
 
-        if (HookTrasn.transform.position.y >= topPoint.position.y) //Clamp por arriba para que no se pase del top
-        {
-            HookTrasn.position = topPoint.position;
-        }
-        if (HookTrasn.transform.position.y <= BotPoint.position.y) //Clamp abajo para que no se pase del bot
-        {
-            HookTrasn.position = BotPoint.position;
-        }
-
+        else HookTrasn.transform.position += Vector3.down * GravityPower;
+        HookTrasn.position = new Vector3(HookTrasn.position.x, Mathf.Clamp(HookTrasn.position.y, BotPoint.position.y, topPoint.position.y), HookTrasn.position.z);
     }
 
-    void CameraChange() //Cambiar a minijuego / juego
+    private void CameraChange()
     {
-        //if (Input.GetKeyDown(KeyCode.Y)) //Aca se cambia todo
-        if (start && overWatch == 0) //Para iniciar,que algun codigo ponga start en true
+        if (start && overWatch == 0)
         {
-            _canvasRenderFish.SetActive(true);
-
-            foreach (var item in _textAmount)
-                item.gameObject.SetActive(true);
-
+            ActivateMinigameUI();
             overWatch++;
-            if (Gaming == true)
-            {
-                Gaming = false;
-                Capture = CaptureResetScore;
-                fishDestination.transform.position = StartPos.position;
-                FishTimer = 0;
-                HookTrasn.position = StartPos.position;
-                Fish.transform.position = StartPos.position;
-            }
-            else
-            {
-                Gaming = true;
-            }
-            if (Gaming == true)
+            Gaming = !Gaming;
+
+            if (Gaming)
             {
                 //camer1.SetActive(false);
-                camer2.SetActive(true);
-                //_character.enabled = false;
+                //camer2.SetActive(true);
+
+                _camPlayer.enabled = false;
+                _camFish.enabled = true;
 
                 _character.speed = 0;
                 _character.FreezePlayer(RigidbodyConstraints.FreezeAll);
                 _radar.StatusRadar(false);
-
-                DifficultyCapture = Random.Range(DifficultyCaptureMin, DifficultyCaptureMax);
-                DifficultyEscape = Random.Range(DifficultyEscapeMin, DifficultyEscapeMax);
             }
 
-            if (Gaming == false)
+            else
             {
                 //camer1.SetActive(true);
-                camer2.SetActive(false);
-                //_character.enabled = true;
+                //camer2.SetActive(false);
+
+                _camPlayer.enabled = true;
+                _camFish.enabled = false;
 
                 _character.speed = _character.speedAux;
                 _character.FreezePlayer(RigidbodyConstraints.FreezeRotation);
@@ -264,54 +461,22 @@ public class FishingMinigame : MonoBehaviour
         }
     }
 
-    public void FishQuest(KeyCode keyFish)
+    private void ActivateMinigameUI()
     {
-        if (Input.GetKeyDown(keyFish)) //Aca se cambia todo
+        //_canvasRenderFish.SetActive(true);
+        foreach (TMP_Text text in _textAmount)
         {
-            if (Gaming == true)
-            {
-                Gaming = false;
-                Capture = CaptureResetScore;
-                fishDestination.transform.position = StartPos.position;
-                FishTimer = 0;
-                HookTrasn.position = StartPos.position;
-                Fish.transform.position = StartPos.position;
-            }
-            else
-            {
-                Gaming = true;
-            }
-            if (Gaming == true)
-            {
-                camer1.SetActive(false);
-                camer2.SetActive(true);
-                //_character.enabled = false;
-
-                _character.speed = 0;
-                _character.FreezePlayer(RigidbodyConstraints.FreezeAll);
-                _radar.StatusRadar(false);
-            }
-
-            if (Gaming == false)
-            {
-                camer1.SetActive(true);
-                camer2.SetActive(false);
-                //_character.enabled = true;
-
-                _character.speed = _character.speedAux;
-                _character.FreezePlayer(RigidbodyConstraints.FreezeRotation);
-                _radar.StatusRadar(true);
-            }
+            text.gameObject.SetActive(true);
         }
     }
 
     public void Quit()
     {
-        _canvasRenderFish.SetActive(false);
-
-        foreach (var item in _textAmount)
-            item.gameObject.SetActive(false);
-
+        //_canvasRenderFish.SetActive(false);
+        foreach (TMP_Text text in _textAmount)
+        {
+            text.gameObject.SetActive(false);
+        }
         _myAudio.Stop();
         overWatch = 0;
         start = false;
@@ -321,43 +486,16 @@ public class FishingMinigame : MonoBehaviour
         FishTimer = 0;
         HookTrasn.position = StartPos.position;
         Fish.transform.position = StartPos.position;
-        camer1.SetActive(true);
-        camer2.SetActive(false);
+
+        //camer1.SetActive(true);
+        //camer2.SetActive(false);
+
+        _camPlayer.enabled = true;
+        _camFish.enabled = false;
+
         _character.speed = _character.speedAux;
         _character.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _radar.StatusRadar(true);
-    }
-
-    public void ActiveCount()
-    {
-        StartCoroutine(StartCount());
-    }
-
-    private IEnumerator StartCount()
-    {
-        yield return new WaitForSeconds(1f);
-
-        _count[0].DOColor(Color.white, 0.5f);
-        yield return new WaitForSeconds(1f);
-        _count[0].DOColor(Color.clear, 0.5f);
-
-        _count[1].DOColor(Color.white, 0.5f);
-        yield return new WaitForSeconds(1f);
-        _count[1].DOColor(Color.clear, 0.5f);
-
-        _count[2].DOColor(Color.white, 0.5f);
-        yield return new WaitForSeconds(1f);
-        _count[2].DOColor(Color.clear, 0.5f);
-
-        _count[3].DOColor(Color.white, 0.5f);
-        yield return new WaitForSeconds(1f);
-        _count[3].DOColor(Color.clear, 0.5f);
-
-        yield return new WaitForSeconds(1f);
-
-        foreach (var item in _textAmount)
-            item.gameObject.SetActive(true);
-
-        Gaming = true;
+        fishedPicked = 0;
     }
 }

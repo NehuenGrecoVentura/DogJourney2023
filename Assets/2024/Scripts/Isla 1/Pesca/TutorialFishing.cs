@@ -85,7 +85,7 @@ public class TutorialFishing : MonoBehaviour
 
     private IEnumerator Ending()
     {
-        _fishing.Quit();
+        //_fishing.Quit();
         _questActive = false;
         _textName.text = "Alice";
         _message.text = _messageFinal;
@@ -126,7 +126,6 @@ public class TutorialFishing : MonoBehaviour
         _inventory.money += _reward;
         _radar.target = _questFence.gameObject.transform;
         _questFence.enabled = true;
-        _fishing.fishedPicked = 0;
         Destroy(this);
     }
 
