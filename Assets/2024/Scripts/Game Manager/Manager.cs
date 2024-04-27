@@ -40,6 +40,7 @@ public class Manager : MonoBehaviour
     [Header("UPGRADES")]
     public bool amountUpgrade = false;
     public bool speedFishUpgrade = false;
+    public bool speedHookUpgrade = false;
     private FishingMinigame _fishingGame;
     public int levelFishing = 1;
 
@@ -190,5 +191,11 @@ public class Manager : MonoBehaviour
             _fishingGame.FishSpeedMult = 0.02f;
             speedFishUpgrade = true;
         }
+    }
+
+    public void Upgrade()
+    {
+        if (levelFishing == 2) _fishingGame.FishSpeedMult = 0.02f;
+        if (levelFishing == 3) _fishingGame.HookPower = 0.03f;
     }
 }

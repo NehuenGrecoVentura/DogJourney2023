@@ -135,7 +135,8 @@ public class Fishing : MonoBehaviour
         }
 
         _fishing.Quit();
-        _gm.levelFishing++; 
+        _gm.levelFishing++;
+        _gm.Upgrade();
         _fadeOut.DOColor(Color.black, 1f);
 
         yield return new WaitForSeconds(1f);

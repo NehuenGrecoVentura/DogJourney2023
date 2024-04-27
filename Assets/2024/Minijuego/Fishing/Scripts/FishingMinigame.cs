@@ -33,7 +33,7 @@ public class FishingMinigame : MonoBehaviour
     //Hook move
     [Header("HOOK MOVE")]
     [SerializeField] private Transform HookTrasn; //El gancho
-    [SerializeField] private float HookPower; //Cuanto sube el gancho
+    public float HookPower; //Cuanto sube el gancho
     [SerializeField] private float GravityPower; //Cuanto baja el gancho
 
     //Catch
