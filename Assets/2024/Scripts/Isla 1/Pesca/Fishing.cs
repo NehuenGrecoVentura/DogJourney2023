@@ -30,9 +30,20 @@ public class Fishing : MonoBehaviour
     [SerializeField] TMP_Text _textName;
     [SerializeField, TextArea(4, 6)] string _message;
 
+    [Header("POS")]
+    [SerializeField] Transform _posEnter;
+    [SerializeField] Transform _posExit;
+    private Quaternion _initialRot;
+
+    [Header("ANIMS")]
+    [SerializeField] RuntimeAnimatorController[] _animConrtollers;
+    [SerializeField] GameObject _myRod;
+    private Animator _myAnim;
+
     private void Awake()
     {
         _myCol = GetComponent<Collider>();
+        _myAnim = GetComponent<Animator>();
 
         _fishing = FindObjectOfType<FishingMinigame>();
         _player = FindObjectOfType<Character>();
@@ -52,16 +63,6 @@ public class Fishing : MonoBehaviour
             StartCoroutine(FinishMiniGame());
     }
 
-    private void EndGame()
-    {
-        _fishing.Quit();
-        _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
-        _camPlayer.gameObject.SetActive(true);
-        Destroy(_myCam.gameObject);
-        _isActive = false;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
@@ -74,9 +75,7 @@ public class Fishing : MonoBehaviour
         if (player != null)
         {
             if (Input.GetKeyDown(KeyCode.F) && !_isActive)
-            {
                 StartCoroutine(StartMiniGame());
-            }
         }
     }
 
@@ -88,11 +87,22 @@ public class Fishing : MonoBehaviour
 
     private IEnumerator StartMiniGame()
     {
+        transform.rotation = _initialRot;
+        transform.position = _posExit.position;
+        _myAnim.runtimeAnimatorController = _animConrtollers[1];
+        _myAnim.SetBool("Quest", true);
+        _myRod.SetActive(false);
+
+        _player.gameObject.transform.position = _posEnter.position;
+        _player.transform.rotation = _initialRot;
+        _player.SetFishingMode(true);
+        _player.PlayAnim("Fish");
         _camPlayer.gameObject.SetActive(false);
         _myCam.gameObject.SetActive(true);
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
         _isActive = true;
+
         Destroy(_myCol);
         Destroy(_iconInteract);
         _fishing.start = true;
@@ -106,9 +116,23 @@ public class Fishing : MonoBehaviour
         _isActive = false;
         _fishing.Quit();
         _gm.levelFishing++;
+
+        _fadeOut.DOColor(Color.black, 1f);
+        yield return new WaitForSeconds(1f);
+        _myRod.SetActive(true);
+        _myAnim.runtimeAnimatorController = _animConrtollers[0];
+        transform.position = _posEnter.position;
+
+        _player.SetFishingMode(false);
+        _player.gameObject.transform.position = _posExit.position;
+        _player.PlayAnim("Hit");
+
+        _fadeOut.DOColor(Color.clear, 1f);
+
         Destroy(_myCam.gameObject);
         _camPlayer.gameObject.SetActive(true);
 
+        yield return new WaitForSeconds(2f);
         _textName.text = "Fisherman";
         _textMessage.text = _message;
         _boxMessage.localScale = new Vector3(1, 1, 1);

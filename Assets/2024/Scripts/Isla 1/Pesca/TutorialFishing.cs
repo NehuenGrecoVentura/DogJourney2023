@@ -111,6 +111,7 @@ public class TutorialFishing : MonoBehaviour
 
         _camPlayer.gameObject.SetActive(true);
         _player.GetComponent<Animator>().enabled = true;
+        _player.PlayAnim("Hit");
 
         yield return new WaitForSeconds(0.5f);
         _boxMessage.gameObject.SetActive(true);
