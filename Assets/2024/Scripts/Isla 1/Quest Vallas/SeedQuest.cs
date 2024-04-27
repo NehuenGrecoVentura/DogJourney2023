@@ -20,7 +20,7 @@ public class SeedQuest : MonoBehaviour
 
     [Header("MESSAGE")]
     [SerializeField] TMP_Text _text;
-    [SerializeField, TextArea(4, 6)] string _messsageFinal;
+    [SerializeField, TextArea(4, 6)] string[] _messsages;
     [SerializeField] RectTransform _message;
 
     [Header("NEXT QUEST")]
@@ -73,7 +73,7 @@ public class SeedQuest : MonoBehaviour
         yield return new WaitForSeconds(2);
         _player.isConstruct = false;
         _npc.transform.LookAt(_player.gameObject.transform);
-        _text.text = _messsageFinal;
+        _text.text = _messsages[0];
         _message.DOAnchorPosY(-1000f, 0f);
         _message.localScale = new Vector3(1, 1, 1);
         _message.gameObject.SetActive(true);
@@ -98,6 +98,7 @@ public class SeedQuest : MonoBehaviour
         _npc.GetComponent<Animator>().runtimeAnimatorController = _animReward;
         _fadeOut.DOColor(Color.clear, 2f);
         yield return new WaitForSeconds(2);
+        _text.text = _messsages[1];
         _message.gameObject.SetActive(true);
         _message.DOAnchorPosY(70f, 0.5f);
         
@@ -114,7 +115,8 @@ public class SeedQuest : MonoBehaviour
         yield return new WaitForSeconds(2f);
         _fadeOut.DOColor(Color.clear, 2f);
         yield return new WaitForSeconds(2f);
-        
+
+        _text.text = _messsages[2];
         _message.gameObject.SetActive(true);
         _message.DOAnchorPosY(70f, 0.5f);
         yield return new WaitForSeconds(5f);
@@ -122,39 +124,17 @@ public class SeedQuest : MonoBehaviour
         yield return new WaitForSeconds(2f);
         Destroy(_camTree.gameObject);
         _fadeOut.DOColor(Color.clear, 2f);
-
-
-
-
-
         _message.gameObject.SetActive(false);
         _message.DOAnchorPosY(-1000f, 0f);
-        
         Destroy(_newAxe);
         _camPlayer.gameObject.SetActive(true);
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _gm.QuestCompleted();
+        _gm.amountUpgrade = true;
         _radar.target = _market.gameObject.transform;
         _npc.GetComponent<Animator>().runtimeAnimatorController = _animNormal;
         _broom.SetActive(true);
         Destroy(gameObject, 0.6f);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

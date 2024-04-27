@@ -37,6 +37,9 @@ public class Manager : MonoBehaviour
     private GameObject[] _purpleTrees;
     private TreeRegenerative[] _allTrees;
 
+    [Header("TREES")]
+    public bool amountUpgrade = false;
+
     private void Awake()
     {
         _quest1 = GetComponent<ManagerQuest1>();
@@ -123,31 +126,11 @@ public class Manager : MonoBehaviour
         StartCoroutine(ShowGameOver(cinematicGameOver, time, textGameOver, posRestart));
     }
 
-    //private IEnumerator ShowGameOver(GameObject cinematicGameOver, float time, string messageGameOver, Transform posRestart)
-    //{
-    //    _cam.gameObject.SetActive(false);
-
-    //    //_player.enabled = false;
-    //    _player.speed = 0;
-    //    _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
-
-    //    cinematicGameOver.SetActive(true);
-    //    yield return new WaitForSeconds(time);
-    //    _gameOver.SetActive(true);
-    //    _textGameOver.text = messageGameOver;
-    //    _isGameOver = true;
-    //    yield return new WaitForSeconds(3f);
-    //    RestartCheckpoint(cinematicGameOver, posRestart);
-    //}
-
     private IEnumerator ShowGameOver(GameObject cinematicGameOver, float time, string messageGameOver, Transform posRestart)
     {
         _cam.gameObject.SetActive(false);
-
-        //_player.enabled = false;
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
-
         cinematicGameOver.SetActive(true);
         yield return new WaitForSeconds(time);
         _gameOver.SetActive(true);
@@ -166,11 +149,6 @@ public class Manager : MonoBehaviour
         _isGameOver = false;
     }
 
-
-
-
-
-
     public IEnumerator Restart(GameObject cinematicGameOver, Transform posRestart)
     {
 
@@ -180,12 +158,8 @@ public class Manager : MonoBehaviour
         }
 
         _cam.gameObject.SetActive(true);
-
-        //_player.enabled = true;
-
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
-
         cinematicGameOver.SetActive(false);
         _gameOver.SetActive(false);
         _player.gameObject.transform.position = posRestart.position;

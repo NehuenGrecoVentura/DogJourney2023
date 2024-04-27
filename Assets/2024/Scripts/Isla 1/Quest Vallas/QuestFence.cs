@@ -20,7 +20,8 @@ public class QuestFence : MonoBehaviour
     [SerializeField] Button _buttonConfirm;
     [SerializeField] RectTransform _message;
     [SerializeField] TMP_Text _textMessage;
-    [SerializeField, TextArea(4, 6)] string _messageBuild;
+    [SerializeField] TMP_Text _textName;
+    [SerializeField, TextArea(4, 6)] string[] _messages;
     [SerializeField] Image _fadeOut;
     private Dialogue _dialogue;
 
@@ -146,6 +147,8 @@ public class QuestFence : MonoBehaviour
     private IEnumerator ShowMessage()
     {
         _myCol.enabled = false;
+        _textName.text = _nameNPC;
+        _textMessage.text = _messages[0];
         _fadeOut.DOColor(Color.clear, 0f);
         _iconInteract.SetActive(false);
         _player.speed = 0;
@@ -160,6 +163,7 @@ public class QuestFence : MonoBehaviour
         _camBush.gameObject.SetActive(false);
         _camNPC.gameObject.SetActive(true);
         _fadeOut.DOColor(Color.clear, 1f);
+        _textMessage.text = _messages[1];
         _message.gameObject.SetActive(true);
         _message.DOAnchorPosY(70f, 0.5f);
         yield return new WaitForSeconds(4f);
@@ -170,6 +174,7 @@ public class QuestFence : MonoBehaviour
         _camNPC.gameObject.SetActive(false);
         _camBush.gameObject.SetActive(true);
         _message.gameObject.SetActive(true);
+        _textMessage.text = _messages[2];
         _message.DOAnchorPosY(70f, 0.5f);
         yield return new WaitForSeconds(4f);
         _message.DOAnchorPosY(-1000f, 0.5f).OnComplete(() => _fadeOut.DOColor(Color.black, 1f));
@@ -181,13 +186,14 @@ public class QuestFence : MonoBehaviour
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _message.gameObject.SetActive(false);
-        _textMessage.text = _messageBuild;
         _seedsActive = true;
     }
 
     private IEnumerator MessageBuild()
     {
         Destroy(_myCol);
+        _textName.text = _nameNPC;
+        _textMessage.text = _messages[3];
         _fadeOut.DOColor(Color.clear, 0f);
         _iconInteract.SetActive(false);
         _player.speed = 0;

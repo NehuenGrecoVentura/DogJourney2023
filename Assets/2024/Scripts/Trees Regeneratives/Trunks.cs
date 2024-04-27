@@ -19,7 +19,7 @@ public class Trunks : MonoBehaviour
 
     private Vector3[] _initiaPos;
     private Collider _myCol;
-
+    private Manager _gm;
     private Vector3 _initialSize;
 
     private void Awake()
@@ -29,6 +29,7 @@ public class Trunks : MonoBehaviour
         _doTweenMessage = FindObjectOfType<DoTweenTest>();
         _doTweenManager = FindObjectOfType<DoTweenManager>();
         _trolley = FindObjectOfType<TrolleyWood>();
+        _gm = FindObjectOfType<Manager>();
     }
 
     void Start()
@@ -62,7 +63,8 @@ public class Trunks : MonoBehaviour
         if (gameObject.layer == 3)
         {
             // Si no compré el upgrade, entonces junta de a uno.
-            if (!isUpgraded)
+            //if (!isUpgraded)
+            if (!_gm.amountUpgrade)
             {
                 _inventory.greenTrees++;
                 _doTweenMessage.ShowUI("+ 1");
@@ -71,15 +73,19 @@ public class Trunks : MonoBehaviour
             // Sino junta de a 10 (SI ESTÁ EN LA QUEST 6 SUMA DE A UNO PARA EL CONTADOR)
             else
             {
-                _inventory.greenTrees += 10;
-                _doTweenMessage.ShowUI("+ 10");
+                //_inventory.greenTrees += 10;
+                //_doTweenMessage.ShowUI("+ 10");
+                int random = Random.Range(2, 5);
+                _inventory.greenTrees += random;
+                _doTweenMessage.ShowUI(random.ToString());
             }
         }
 
         // Si es del arbol púrpura, usa la misma lógica que la del verde.
         else
         {
-            if (!isUpgraded)
+            //if (!isUpgraded)
+            if (!_gm.amountUpgrade)
             {
                 _inventory.purpleTrees++;
                 _doTweenMessage.ShowUI("+ 1");
@@ -87,8 +93,11 @@ public class Trunks : MonoBehaviour
 
             else
             {
-                _inventory.purpleTrees += 10;
-                _doTweenMessage.ShowUI("+ 10");
+                //_inventory.purpleTrees += 10;
+                //_doTweenMessage.ShowUI("+ 10");
+                int random = Random.Range(2, 5);
+                _inventory.greenTrees += random;
+                _doTweenMessage.ShowUI(random.ToString());
             }
         }
     }
