@@ -60,7 +60,7 @@ public class SeedQuest : MonoBehaviour
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
         _player.isConstruct = true;
-
+        _radar.StatusRadar(false);
         _camPlayer.gameObject.SetActive(false);
         _cinematic.SetActive(true);
         _fadeOut.DOColor(Color.black, 2f);
@@ -89,7 +89,7 @@ public class SeedQuest : MonoBehaviour
         _message.gameObject.SetActive(true);
         _myAudio.Play();
         _message.DOAnchorPosY(70f, 0.5f);
-
+        _player.gameObject.transform.LookAt(_npc.transform);
         yield return new WaitForSeconds(5f);
         _message.gameObject.SetActive(false);
         _message.DOAnchorPosY(-1000f, 0f);
@@ -145,6 +145,7 @@ public class SeedQuest : MonoBehaviour
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _gm.QuestCompleted();
         _gm.amountUpgrade = true;
+        _radar.StatusRadar(true);
         _radar.target = _market.gameObject.transform;
         _npc.GetComponent<Animator>().runtimeAnimatorController = _animNormal;
         _broom.SetActive(true);
