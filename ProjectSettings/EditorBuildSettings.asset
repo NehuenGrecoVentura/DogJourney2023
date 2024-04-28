@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/MENU FINAL.unity
     guid: 8a2efe642549db74bb21a410e1465ebe
   - enabled: 1
-    path: Assets/Scenes/ARTE 3.unity
-    guid: 7e1703011de1d7a4b8a2e200684d8b1e
+    path: Assets/Scenes/ARTE 5.unity
+    guid: ec91b419e4a2dea4b8aca99bfcedc5f0
   m_configObjects: {}

@@ -10,9 +10,11 @@ public class Bush : MonoBehaviour
 
     private DoTweenManager _message;
     private CharacterInventory _invetory;
+    private AudioSource _myAudio;
 
     private void Awake()
     {
+        _myAudio = GetComponent<AudioSource>();
         _message = FindObjectOfType<DoTweenManager>();
         _invetory = FindObjectOfType<CharacterInventory>();
     }
@@ -20,6 +22,7 @@ public class Bush : MonoBehaviour
     private void Start()
     {
         _boxMessage.gameObject.SetActive(false);
+        _myAudio.Stop();
     }
 
     private void OnTriggerStay(Collider other)
@@ -27,6 +30,10 @@ public class Bush : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null && Input.GetKey(_inputInteractive))
         {
+            if (!_myAudio.isPlaying) _myAudio.Play();
+
+            Vector3 pos = new Vector3(transform.position.x, player.transform.position.y, transform.position.z);
+            player.gameObject.transform.LookAt(pos);
             player.HitTree();
             _amountHit--;
 
