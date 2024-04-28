@@ -78,7 +78,6 @@ public class QuestFence : MonoBehaviour
     {
         if(_activeQuest) _taskWoods.text = "Get some wood (" + _inventory.greenTrees.ToString() + "/" + _woodsRequired.ToString() + ")";
 
-
         if (_activeQuest && _inventory.greenTrees >= _woodsRequired && !_completedWoods && !_seedsActive)
         {
             _myCol.enabled = true;

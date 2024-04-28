@@ -72,7 +72,7 @@ public class FishingMinigame : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] Image[] _count;
-    [SerializeField] TMP_Text[] _textAmount;
+    public TMP_Text[] _textAmount;
     public int fishedPicked = 0;
 
     [Header("AUDIOS")]

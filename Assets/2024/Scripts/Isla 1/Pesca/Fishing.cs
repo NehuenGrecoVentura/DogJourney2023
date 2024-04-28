@@ -92,6 +92,7 @@ public class Fishing : MonoBehaviour
 
     private IEnumerator StartMiniGame()
     {
+        _fishing._textAmount = _score;
         _fadeOut.DOColor(Color.black, 1f);
         yield return new WaitForSeconds(1f);
         _fadeOut.DOColor(Color.clear, 1f);

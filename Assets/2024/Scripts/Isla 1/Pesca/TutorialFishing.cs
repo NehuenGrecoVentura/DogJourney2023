@@ -130,6 +130,10 @@ public class TutorialFishing : MonoBehaviour
         _inventory.money += _reward;
         _radar.target = _questFence.gameObject.transform;
         _questFence.enabled = true;
+
+        Destroy(score[0].gameObject);
+        Destroy(score[1].gameObject);
+
         Destroy(this);
     }
 
