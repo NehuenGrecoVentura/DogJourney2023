@@ -44,6 +44,7 @@ public class TutorialFishing : MonoBehaviour
     [SerializeField] NPCFishing _npc;
 
     public GameObject[] score;
+    [SerializeField] Fishing[] _allFishings;
 
     private void Awake()
     {
@@ -133,6 +134,10 @@ public class TutorialFishing : MonoBehaviour
 
         Destroy(score[0].gameObject);
         Destroy(score[1].gameObject);
+
+
+        _allFishings[0].gameObject.SetActive(true);
+        _allFishings[1].gameObject.SetActive(true);
 
         Destroy(this);
     }
