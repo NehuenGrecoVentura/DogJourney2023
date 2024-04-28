@@ -158,6 +158,7 @@ public class QuestFence : MonoBehaviour
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
         _message.gameObject.SetActive(true);
         _message.localScale = new Vector3(1, 1, 1);
+        _myAudio.PlayOneShot(_messageSound);
         _message.DOAnchorPosY(70f, 0.5f);
         yield return new WaitForSeconds(2f);
         _message.DOAnchorPosY(-1000f, 0.5f).OnComplete(() => _fadeOut.DOColor(Color.black, 1f));
@@ -168,6 +169,7 @@ public class QuestFence : MonoBehaviour
         _fadeOut.DOColor(Color.clear, 1f);
         _textMessage.text = _messages[1];
         _message.gameObject.SetActive(true);
+        _myAudio.PlayOneShot(_messageSound);
         _message.DOAnchorPosY(70f, 0.5f);
         yield return new WaitForSeconds(4f);
         _message.DOAnchorPosY(-1000f, 0.5f).OnComplete(() => _fadeOut.DOColor(Color.black, 1f));
@@ -176,8 +178,10 @@ public class QuestFence : MonoBehaviour
         _camPlayer.gameObject.SetActive(false);
         _camNPC.gameObject.SetActive(false);
         _camBush.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2f);
         _message.gameObject.SetActive(true);
         _textMessage.text = _messages[2];
+        _myAudio.PlayOneShot(_messageSound);
         _message.DOAnchorPosY(70f, 0.5f);
         yield return new WaitForSeconds(4f);
         _message.DOAnchorPosY(-1000f, 0.5f).OnComplete(() => _fadeOut.DOColor(Color.black, 1f));
@@ -203,6 +207,7 @@ public class QuestFence : MonoBehaviour
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
         _message.gameObject.SetActive(true);
         _message.localScale = new Vector3(1, 1, 1);
+        _myAudio.PlayOneShot(_messageSound);
         _message.DOAnchorPosY(70f, 0.5f);
         yield return new WaitForSeconds(2.5f);
         _message.DOAnchorPosY(-1000f, 0.5f).OnComplete(() =>
