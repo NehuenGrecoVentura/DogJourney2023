@@ -35,6 +35,14 @@ public class SeedQuest : MonoBehaviour
     [SerializeField] GameObject _broom;
     [SerializeField] GameObject _newAxe;
 
+    [Header("AUDIO")]
+    private AudioSource _myAudio;
+
+    private void Awake()
+    {
+        _myAudio = GetComponent<AudioSource>();
+    }
+
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Character>();
@@ -79,6 +87,7 @@ public class SeedQuest : MonoBehaviour
         _message.DOAnchorPosY(-1000f, 0f);
         _message.localScale = new Vector3(1, 1, 1);
         _message.gameObject.SetActive(true);
+        _myAudio.Play();
         _message.DOAnchorPosY(70f, 0.5f);
 
         yield return new WaitForSeconds(5f);
@@ -102,6 +111,7 @@ public class SeedQuest : MonoBehaviour
         yield return new WaitForSeconds(2);
         _text.text = _messsages[1];
         _message.gameObject.SetActive(true);
+        _myAudio.Play();
         _message.DOAnchorPosY(70f, 0.5f);
         
         
@@ -120,6 +130,7 @@ public class SeedQuest : MonoBehaviour
 
         _text.text = _messsages[2];
         _message.gameObject.SetActive(true);
+        _myAudio.Play();
         _message.DOAnchorPosY(70f, 0.5f);
         yield return new WaitForSeconds(5f);
         _fadeOut.DOColor(Color.black, 2f);

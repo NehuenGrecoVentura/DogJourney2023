@@ -30,6 +30,8 @@ public class RepairFence : MonoBehaviour
     //private LocationQuest _radar;
 
     private AudioSource _myAudio;
+    [SerializeField] AudioClip _soundMessage;
+    [SerializeField] AudioClip _soundConstruct;
 
 
     private void Awake()
@@ -76,7 +78,8 @@ public class RepairFence : MonoBehaviour
     private IEnumerator Repair()
     {
         _textName.text = "Florist";
-        _myAudio.Play();
+        //_myAudio.Play();
+        _myAudio.PlayOneShot(_soundConstruct);
         Destroy(_myCol);
         Destroy(_iconMaterial.gameObject);
         _myMesh.enabled = false;
@@ -114,6 +117,7 @@ public class RepairFence : MonoBehaviour
         _message.DOAnchorPosY(-1000f, 0f);
         _message.localScale = new Vector3(1, 1, 1);
         _message.gameObject.SetActive(true);
+        _myAudio.PlayOneShot(_soundMessage);
         _message.DOAnchorPosY(70f, 0.5f);
 
 

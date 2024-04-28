@@ -44,6 +44,11 @@ public class Manager : MonoBehaviour
     private FishingMinigame _fishingGame;
     public int levelFishing = 1;
 
+    [Header("BUSH")]
+    private Bush[] _allBush;
+
+
+
     private void Awake()
     {
         _quest1 = GetComponent<ManagerQuest1>();
@@ -55,15 +60,23 @@ public class Manager : MonoBehaviour
         _questUI = FindObjectOfType<QuestUI>();
         _allWolfs = FindObjectsOfType<WolfSleeping>();
         _fishingGame = FindObjectOfType<FishingMinigame>();
+        _allBush = FindObjectsOfType<Bush>();
 
         _allDecals = GameObject.FindGameObjectsWithTag("Tree Decals");
         _greenTrees = GameObject.FindGameObjectsWithTag("Green Leaves");
         _purpleTrees = GameObject.FindGameObjectsWithTag("Purple Leaves");
+
     }
 
     void Start()
     {
         BeginGame();
+
+        foreach (var item in _allBush)
+        {
+            item.enabled = false;
+            item.GetComponent<Collider>().enabled = false;
+        }
     }
 
     private void BeginGame()

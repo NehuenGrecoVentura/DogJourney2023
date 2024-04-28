@@ -53,6 +53,7 @@ public class QuestFence : MonoBehaviour
     [Header("SEEDS")]
     private bool _seedsActive = false;
     private int _totalSeeds = 3;
+    private Bush[] _allBush;
 
     private void Awake()
     {
@@ -63,6 +64,7 @@ public class QuestFence : MonoBehaviour
         _questUI = FindObjectOfType<QuestUI>();
         _inventory = FindObjectOfType<CharacterInventory>();
         _player = FindObjectOfType<Character>();
+        _allBush = FindObjectsOfType<Bush>();
     }
 
     void Start()
@@ -193,6 +195,15 @@ public class QuestFence : MonoBehaviour
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _message.gameObject.SetActive(false);
+
+
+        foreach (var item in _allBush)
+        {
+            item.enabled = true;
+            item.GetComponent<Collider>().enabled = true;
+        }
+
+
         _seedsActive = true;
     }
 
