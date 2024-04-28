@@ -17,6 +17,7 @@ public class SeedQuest : MonoBehaviour
     [SerializeField] Camera _camEnding;
     [SerializeField] Camera _camTree;
     [SerializeField] Transform _posEnd;
+    [SerializeField] GameObject _flowers;
 
     [Header("MESSAGE")]
     [SerializeField] TMP_Text _text;
@@ -69,6 +70,7 @@ public class SeedQuest : MonoBehaviour
             yield return null;
         }
 
+        _flowers.SetActive(true);
         _fadeOut.DOColor(Color.clear, 2f);
         yield return new WaitForSeconds(2);
         _player.isConstruct = false;

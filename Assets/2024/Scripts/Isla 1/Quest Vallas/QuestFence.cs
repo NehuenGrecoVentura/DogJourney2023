@@ -23,6 +23,7 @@ public class QuestFence : MonoBehaviour
     [SerializeField] TMP_Text _textName;
     [SerializeField, TextArea(4, 6)] string[] _messages;
     [SerializeField] Image _fadeOut;
+    [SerializeField] TMP_Text _taskWoods;
     private Dialogue _dialogue;
 
     [Header("CAMERAS")]
@@ -75,6 +76,9 @@ public class QuestFence : MonoBehaviour
 
     private void Update()
     {
+        if(_activeQuest) _taskWoods.text = "Get some wood (" + _inventory.greenTrees.ToString() + "/" + _woodsRequired.ToString() + ")";
+
+
         if (_activeQuest && _inventory.greenTrees >= _woodsRequired && !_completedWoods && !_seedsActive)
         {
             _myCol.enabled = true;
