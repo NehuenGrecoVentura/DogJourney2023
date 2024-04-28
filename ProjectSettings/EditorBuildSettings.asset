@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/MENU FINAL.unity
     guid: 8a2efe642549db74bb21a410e1465ebe
   - enabled: 1
-    path: Assets/Scenes/TEST navmesh.unity
-    guid: ec91b419e4a2dea4b8aca99bfcedc5f0
+    path: Assets/Scenes/CELL.unity
+    guid: 2499f35819fac15419731162ecdf17d2
   m_configObjects: {}
