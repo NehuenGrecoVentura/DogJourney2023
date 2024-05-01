@@ -16,14 +16,14 @@ public class CameraOrbit : MonoBehaviour
     public float minZoomDistance = 1.0f; // Distancia mínima permitida
     public float maxZoomDistance = 10.0f; // Distancia máxima permitida
 
-    public float minY, maxY;
-    public float maxAllowed;
+    //public float minY, maxY;
+    //public float maxAllowed;
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         camera = GetComponent<Camera>();
-        //CalculateNearPlaneSize();
+        CalculateNearPlaneSize();
     }
 
     private void CalculateNearPlaneSize() 
@@ -64,17 +64,18 @@ public class CameraOrbit : MonoBehaviour
 
         float ver = Input.GetAxis("Mouse Y");
 
-        //if (ver != 0) 
-        //{ 
-        //    angle.y += ver * Mathf.Deg2Rad * sensitivity.y;
-        //    angle.y = Mathf.Clamp(angle.y, -80 * Mathf.Deg2Rad, 80 * Mathf.Deg2Rad);
-        //}
-
         if (ver != 0)
         {
             angle.y += ver * Mathf.Deg2Rad * sensitivity.y;
-            angle.y = Mathf.Clamp(angle.y, minY * Mathf.Deg2Rad, maxY * Mathf.Deg2Rad);
+            angle.y = Mathf.Clamp(angle.y, -80 * Mathf.Deg2Rad, 80 * Mathf.Deg2Rad);
         }
+
+        // CLAMP
+        //if (ver != 0)
+        //{
+        //    angle.y += ver * Mathf.Deg2Rad * sensitivity.y;
+        //    angle.y = Mathf.Clamp(angle.y, minY * Mathf.Deg2Rad, maxY * Mathf.Deg2Rad);
+        //}
 
 
 
