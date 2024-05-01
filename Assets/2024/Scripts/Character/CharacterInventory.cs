@@ -12,6 +12,7 @@ public class CharacterInventory : MonoBehaviour
     public int ropes = 0;
     public int oils = 0;
     public int seeds = 0;
+    public int flowers = 0;
     public bool upgradeLoot = false;
     
     [Header("CANVAS")]
