@@ -31,14 +31,16 @@ public class MailManager : MonoBehaviour
     [SerializeField] Character _player;
     [SerializeField] GameObject _nextQuest;
     Collider _col;
-    Pause _pause;
+    //Pause _pause;
+    private MenuPause _pause;
     GoToQuest3 _goToQuest3;
 
     private void Awake()
     {
         _myAudio = GetComponent<AudioSource>();
         _col = GetComponent<Collider>();
-        _pause = FindObjectOfType<Pause>();
+        //_pause = FindObjectOfType<Pause>();
+        _pause = FindObjectOfType<MenuPause>();
         _goToQuest3 = FindObjectOfType<GoToQuest3>();
     }
 
@@ -62,7 +64,8 @@ public class MailManager : MonoBehaviour
     {
         if (Input.GetKeyDown(buttonAccept))
         {
-            _pause.Defrize();
+            //_pause.Defrize();
+            _pause.Defreeze();
             _col.enabled = false;
             _map.target = _nextLocation;    
             _player.speed = 10f;

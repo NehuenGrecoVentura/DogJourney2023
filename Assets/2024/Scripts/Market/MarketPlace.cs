@@ -5,13 +5,14 @@ public class MarketPlace : MonoBehaviour
     private MarketManager _market;
     [SerializeField] Transform _exitPos;
     private LocationQuest _radar;
-
+    private MenuPause _pause;
     [SerializeField] GameObject _ui;
 
     private void Awake()
     {
         _market = FindObjectOfType<MarketManager>();
         _radar = FindObjectOfType<LocationQuest>();
+        _pause = FindObjectOfType<MenuPause>();
     }
 
     private void Start()
@@ -24,6 +25,8 @@ public class MarketPlace : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
+            _pause.Freeze();
+            _market.isShopping = true;
             _ui.SetActive(true);
             _market.OpenMarket();
             _radar.StatusRadar(false);
@@ -37,6 +40,7 @@ public class MarketPlace : MonoBehaviour
         {
             player.gameObject.transform.position = _exitPos.position;
             _radar.StatusRadar(true);
+            _market.isShopping = false;
         }      
     }
 }

@@ -21,10 +21,13 @@ public class Mail1 : MailQuest
     [SerializeField] Sprite _iconQuest;
     [SerializeField] Image _imageIcon;
 
+    private MenuPause _pause;
+
     private void Awake()
     {
         _myAudio = GetComponent<AudioSource>();
         _radar = FindObjectOfType<LocationQuest>();
+        _pause = FindObjectOfType<MenuPause>();
     }
 
     private void Start()
@@ -38,10 +41,9 @@ public class Mail1 : MailQuest
         _imageIcon.sprite = _iconQuest;
         _radar.target = _nextPos;
         _myAudio.PlayOneShot(_soundClip);
-        Character player = FindObjectOfType<Character>();
-        player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        _pause.Defreeze();
         Destroy(_letterQuest.gameObject);
         _colAxe.enabled = true;
         ShowTasks();
@@ -59,6 +61,7 @@ public class Mail1 : MailQuest
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+            _pause.Freeze();
         }
     }
 }

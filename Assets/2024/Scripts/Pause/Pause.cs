@@ -27,7 +27,8 @@ public class Pause : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (!_isPause && !_isFreeze) ShowPause();
-            else HidePause();
+            //else HidePause();
+            else if (_isPause) HidePause();
         }
     }
 
@@ -69,6 +70,7 @@ public class Pause : MonoBehaviour
         Cursor.visible = false;
         _cam.enabled = true;
         Time.timeScale = 1;
+        _isPause = false;
     }
 
     public void ShowOptions()

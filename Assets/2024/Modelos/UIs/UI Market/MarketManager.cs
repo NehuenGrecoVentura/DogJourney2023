@@ -14,6 +14,8 @@ public class MarketManager : MonoBehaviour, IScrollHandler
     private SaplingTree[] _sapling;
     private Trunks[] _trunks;
     private Dog[] _dogs;
+    private MenuPause _pause;
+    public bool isShopping = false;
 
     [SerializeField] GameObject[] _dogUpgrade;
     [SerializeField] GameObject _canvas;
@@ -63,6 +65,7 @@ public class MarketManager : MonoBehaviour, IScrollHandler
         _sapling = FindObjectsOfType<SaplingTree>();
         _trunks = FindObjectsOfType<Trunks>();
         _dogs = FindObjectsOfType<Dog>();
+        _pause = FindObjectOfType<MenuPause>();
     }
 
     private void Start()
@@ -80,7 +83,7 @@ public class MarketManager : MonoBehaviour, IScrollHandler
     {
         if (_canvas.activeSelf) _textInventory.text = "$ " + _inventory.money.ToString();
 
-        if (Input.GetKeyDown(KeyCode.K)) OpenMarket();
+        if (Input.GetKeyDown(KeyCode.Escape) && isShopping) ExitMarket();
     }
 
     #region EVENT TRIGGER
@@ -279,6 +282,7 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 
     private IEnumerator ExitMarketCoroutine()
     {
+        isShopping = false;
         _intro.gameObject.SetActive(true);
         _intro.transform.DOScale(100f, 0f);
         _intro.transform.DOScale(0f, 2f);
@@ -289,6 +293,7 @@ public class MarketManager : MonoBehaviour, IScrollHandler
         _player.speed = _player.speedAux;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        _pause.Defreeze();
     }
 
 
