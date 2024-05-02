@@ -30,6 +30,7 @@ public class FishingQuest2 : MonoBehaviour
     [SerializeField] GameObject[] _objs;
     [SerializeField] Fishing _fishingMinigame;
     [SerializeField] int _totalAmount = 5;
+    [SerializeField] GameObject _canvasRender;
     private FishingMinigame _fish;
 
     [Header("NEXT QUEST")]
@@ -66,8 +67,7 @@ public class FishingQuest2 : MonoBehaviour
 
     private void Update()
     {
-        //if (_questActive && _fish.fishedPicked == _totalAmount)
-        if (_questActive && _fish.fishedPicked == 5)
+        if (_questActive && (!_canvasRender.activeSelf || _fish.fishedPicked == _totalAmount))
         {
             print("COMPLETADO");
             StartCoroutine(Ending());

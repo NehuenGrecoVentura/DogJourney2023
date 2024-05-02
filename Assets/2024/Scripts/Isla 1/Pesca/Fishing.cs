@@ -95,8 +95,6 @@ public class Fishing : MonoBehaviour
         StartCoroutine(StartMiniGame());
     }
 
-
-
     private IEnumerator StartMiniGame()
     {
         _fishing._textAmount = _score;
