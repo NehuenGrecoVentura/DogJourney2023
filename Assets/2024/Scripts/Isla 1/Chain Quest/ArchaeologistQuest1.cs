@@ -32,12 +32,12 @@ public class ArchaeologistQuest1 : MonoBehaviour
 
     private void Start()
     {
-        _dialogue.canTalk = true;
-        _dialogue.Set("Archaeologist");
-        _buttonConfirm.onClick.AddListener(() => Confirm());
+        //_dialogue.canTalk = true;
+        //_dialogue.Set("Archaeologist");
+        //_buttonConfirm.onClick.AddListener(() => Confirm());
 
-        for (int i = 0; i < _dialogue._lines.Length; i++)
-            _dialogue._lines[i] = _lines[i];
+        //for (int i = 0; i < _dialogue._lines.Length; i++)
+        //    _dialogue._lines[i] = _lines[i];
 
         _dialogue.gameObject.SetActive(false);
     }
@@ -53,14 +53,24 @@ public class ArchaeologistQuest1 : MonoBehaviour
         archaeologistChain = true;
     }
 
+    private void SetDialogue()
+    {
+        _dialogue.canTalk = true;
+        _dialogue.Set("Archaeologist");
+        _buttonConfirm.onClick.AddListener(() => Confirm());
+
+        for (int i = 0; i < _dialogue._lines.Length; i++)
+            _dialogue._lines[i] = _lines[i];
+
+        _dialogue.gameObject.SetActive(true);
+        _dialogue.playerInRange = true;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && _myCol.enabled)
-        {
-            _dialogue.gameObject.SetActive(true);
-            _dialogue.playerInRange = true;
-        }
+        if (player != null && _myCol.enabled && !archaeologistChain)
+            SetDialogue();
     }
 
     private void OnTriggerExit(Collider other)

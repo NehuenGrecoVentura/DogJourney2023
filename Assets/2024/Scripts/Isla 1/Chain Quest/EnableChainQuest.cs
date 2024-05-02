@@ -60,8 +60,8 @@ public class EnableChainQuest : MonoBehaviour
 
         _archaeologist.enabled = true;
         _archaeologist.GetComponent<BoxCollider>().enabled = true;
-        _fishChain.enabled = true;
-        _fishChain.GetComponent<Collider>().enabled = true;
+        //_fishChain.enabled = true;
+        //_fishChain.GetComponent<Collider>().enabled = true;
 
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);

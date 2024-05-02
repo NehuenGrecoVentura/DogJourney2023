@@ -90,6 +90,13 @@ public class Fishing : MonoBehaviour
         if (player != null && !_isActive) _iconInteract.SetActive(false);
     }
 
+    public void StarFishing()
+    {
+        StartCoroutine(StartMiniGame());
+    }
+
+
+
     private IEnumerator StartMiniGame()
     {
         _fishing._textAmount = _score;
