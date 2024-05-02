@@ -24,6 +24,7 @@ public class FishingQuest2 : MonoBehaviour
     [SerializeField] TMP_Text _textMessage;
     [SerializeField] TMP_Text _textNPCMessage;
     [SerializeField, TextArea(4,6)] string[] _messages;
+    [SerializeField] GameObject _cinematic;
 
     [Header("FISHING")]
     [SerializeField] GameObject[] _objs;
@@ -37,6 +38,7 @@ public class FishingQuest2 : MonoBehaviour
     private Manager _gm;
     private Character _player;
     private QuestUI _questUI;
+    private CameraOrbit _camPlayer;
 
     private void Awake()
     {
@@ -46,6 +48,7 @@ public class FishingQuest2 : MonoBehaviour
         _gm = FindObjectOfType<Manager>();
         _player = FindObjectOfType<Character>();
         _questUI = FindObjectOfType<QuestUI>();
+        _camPlayer = FindObjectOfType<CameraOrbit>();
     }
 
     private void Start()
@@ -53,6 +56,7 @@ public class FishingQuest2 : MonoBehaviour
         _dialogue.gameObject.SetActive(false);
         _iconInteract.SetActive(false);
         _fishingMinigame.gameObject.SetActive(false);
+        _cinematic.SetActive(false);
         _fishingMinigame._totalAmount = _totalAmount;
     }
 
@@ -68,6 +72,7 @@ public class FishingQuest2 : MonoBehaviour
         {
             _player.speed = 0;
             _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+            _camPlayer.gameObject.SetActive(false);
         }
     }
 
@@ -148,6 +153,9 @@ public class FishingQuest2 : MonoBehaviour
         yield return new WaitForSeconds(1f);
         Destroy(_fishingMinigame.gameObject);
 
+        _camPlayer.gameObject.SetActive(false);
+        _cinematic.SetActive(true);
+
         foreach (var item in _objs)
             item.SetActive(true);
         
@@ -167,8 +175,10 @@ public class FishingQuest2 : MonoBehaviour
 
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _camPlayer.gameObject.SetActive(true);
 
         _gm.QuestCompleted();
+        Destroy(_cinematic);
         Destroy(this);
     }
 }
