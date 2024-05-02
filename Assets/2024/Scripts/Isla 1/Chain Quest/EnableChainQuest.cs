@@ -8,6 +8,7 @@ public class EnableChainQuest : MonoBehaviour
     [SerializeField] Collider _myCol;
     [SerializeField] GameObject _iconChainQuest;
     [SerializeField] Camera _focusCam;
+    [SerializeField] ArchaeologistQuest1 _archaeologist;
 
     [Header("PLAYER")]
     [SerializeField] Character _player;
@@ -39,7 +40,6 @@ public class EnableChainQuest : MonoBehaviour
         _camPlayer.gameObject.SetActive(false);
         _focusCam.gameObject.SetActive(true);
         _iconChainQuest.SetActive(true);
-        _iconChainQuest.SetActive(true);
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
         _textName.text = "Special Quest";
@@ -56,6 +56,8 @@ public class EnableChainQuest : MonoBehaviour
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _archaeologist.enabled = true;
+        _archaeologist.GetComponent<BoxCollider>().enabled = true;
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }

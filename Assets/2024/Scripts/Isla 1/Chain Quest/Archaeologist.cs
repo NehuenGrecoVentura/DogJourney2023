@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class Archaeologist : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] GameObject _iconInteract;
+    [SerializeField] KeyCode _keyInteract = KeyCode.F;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }
