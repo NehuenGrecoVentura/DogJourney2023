@@ -19,6 +19,12 @@ public class FishingQuest2 : MonoBehaviour
     [SerializeField] Button _buttonConfirm;
     private Dialogue _dialogue;
 
+    [Header("MESSAGE")]
+    [SerializeField] RectTransform _boxMessage;
+    [SerializeField] TMP_Text _textMessage;
+    [SerializeField] TMP_Text _textNPCMessage;
+    [SerializeField, TextArea(4,6)] string[] _messages;
+
     [Header("FISHING")]
     [SerializeField] GameObject[] _objs;
     [SerializeField] Fishing _fishingMinigame;
@@ -26,8 +32,11 @@ public class FishingQuest2 : MonoBehaviour
     private FishingMinigame _fish;
 
     private bool _questActive = false;
+    private bool _questCompleted = false;
     private Collider _myCol;
     private Manager _gm;
+    private Character _player;
+    private QuestUI _questUI;
 
     private void Awake()
     {
@@ -35,6 +44,8 @@ public class FishingQuest2 : MonoBehaviour
         _dialogue = FindObjectOfType<Dialogue>();
         _fish = FindObjectOfType<FishingMinigame>();
         _gm = FindObjectOfType<Manager>();
+        _player = FindObjectOfType<Character>();
+        _questUI = FindObjectOfType<QuestUI>();
     }
 
     private void Start()
@@ -51,6 +62,12 @@ public class FishingQuest2 : MonoBehaviour
         {
             print("COMPLETADO");
             StartCoroutine(Ending());
+        }
+
+        if (_questCompleted)
+        {
+            _player.speed = 0;
+            _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
         }
     }
 
@@ -84,8 +101,12 @@ public class FishingQuest2 : MonoBehaviour
         _iconInteract.SetActive(true);
         _buttonConfirm.onClick.AddListener(() => Confirm());
 
-        for (int i = 0; i < _dialogue._lines.Length; i++)
-            _dialogue._lines[i] = _lines[i];
+
+        if (!_questCompleted)
+        {
+            for (int i = 0; i < _dialogue._lines.Length; i++)
+                _dialogue._lines[i] = _lines[i];
+        }
 
         _dialogue.gameObject.SetActive(true);
         _dialogue.playerInRange = true;
@@ -113,29 +134,39 @@ public class FishingQuest2 : MonoBehaviour
     private IEnumerator Ending()
     {
         _questActive = false;
+        _questCompleted = true;
+
+        _player.speed = 0;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+
+        _textNPCMessage.text = "Fisherman";
+        _textMessage.text = _messages[0];
+        _boxMessage.localScale = new Vector3(1, 1, 1);
+        _boxMessage.DOAnchorPosY(-1000f, 0);
+        _boxMessage.gameObject.SetActive(true);
+
         yield return new WaitForSeconds(1f);
         Destroy(_fishingMinigame.gameObject);
 
         foreach (var item in _objs)
-        {
             item.SetActive(true);
-        }
-
         
+        _boxMessage.DOAnchorPosY(70f, 0.5f);
+        yield return new WaitForSeconds(4f);
+        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+        yield return new WaitForSeconds(0.6f);
+        _textMessage.text = _messages[1];
+        _boxMessage.DOAnchorPosY(70f, 0.5f);
+        yield return new WaitForSeconds(4f);
+        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+        yield return new WaitForSeconds(0.6f);
+        _textMessage.text = _messages[2];
+        yield return new WaitForSeconds(4f);
+        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+        _boxMessage.gameObject.SetActive(false);
 
-
-
-
-
-
-
-
-
-
-
-        yield return new WaitForSeconds(1.5f);
-
-
+        _player.speed = _player.speedAux;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
 
         _gm.QuestCompleted();
         Destroy(this);
