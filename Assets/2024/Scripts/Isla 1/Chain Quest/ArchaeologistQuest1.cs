@@ -50,6 +50,7 @@ public class ArchaeologistQuest1 : MonoBehaviour
         _myCol.enabled = false;
         _dialogue.Close();
         _iconInteract.SetActive(false);
+        archaeologistChain = true;
     }
 
     private void OnTriggerEnter(Collider other)

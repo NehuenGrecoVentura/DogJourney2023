@@ -9,6 +9,7 @@ public class EnableChainQuest : MonoBehaviour
     [SerializeField] GameObject _iconChainQuest;
     [SerializeField] Camera _focusCam;
     [SerializeField] ArchaeologistQuest1 _archaeologist;
+    [SerializeField] FishingChain1 _fishChain;
 
     [Header("PLAYER")]
     [SerializeField] Character _player;
@@ -56,8 +57,12 @@ public class EnableChainQuest : MonoBehaviour
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+
         _archaeologist.enabled = true;
         _archaeologist.GetComponent<BoxCollider>().enabled = true;
+        _fishChain.enabled = true;
+        _fishChain.GetComponent<Collider>().enabled = true;
+
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
