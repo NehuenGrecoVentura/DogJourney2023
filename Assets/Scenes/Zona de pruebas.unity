@@ -3892,7 +3892,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 3a4117a22e61dee4da869e64d02bf6cd, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2028302, g: 0.66745985, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4326,10 +4326,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fca21d9d11df97439d62b30384e0445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canvas: {fileID: 0}
   _menuPause: {fileID: 627845012}
   _optionsMenu: {fileID: 1801968068}
   _isFreeze: 0
   _isPause: 0
+  _cam: {fileID: 0}
+  _player: {fileID: 0}
 --- !u!114 &1335600894
 MonoBehaviour:
   m_ObjectHideFlags: 0

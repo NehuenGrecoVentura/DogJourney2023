@@ -32,7 +32,7 @@ public class MailManager : MonoBehaviour
     [SerializeField] GameObject _nextQuest;
     Collider _col;
     //Pause _pause;
-    private MenuPause _pause;
+    MenuPause _pause;
     GoToQuest3 _goToQuest3;
 
     private void Awake()

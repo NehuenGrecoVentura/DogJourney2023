@@ -13,7 +13,6 @@ public class MailQuest : MonoBehaviour
     public GameObject[] _phasesQuests;
     public string nameQuest;
     public string secondText;
-
     public QuestUI _questUI;
     public string[] tasks;
 

@@ -4,12 +4,11 @@ using UnityEngine.SceneManagement;
 
 public class Pause : MonoBehaviour
 {
-    [SerializeField] GameObject _canvasPause;
     [SerializeField] GameObject _canvasOptionsPause;
     [SerializeField] GameObject _menuMain;
     [SerializeField] GameObject _canvas;
-    bool _isPause;
-    bool _isFreeze; // Esta variable sirve para freezear la pausa en los mails y en las tiendas.
+    [SerializeField] bool _isPause;
+    [SerializeField] bool _isFreeze; // Esta variable sirve para freezear la pausa en los mails y en las tiendas.
     CameraOrbit _cam;
 
     private void Awake()

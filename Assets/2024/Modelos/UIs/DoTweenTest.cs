@@ -17,6 +17,13 @@ public class DoTweenTest : MonoBehaviour
         _object.gameObject.SetActive(false);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K)) ShowUI("+ 1");
+    }
+
+
+
     public void ShowUI(string amount)
     {
         StartCoroutine(ShowUICoroutine(amount));

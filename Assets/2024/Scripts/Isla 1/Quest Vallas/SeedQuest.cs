@@ -27,6 +27,7 @@ public class SeedQuest : MonoBehaviour
     [Header("NEXT QUEST")]
     [SerializeField] LocationQuest _radar;
     [SerializeField] FirstMarket _market;
+    [SerializeField] EnableChainQuest _chainQuest;
 
     [Header("NPC")]
     [SerializeField] GameObject _npc;
@@ -149,6 +150,7 @@ public class SeedQuest : MonoBehaviour
         _radar.target = _market.gameObject.transform;
         _npc.GetComponent<Animator>().runtimeAnimatorController = _animNormal;
         _broom.SetActive(true);
+        _chainQuest.gameObject.SetActive(true);
         Destroy(gameObject, 0.6f);
     }
 }
