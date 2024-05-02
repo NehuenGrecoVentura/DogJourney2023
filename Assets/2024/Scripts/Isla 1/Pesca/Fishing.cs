@@ -16,7 +16,7 @@ public class Fishing : MonoBehaviour
     private CameraOrbit _camPlayer;
 
     [Header("FISHING")]
-    [SerializeField] int _totalAmount = 3;
+    public int _totalAmount = 3;
     private FishingMinigame _fishing;
     private Manager _gm;
     private Character _player;

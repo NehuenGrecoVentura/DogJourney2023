@@ -19,18 +19,22 @@ public class FishingQuest2 : MonoBehaviour
     [SerializeField] Button _buttonConfirm;
     private Dialogue _dialogue;
 
+    [Header("FISHING")]
     [SerializeField] GameObject[] _objs;
     [SerializeField] Fishing _fishingMinigame;
-
-
+    [SerializeField] int _totalAmount = 5;
+    private FishingMinigame _fish;
 
     private bool _questActive = false;
     private Collider _myCol;
+    private Manager _gm;
 
     private void Awake()
     {
         _myCol = GetComponent<Collider>();
         _dialogue = FindObjectOfType<Dialogue>();
+        _fish = FindObjectOfType<FishingMinigame>();
+        _gm = FindObjectOfType<Manager>();
     }
 
     private void Start()
@@ -38,6 +42,16 @@ public class FishingQuest2 : MonoBehaviour
         _dialogue.gameObject.SetActive(false);
         _iconInteract.SetActive(false);
         _fishingMinigame.gameObject.SetActive(false);
+        _fishingMinigame._totalAmount = _totalAmount;
+    }
+
+    private void Update()
+    {
+        if (_questActive && _fish.fishedPicked == _totalAmount)
+        {
+            print("COMPLETADO");
+            StartCoroutine(Ending());
+        }
     }
 
     private void Confirm()
@@ -83,7 +97,7 @@ public class FishingQuest2 : MonoBehaviour
         if (player != null && _myCol.enabled && !_questActive)
         {
             SetDialogue();
-        }                   
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -94,5 +108,36 @@ public class FishingQuest2 : MonoBehaviour
             _dialogue.playerInRange = false;
             _iconInteract.SetActive(false);
         }
+    }
+
+    private IEnumerator Ending()
+    {
+        _questActive = false;
+        yield return new WaitForSeconds(1f);
+        Destroy(_fishingMinigame.gameObject);
+
+        foreach (var item in _objs)
+        {
+            item.SetActive(true);
+        }
+
+        
+
+
+
+
+
+
+
+
+
+
+
+        yield return new WaitForSeconds(1.5f);
+
+
+
+        _gm.QuestCompleted();
+        Destroy(this);
     }
 }

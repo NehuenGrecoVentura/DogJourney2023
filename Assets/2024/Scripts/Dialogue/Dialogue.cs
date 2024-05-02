@@ -77,7 +77,14 @@ public class Dialogue : MonoBehaviour
         StartCoroutine(ShowLine());
     }
 
-    private void NextDialogueLine()
+
+    public void PlayQuick()
+    {
+        StartCoroutine(ShowLine());
+    }
+
+
+    public void NextDialogueLine()
     {
         _index++;
         if (_index < _lines.Length) StartCoroutine(ShowLine());
