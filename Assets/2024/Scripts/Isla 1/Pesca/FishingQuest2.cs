@@ -39,6 +39,7 @@ public class FishingQuest2 : MonoBehaviour
     private Character _player;
     private QuestUI _questUI;
     private CameraOrbit _camPlayer;
+    [SerializeField] EnableChainQuest _chainQuest;
 
     private void Awake()
     {
@@ -83,8 +84,6 @@ public class FishingQuest2 : MonoBehaviour
         _dialogue.canTalk = false;
         _dialogue.Close();
 
-
-
         foreach (var item in _objs)
         {
             item.SetActive(false);
@@ -92,9 +91,6 @@ public class FishingQuest2 : MonoBehaviour
 
         _fishingMinigame.gameObject.SetActive(true);
         _fishingMinigame.StarFishing();
-
-
-
 
         print("MISION ACEPTADA");
         _questActive = true;
@@ -179,6 +175,7 @@ public class FishingQuest2 : MonoBehaviour
 
         _gm.QuestCompleted();
         Destroy(_cinematic);
+        _chainQuest.gameObject.SetActive(true);
         Destroy(this);
     }
 }

@@ -49,7 +49,6 @@ public class QuestFence : MonoBehaviour
     private QuestUI _questUI;
     private CharacterInventory _inventory;
     private Character _player;
-    [SerializeField] EnableChainQuest _chainQuest;
 
     [Header("SEEDS")]
     private bool _seedsActive = false;
@@ -237,12 +236,14 @@ public class QuestFence : MonoBehaviour
         Destroy(_myCol);
         Destroy(_iconInteract);
         Destroy(_iconBuild);
-        _chainQuest.gameObject.SetActive(true);
-        FirstMarket market = FindObjectOfType<FirstMarket>();
+
+        //FirstMarket market = FindObjectOfType<FirstMarket>();
+        FishingQuest2 npcFishing = FindObjectOfType<FishingQuest2>();
         LocationQuest radar = FindObjectOfType<LocationQuest>();
         Manager manager = FindObjectOfType<Manager>();
         manager.QuestCompleted();
-        radar.target = market.gameObject.transform;
+        //radar.target = market.gameObject.transform;
+        radar.target = npcFishing.gameObject.transform;
         Destroy(this);
     }
 }

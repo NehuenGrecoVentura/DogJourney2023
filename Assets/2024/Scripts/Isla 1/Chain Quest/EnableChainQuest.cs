@@ -6,10 +6,12 @@ using TMPro;
 public class EnableChainQuest : MonoBehaviour
 {
     [SerializeField] Collider _myCol;
-    [SerializeField] GameObject _iconChainQuest;
-    [SerializeField] Camera _focusCam;
+    [SerializeField] GameObject[] _iconsChainQuest;
     [SerializeField] ArchaeologistQuest1 _archaeologist;
-    [SerializeField] FishingChain1 _fishChain;
+
+    [Header("CAMERAS")]
+    [SerializeField] Camera _cam1;
+    [SerializeField] Camera _cam2;
 
     [Header("PLAYER")]
     [SerializeField] Character _player;
@@ -24,8 +26,12 @@ public class EnableChainQuest : MonoBehaviour
 
     private void Start()
     {
-        _focusCam.gameObject.SetActive(false);
-        _iconChainQuest.SetActive(false);
+        _cam1.gameObject.SetActive(false);
+        _cam2.gameObject.SetActive(false);
+
+        foreach (var icon in _iconsChainQuest)
+            icon.SetActive(false);
+        
         _myAudio.Stop();
     }
 
@@ -39,8 +45,11 @@ public class EnableChainQuest : MonoBehaviour
     {
         Destroy(_myCol);
         _camPlayer.gameObject.SetActive(false);
-        _focusCam.gameObject.SetActive(true);
-        _iconChainQuest.SetActive(true);
+        _cam1.gameObject.SetActive(true);
+
+        foreach (var icon in _iconsChainQuest)
+            icon.SetActive(true);
+
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
         _textName.text = "Special Quest";
@@ -51,13 +60,16 @@ public class EnableChainQuest : MonoBehaviour
         yield return new WaitForSeconds(1f);
         _myAudio.Play();
         _boxMessage.DOAnchorPosY(70f, 0f);
+        yield return new WaitForSeconds(3f);
+        Destroy(_cam1.gameObject);
+        _cam2.gameObject.SetActive(true);
+
         yield return new WaitForSeconds(4f);
-        Destroy(_focusCam.gameObject);
+        Destroy(_cam2.gameObject);
         _camPlayer.gameObject.SetActive(true);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
-
         _archaeologist.enabled = true;
         _archaeologist.GetComponent<BoxCollider>().enabled = true;
         //_fishChain.enabled = true;

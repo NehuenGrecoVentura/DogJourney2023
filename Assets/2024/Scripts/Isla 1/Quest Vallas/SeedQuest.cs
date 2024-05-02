@@ -26,8 +26,8 @@ public class SeedQuest : MonoBehaviour
 
     [Header("NEXT QUEST")]
     [SerializeField] LocationQuest _radar;
-    [SerializeField] FirstMarket _market;
-    [SerializeField] EnableChainQuest _chainQuest;
+    //[SerializeField] FirstMarket _market;
+    private FishingQuest2 _npcFishing;
 
     [Header("NPC")]
     [SerializeField] GameObject _npc;
@@ -42,6 +42,7 @@ public class SeedQuest : MonoBehaviour
     private void Awake()
     {
         _myAudio = GetComponent<AudioSource>();
+        _npcFishing = FindObjectOfType<FishingQuest2>();
     }
 
     private void OnTriggerStay(Collider other)
@@ -147,10 +148,10 @@ public class SeedQuest : MonoBehaviour
         _gm.QuestCompleted();
         _gm.amountUpgrade = true;
         _radar.StatusRadar(true);
-        _radar.target = _market.gameObject.transform;
+        //_radar.target = _market.gameObject.transform;
+        _radar.target = _npcFishing.gameObject.transform;
         _npc.GetComponent<Animator>().runtimeAnimatorController = _animNormal;
         _broom.SetActive(true);
-        _chainQuest.gameObject.SetActive(true);
         Destroy(gameObject, 0.6f);
     }
 }
