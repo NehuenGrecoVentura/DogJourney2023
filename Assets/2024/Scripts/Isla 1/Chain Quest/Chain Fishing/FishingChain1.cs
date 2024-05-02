@@ -15,12 +15,13 @@ public class FishingChain1 : MonoBehaviour
 
     [Header("DIALOGUE")]
     [SerializeField] TMP_Text _textDialogue;
+    [SerializeField] TMP_Text _textName;
     [SerializeField, TextArea(4, 6)] string[] _lines;
     [SerializeField] Button _buttonConfirm;
-    private Dialogue _dialogue;
+    [SerializeField] Dialogue _dialogue;
 
     [Header("QUEST")]
-    public bool fishingChain = false;
+    private bool _questActive = false;
 
     [Header("REFS")]
     private Character _player;
@@ -28,20 +29,13 @@ public class FishingChain1 : MonoBehaviour
     private void Awake()
     {
         _myCol = GetComponent<Collider>();
-        _dialogue = FindObjectOfType<Dialogue>();
         _player = FindObjectOfType<Character>();
     }
 
     private void Start()
     {
-        _dialogue.canTalk = true;
-        _dialogue.Set("Archaeologist");
-        _buttonConfirm.onClick.AddListener(() => Confirm());
-
-        for (int i = 0; i < _dialogue._lines.Length; i++)
-            _dialogue._lines[i] = _lines[i];
-
-        _dialogue.gameObject.SetActive(false);
+        //_dialogue.gameObject.SetActive(false);
+        _iconInteract.SetActive(false);
     }
 
     public void Confirm()
@@ -52,18 +46,24 @@ public class FishingChain1 : MonoBehaviour
         _myCol.enabled = false;
         _dialogue.Close();
         _iconInteract.SetActive(false);
-        _iconBubble.SetActive(false);
-        fishingChain = true;
+        Destroy(_iconBubble);
+        _questActive = true;
+    }
+
+    private void SetDialogue()
+    {
+        _textName.text = "Fisherman";
+        _iconInteract.SetActive(true);
+        _buttonConfirm.onClick.AddListener(() => Confirm());
+        _dialogue.gameObject.SetActive(true);
+        _dialogue.playerInRange = true;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
         if (player != null && _myCol.enabled && gameObject.activeSelf)
-        {
-            _dialogue.gameObject.SetActive(true);
-            _dialogue.playerInRange = true;
-        }
+            SetDialogue();
     }
 
     private void OnTriggerExit(Collider other)
@@ -72,6 +72,7 @@ public class FishingChain1 : MonoBehaviour
         if (player != null)
         {
             _dialogue.playerInRange = false;
+            _iconInteract.SetActive(false);
         }
     }
 }

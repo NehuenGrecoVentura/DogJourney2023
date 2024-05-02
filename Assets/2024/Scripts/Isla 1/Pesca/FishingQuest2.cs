@@ -32,6 +32,9 @@ public class FishingQuest2 : MonoBehaviour
     [SerializeField] int _totalAmount = 5;
     private FishingMinigame _fish;
 
+    [Header("NEXT QUEST")]
+    [SerializeField] EnableChainQuest _chainQuest;
+
     private bool _questActive = false;
     private bool _questCompleted = false;
     private Collider _myCol;
@@ -39,7 +42,7 @@ public class FishingQuest2 : MonoBehaviour
     private Character _player;
     private QuestUI _questUI;
     private CameraOrbit _camPlayer;
-    [SerializeField] EnableChainQuest _chainQuest;
+    
 
     private void Awake()
     {
@@ -63,7 +66,8 @@ public class FishingQuest2 : MonoBehaviour
 
     private void Update()
     {
-        if (_questActive && _fish.fishedPicked == _totalAmount)
+        //if (_questActive && _fish.fishedPicked == _totalAmount)
+        if (_questActive && _fish.fishedPicked == 5)
         {
             print("COMPLETADO");
             StartCoroutine(Ending());

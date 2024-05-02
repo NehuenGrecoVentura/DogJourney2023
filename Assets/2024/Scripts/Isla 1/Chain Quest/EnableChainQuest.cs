@@ -6,8 +6,13 @@ using TMPro;
 public class EnableChainQuest : MonoBehaviour
 {
     [SerializeField] Collider _myCol;
-    [SerializeField] GameObject[] _iconsChainQuest;
+    [SerializeField] GameObject _iconChain;
+
+    [Header("NPCS")]
+    [SerializeField] FloristChain1 _npcChainFlorist;
+    [SerializeField] GameObject _npcFlorist;
     [SerializeField] ArchaeologistQuest1 _archaeologist;
+    [SerializeField] FishingChain1 _fishingChain;
 
     [Header("CAMERAS")]
     [SerializeField] Camera _cam1;
@@ -28,10 +33,7 @@ public class EnableChainQuest : MonoBehaviour
     {
         _cam1.gameObject.SetActive(false);
         _cam2.gameObject.SetActive(false);
-
-        foreach (var icon in _iconsChainQuest)
-            icon.SetActive(false);
-        
+        _iconChain.SetActive(false);
         _myAudio.Stop();
     }
 
@@ -44,12 +46,11 @@ public class EnableChainQuest : MonoBehaviour
     private IEnumerator ActiveChainQuests()
     {
         Destroy(_myCol);
+        Destroy(_npcFlorist);
+        _npcChainFlorist.gameObject.SetActive(true);
         _camPlayer.gameObject.SetActive(false);
         _cam1.gameObject.SetActive(true);
-
-        foreach (var icon in _iconsChainQuest)
-            icon.SetActive(true);
-
+        _iconChain.SetActive(true);
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
         _textName.text = "Special Quest";
@@ -70,8 +71,11 @@ public class EnableChainQuest : MonoBehaviour
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+
         _archaeologist.enabled = true;
         _archaeologist.GetComponent<BoxCollider>().enabled = true;
+        _fishingChain.gameObject.SetActive(true);
+
         //_fishChain.enabled = true;
         //_fishChain.GetComponent<Collider>().enabled = true;
 
