@@ -1,20 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class DigTreasure : MonoBehaviour
 {
     private List<DigTreasure> _allTreasures = new List<DigTreasure>();
     private CharacterInventory _inventory;
+    private ArchaeologistQuest1 _npc;
     private bool _isLast = false;
 
     [SerializeField] float _amountHit = 200f;
     [SerializeField] KeyCode _keyInteractive = KeyCode.Mouse0;
 
-
     private void Awake()
     {
         _inventory = FindObjectOfType<CharacterInventory>();
+        _npc = FindObjectOfType<ArchaeologistQuest1>();
 
         // Obtener todos los componentes DigTreasure en la escena y agregarlos a la lista
         var treasures = FindObjectsOfType<DigTreasure>();
@@ -71,6 +73,7 @@ public class DigTreasure : MonoBehaviour
     private void TreasureLoot()
     {
         print("TESORO ENCONTRADO");
+        _npc.MessageFound();
     }
 
     private void RandomLoot()

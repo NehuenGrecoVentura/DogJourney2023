@@ -17,10 +17,18 @@ public class ArchaeologistQuest1 : MonoBehaviour
     [SerializeField] TMP_Text _textDialogue;
     [SerializeField, TextArea(4, 6)] string[] _lines;
     [SerializeField] Button _buttonConfirm;
+    [SerializeField] Image _fadeOut;
     private Dialogue _dialogue;
+
+    [Header("MESSAGE")]
+    [SerializeField] TMP_Text _nameNPC;
+    [SerializeField] TMP_Text _textMessage;
+    [SerializeField] RectTransform _rectMessage;
+    [SerializeField, TextArea(4,6)] string[] _messagesEnding;
 
     [Header("QUEST")]
     private bool _questActive = false;
+    private bool _treasureFound = false;
 
     [Header("INVENTORY UI")]
     [SerializeField] GameObject _canvasIconsChainsQuests;
@@ -28,23 +36,28 @@ public class ArchaeologistQuest1 : MonoBehaviour
     [SerializeField] DoTweenManager _message;
     [SerializeField] RectTransform _boxMessage;
     [SerializeField] TMP_Text _textSlide;
+    [SerializeField] TMP_Text _textInventory;
 
     [Header("REFS")]
     private Character _player;
     private Manager _gm;
+    private DigTreasure[] _allTreasures;
 
     private void Awake()
     {
         _dialogue = FindObjectOfType<Dialogue>();
         _player = FindObjectOfType<Character>();
         _gm = FindObjectOfType<Manager>();
+        _allTreasures = FindObjectsOfType<DigTreasure>();
     }
 
     private void Start()
     {
         _dialogue.gameObject.SetActive(false);
         _iconInteract.SetActive(false);
+        _fadeOut.DOColor(Color.clear, 0f);
     }
+
 
     public void Confirm()
     {
@@ -58,7 +71,15 @@ public class ArchaeologistQuest1 : MonoBehaviour
         _canvasIconsChainsQuests.SetActive(true);
         _iconTreasure.SetActive(true);
         _message.AddIconInventory(_boxMessage, _textSlide, "Added to inventory");
+
+        foreach (var item in _allTreasures)
+        {
+            item.enabled = true;
+            item.GetComponent<Collider>().enabled = true;
+        }
+
         Destroy(_iconQuest);
+        _questActive = true;
     }
 
     private void SetDialogue()
@@ -78,8 +99,15 @@ public class ArchaeologistQuest1 : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && _myCol.enabled && !_questActive)
+        if (player != null && _myCol.enabled && !_questActive && !_treasureFound)
             SetDialogue();
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null && _myCol.enabled && _treasureFound && Input.GetKeyDown(KeyCode.F))
+            StartCoroutine(Ending());            
     }
 
     private void OnTriggerExit(Collider other)
@@ -90,5 +118,56 @@ public class ArchaeologistQuest1 : MonoBehaviour
             _dialogue.playerInRange = false;
             _iconInteract.SetActive(false);
         }
+    }
+
+    public void MessageFound()
+    {
+        _message.AddIconInventory(_boxMessage, _textSlide, "Take it to the archaeologist");
+        _textInventory.text = "Found";
+        _myCol.enabled = true;
+        _treasureFound = true;
+    }
+
+    private IEnumerator Ending()
+    {
+        _myCol.enabled = false;
+
+        _player.speed = 0;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+
+        _nameNPC.text = "Archaeologist";
+        _textMessage.text = _messagesEnding[0];
+        _rectMessage.localScale = new Vector3(1, 1, 1);
+        _rectMessage.DOAnchorPosY(-1000f, 0f);
+
+        _fadeOut.DOColor(Color.black, 1f);
+        yield return new WaitForSeconds(2f);
+        _rectMessage.gameObject.SetActive(true);
+        _fadeOut.DOColor(Color.clear, 1f);
+        _rectMessage.DOAnchorPosY(70f, 0f);
+
+        yield return new WaitForSeconds(3f);
+        _rectMessage.DOAnchorPosY(-1000f, 0.5f);
+        yield return new WaitForSeconds(1f);
+        _textMessage.text = _messagesEnding[1];
+        _rectMessage.DOAnchorPosY(70f, 0f);
+
+        yield return new WaitForSeconds(3f);
+        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+        yield return new WaitForSeconds(1f);
+        _textMessage.text = _messagesEnding[2];
+        _rectMessage.DOAnchorPosY(70f, 0f);
+
+        yield return new WaitForSeconds(3f);
+        _rectMessage.DOAnchorPosY(-1000f, 0.5f);
+        yield return new WaitForSeconds(0.6f);
+        _rectMessage.gameObject.SetActive(false);
+
+        _player.speed = _player.speedAux;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+
+        _gm.QuestCompleted();
+        _iconTreasure.SetActive(false);
+        Destroy(this);
     }
 }
