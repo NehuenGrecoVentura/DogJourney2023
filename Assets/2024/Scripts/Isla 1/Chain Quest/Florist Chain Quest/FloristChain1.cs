@@ -59,6 +59,7 @@ public class FloristChain1 : MonoBehaviour
         _dialogue.Close();
         _iconInteract.SetActive(false);
         Destroy(_iconQuest);
+        _gm.ActiveTutorialChain();
         _questActive = true;
     }
 

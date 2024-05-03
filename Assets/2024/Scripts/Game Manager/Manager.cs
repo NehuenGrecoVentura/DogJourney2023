@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class Manager : MonoBehaviour
 {
@@ -49,6 +50,13 @@ public class Manager : MonoBehaviour
 
     [Header("CHAINS")]
     public bool chainsActive = false;
+
+    [Header("MESSAGE")]
+    [SerializeField] RectTransform _boxMessage;
+    [SerializeField] TMP_Text _textName;
+    [SerializeField] TMP_Text _textMessage;
+    [SerializeField, TextArea(4, 6)] string[] _message;
+    [SerializeField] Camera _camScenario;
 
     private void Awake()
     {
@@ -211,5 +219,56 @@ public class Manager : MonoBehaviour
     {
         if (levelFishing == 2) _fishingGame.FishSpeedMult = 0.02f;
         if (levelFishing == 3) _fishingGame.HookPower = 0.03f;
+    }
+
+    public void ActiveTutorialChain()
+    {
+        if (!chainsActive) StartCoroutine(TutorialChain());
+    }
+
+    private IEnumerator TutorialChain()
+    {
+        chainsActive = true;
+
+        _player.speed = 0;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+
+        _cam.gameObject.SetActive(false);
+        _camScenario.gameObject.SetActive(true);
+
+        _textName.text = "Special Quest";
+        _textMessage.text = _message[0];
+        _boxMessage.localScale = new Vector3(1, 1, 1);
+        _boxMessage.DOAnchorPosY(-1000f, 0f);
+
+        yield return new WaitForSeconds(0.5f);
+        _boxMessage.gameObject.SetActive(true);
+        _boxMessage.DOAnchorPosY(70f, 0.5f);
+
+        yield return new WaitForSeconds(3f);
+        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+
+        yield return new WaitForSeconds(1f);
+        _textMessage.text = _message[1];
+        _boxMessage.DOAnchorPosY(70f, 0.5f);
+
+        yield return new WaitForSeconds(3f);
+        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+
+        yield return new WaitForSeconds(1f);
+        _textMessage.text = _message[2];
+        _boxMessage.DOAnchorPosY(70f, 0.5f);
+
+        yield return new WaitForSeconds(3f);
+        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+
+        _cam.gameObject.SetActive(true);
+        Destroy(_camScenario.gameObject);
+
+        _player.speed = _player.speedAux;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+
+        yield return new WaitForSeconds(0.6f);
+        _boxMessage.gameObject.SetActive(false);
     }
 }

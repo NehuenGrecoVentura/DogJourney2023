@@ -20,7 +20,7 @@ public class ArchaeologistQuest1 : MonoBehaviour
     private Dialogue _dialogue;
 
     [Header("QUEST")]
-    public bool archaeologistChain = false;
+    private bool _questActive = false;
 
     [Header("REFS")]
     private Character _player;
@@ -36,6 +36,7 @@ public class ArchaeologistQuest1 : MonoBehaviour
     private void Start()
     {
         _dialogue.gameObject.SetActive(false);
+        _iconInteract.SetActive(false);
     }
 
     public void Confirm()
@@ -46,9 +47,8 @@ public class ArchaeologistQuest1 : MonoBehaviour
         _myCol.enabled = false;
         _dialogue.Close();
         _iconInteract.SetActive(false);
-        _gm.chainsActive = true;
+        _gm.ActiveTutorialChain();
         Destroy(_iconQuest);
-        archaeologistChain = true;
     }
 
     private void SetDialogue()
@@ -68,7 +68,7 @@ public class ArchaeologistQuest1 : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && _myCol.enabled && !archaeologistChain)
+        if (player != null && _myCol.enabled && !_questActive)
             SetDialogue();
     }
 
