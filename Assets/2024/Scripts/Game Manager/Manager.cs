@@ -47,7 +47,8 @@ public class Manager : MonoBehaviour
     [Header("BUSH")]
     private Bush[] _allBush;
 
-
+    [Header("CHAINS")]
+    public bool chainsActive = false;
 
     private void Awake()
     {

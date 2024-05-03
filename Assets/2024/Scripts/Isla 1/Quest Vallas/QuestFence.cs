@@ -152,6 +152,7 @@ public class QuestFence : MonoBehaviour
     private IEnumerator ShowMessage()
     {
         _myCol.enabled = false;
+        _dialogue.playerInRange = false;
         _textName.text = _nameNPC;
         _textMessage.text = _messages[0];
         _fadeOut.DOColor(Color.clear, 0f);
@@ -209,7 +210,9 @@ public class QuestFence : MonoBehaviour
 
     private IEnumerator MessageBuild()
     {
-        Destroy(_myCol);
+        //Destroy(_myCol);
+        _myCol.enabled = false;
+        _dialogue.playerInRange = false;
         _textName.text = _nameNPC;
         _textMessage.text = _messages[3];
         _fadeOut.DOColor(Color.clear, 0f);
@@ -233,7 +236,8 @@ public class QuestFence : MonoBehaviour
 
     public void CheatSkip()
     {
-        Destroy(_myCol);
+        //Destroy(_myCol);
+        _myCol.enabled = false;
         Destroy(_iconInteract);
         Destroy(_iconBuild);
 

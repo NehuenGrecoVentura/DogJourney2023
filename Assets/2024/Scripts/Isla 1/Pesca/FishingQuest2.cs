@@ -115,6 +115,7 @@ public class FishingQuest2 : MonoBehaviour
 
         _dialogue.gameObject.SetActive(true);
         _dialogue.playerInRange = true;
+        _dialogue.canTalk = true;
     }
 
     private void OnTriggerEnter(Collider other)

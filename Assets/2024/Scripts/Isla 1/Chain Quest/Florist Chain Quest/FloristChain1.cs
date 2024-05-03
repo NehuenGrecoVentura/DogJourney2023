@@ -21,11 +21,13 @@ public class FloristChain1 : MonoBehaviour
     
     [Header("QUEST")]
     private bool _questActive = false;
+    private Manager _gm;
 
     private void Awake()
     {
         _myCol = GetComponent<Collider>();
         _dialogue = FindObjectOfType<Dialogue>();
+        _gm = FindObjectOfType<Manager>();
     }
 
     private void Start()

@@ -9,6 +9,7 @@ public class ArchaeologistQuest1 : MonoBehaviour
 {
     [Header("INTERACT")]
     [SerializeField] GameObject _iconInteract;
+    [SerializeField] GameObject _iconQuest;
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
     [SerializeField] Collider _myCol;
 
@@ -23,22 +24,17 @@ public class ArchaeologistQuest1 : MonoBehaviour
 
     [Header("REFS")]
     private Character _player;
+    private Manager _gm;
 
     private void Awake()
     {
         _dialogue = FindObjectOfType<Dialogue>();
         _player = FindObjectOfType<Character>();
+        _gm = FindObjectOfType<Manager>();
     }
 
     private void Start()
     {
-        //_dialogue.canTalk = true;
-        //_dialogue.Set("Archaeologist");
-        //_buttonConfirm.onClick.AddListener(() => Confirm());
-
-        //for (int i = 0; i < _dialogue._lines.Length; i++)
-        //    _dialogue._lines[i] = _lines[i];
-
         _dialogue.gameObject.SetActive(false);
     }
 
@@ -50,6 +46,8 @@ public class ArchaeologistQuest1 : MonoBehaviour
         _myCol.enabled = false;
         _dialogue.Close();
         _iconInteract.SetActive(false);
+        _gm.chainsActive = true;
+        Destroy(_iconQuest);
         archaeologistChain = true;
     }
 
@@ -64,6 +62,7 @@ public class ArchaeologistQuest1 : MonoBehaviour
 
         _dialogue.gameObject.SetActive(true);
         _dialogue.playerInRange = true;
+        _iconInteract.SetActive(true);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -79,6 +78,7 @@ public class ArchaeologistQuest1 : MonoBehaviour
         if (player != null)
         {
             _dialogue.playerInRange = false;
+            _iconInteract.SetActive(false);
         }
     }
 }
