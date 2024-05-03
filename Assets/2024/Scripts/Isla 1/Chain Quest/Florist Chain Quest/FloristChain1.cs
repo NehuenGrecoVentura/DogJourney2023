@@ -18,9 +18,11 @@ public class FloristChain1 : MonoBehaviour
     [SerializeField, TextArea(4, 6)] string[] _lines;
     [SerializeField] Button _buttonConfirm;
     [SerializeField] Dialogue _dialogue;
-    
+
     [Header("QUEST")]
+    [SerializeField] int _flowersRequired = 4;
     private bool _questActive = false;
+    private bool _questCompleted = false;
     private Manager _gm;
 
     [Header("INVENTORY UI")]
@@ -29,17 +31,37 @@ public class FloristChain1 : MonoBehaviour
     [SerializeField] RectTransform _boxMessage;
     [SerializeField] TMP_Text _textSlide;
     [SerializeField] DoTweenManager _message;
+    private CharacterInventory _inventory;
+
+    [Header("MESSAGE")]
+    [SerializeField] RectTransform _recTransform;
+    [SerializeField] TMP_Text _txtNPC;
+    [SerializeField] TMP_Text _txtMessage;
+    [SerializeField, TextArea(4, 6)] string[] _messagesEnding;
+    [SerializeField] Image _fadeOut;
+    private Character _player;
 
     private void Awake()
     {
         _myCol = GetComponent<Collider>();
         _gm = FindObjectOfType<Manager>();
+        _inventory = FindObjectOfType<CharacterInventory>();
+        _player = FindObjectOfType<Character>();
     }
 
     private void Start()
     {
         _dialogue.gameObject.SetActive(false);
         _iconInteract.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if(_questActive && _inventory.flowers >= _flowersRequired)
+        {
+            _myCol.enabled = true;
+            _questCompleted = true;
+        }            
     }
 
     private void SetDialogue()
@@ -75,7 +97,7 @@ public class FloristChain1 : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && _myCol.enabled && !_questActive && this.enabled)
+        if (player != null && _myCol.enabled && !_questActive && this.enabled && !_questCompleted)
             SetDialogue();
     }
 
@@ -87,5 +109,55 @@ public class FloristChain1 : MonoBehaviour
             _dialogue.playerInRange = false;
             _iconInteract.SetActive(false);
         }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null && _myCol.enabled && _questCompleted && Input.GetKeyDown(KeyCode.F))
+            StartCoroutine(Ending());
+    }
+
+    private IEnumerator Ending()
+    {
+        _myCol.enabled = false;
+
+        _player.speed = 0;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+
+        _txtNPC.text = "Florist";
+        _txtMessage.text = _messagesEnding[0];
+        _recTransform.localScale = new Vector3(1, 1, 1);
+        _recTransform.DOAnchorPosY(-1000f, 0f);
+
+        _fadeOut.DOColor(Color.black, 1f);
+        yield return new WaitForSeconds(2f);
+        _recTransform.gameObject.SetActive(true);
+        _fadeOut.DOColor(Color.clear, 1f);
+        _recTransform.DOAnchorPosY(70f, 0f);
+
+        yield return new WaitForSeconds(3f);
+        _recTransform.DOAnchorPosY(-1000f, 0.5f);
+        yield return new WaitForSeconds(1f);
+        _txtMessage.text = _messagesEnding[1];
+        _recTransform.DOAnchorPosY(70f, 0f);
+
+        yield return new WaitForSeconds(3f);
+        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+        yield return new WaitForSeconds(1f);
+        _txtMessage.text = _messagesEnding[2];
+        _recTransform.DOAnchorPosY(70f, 0f);
+
+        yield return new WaitForSeconds(3f);
+        _recTransform.DOAnchorPosY(-1000f, 0.5f);
+        yield return new WaitForSeconds(0.6f);
+        _recTransform.gameObject.SetActive(false);
+
+        _player.speed = _player.speedAux;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+
+        _gm.QuestCompleted();
+        _iconFlowers.SetActive(false);
+        Destroy(this);
     }
 }
