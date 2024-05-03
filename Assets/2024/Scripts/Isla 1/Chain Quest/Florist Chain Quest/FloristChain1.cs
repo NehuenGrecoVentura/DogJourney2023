@@ -17,16 +17,22 @@ public class FloristChain1 : MonoBehaviour
     [SerializeField] TMP_Text _textDialogue;
     [SerializeField, TextArea(4, 6)] string[] _lines;
     [SerializeField] Button _buttonConfirm;
-    private Dialogue _dialogue;
+    [SerializeField] Dialogue _dialogue;
     
     [Header("QUEST")]
     private bool _questActive = false;
     private Manager _gm;
 
+    [Header("INVENTORY UI")]
+    [SerializeField] GameObject _canvasIconsChainsQuests;
+    [SerializeField] GameObject _iconFlowers;
+    [SerializeField] RectTransform _boxMessage;
+    [SerializeField] TMP_Text _textSlide;
+    [SerializeField] DoTweenManager _message;
+
     private void Awake()
     {
         _myCol = GetComponent<Collider>();
-        _dialogue = FindObjectOfType<Dialogue>();
         _gm = FindObjectOfType<Manager>();
     }
 
@@ -60,6 +66,9 @@ public class FloristChain1 : MonoBehaviour
         _iconInteract.SetActive(false);
         Destroy(_iconQuest);
         _gm.ActiveTutorialChain();
+        _canvasIconsChainsQuests.SetActive(true);
+        _iconFlowers.SetActive(true);
+        _message.AddIconInventory(_boxMessage, _textSlide, "Added to inventory");
         _questActive = true;
     }
 

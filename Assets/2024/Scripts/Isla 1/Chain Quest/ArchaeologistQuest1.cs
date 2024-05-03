@@ -22,6 +22,13 @@ public class ArchaeologistQuest1 : MonoBehaviour
     [Header("QUEST")]
     private bool _questActive = false;
 
+    [Header("INVENTORY UI")]
+    [SerializeField] GameObject _canvasIconsChainsQuests;
+    [SerializeField] GameObject _iconTreasure;
+    [SerializeField] DoTweenManager _message;
+    [SerializeField] RectTransform _boxMessage;
+    [SerializeField] TMP_Text _textSlide;
+
     [Header("REFS")]
     private Character _player;
     private Manager _gm;
@@ -48,6 +55,9 @@ public class ArchaeologistQuest1 : MonoBehaviour
         _dialogue.Close();
         _iconInteract.SetActive(false);
         _gm.ActiveTutorialChain();
+        _canvasIconsChainsQuests.SetActive(true);
+        _iconTreasure.SetActive(true);
+        _message.AddIconInventory(_boxMessage, _textSlide, "Added to inventory");
         Destroy(_iconQuest);
     }
 

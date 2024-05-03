@@ -224,6 +224,7 @@ public class Manager : MonoBehaviour
     public void ActiveTutorialChain()
     {
         if (!chainsActive) StartCoroutine(TutorialChain());
+        else return;
     }
 
     private IEnumerator TutorialChain()
@@ -271,4 +272,13 @@ public class Manager : MonoBehaviour
         yield return new WaitForSeconds(0.6f);
         _boxMessage.gameObject.SetActive(false);
     }
+
+
+
+
+
+
+
+
+
 }
