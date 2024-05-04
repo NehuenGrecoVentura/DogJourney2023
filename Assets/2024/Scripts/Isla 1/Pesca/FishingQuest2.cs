@@ -227,7 +227,7 @@ public class FishingQuest2 : MonoBehaviour
         _myRod.SetActive(false);
         _myAnim.runtimeAnimatorController = _animControl;
         _myAnim.SetBool("Quest", true);
-
+        _radar.target = _market.gameObject.transform;
         Destroy(this);
     }
 
