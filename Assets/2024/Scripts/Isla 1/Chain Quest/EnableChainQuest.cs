@@ -29,12 +29,26 @@ public class EnableChainQuest : MonoBehaviour
     [SerializeField, TextArea(4, 6)] string _message;
     [SerializeField] AudioSource _myAudio;
 
+    [SerializeField] BillboardCam[] _bubbleIcons;
+
     private void Start()
     {
         _cam1.gameObject.SetActive(false);
         _cam2.gameObject.SetActive(false);
         _iconChain.SetActive(false);
         _myAudio.Stop();
+
+
+        foreach (var item in _bubbleIcons)
+        {
+            item.enabled = false;
+        }
+
+
+
+
+
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -77,6 +91,14 @@ public class EnableChainQuest : MonoBehaviour
         //_fishingChain.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(1f);
+
+
+        foreach (var item in _bubbleIcons)
+        {
+            item.enabled = true;
+        }
+
+
         Destroy(gameObject);
     }
 }

@@ -22,7 +22,8 @@ public class CheatManager : MonoBehaviour
     private QuestFence _questRepair;
     private Mail2 _quest2;
     private TableQuest _tableQuest;
-    private bool _quest1Skiped, _quest2Skiped, _quest3Skiped, _quest4Skiped, _quest5Skiped = false;
+    private FishingQuest2 _fishingQuest2;
+    private bool _quest1Skiped, _quest2Skiped, _quest3Skiped, _quest4Skiped, _quest5Skiped, _questFishing2Skiped = false;
 
     [Header("TELETRANSOPORT")]
     [SerializeField] Transform _posTeletransport;
@@ -44,6 +45,7 @@ public class CheatManager : MonoBehaviour
         _questTable = FindObjectOfType<BuildTable>();
         _questFishing = FindObjectOfType<TutorialFishing>();
         _questRepair = FindObjectOfType<QuestFence>();
+        _fishingQuest2 = FindObjectOfType<FishingQuest2>();
     }
 
     void Update()
@@ -67,64 +69,117 @@ public class CheatManager : MonoBehaviour
         if (Input.GetKeyDown(_keyTeletransport))
             transform.position = _posTeletransport.position;
 
-        if (Input.GetKey(_keySkipQuest) && Input.GetKeyDown(KeyCode.Alpha1))
+        //if (Input.GetKey(_keySkipQuest) && Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    if (!_quest1Skiped)
+        //    {
+        //        _quest1.FinishQuest();
+
+        //        foreach (var item in _initialTutorial)
+        //            if (item.activeSelf || !item.activeSelf) Destroy(item);
+
+        //        _ordersDogs.activeOrders = true;
+
+        //        _boxMessage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 125f);
+        //        _textMessage.rectTransform.anchoredPosition = new Vector2(0.2341f, _textMessage.rectTransform.anchoredPosition.y);
+        //        _textMessage.rectTransform.sizeDelta = new Vector2(1030.737f, _textMessage.rectTransform.sizeDelta.y);
+        //        _textMessage.fontSize = 40;
+        //        _textMessage.alignment = TextAlignmentOptions.TopLeft;
+        //        _iconMessage.gameObject.SetActive(false);
+
+        //        _quest1Skiped = true;
+        //    }
+        //}
+
+        //if (Input.GetKey(_keySkipQuest) && Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+        //    if (_quest1Skiped)
+        //    {
+        //        _questBroom.ActiveNextQuest();
+        //        _quest2Skiped = true;
+        //    }
+        //}
+
+        //if (Input.GetKey(_keySkipQuest) && Input.GetKeyDown(KeyCode.Alpha3))
+        //{
+        //    if (_quest2Skiped)
+        //    {
+        //        _questTable.CheatSkip();
+        //        Destroy(_tableQuest);
+        //        _quest3Skiped = true;
+        //    }
+        //}
+
+        //if (Input.GetKey(_keySkipQuest) && Input.GetKeyDown(KeyCode.Alpha4))
+        //{
+        //    if (_quest3Skiped)
+        //    {
+        //        _questFishing.CheatSkip();
+        //        _quest4Skiped = true;
+        //    }
+        //}
+
+        //if (Input.GetKey(_keySkipQuest) && Input.GetKeyDown(KeyCode.Alpha5))
+        //{
+        //    if (_quest4Skiped)
+        //    {
+        //        _questRepair.CheatSkip();               
+        //        _quest5Skiped = true;
+        //    }
+        //}
+
+        //if (Input.GetKey(_keySkipQuest) && Input.GetKeyDown(KeyCode.Alpha6))
+        //{
+        //    if (_quest5Skiped)
+        //    {
+        //        _fishingQuest2.CheatSkip();
+        //        _questFishing2Skiped = true;
+        //    }
+        //}
+
+        if (!Input.GetKey(_keySkipQuest)) return;
+
+        switch (Input.inputString)
         {
-            if (!_quest1Skiped)
-            {
+            case "1" when !_quest1Skiped:
                 _quest1.FinishQuest();
-
                 foreach (var item in _initialTutorial)
-                    if (item.activeSelf || !item.activeSelf) Destroy(item);
-
+                    Destroy(item);
                 _ordersDogs.activeOrders = true;
-
                 _boxMessage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, 125f);
                 _textMessage.rectTransform.anchoredPosition = new Vector2(0.2341f, _textMessage.rectTransform.anchoredPosition.y);
                 _textMessage.rectTransform.sizeDelta = new Vector2(1030.737f, _textMessage.rectTransform.sizeDelta.y);
                 _textMessage.fontSize = 40;
                 _textMessage.alignment = TextAlignmentOptions.TopLeft;
                 _iconMessage.gameObject.SetActive(false);
-                
                 _quest1Skiped = true;
-            }
-        }
+                break;
 
-        if (Input.GetKey(_keySkipQuest) && Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            if (_quest1Skiped)
-            {
+            case "2" when _quest1Skiped && !_quest2Skiped:
                 _questBroom.ActiveNextQuest();
                 _quest2Skiped = true;
-            }
-        }
+                break;
 
-        if (Input.GetKey(_keySkipQuest) && Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            if (_quest2Skiped)
-            {
+            case "3" when _quest2Skiped && !_quest3Skiped:
                 _questTable.CheatSkip();
                 Destroy(_tableQuest);
                 _quest3Skiped = true;
-            }
-        }
+                break;
 
-        if (Input.GetKey(_keySkipQuest) && Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            if (_quest3Skiped)
-            {
+            case "4" when _quest3Skiped && !_quest4Skiped:
                 _questFishing.CheatSkip();
                 _quest4Skiped = true;
-            }
-        }
+                break;
 
-        if (Input.GetKey(_keySkipQuest) && Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            if (_quest4Skiped)
-            {
+            case "5" when _quest4Skiped && !_quest5Skiped:
                 _questRepair.CheatSkip();
-                
                 _quest5Skiped = true;
-            }
+                break;
+
+            case "6" when _quest5Skiped && !_questFishing2Skiped:
+                _fishingQuest2.CheatSkip();
+                _questFishing2Skiped = true;
+                break;
         }
     }
 }

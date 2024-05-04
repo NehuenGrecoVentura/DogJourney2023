@@ -184,4 +184,16 @@ public class FishingQuest2 : MonoBehaviour
         _chainQuest.gameObject.SetActive(true);
         Destroy(this);
     }
+
+    public void CheatSkip()
+    {
+        foreach (var item in _objs)
+            item.SetActive(true);
+
+        Destroy(_fishingMinigame.gameObject);
+        Destroy(_cinematic);
+        _gm.QuestCompleted();
+        _chainQuest.gameObject.SetActive(true);
+        Destroy(this);
+    }
 }
