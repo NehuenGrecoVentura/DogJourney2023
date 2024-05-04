@@ -23,33 +23,32 @@ public class FishingQuest2 : MonoBehaviour
     [SerializeField] RectTransform _boxMessage;
     [SerializeField] TMP_Text _textMessage;
     [SerializeField] TMP_Text _textNPCMessage;
-    [SerializeField, TextArea(4,6)] string[] _messages;
+    [SerializeField, TextArea(4, 6)] string[] _messages;
     [SerializeField] GameObject _cinematic;
+    [SerializeField] Camera _camDig;
 
-    [Header("FISHING")]
-    [SerializeField] GameObject[] _objs;
-    [SerializeField] Fishing _fishingMinigame;
-    [SerializeField] int _totalAmount = 5;
-    [SerializeField] GameObject _canvasRender;
-    private FishingMinigame _fish;
+    [Header("QUEST")]
+    [SerializeField] int _totalBaits = 3;
+    [SerializeField] TMP_Text _textTask;
+    public int baitPicked = 0;
+    private bool _questActive = false;
+    private bool _questCompleted = false;
 
     [Header("NEXT QUEST")]
     [SerializeField] EnableChainQuest _chainQuest;
 
-    private bool _questActive = false;
-    private bool _questCompleted = false;
     private Collider _myCol;
     private Manager _gm;
     private Character _player;
     private QuestUI _questUI;
     private CameraOrbit _camPlayer;
-    
+    [SerializeField] DigBait[] _allBaits;
+
 
     private void Awake()
     {
         _myCol = GetComponent<Collider>();
         _dialogue = FindObjectOfType<Dialogue>();
-        _fish = FindObjectOfType<FishingMinigame>();
         _gm = FindObjectOfType<Manager>();
         _player = FindObjectOfType<Character>();
         _questUI = FindObjectOfType<QuestUI>();
@@ -60,26 +59,26 @@ public class FishingQuest2 : MonoBehaviour
     {
         _dialogue.gameObject.SetActive(false);
         _iconInteract.SetActive(false);
-        _fishingMinigame.gameObject.SetActive(false);
         _cinematic.SetActive(false);
-        _fishingMinigame._totalAmount = _totalAmount;
+        _camDig.gameObject.SetActive(false);
+
+        foreach (var item in _allBaits)
+            item.gameObject.SetActive(false);
     }
 
     private void Update()
     {
-        
-        if(_fishingMinigame.completed && _questActive)
+        if (_questActive && baitPicked >= _totalBaits)
         {
-            StartCoroutine(Ending());
+            _myCol.enabled = true;
+            _questUI.TaskCompleted(1);
+            _questUI.AddNewTask(2, "Take the bait to the fisherman.");
+            _questCompleted = true;
+            _questActive = false;
         }
 
-
-        if (_questCompleted)
-        {
-            _player.speed = 0;
-            _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
-            _camPlayer.gameObject.SetActive(false);
-        }
+        else if (_questActive)
+            _textTask.text = "Find and dig baits (" + baitPicked.ToString() + "/" + _totalBaits.ToString() + ")";
     }
 
     private void Confirm()
@@ -89,16 +88,13 @@ public class FishingQuest2 : MonoBehaviour
         _dialogue.canTalk = false;
         _dialogue.Close();
 
-        foreach (var item in _objs)
-        {
-            item.SetActive(false);
-        }
+        _questUI.ActiveUIQuest("Fishing Excavation", "Find and dig baits (" + baitPicked.ToString() + _totalBaits.ToString() + ")", string.Empty, string.Empty);
 
-        _fishingMinigame.gameObject.SetActive(true);
-        _fishingMinigame.StarFishing();
+        foreach (var item in _allBaits)
+            item.gameObject.SetActive(true);
 
-        print("MISION ACEPTADA");
-        _questActive = true;
+        StartCoroutine(ShowDigs());
+        
     }
 
     private void SetDialogue()
@@ -122,10 +118,15 @@ public class FishingQuest2 : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && _myCol.enabled && !_questActive)
-        {
+        if (player != null && _myCol.enabled && !_questActive && !_questCompleted)
             SetDialogue();
-        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract))
+            StartCoroutine(Ending());
     }
 
     private void OnTriggerExit(Collider other)
@@ -140,39 +141,80 @@ public class FishingQuest2 : MonoBehaviour
 
     private IEnumerator Ending()
     {
-        _questActive = false;
-        _questCompleted = true;
+        //_player.speed = 0;
+        //_player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+
+        //_textNPCMessage.text = "Fisherman";
+        //_textMessage.text = _messages[0];
+        //_boxMessage.localScale = new Vector3(1, 1, 1);
+        //_boxMessage.DOAnchorPosY(-1000f, 0);
+        //_boxMessage.gameObject.SetActive(true);
+
+        //yield return new WaitForSeconds(1f);
+
+        //_camPlayer.gameObject.SetActive(false);
+        //_cinematic.SetActive(true);
+
+        //_boxMessage.DOAnchorPosY(70f, 0.5f);
+        //yield return new WaitForSeconds(4f);
+        //_boxMessage.DOAnchorPosY(-1000f, 0.5f);
+        //yield return new WaitForSeconds(0.6f);
+        //_textMessage.text = _messages[1];
+        //_boxMessage.DOAnchorPosY(70f, 0.5f);
+        //yield return new WaitForSeconds(4f);
+        //_boxMessage.DOAnchorPosY(-1000f, 0.5f);
+        //yield return new WaitForSeconds(0.6f);
+        //_textMessage.text = _messages[2];
+        //yield return new WaitForSeconds(4f);
+        //_boxMessage.DOAnchorPosY(-1000f, 0.5f);
+        //_boxMessage.gameObject.SetActive(false);
+
+        //_player.speed = _player.speedAux;
+        //_player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        //_camPlayer.gameObject.SetActive(true);
+
+        //_gm.QuestCompleted();
+        //Destroy(_cinematic);
+        //_chainQuest.gameObject.SetActive(true);
+        //Destroy(this);
+
+        Destroy(_myCol);
 
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
 
         _textNPCMessage.text = "Fisherman";
-        _textMessage.text = _messages[0];
+        _textMessage.text = _messages[2];
         _boxMessage.localScale = new Vector3(1, 1, 1);
         _boxMessage.DOAnchorPosY(-1000f, 0);
         _boxMessage.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(1f);
-        Destroy(_fishingMinigame.gameObject);
-
         _camPlayer.gameObject.SetActive(false);
         _cinematic.SetActive(true);
 
-        foreach (var item in _objs)
-            item.SetActive(true);
-        
         _boxMessage.DOAnchorPosY(70f, 0.5f);
         yield return new WaitForSeconds(4f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
         yield return new WaitForSeconds(0.6f);
-        _textMessage.text = _messages[1];
+        _textMessage.text = _messages[3];
         _boxMessage.DOAnchorPosY(70f, 0.5f);
         yield return new WaitForSeconds(4f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
         yield return new WaitForSeconds(0.6f);
-        _textMessage.text = _messages[2];
+        _textMessage.text = _messages[4];
         yield return new WaitForSeconds(4f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+        yield return new WaitForSeconds(0.6f);
+        _textMessage.text = _messages[5];
+        yield return new WaitForSeconds(4f);
+        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+        yield return new WaitForSeconds(0.6f);
+        _textMessage.text = _messages[6];
+        yield return new WaitForSeconds(4f);
+        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+
+        yield return new WaitForSeconds(1f);
         _boxMessage.gameObject.SetActive(false);
 
         _player.speed = _player.speedAux;
@@ -185,12 +227,52 @@ public class FishingQuest2 : MonoBehaviour
         Destroy(this);
     }
 
+
+    private IEnumerator ShowDigs()
+    {
+        _questActive = true;
+
+        foreach (var item in _allBaits)
+            item.gameObject.SetActive(true);
+
+        _camDig.gameObject.SetActive(true);
+        _camPlayer.gameObject.SetActive(false);
+
+        _player.speed = 0;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+
+        _textNPCMessage.text = "Digs";
+        _textMessage.text = _messages[0];
+        _boxMessage.localScale = new Vector3(1, 1, 1);
+        _boxMessage.DOAnchorPosY(-1000f, 0);
+        _boxMessage.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(1f);
+        _boxMessage.DOAnchorPosY(70f, 0.5f);
+
+        yield return new WaitForSeconds(3f);
+        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+
+        yield return new WaitForSeconds(0.6f);
+        _textMessage.text = _messages[1];
+        _boxMessage.DOAnchorPosY(70f, 0.5f);
+
+        yield return new WaitForSeconds(3f);
+        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+
+        Destroy(_camDig.gameObject);
+        _camPlayer.gameObject.SetActive(true);
+
+        _player.speed = _player.speedAux;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+
+        yield return new WaitForSeconds(0.6f);
+        _boxMessage.gameObject.SetActive(false);
+
+    }
+
     public void CheatSkip()
     {
-        foreach (var item in _objs)
-            item.SetActive(true);
-
-        Destroy(_fishingMinigame.gameObject);
         Destroy(_cinematic);
         _gm.QuestCompleted();
         _chainQuest.gameObject.SetActive(true);
