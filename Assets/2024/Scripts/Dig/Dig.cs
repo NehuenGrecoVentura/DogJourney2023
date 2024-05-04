@@ -30,7 +30,7 @@ public class Dig : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && Input.GetKey(_inputInteractive))
+        if (player != null && Input.GetKey(_inputInteractive) && _invetory.shovelSelected)
         {
             if (!_myAudio.isPlaying) _myAudio.Play();
 

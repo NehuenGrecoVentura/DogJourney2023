@@ -246,6 +246,7 @@ public class QuestFence : MonoBehaviour
         radar.target = npcFishing.gameObject.transform;
         npcFishing.enabled = true;
         npcFishing.GetComponent<Collider>().enabled = true;
+        _inventory.shovelUnlocked = true;
         Destroy(this);
     }
 }

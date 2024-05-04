@@ -100,7 +100,7 @@ public class DigTreasure : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && Input.GetKey(_keyInteractive))
+        if (player != null && Input.GetKey(_keyInteractive) && _inventory.shovelSelected)
         {
             //if (!_myAudio.isPlaying) _myAudio.Play();
 

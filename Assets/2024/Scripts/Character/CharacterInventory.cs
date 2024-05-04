@@ -18,7 +18,7 @@ public class CharacterInventory : MonoBehaviour
     [Header("MY TOOLS")]
     [SerializeField] GameObject _myShovel;
     [SerializeField] GameObject _myAxe;
-    private bool _useShovel = false;
+    public bool shovelSelected = false;
     public bool shovelUnlocked = false;
     
     [Header("CANVAS")]
@@ -76,18 +76,18 @@ public class CharacterInventory : MonoBehaviour
         {
             if (shovelUnlocked)
             {
-                if (!_useShovel)
+                if (!shovelSelected)
                 {
                     _myShovel.gameObject.SetActive(true);
                     _myAxe.gameObject.SetActive(false);
-                    _useShovel = true;
+                    shovelSelected = true;
                 }
 
                 else
                 {
                     _myShovel.gameObject.SetActive(false);
                     _myAxe.gameObject.SetActive(true);
-                    _useShovel = false;
+                    shovelSelected = false;
 
                 }
             }
