@@ -10,11 +10,13 @@ public class DigBait : MonoBehaviour
     [SerializeField] RectTransform _rectLoot;
     private CharacterInventory _inventory;
     private FishingQuest2 _quest;
+    private DoTweenTest _doTween;
 
     private void Awake()
     {
         _inventory = FindObjectOfType<CharacterInventory>();
         _quest = FindObjectOfType<FishingQuest2>();
+        _doTween = FindObjectOfType<DoTweenTest>();
     }
 
     private void FocusToDig(Character player)
@@ -38,6 +40,7 @@ public class DigBait : MonoBehaviour
                 {
                     _amountHit = 0;
                     _quest.baitPicked++;
+                    _doTween.ShowLootCoroutine(_rectLoot);
                     Destroy(gameObject);
                 }
             }

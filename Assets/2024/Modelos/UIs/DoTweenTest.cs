@@ -83,4 +83,25 @@ public class DoTweenTest : MonoBehaviour
         yield return new WaitForSeconds(1f);
         obj.gameObject.SetActive(false);
     }
+
+
+
+
+
+    private IEnumerator ShowLoot(RectTransform boxMessage)
+    {
+        float initialPos = boxMessage.anchoredPosition.x;
+        boxMessage.anchoredPosition = new Vector2(-1000f, boxMessage.anchoredPosition.y);
+        boxMessage.gameObject.SetActive(true);
+        boxMessage.DOAnchorPosX(1150f, 1f);
+        yield return new WaitForSeconds(3f);
+        boxMessage.DOAnchorPosX(initialPos, 1f);
+        yield return new WaitForSeconds(1f);
+        boxMessage.gameObject.SetActive(false);
+    }
+
+    public void ShowLootCoroutine(RectTransform boxMessage)
+    {
+        StartCoroutine(ShowLoot(boxMessage));
+    }
 }
