@@ -6,36 +6,44 @@ using DG.Tweening;
 
 public class FloristChain1 : MonoBehaviour
 {
+    #region INTERACT
     [Header("INTERACT")]
     [SerializeField] GameObject _iconInteract;
     [SerializeField] GameObject _iconQuest;
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
     private Collider _myCol;
+    #endregion
 
+    #region DIALOGUE
     [Header("DIALOGUE")]
     [SerializeField] TMP_Text _textName;
     [SerializeField] TMP_Text _textDialogue;
     [SerializeField, TextArea(4, 6)] string[] _lines;
     [SerializeField] Button _buttonConfirm;
     [SerializeField] Dialogue _dialogue;
+    #endregion
 
     [Header("QUEST")]
     [SerializeField] int _flowersRequired = 4;
     private bool _questActive = false;
     private bool _questCompleted = false;
+    [SerializeField] Dig[] _allDigs;
     private Manager _gm;
 
     [Header("INVENTORY UI")]
     [SerializeField] GameObject _canvasIconsChainsQuests;
     [SerializeField] GameObject _iconFlowers;
-    [SerializeField] RectTransform _boxMessage;
-    [SerializeField] TMP_Text _textSlide;
     [SerializeField] TMP_Text _textInventoryFlowers;
-    [SerializeField] DoTweenManager _message;
-    [SerializeField] RectTransform _slideMoney;
-    [SerializeField] TMP_Text _textAmountMoney;
     private CharacterInventory _inventory;
 
+    [Header("SLIDERS MESSAGES")]
+    [SerializeField] RectTransform _sliderActivation;
+    [SerializeField] RectTransform _sliderMoney;
+    [SerializeField] TMP_Text _messageBack;
+    [SerializeField] DoTweenTest _doTween;
+    [SerializeField] GameObject _sliderTreasure;
+
+    #region ENDING
     [Header("ENDING")]
     [SerializeField] RectTransform _recTransform;
     [SerializeField] TMP_Text _txtNPC;
@@ -45,6 +53,7 @@ public class FloristChain1 : MonoBehaviour
     [SerializeField] GameObject _cinematicEnd;
     private Character _player;
     private CameraOrbit _camPlayer;
+    #endregion
 
     private void Awake()
     {
@@ -64,14 +73,16 @@ public class FloristChain1 : MonoBehaviour
 
     private void Update()
     {
-        if(_questActive && _inventory.flowers >= _flowersRequired)
+        if(_questActive && _inventory.flowers >= _flowersRequired && !_questCompleted)
         {
             _myCol.enabled = true;
+            _messageBack.text = "Back to the florist";
+            _doTween.ShowLootCoroutine(_sliderActivation);
             _questCompleted = true;
         }     
         
         else if (_questActive)
-            _textInventoryFlowers.text = "x " + _inventory.flowers.ToString();
+            _textInventoryFlowers.text = "x " + _inventory.flowers.ToString() + "/" + _flowersRequired.ToString();
     }
 
     private void SetDialogue()
@@ -100,7 +111,15 @@ public class FloristChain1 : MonoBehaviour
         _gm.ActiveTutorialChain();
         _canvasIconsChainsQuests.SetActive(true);
         _iconFlowers.SetActive(true);
-        _message.AddIconInventory(_boxMessage, _textSlide, "Added to inventory");
+        _doTween.ShowLootCoroutine(_sliderActivation);
+        _sliderTreasure.SetActive(false);
+
+        foreach (var item in _allDigs)
+        {
+            item.gameObject.SetActive(true);
+        }
+
+
         _questActive = true;
     }
 
@@ -156,7 +175,7 @@ public class FloristChain1 : MonoBehaviour
         _recTransform.DOAnchorPosY(70f, 0f);
 
         yield return new WaitForSeconds(3f);
-        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+        _recTransform.DOAnchorPosY(-1000f, 0.5f);
         yield return new WaitForSeconds(1f);
         _txtMessage.text = _messagesEnding[2];
         _recTransform.DOAnchorPosY(70f, 0f);
@@ -175,7 +194,8 @@ public class FloristChain1 : MonoBehaviour
         _gm.QuestCompleted();
         _iconFlowers.SetActive(false);
         _inventory.money += 100;
-        _message.ShowUI("+100", _slideMoney, _textAmountMoney);
+        //_message.ShowUI("+100", _slideMoney, _textAmountMoney);
+        _doTween.ShowLootCoroutine(_sliderMoney);
         Destroy(this);
     }
 }
