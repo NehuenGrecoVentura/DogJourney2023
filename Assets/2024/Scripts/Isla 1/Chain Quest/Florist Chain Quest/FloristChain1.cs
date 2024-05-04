@@ -30,16 +30,21 @@ public class FloristChain1 : MonoBehaviour
     [SerializeField] GameObject _iconFlowers;
     [SerializeField] RectTransform _boxMessage;
     [SerializeField] TMP_Text _textSlide;
+    [SerializeField] TMP_Text _textInventoryFlowers;
     [SerializeField] DoTweenManager _message;
+    [SerializeField] RectTransform _slideMoney;
+    [SerializeField] TMP_Text _textAmountMoney;
     private CharacterInventory _inventory;
 
-    [Header("MESSAGE")]
+    [Header("ENDING")]
     [SerializeField] RectTransform _recTransform;
     [SerializeField] TMP_Text _txtNPC;
     [SerializeField] TMP_Text _txtMessage;
     [SerializeField, TextArea(4, 6)] string[] _messagesEnding;
     [SerializeField] Image _fadeOut;
+    [SerializeField] GameObject _cinematicEnd;
     private Character _player;
+    private CameraOrbit _camPlayer;
 
     private void Awake()
     {
@@ -47,12 +52,14 @@ public class FloristChain1 : MonoBehaviour
         _gm = FindObjectOfType<Manager>();
         _inventory = FindObjectOfType<CharacterInventory>();
         _player = FindObjectOfType<Character>();
+        _camPlayer = FindObjectOfType<CameraOrbit>();
     }
 
     private void Start()
     {
         _dialogue.gameObject.SetActive(false);
         _iconInteract.SetActive(false);
+        _cinematicEnd.SetActive(false);
     }
 
     private void Update()
@@ -61,7 +68,10 @@ public class FloristChain1 : MonoBehaviour
         {
             _myCol.enabled = true;
             _questCompleted = true;
-        }            
+        }     
+        
+        else if (_questActive)
+            _textInventoryFlowers.text = "x " + _inventory.flowers.ToString();
     }
 
     private void SetDialogue()
@@ -131,6 +141,9 @@ public class FloristChain1 : MonoBehaviour
         _recTransform.DOAnchorPosY(-1000f, 0f);
 
         _fadeOut.DOColor(Color.black, 1f);
+        _camPlayer.gameObject.SetActive(false);
+        _cinematicEnd.SetActive(true);
+
         yield return new WaitForSeconds(2f);
         _recTransform.gameObject.SetActive(true);
         _fadeOut.DOColor(Color.clear, 1f);
@@ -153,11 +166,16 @@ public class FloristChain1 : MonoBehaviour
         yield return new WaitForSeconds(0.6f);
         _recTransform.gameObject.SetActive(false);
 
+        _camPlayer.gameObject.SetActive(true);
+        Destroy(_cinematicEnd);
+
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
 
         _gm.QuestCompleted();
         _iconFlowers.SetActive(false);
+        _inventory.money += 100;
+        _message.ShowUI("+100", _slideMoney, _textAmountMoney);
         Destroy(this);
     }
 }

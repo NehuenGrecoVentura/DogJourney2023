@@ -38,8 +38,12 @@ public class ArchaeologistQuest1 : MonoBehaviour
     [SerializeField] TMP_Text _textSlide;
     [SerializeField] TMP_Text _textInventory;
 
+    [Header("ENDING")]
+    [SerializeField] GameObject _cinematicEnd;
+
     [Header("REFS")]
     private Character _player;
+    private CameraOrbit _camPlayer;
     private Manager _gm;
     private DigTreasure[] _allTreasures;
 
@@ -48,6 +52,7 @@ public class ArchaeologistQuest1 : MonoBehaviour
         _dialogue = FindObjectOfType<Dialogue>();
         _player = FindObjectOfType<Character>();
         _gm = FindObjectOfType<Manager>();
+        _camPlayer = FindObjectOfType<CameraOrbit>();
         _allTreasures = FindObjectsOfType<DigTreasure>();
     }
 
@@ -57,7 +62,6 @@ public class ArchaeologistQuest1 : MonoBehaviour
         _iconInteract.SetActive(false);
         _fadeOut.DOColor(Color.clear, 0f);
     }
-
 
     public void Confirm()
     {

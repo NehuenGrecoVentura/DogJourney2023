@@ -7,12 +7,13 @@ public class Dig : MonoBehaviour
 {
     [SerializeField] float _amountHit = 500f;
     [SerializeField] KeyCode _inputInteractive = KeyCode.Mouse0;
-    //[SerializeField] RectTransform _boxMessage;
-    //[SerializeField] TMP_Text _textAmount;
+    private AudioSource _myAudio;
 
+    [Header("INVENTORY UI")]
+    [SerializeField] RectTransform _boxSlide;
+    [SerializeField] TMP_Text _textAmount;
     private DoTweenManager _message;
     private CharacterInventory _invetory;
-    private AudioSource _myAudio;
 
     private void Awake()
     {
@@ -23,9 +24,15 @@ public class Dig : MonoBehaviour
 
     private void Start()
     {
-        //_boxMessage.gameObject.SetActive(false);
         _myAudio.Stop();
     }
+
+    private void FocusToFlower(Character player)
+    {
+        Vector3 pos = new Vector3(transform.position.x, player.transform.position.y, transform.position.z);
+        player.gameObject.transform.LookAt(pos);
+    }
+
 
     private void OnTriggerStay(Collider other)
     {
@@ -33,10 +40,7 @@ public class Dig : MonoBehaviour
         if (player != null && Input.GetKey(_inputInteractive) && _invetory.shovelSelected)
         {
             if (!_myAudio.isPlaying) _myAudio.Play();
-
-            Vector3 pos = new Vector3(transform.position.x, player.transform.position.y, transform.position.z);
-            player.gameObject.transform.LookAt(pos);
-            //player.HitTree();
+            FocusToFlower(player);
             player.HitDig();
             _amountHit--;
 
@@ -44,25 +48,27 @@ public class Dig : MonoBehaviour
             {
                 _amountHit = 0;
                 //_message.ShowUI("+1", _boxMessage, _textAmount);
-                int randomIndex = Random.Range(0, 2);
+                //int randomIndex = Random.Range(0, 2);
 
-                switch (randomIndex)
-                {
-                    case 0:
-                        // Incrementa la variable seeds
-                        _invetory.seeds++;
-                        break;
+                //switch (randomIndex)
+                //{
+                //    case 0:
+                //        // Incrementa la variable seeds
+                //        _invetory.seeds++;
+                //        break;
 
-                    case 1:
-                        // Incrementa la variable flowers
-                        _invetory.flowers++;
-                        break;
+                //    case 1:
+                //        // Incrementa la variable flowers
+                //        _invetory.flowers++;
+                //        break;
 
-                    default:
-                        Debug.LogError("Index fuera de rango.");
-                        break;
-                }
+                //    default:
+                //        Debug.LogError("Index fuera de rango.");
+                //        break;
+                //}
 
+                _invetory.flowers++;
+                _message.ShowUI("+1", _boxSlide, _textAmount);
                 Destroy(gameObject);
             }
         }
