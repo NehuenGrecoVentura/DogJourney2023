@@ -43,6 +43,8 @@ public class Fishing : MonoBehaviour
     [Header("SCORE")]
     [SerializeField] TMP_Text[] _score;
 
+    public bool completed = false;
+
     private void Awake()
     {
         _myCol = GetComponent<Collider>();
@@ -97,6 +99,7 @@ public class Fishing : MonoBehaviour
 
     private IEnumerator StartMiniGame()
     {
+        completed = false;
         _fishing._textAmount = _score;
         _fadeOut.DOColor(Color.black, 1f);
         yield return new WaitForSeconds(1f);
@@ -134,6 +137,7 @@ public class Fishing : MonoBehaviour
     private IEnumerator FinishMiniGame()
     {
         _isActive = false;
+        completed = true;
 
         foreach (var item in _score)
         {
