@@ -68,6 +68,12 @@ public class Fishing : MonoBehaviour
 
         if (_isActive && _fishing.fishedPicked == _totalAmount) 
             StartCoroutine(FinishMiniGame());
+
+        else if (_isActive && !completed)
+        {
+            _player.speed = 0;
+            _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
