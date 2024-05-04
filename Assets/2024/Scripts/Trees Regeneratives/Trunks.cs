@@ -11,7 +11,6 @@ public class Trunks : MonoBehaviour
 
     private DoTweenTest _doTweenMessage;
     private DoTweenManager _doTweenManager;
-    private TrolleyWood _trolley;
     [SerializeField] Transform _posJump;
     [SerializeField] float _jumpForce = 2f;
     [SerializeField] float _duration = 1f;
@@ -29,7 +28,6 @@ public class Trunks : MonoBehaviour
         _inventory = FindObjectOfType<CharacterInventory>();
         _doTweenMessage = FindObjectOfType<DoTweenTest>();
         _doTweenManager = FindObjectOfType<DoTweenManager>();
-        _trolley = FindObjectOfType<TrolleyWood>();
         _gm = FindObjectOfType<Manager>();
     }
 
@@ -68,7 +66,8 @@ public class Trunks : MonoBehaviour
             if (!_gm.amountUpgrade)
             {
                 _inventory.greenTrees++;
-                _doTweenMessage.ShowUI("+ 1");
+                //_doTweenMessage.ShowUI("+ 1");
+                _doTweenMessage.ShowUIWood("+ 1");
             }
 
             // Sino junta de a 10 (SI ESTÁ EN LA QUEST 6 SUMA DE A UNO PARA EL CONTADOR)
@@ -78,7 +77,8 @@ public class Trunks : MonoBehaviour
                 //_doTweenMessage.ShowUI("+ 10");
                 int random = Random.Range(2, 5);
                 _inventory.greenTrees += random;
-                _doTweenMessage.ShowUI(random.ToString());
+                //_doTweenMessage.ShowUI(random.ToString());
+                _doTweenMessage.ShowUIWood(random.ToString());
             }
         }
 
@@ -89,7 +89,8 @@ public class Trunks : MonoBehaviour
             if (!_gm.amountUpgrade)
             {
                 _inventory.purpleTrees++;
-                _doTweenMessage.ShowUI("+ 1");
+                //_doTweenMessage.ShowUI("+ 1");
+                _doTweenMessage.ShowUIWood("+ 1");
             }
 
             else
@@ -98,7 +99,8 @@ public class Trunks : MonoBehaviour
                 //_doTweenMessage.ShowUI("+ 10");
                 int random = Random.Range(2, 5);
                 _inventory.greenTrees += random;
-                _doTweenMessage.ShowUI(random.ToString());
+                //_doTweenMessage.ShowUI(random.ToString());
+                _doTweenMessage.ShowUIWood(random.ToString());
             }
         }
     }
