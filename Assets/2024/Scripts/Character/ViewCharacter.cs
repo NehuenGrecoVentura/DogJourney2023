@@ -80,6 +80,11 @@ public class ViewCharacter
         _anim.Play("Hit");
     }
 
+    public void HitDig()
+    {
+        _anim.Play("Dig");
+    }
+
     public void Win(AudioClip audioWin)
     {
         _anim.Play("Win");

@@ -55,6 +55,7 @@ public class Character : MonoBehaviour
         _model.EventIdleCallDog += _view.CallIdleDogAnim;
         _model.EventCallMoveDog += _view.CallMoveDogAnim;
         _model.EventHitTree += _view.HitAnim;
+        _model.EventHitDig += _view.HitDig;
         _model.EventPickIdle += _view.PickIdleAnim;
         _model.EventPickWalk += _view.PickWalkAnim;
     }
@@ -88,6 +89,11 @@ public class Character : MonoBehaviour
     public void HitTree()
     {
         _model.HitTree();
+    }
+
+    public void HitDig()
+    {
+        _model.HitDig();
     }
 
     public void PlayAnim(string nameAnim)

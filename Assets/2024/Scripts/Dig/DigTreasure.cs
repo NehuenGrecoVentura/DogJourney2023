@@ -106,7 +106,7 @@ public class DigTreasure : MonoBehaviour
 
             Vector3 pos = new Vector3(transform.position.x, player.transform.position.y, transform.position.z);
             player.gameObject.transform.LookAt(pos);
-            player.HitTree();
+            player.HitDig();
             _amountHit--;
 
             if (_amountHit <= 0)

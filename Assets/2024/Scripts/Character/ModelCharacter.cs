@@ -8,7 +8,7 @@ public class ModelCharacter
     private bool _isClimb, _test, _test2;
     private Transform _myTransform, _camPos, _rayPoint1, _rayPoint2;
     private OrderDog _orderDog;
-    public event Action EventIdle, EventWalk, EventRun, EventIdleCrouch, EventWalkCrouch, EventPickIdle, EventPickWalk, EventClimb, EventIdleCallDog, EventCallMoveDog, EventHitTree;
+    public event Action EventIdle, EventWalk, EventRun, EventIdleCrouch, EventWalkCrouch, EventPickIdle, EventPickWalk, EventClimb, EventIdleCallDog, EventCallMoveDog, EventHitTree, EventHitDig;
 
     public ModelCharacter(Rigidbody rb, float speed, float speedRun, float speedCrouch, float speedAux, bool isClimb, Transform transform, Transform camPos, float gravity, OrderDog orderDog, bool test1, bool test2,
         float rayDist, Transform rayPoint1, Transform rayPoint2)
@@ -121,6 +121,11 @@ public class ModelCharacter
     }
 
     public void HitTree()
+    {
+        EventHitTree?.Invoke();
+    }
+
+    public void HitDig()
     {
         EventHitTree?.Invoke();
     }
