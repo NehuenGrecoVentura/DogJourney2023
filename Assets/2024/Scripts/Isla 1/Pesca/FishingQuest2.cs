@@ -158,6 +158,7 @@ public class FishingQuest2 : MonoBehaviour
     {
         Destroy(_myCol);
         Destroy(_iconInteract);
+        _myRod.SetActive(true);
 
         Quaternion initialRot = transform.rotation;
         Vector3 initialPos = transform.position;
@@ -224,7 +225,6 @@ public class FishingQuest2 : MonoBehaviour
         transform.position = initialPos;
         transform.rotation = initialRot;
 
-        _myRod.SetActive(false);
         _myAnim.runtimeAnimatorController = _animControl;
         _myAnim.SetBool("Quest", true);
         _radar.target = _market.gameObject.transform;
