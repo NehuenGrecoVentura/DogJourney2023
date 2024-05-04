@@ -5,11 +5,8 @@ using DG.Tweening;
 using TMPro;
 
 public class SeedQuest : MonoBehaviour
-{
-    
+{    
     [SerializeField] GameObject _cinematic;
-    [SerializeField] CameraOrbit _camPlayer;
-    [SerializeField] Character _player;
     [SerializeField] Collider _myCol;
     [SerializeField] MeshRenderer _myMesh;
     [SerializeField] Image _fadeOut;
@@ -19,6 +16,11 @@ public class SeedQuest : MonoBehaviour
     [SerializeField] Transform _posEnd;
     [SerializeField] GameObject _flowers;
 
+    [Header("PLAYER")]
+    [SerializeField] CameraOrbit _camPlayer;
+    [SerializeField] Character _player;
+    [SerializeField] CharacterInventory _inventory;
+
     [Header("MESSAGE")]
     [SerializeField] TMP_Text _text;
     [SerializeField, TextArea(4, 6)] string[] _messsages;
@@ -26,7 +28,6 @@ public class SeedQuest : MonoBehaviour
 
     [Header("NEXT QUEST")]
     [SerializeField] LocationQuest _radar;
-    //[SerializeField] FirstMarket _market;
     private FishingQuest2 _npcFishing;
 
     [Header("NPC")]
@@ -115,9 +116,9 @@ public class SeedQuest : MonoBehaviour
         _message.gameObject.SetActive(true);
         _myAudio.Play();
         _message.DOAnchorPosY(70f, 0.5f);
-        
-        
-        
+
+
+
         yield return new WaitForSeconds(4f);
         _message.DOAnchorPosY(-1000f, 0.5f);
         _fadeOut.DOColor(Color.black, 2f).OnComplete(() =>
@@ -148,10 +149,12 @@ public class SeedQuest : MonoBehaviour
         _gm.QuestCompleted();
         _gm.amountUpgrade = true;
         _radar.StatusRadar(true);
-        //_radar.target = _market.gameObject.transform;
         _radar.target = _npcFishing.gameObject.transform;
+        _npcFishing.enabled = true;
+        _npcFishing.GetComponent<Collider>().enabled = true;
         _npc.GetComponent<Animator>().runtimeAnimatorController = _animNormal;
         _broom.SetActive(true);
+        _inventory.shovelUnlocked = true;
         Destroy(gameObject, 0.6f);
     }
 }

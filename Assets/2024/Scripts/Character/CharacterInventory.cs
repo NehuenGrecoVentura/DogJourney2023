@@ -14,7 +14,12 @@ public class CharacterInventory : MonoBehaviour
     public int seeds = 0;
     public int flowers = 0;
     public bool upgradeLoot = false;
-    //public bool treasureLoot = true;
+
+    [Header("MY TOOLS")]
+    [SerializeField] GameObject _myShovel;
+    [SerializeField] GameObject _myAxe;
+    private bool _useShovel = false;
+    public bool shovelUnlocked = false;
     
     [Header("CANVAS")]
     [SerializeField] KeyCode _keyInventory = KeyCode.Tab;
@@ -28,6 +33,7 @@ public class CharacterInventory : MonoBehaviour
     private void Start()
     {
         _canvasInventory.SetActive(false);
+        _myShovel.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -64,6 +70,28 @@ public class CharacterInventory : MonoBehaviour
         AmountItem(2, nails);
         AmountItem(3, ropes);
         AmountItem(4, money);
+
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            if (shovelUnlocked)
+            {
+                if (!_useShovel)
+                {
+                    _myShovel.gameObject.SetActive(true);
+                    _myAxe.gameObject.SetActive(false);
+                    _useShovel = true;
+                }
+
+                else
+                {
+                    _myShovel.gameObject.SetActive(false);
+                    _myAxe.gameObject.SetActive(true);
+                    _useShovel = false;
+
+                }
+            }
+        }
     }
 
     private void AmountItem(int indexText, int item)
