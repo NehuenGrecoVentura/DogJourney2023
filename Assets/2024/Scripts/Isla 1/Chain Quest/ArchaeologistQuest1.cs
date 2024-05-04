@@ -23,8 +23,11 @@ public class ArchaeologistQuest1 : MonoBehaviour
     [Header("MESSAGE")]
     [SerializeField] TMP_Text _nameNPC;
     [SerializeField] TMP_Text _textMessage;
+    [SerializeField] TMP_Text _textAmountMoney;
     [SerializeField] RectTransform _rectMessage;
+    [SerializeField] RectTransform _rectMoney;
     [SerializeField, TextArea(4,6)] string[] _messagesEnding;
+    [SerializeField] CharacterInventory _inventory;
 
     [Header("QUEST")]
     private bool _questActive = false;
@@ -60,7 +63,7 @@ public class ArchaeologistQuest1 : MonoBehaviour
     {
         _dialogue.gameObject.SetActive(false);
         _iconInteract.SetActive(false);
-        _fadeOut.DOColor(Color.clear, 0f);
+        _cinematicEnd.SetActive(false);
     }
 
     public void Confirm()
@@ -132,6 +135,49 @@ public class ArchaeologistQuest1 : MonoBehaviour
         _treasureFound = true;
     }
 
+    //private IEnumerator Ending()
+    //{
+    //    _myCol.enabled = false;
+
+    //    _player.speed = 0;
+    //    _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+
+    //    _nameNPC.text = "Archaeologist";
+    //    _textMessage.text = _messagesEnding[0];
+    //    _rectMessage.localScale = new Vector3(1, 1, 1);
+    //    _rectMessage.DOAnchorPosY(-1000f, 0f);
+
+    //    _fadeOut.DOColor(Color.black, 1f);
+    //    yield return new WaitForSeconds(2f);
+    //    _rectMessage.gameObject.SetActive(true);
+    //    _fadeOut.DOColor(Color.clear, 1f);
+    //    _rectMessage.DOAnchorPosY(70f, 0f);
+
+    //    yield return new WaitForSeconds(3f);
+    //    _rectMessage.DOAnchorPosY(-1000f, 0.5f);
+    //    yield return new WaitForSeconds(1f);
+    //    _textMessage.text = _messagesEnding[1];
+    //    _rectMessage.DOAnchorPosY(70f, 0f);
+
+    //    yield return new WaitForSeconds(3f);
+    //    _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+    //    yield return new WaitForSeconds(1f);
+    //    _textMessage.text = _messagesEnding[2];
+    //    _rectMessage.DOAnchorPosY(70f, 0f);
+
+    //    yield return new WaitForSeconds(3f);
+    //    _rectMessage.DOAnchorPosY(-1000f, 0.5f);
+    //    yield return new WaitForSeconds(0.6f);
+    //    _rectMessage.gameObject.SetActive(false);
+
+    //    _player.speed = _player.speedAux;
+    //    _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+
+    //    _gm.QuestCompleted();
+    //    _iconTreasure.SetActive(false);
+    //    Destroy(this);
+    //}
+
     private IEnumerator Ending()
     {
         _myCol.enabled = false;
@@ -145,6 +191,9 @@ public class ArchaeologistQuest1 : MonoBehaviour
         _rectMessage.DOAnchorPosY(-1000f, 0f);
 
         _fadeOut.DOColor(Color.black, 1f);
+        _camPlayer.gameObject.SetActive(false);
+        _cinematicEnd.SetActive(true);
+
         yield return new WaitForSeconds(2f);
         _rectMessage.gameObject.SetActive(true);
         _fadeOut.DOColor(Color.clear, 1f);
@@ -167,11 +216,16 @@ public class ArchaeologistQuest1 : MonoBehaviour
         yield return new WaitForSeconds(0.6f);
         _rectMessage.gameObject.SetActive(false);
 
+        _camPlayer.gameObject.SetActive(true);
+        Destroy(_cinematicEnd);
+
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
 
         _gm.QuestCompleted();
         _iconTreasure.SetActive(false);
+        _inventory.money += 100;
+        _message.ShowUI("+100", _rectMoney, _textAmountMoney);
         Destroy(this);
     }
 }
