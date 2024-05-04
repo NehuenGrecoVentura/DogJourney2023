@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 7526253996533546127}
   m_Layer: 0
   m_Name: Object007
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -309,6 +309,7 @@ MonoBehaviour:
   _iconInteractive: {fileID: 8209448397979986178}
   _buttonInteractive: 113
   isUpgraded: 0
+  _posJump: {fileID: 0}
   _jumpForce: 2
   _duration: 1
   _counts: 1
@@ -414,7 +415,7 @@ GameObject:
   - component: {fileID: 7247348510018281}
   m_Layer: 0
   m_Name: Object004
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -535,7 +536,7 @@ GameObject:
   - component: {fileID: 3931975910695641835}
   m_Layer: 0
   m_Name: Object002
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1585,7 +1586,7 @@ GameObject:
   - component: {fileID: 3562186752176394687}
   m_Layer: 0
   m_Name: Object005
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2021,7 +2022,7 @@ GameObject:
   - component: {fileID: 4583501726625505102}
   m_Layer: 0
   m_Name: Object006
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2310,8 +2311,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_audioClip: {fileID: 8300000, guid: f6ee36d41453c104d9e760a6c66b2d2a, type: 3}
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -2631,7 +2632,7 @@ GameObject:
   - component: {fileID: 4431577868267658116}
   m_Layer: 0
   m_Name: Object001
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9219,7 +9220,7 @@ GameObject:
   - component: {fileID: 7861517598004637755}
   m_Layer: 0
   m_Name: Object003
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

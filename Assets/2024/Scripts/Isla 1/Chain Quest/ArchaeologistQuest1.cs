@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -48,7 +47,7 @@ public class ArchaeologistQuest1 : MonoBehaviour
     private Character _player;
     private CameraOrbit _camPlayer;
     private Manager _gm;
-    private DigTreasure[] _allTreasures;
+    [SerializeField] DigTreasure[] _allTreasures;
 
     private void Awake()
     {
@@ -56,7 +55,6 @@ public class ArchaeologistQuest1 : MonoBehaviour
         _player = FindObjectOfType<Character>();
         _gm = FindObjectOfType<Manager>();
         _camPlayer = FindObjectOfType<CameraOrbit>();
-        _allTreasures = FindObjectsOfType<DigTreasure>();
     }
 
     private void Start()
@@ -81,9 +79,10 @@ public class ArchaeologistQuest1 : MonoBehaviour
 
         foreach (var item in _allTreasures)
         {
-            item.enabled = true;
-            item.GetComponent<Collider>().enabled = true;
+            item.gameObject.SetActive(true);
         }
+
+
 
         Destroy(_iconQuest);
         _questActive = true;
@@ -135,49 +134,6 @@ public class ArchaeologistQuest1 : MonoBehaviour
         _treasureFound = true;
     }
 
-    //private IEnumerator Ending()
-    //{
-    //    _myCol.enabled = false;
-
-    //    _player.speed = 0;
-    //    _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
-
-    //    _nameNPC.text = "Archaeologist";
-    //    _textMessage.text = _messagesEnding[0];
-    //    _rectMessage.localScale = new Vector3(1, 1, 1);
-    //    _rectMessage.DOAnchorPosY(-1000f, 0f);
-
-    //    _fadeOut.DOColor(Color.black, 1f);
-    //    yield return new WaitForSeconds(2f);
-    //    _rectMessage.gameObject.SetActive(true);
-    //    _fadeOut.DOColor(Color.clear, 1f);
-    //    _rectMessage.DOAnchorPosY(70f, 0f);
-
-    //    yield return new WaitForSeconds(3f);
-    //    _rectMessage.DOAnchorPosY(-1000f, 0.5f);
-    //    yield return new WaitForSeconds(1f);
-    //    _textMessage.text = _messagesEnding[1];
-    //    _rectMessage.DOAnchorPosY(70f, 0f);
-
-    //    yield return new WaitForSeconds(3f);
-    //    _boxMessage.DOAnchorPosY(-1000f, 0.5f);
-    //    yield return new WaitForSeconds(1f);
-    //    _textMessage.text = _messagesEnding[2];
-    //    _rectMessage.DOAnchorPosY(70f, 0f);
-
-    //    yield return new WaitForSeconds(3f);
-    //    _rectMessage.DOAnchorPosY(-1000f, 0.5f);
-    //    yield return new WaitForSeconds(0.6f);
-    //    _rectMessage.gameObject.SetActive(false);
-
-    //    _player.speed = _player.speedAux;
-    //    _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
-
-    //    _gm.QuestCompleted();
-    //    _iconTreasure.SetActive(false);
-    //    Destroy(this);
-    //}
-
     private IEnumerator Ending()
     {
         _myCol.enabled = false;
@@ -225,7 +181,8 @@ public class ArchaeologistQuest1 : MonoBehaviour
         _gm.QuestCompleted();
         _iconTreasure.SetActive(false);
         _inventory.money += 100;
-        _message.ShowUI("+100", _rectMoney, _textAmountMoney);
+        //_message.ShowUI("+100", _rectMoney, _textAmountMoney);
+        _message.AddIconInventory(_boxMessage, _textSlide, "Minerva helmet received");
         Destroy(this);
     }
 }

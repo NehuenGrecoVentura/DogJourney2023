@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 1097156613511957464}
   m_Layer: 0
   m_Name: Plane.023
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -363,7 +363,7 @@ GameObject:
   - component: {fileID: 669423828144707803}
   m_Layer: 0
   m_Name: Plane.024
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -695,7 +695,7 @@ GameObject:
   - component: {fileID: 725841606090662588}
   m_Layer: 0
   m_Name: Plane.007
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -778,7 +778,7 @@ GameObject:
   - component: {fileID: 666344801699842647}
   m_Layer: 0
   m_Name: Plane.021
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -861,7 +861,7 @@ GameObject:
   - component: {fileID: 6908806486925936944}
   m_Layer: 0
   m_Name: Plane.026
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1194,7 +1194,7 @@ GameObject:
   - component: {fileID: 1599610195561938353}
   m_Layer: 0
   m_Name: Plane.005
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1543,7 +1543,7 @@ GameObject:
   - component: {fileID: 606837999141031792}
   m_Layer: 0
   m_Name: Plane.010
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1626,7 +1626,7 @@ GameObject:
   - component: {fileID: 1126295562268681855}
   m_Layer: 0
   m_Name: Plane.014
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1792,7 +1792,7 @@ GameObject:
   - component: {fileID: 5400305666269203999}
   m_Layer: 0
   m_Name: Plane.012
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1958,7 +1958,7 @@ GameObject:
   - component: {fileID: 5459084289252557906}
   m_Layer: 0
   m_Name: Plane.013
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2207,7 +2207,7 @@ GameObject:
   - component: {fileID: 8363912376852473361}
   m_Layer: 0
   m_Name: Plane.004
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2532,7 +2532,7 @@ GameObject:
   - component: {fileID: 7397924541369631924}
   m_Layer: 0
   m_Name: Plane.001
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2698,7 +2698,7 @@ GameObject:
   - component: {fileID: 1102787455909746389}
   m_Layer: 0
   m_Name: Plane.002
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2781,7 +2781,7 @@ GameObject:
   - component: {fileID: 7543589898768204919}
   m_Layer: 0
   m_Name: Plane.018
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3253,8 +3253,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_audioClip: {fileID: 8300000, guid: f6ee36d41453c104d9e760a6c66b2d2a, type: 3}
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -3934,7 +3934,7 @@ GameObject:
   - component: {fileID: 6393961366322647215}
   m_Layer: 0
   m_Name: Plane.016
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9080,7 +9080,7 @@ GameObject:
   - component: {fileID: 1063000418796363052}
   m_Layer: 0
   m_Name: Plane.022
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9421,7 +9421,7 @@ GameObject:
   - component: {fileID: 5604572483511910381}
   m_Layer: 0
   m_Name: Plane.020
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9504,7 +9504,7 @@ GameObject:
   - component: {fileID: 6467671342320797695}
   m_Layer: 0
   m_Name: Plane.011
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9587,7 +9587,7 @@ GameObject:
   - component: {fileID: 1679421209974580093}
   m_Layer: 0
   m_Name: Plane.025
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10091,7 +10091,7 @@ GameObject:
   - component: {fileID: 5207944764943829878}
   m_Layer: 0
   m_Name: Plane.015
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10509,7 +10509,7 @@ GameObject:
   - component: {fileID: 2285957235745087869}
   m_Layer: 0
   m_Name: Plane.008
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10771,7 +10771,7 @@ GameObject:
   - component: {fileID: 2604748987100443018}
   m_Layer: 0
   m_Name: Plane.009
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11020,7 +11020,7 @@ GameObject:
   - component: {fileID: 7683759903360167345}
   m_Layer: 0
   m_Name: Plane.027
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11103,7 +11103,7 @@ GameObject:
   - component: {fileID: 5493410660132764230}
   m_Layer: 0
   m_Name: Plane.003
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11269,7 +11269,7 @@ GameObject:
   - component: {fileID: 7609539873937836072}
   m_Layer: 0
   m_Name: Plane.006
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11489,6 +11489,7 @@ MonoBehaviour:
   _iconInteractive: {fileID: 1844234975089619861}
   _buttonInteractive: 113
   isUpgraded: 0
+  _posJump: {fileID: 0}
   _jumpForce: 2
   _duration: 1
   _counts: 1
@@ -11761,7 +11762,7 @@ GameObject:
   - component: {fileID: 4652488624720341945}
   m_Layer: 0
   m_Name: Plane.017
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12770,7 +12771,7 @@ GameObject:
   - component: {fileID: 1603677991406234936}
   m_Layer: 0
   m_Name: Plane.019
-  m_TagString: Untagged
+  m_TagString: Green Leaves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
