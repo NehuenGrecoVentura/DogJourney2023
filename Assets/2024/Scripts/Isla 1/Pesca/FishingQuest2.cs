@@ -67,12 +67,6 @@ public class FishingQuest2 : MonoBehaviour
 
     private void Update()
     {
-        //if (_questActive && (!_canvasRender.activeSelf || _fish.fishedPicked == _totalAmount))
-        //{
-        //    print("COMPLETADO");
-        //    StartCoroutine(Ending());
-        //}
-
         
         if(_fishingMinigame.completed && _questActive)
         {

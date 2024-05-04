@@ -236,18 +236,16 @@ public class QuestFence : MonoBehaviour
 
     public void CheatSkip()
     {
-        //Destroy(_myCol);
         _myCol.enabled = false;
         Destroy(_iconInteract);
         Destroy(_iconBuild);
-
-        //FirstMarket market = FindObjectOfType<FirstMarket>();
         FishingQuest2 npcFishing = FindObjectOfType<FishingQuest2>();
         LocationQuest radar = FindObjectOfType<LocationQuest>();
         Manager manager = FindObjectOfType<Manager>();
         manager.QuestCompleted();
-        //radar.target = market.gameObject.transform;
         radar.target = npcFishing.gameObject.transform;
+        npcFishing.enabled = true;
+        npcFishing.GetComponent<Collider>().enabled = true;
         Destroy(this);
     }
 }

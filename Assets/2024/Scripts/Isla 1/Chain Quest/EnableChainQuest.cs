@@ -12,7 +12,7 @@ public class EnableChainQuest : MonoBehaviour
     [SerializeField] FloristChain1 _npcChainFlorist;
     [SerializeField] GameObject _npcFlorist;
     [SerializeField] ArchaeologistQuest1 _archaeologist;
-    [SerializeField] FishingChain1 _fishingChain;
+    //[SerializeField] FishingChain1 _fishingChain;
 
     [Header("CAMERAS")]
     [SerializeField] Camera _cam1;
@@ -74,10 +74,7 @@ public class EnableChainQuest : MonoBehaviour
 
         _archaeologist.enabled = true;
         _archaeologist.GetComponent<BoxCollider>().enabled = true;
-        _fishingChain.gameObject.SetActive(true);
-
-        //_fishChain.enabled = true;
-        //_fishChain.GetComponent<Collider>().enabled = true;
+        //_fishingChain.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);
