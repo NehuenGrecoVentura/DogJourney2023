@@ -12,6 +12,7 @@ public class Trunks : MonoBehaviour
     private DoTweenTest _doTweenMessage;
     private DoTweenManager _doTweenManager;
     private TrolleyWood _trolley;
+    [SerializeField] Transform _posJump;
     [SerializeField] float _jumpForce = 2f;
     [SerializeField] float _duration = 1f;
     [SerializeField] int _counts = 1;
@@ -113,7 +114,8 @@ public class Trunks : MonoBehaviour
 
             for (int i = 0; i < _logs.Length; i++)
             {
-                _doTweenManager.JumpEffect(_logs[i].transform, _trolley.gameObject.transform.position, _jumpForce, _counts, _duration);
+                //_doTweenManager.JumpEffect(_logs[i].transform, _trolley.gameObject.transform.position, _jumpForce, _counts, _duration);
+                _doTweenManager.JumpEffect(_logs[i].transform, _posJump.transform.position, _jumpForce, _counts, _duration);
             }
 
             StartCoroutine(RecollectLogs());
