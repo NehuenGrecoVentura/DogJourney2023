@@ -14,6 +14,7 @@ public class ArchaeologistQuest1 : MonoBehaviour
 
     [Header("DIALOGUE")]
     [SerializeField] TMP_Text _textDialogue;
+    [SerializeField] TMP_Text _textNAME;
     [SerializeField, TextArea(4, 6)] string[] _lines;
     [SerializeField] Button _buttonConfirm;
     [SerializeField] Image _fadeOut;
@@ -89,6 +90,7 @@ public class ArchaeologistQuest1 : MonoBehaviour
             item.gameObject.SetActive(true);
         }
 
+        _textNAME.enableAutoSizing = false;
         Destroy(_iconQuest);
         _questActive = true;
     }
@@ -97,6 +99,7 @@ public class ArchaeologistQuest1 : MonoBehaviour
     {
         _dialogue.canTalk = true;
         _dialogue.Set("Archaeologist");
+        _textNAME.enableAutoSizing = true;
         _buttonConfirm.onClick.AddListener(() => Confirm());
 
         for (int i = 0; i < _dialogue._lines.Length; i++)
