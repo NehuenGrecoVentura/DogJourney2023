@@ -164,7 +164,7 @@ public class FishingQuest2 : MonoBehaviour
     {
         Destroy(_myCol);
         Destroy(_iconInteract);
-        _myRod.SetActive(true);
+        _myRod.SetActive(false);
 
         Quaternion initialRot = transform.rotation;
         Vector3 initialPos = transform.position;
