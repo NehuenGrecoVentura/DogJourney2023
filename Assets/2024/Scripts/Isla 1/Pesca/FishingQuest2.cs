@@ -42,6 +42,7 @@ public class FishingQuest2 : MonoBehaviour
     [SerializeField] EnableChainQuest _chainQuest;
     [SerializeField] GameObject _myRod;
     [SerializeField] RuntimeAnimatorController _animControl;
+    [SerializeField] Animator[] _doors;
     private FirstMarket _market;
     private LocationQuest _radar;
 
@@ -241,6 +242,14 @@ public class FishingQuest2 : MonoBehaviour
         _myAnim.runtimeAnimatorController = _animControl;
         _myAnim.SetBool("Quest", true);
         _radar.target = _market.gameObject.transform;
+
+
+        foreach (var item in _doors)
+        {
+            item.enabled = true;
+        }
+
+
         Destroy(this);
     }
 
@@ -297,6 +306,11 @@ public class FishingQuest2 : MonoBehaviour
         foreach (var item in _allBaits)
         {
             Destroy(item.gameObject);
+        }
+
+        foreach (var item in _doors)
+        {
+            item.enabled = true;
         }
 
         _radar.target = _market.gameObject.transform;

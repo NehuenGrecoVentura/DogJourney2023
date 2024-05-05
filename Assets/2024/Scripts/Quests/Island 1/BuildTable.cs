@@ -16,7 +16,6 @@ public class BuildTable : MonoBehaviour
     private Collider _myCol;
 
     [Header("NEXT QUEST")]
-    [SerializeField] Animator[] _animDoors;
     [SerializeField] RectTransform _boxTAB;
     [SerializeField] GameObject _npcFish;
     private LocationQuest _radar;
@@ -47,9 +46,6 @@ public class BuildTable : MonoBehaviour
 
     public void CheatSkip()
     {
-        foreach (var door in _animDoors)
-            door.enabled = true;
-
         _player.isConstruct = false;
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
@@ -95,10 +91,6 @@ public class BuildTable : MonoBehaviour
         // Destruye el objeto después de tres segundos
         //Construct();
 
-        foreach (var door in _animDoors)
-            door.enabled = true;
-
-     
         _player.isConstruct = false;
         _player.speed = _player.speedAux;
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
