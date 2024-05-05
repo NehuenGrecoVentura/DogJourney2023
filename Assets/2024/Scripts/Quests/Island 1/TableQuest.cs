@@ -217,15 +217,18 @@ public class TableQuest : MonoBehaviour
         _colTable.enabled = true;
         Destroy(_camCinematic.gameObject);
 
-        Vector3 initialPos = _messageNails.GetComponent<RectTransform>().anchoredPosition;
-        initialPos.x = -1000f;
-        _messageNails.GetComponent<RectTransform>().anchoredPosition = initialPos;
-        _messageNails.gameObject.SetActive(true);
-        _messageNails.transform.DOMoveX(1150f, 1f);
-        yield return new WaitForSeconds(2f);
-        _messageNails.transform.DOMoveX(initialPos.x, 1f);
-        yield return new WaitForSeconds(3f);
-        _messageNails.gameObject.SetActive(false);
+        //Vector3 initialPos = _messageNails.GetComponent<RectTransform>().anchoredPosition;
+        //initialPos.x = -1000f;
+        //_messageNails.GetComponent<RectTransform>().anchoredPosition = initialPos;
+        //_messageNails.gameObject.SetActive(true);
+        //_messageNails.transform.DOMoveX(1150f, 1f);
+        //yield return new WaitForSeconds(2f);
+        //_messageNails.transform.DOMoveX(initialPos.x, 1f);
+        //yield return new WaitForSeconds(3f);
+        //_messageNails.gameObject.SetActive(false);
+
+        DoTweenTest doTween = FindObjectOfType<DoTweenTest>();
+        doTween.ShowLootCoroutine(_messageNails.GetComponent<RectTransform>());
 
         yield return new WaitForSeconds(0.5f);
         Destroy(this);
