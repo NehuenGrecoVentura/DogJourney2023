@@ -45,6 +45,11 @@ public class FishingQuest2 : MonoBehaviour
     private FirstMarket _market;
     private LocationQuest _radar;
 
+    [Header("AUDIOS")]
+    [SerializeField] AudioClip _soundMoney;
+    [SerializeField] AudioClip _soundMessage;
+    private AudioSource _myAudio;
+
     private Collider _myCol;
     private Manager _gm;
     private Character _player;
@@ -56,6 +61,7 @@ public class FishingQuest2 : MonoBehaviour
     {
         _myCol = GetComponent<Collider>();
         _myAnim = GetComponent<Animator>();
+        _myAudio = GetComponent<AudioSource>();
 
         _dialogue = FindObjectOfType<Dialogue>();
         _gm = FindObjectOfType<Manager>();
@@ -181,12 +187,14 @@ public class FishingQuest2 : MonoBehaviour
         _boxMessage.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(1f);
+        _myAudio.PlayOneShot(_soundMessage);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
         yield return new WaitForSeconds(4f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
         yield return new WaitForSeconds(1f);
 
         _textMessage.text = _messages[3];
+        _myAudio.PlayOneShot(_soundMessage);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
         yield return new WaitForSeconds(4f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
@@ -194,18 +202,23 @@ public class FishingQuest2 : MonoBehaviour
 
         _doTween.ShowLootCoroutine(_slideMoney);
         _textMessage.text = _messages[4];
+        _myAudio.PlayOneShot(_soundMessage);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
+        yield return new WaitForSeconds(1.5f);
+        _myAudio.PlayOneShot(_soundMoney);
         yield return new WaitForSeconds(4f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
         yield return new WaitForSeconds(1f);
 
         _textMessage.text = _messages[5];
+        _myAudio.PlayOneShot(_soundMessage);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
         yield return new WaitForSeconds(4f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
         yield return new WaitForSeconds(1f);
 
         _textMessage.text = _messages[6];
+        _myAudio.PlayOneShot(_soundMessage);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
         yield return new WaitForSeconds(4f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
@@ -252,6 +265,7 @@ public class FishingQuest2 : MonoBehaviour
         _boxMessage.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(1f);
+        _myAudio.PlayOneShot(_soundMessage);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
 
         yield return new WaitForSeconds(3f);
@@ -259,6 +273,7 @@ public class FishingQuest2 : MonoBehaviour
 
         yield return new WaitForSeconds(0.6f);
         _textMessage.text = _messages[1];
+        _myAudio.PlayOneShot(_soundMessage);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
 
         yield return new WaitForSeconds(3f);
