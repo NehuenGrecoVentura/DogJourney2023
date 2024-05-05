@@ -21,12 +21,14 @@ public class TreeRegenerative : MonoBehaviour
     [SerializeField] GameObject _decal;
     [SerializeField] HitBar _hitBar;
 
+    private CharacterInventory _inventory;
     private void Awake()
     {
         _myAudio = GetComponent<AudioSource>();
         _player = FindObjectOfType<Character>();
         _quest4 = FindObjectOfType<HouseQuest4>();
         _doTween = FindObjectOfType<DoTweenManager>();
+        _inventory = FindObjectOfType<CharacterInventory>();
     }
 
     private void Start()
@@ -60,21 +62,25 @@ public class TreeRegenerative : MonoBehaviour
         {
             FocusToTree();
 
-            if (!Input.GetKey(_inputInteractive)) 
+            if (!Input.GetKey(_inputInteractive))
                 _hitBar.gameObject.SetActive(true);
 
             else if (Input.GetKey(_inputInteractive) && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
             {
-                player.HitTree();
+                if (!_inventory.shovelSelected)
+                    player.HitTree();
             }
 
             else
             {
-                _doTween.Shake(gameObject.transform);
-                player.HitTree();
-                amountHit--;
-                if (!_myAudio.isPlaying) _myAudio.PlayOneShot(_soundHit);
-                _hitBar.Bar();
+                if (!_inventory.shovelSelected)
+                {
+                    _doTween.Shake(gameObject.transform);
+                    player.HitTree();
+                    amountHit--;
+                    if (!_myAudio.isPlaying) _myAudio.PlayOneShot(_soundHit);
+                    _hitBar.Bar();
+                }
             }
 
             if (amountHit <= 0)
@@ -98,7 +104,7 @@ public class TreeRegenerative : MonoBehaviour
         {
             _decal.SetActive(false);
             _hitBar.gameObject.SetActive(false);
-        }  
+        }
     }
 
     public void RestartAmount()
