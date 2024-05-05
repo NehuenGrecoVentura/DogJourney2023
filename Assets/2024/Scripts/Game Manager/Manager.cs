@@ -57,6 +57,7 @@ public class Manager : MonoBehaviour
     [SerializeField] TMP_Text _textMessage;
     [SerializeField, TextArea(4, 6)] string[] _message;
     [SerializeField] Camera _camScenario;
+    [SerializeField] AudioClip _soundMessage;
 
     private void Awake()
     {
@@ -244,6 +245,7 @@ public class Manager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
         _boxMessage.gameObject.SetActive(true);
+        _myAudio.PlayOneShot(_soundMessage);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
 
         yield return new WaitForSeconds(3f);
@@ -251,6 +253,7 @@ public class Manager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         _textMessage.text = _message[1];
+        _myAudio.PlayOneShot(_soundMessage);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
 
         yield return new WaitForSeconds(3f);
@@ -258,6 +261,7 @@ public class Manager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         _textMessage.text = _message[2];
+        _myAudio.PlayOneShot(_soundMessage);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
 
         yield return new WaitForSeconds(3f);
@@ -272,13 +276,4 @@ public class Manager : MonoBehaviour
         yield return new WaitForSeconds(0.6f);
         _boxMessage.gameObject.SetActive(false);
     }
-
-
-
-
-
-
-
-
-
 }

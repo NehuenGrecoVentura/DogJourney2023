@@ -49,8 +49,14 @@ public class ArchaeologistQuest1 : MonoBehaviour
     private Manager _gm;
     [SerializeField] DigTreasure[] _allTreasures;
 
+    [Header("AUDIOS")]
+    [SerializeField] AudioClip[] _sounds;
+    private AudioSource _myAudio;
+
     private void Awake()
     {
+        _myAudio = GetComponent<AudioSource>();
+
         _dialogue = FindObjectOfType<Dialogue>();
         _player = FindObjectOfType<Character>();
         _gm = FindObjectOfType<Manager>();
@@ -76,13 +82,12 @@ public class ArchaeologistQuest1 : MonoBehaviour
         _canvasIconsChainsQuests.SetActive(true);
         _iconTreasure.SetActive(true);
         _message.AddIconInventory(_boxMessage, _textSlide, "Added to inventory");
+        _myAudio.PlayOneShot(_sounds[0]);
 
         foreach (var item in _allTreasures)
         {
             item.gameObject.SetActive(true);
         }
-
-
 
         Destroy(_iconQuest);
         _questActive = true;
@@ -153,18 +158,21 @@ public class ArchaeologistQuest1 : MonoBehaviour
         yield return new WaitForSeconds(2f);
         _rectMessage.gameObject.SetActive(true);
         _fadeOut.DOColor(Color.clear, 1f);
+        _myAudio.PlayOneShot(_sounds[1]);
         _rectMessage.DOAnchorPosY(70f, 0f);
 
         yield return new WaitForSeconds(3f);
         _rectMessage.DOAnchorPosY(-1000f, 0.5f);
         yield return new WaitForSeconds(1f);
         _textMessage.text = _messagesEnding[1];
+        _myAudio.PlayOneShot(_sounds[1]);
         _rectMessage.DOAnchorPosY(70f, 0f);
 
         yield return new WaitForSeconds(3f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
         yield return new WaitForSeconds(1f);
         _textMessage.text = _messagesEnding[2];
+        _myAudio.PlayOneShot(_sounds[1]);
         _rectMessage.DOAnchorPosY(70f, 0f);
 
         yield return new WaitForSeconds(3f);
@@ -180,7 +188,6 @@ public class ArchaeologistQuest1 : MonoBehaviour
 
         _gm.QuestCompleted();
         _iconTreasure.SetActive(false);
-        _inventory.money += 100;
         //_message.ShowUI("+100", _rectMoney, _textAmountMoney);
         _message.AddIconInventory(_boxMessage, _textSlide, "Minerva helmet received");
         Destroy(this);
