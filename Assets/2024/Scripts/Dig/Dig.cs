@@ -22,11 +22,6 @@ public class Dig : MonoBehaviour
         _invetory = FindObjectOfType<CharacterInventory>();
     }
 
-    private void Start()
-    {
-        _myAudio.Stop();
-    }
-
     private void FocusToFlower(Character player)
     {
         Vector3 pos = new Vector3(transform.position.x, player.transform.position.y, transform.position.z);

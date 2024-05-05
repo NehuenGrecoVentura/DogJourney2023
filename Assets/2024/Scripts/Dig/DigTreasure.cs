@@ -9,12 +9,16 @@ public class DigTreasure : MonoBehaviour
     private CharacterInventory _inventory;
     private ArchaeologistQuest1 _npc;
     private bool _isLast = false;
+    private AudioSource _myAudio;
 
     [SerializeField] float _amountHit = 200f;
     [SerializeField] KeyCode _keyInteractive = KeyCode.Mouse0;
 
+
     private void Awake()
     {
+        _myAudio = GetComponent<AudioSource>();
+
         _inventory = FindObjectOfType<CharacterInventory>();
         _npc = FindObjectOfType<ArchaeologistQuest1>();
 
@@ -102,7 +106,7 @@ public class DigTreasure : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null && Input.GetKey(_keyInteractive) && _inventory.shovelSelected)
         {
-            //if (!_myAudio.isPlaying) _myAudio.Play();
+            if (!_myAudio.isPlaying) _myAudio.Play();
 
             Vector3 pos = new Vector3(transform.position.x, player.transform.position.y, transform.position.z);
             player.gameObject.transform.LookAt(pos);

@@ -624,6 +624,8 @@ MonoBehaviour:
   _textAmount: {fileID: 0}
   _decal: {fileID: 9124344011295807838}
   _hitBar: {fileID: 5939548659483988724}
+  _bush:
+  - {fileID: 8450561679487049827}
 --- !u!1 &9124344011295807838
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,9 +11,12 @@ public class DigBait : MonoBehaviour
     private CharacterInventory _inventory;
     private FishingQuest2 _quest;
     private DoTweenTest _doTween;
+    private AudioSource _myAudio;
 
     private void Awake()
     {
+        _myAudio = GetComponent<AudioSource>();
+
         _inventory = FindObjectOfType<CharacterInventory>();
         _quest = FindObjectOfType<FishingQuest2>();
         _doTween = FindObjectOfType<DoTweenTest>();
@@ -33,6 +36,8 @@ public class DigBait : MonoBehaviour
             FocusToDig(player);
             if (Input.GetKey(_keyInteractive) && _inventory.shovelSelected)
             {
+                if (!_myAudio.isPlaying) _myAudio.Play();
+
                 player.HitDig();
                 _amountHit--;
 
