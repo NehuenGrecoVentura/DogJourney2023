@@ -63,7 +63,7 @@ public class Dig : MonoBehaviour
                 //}
 
                 _invetory.flowers++;
-                _message.ShowUI("+1", _boxSlide, _textAmount);
+                if(_invetory.flowers < 4)_message.ShowUI("+1", _boxSlide, _textAmount); // CAMBIAR CUANDO EXPANDAMOS A LA ISLA 2 ESTA LINEA.
                 Destroy(gameObject);
             }
         }

@@ -13,13 +13,12 @@ public class CellShadingControl : MonoBehaviour
     void Start()
     {
         foreach (var item in _outline)
-            item.enabled = true;
+            item.enabled = false;
     }
 
     void Update()
     {
-        //if (Input.GetKey(KeyCode.L) && Input.GetKeyDown(KeyCode.S))
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKey(KeyCode.L) && Input.GetKeyDown(KeyCode.S))
         {
             if (!_isActive)
             {
