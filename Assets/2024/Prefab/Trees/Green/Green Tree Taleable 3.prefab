@@ -435,7 +435,7 @@ Transform:
   m_LocalRotation: {x: -0.000000106919174, y: -0.09744376, z: -0.0000000107052855,
     w: -0.99524105}
   m_LocalPosition: {x: -0.15, y: 0.0694, z: 0.058}
-  m_LocalScale: {x: 6.0127554, y: 3.8069377, z: 4.8665905}
+  m_LocalScale: {x: 2.2198, y: 2.2198, z: 2.2198}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7871605488359472357}
@@ -12353,6 +12353,7 @@ MonoBehaviour:
   _iconInteractive: {fileID: 4303075314762478929}
   _buttonInteractive: 113
   isUpgraded: 0
+  _posJump: {fileID: 0}
   _jumpForce: 2
   _duration: 1
   _counts: 1
