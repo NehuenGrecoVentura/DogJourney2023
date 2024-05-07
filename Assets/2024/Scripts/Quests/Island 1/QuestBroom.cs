@@ -53,6 +53,7 @@ public class QuestBroom : MonoBehaviour
         _col.enabled = false;
         _buttonConfirm.onClick.AddListener(() => Confirm());
         _nextQuest.enabled = false;
+        _dogEnter.GetComponent<Collider>().enabled = false;
 
         for (int i = 0; i < _dialogue._lines.Length; i++)
             _dialogue._lines[i] = _lines[i];
