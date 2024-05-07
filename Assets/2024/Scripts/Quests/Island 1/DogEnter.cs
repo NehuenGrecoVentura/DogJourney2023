@@ -59,6 +59,7 @@ public class DogEnter : MonoBehaviour
     private TableQuest _nextQuest;
     private QuestUI _questUI;
     private CameraOrbit _camPlayer;
+    private bool _canQuick = false;
 
     [Header("MY AUDIO")]
     [SerializeField] AudioSource _myAudio;
@@ -131,7 +132,7 @@ public class DogEnter : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && broomPicked) 
+        if (Input.GetKeyDown(KeyCode.Space) && broomPicked && _canQuick) 
             StartCoroutine(Ending());
     }
 
@@ -246,11 +247,13 @@ public class DogEnter : MonoBehaviour
         _questUI.TaskCompleted(1);
         _questUI.AddNewTask(2, "Returns the broom to its owner");
         broomPicked = true;
+        _canQuick = true;
         _maryNPC.gameObject.GetComponent<BoxCollider>().enabled = true;
     }
 
     private IEnumerator Ending()
     {
+        _canQuick = false;
         _audioDog.PlayOneShot(_soundQuick);
         _camDog.gameObject.SetActive(true);
         _camPlayer.gameObject.SetActive(false);
