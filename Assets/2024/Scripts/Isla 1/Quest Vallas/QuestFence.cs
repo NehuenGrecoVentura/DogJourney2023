@@ -153,6 +153,8 @@ public class QuestFence : MonoBehaviour
     {
         _myCol.enabled = false;
         _dialogue.playerInRange = false;
+        _seedsActive = true;
+
         _textName.text = _nameNPC;
         _textMessage.text = _messages[0];
         _fadeOut.DOColor(Color.clear, 0f);
@@ -203,9 +205,6 @@ public class QuestFence : MonoBehaviour
             item.enabled = true;
             item.GetComponent<Collider>().enabled = true;
         }
-
-
-        _seedsActive = true;
     }
 
     private IEnumerator MessageBuild()
