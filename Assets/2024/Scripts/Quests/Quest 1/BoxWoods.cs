@@ -50,7 +50,10 @@ public class BoxWoods : MonoBehaviour
     [SerializeField] Camera _dogTutorial;
     [SerializeField] Image _fadeOut;
     [SerializeField] RectTransform _boxTutorial;
+    public bool canQuick = false;
     private bool _tutorialQuick = false;
+
+    [Header("AUDIOS")]
     [SerializeField] AudioSource _dogAudio;
     [SerializeField] AudioClip _quickSound;
 
@@ -97,12 +100,12 @@ public class BoxWoods : MonoBehaviour
             }
         }
 
-
         if (_inventory.greenTrees >= 5)
         {
-            if (Input.GetKeyDown(KeyCode.Space)) StartCoroutine(QuickEndCoroutine());
+            if (Input.GetKeyDown(KeyCode.Space) && canQuick) StartCoroutine(QuickEndCoroutine());
             else
             {
+                
                 if (!_tutorialQuick)
                 {
                     StartCoroutine(TutorialQuick());
@@ -133,6 +136,7 @@ public class BoxWoods : MonoBehaviour
 
     private IEnumerator QuickEndCoroutine()
     {
+        canQuick = false;
         _dogAudio.PlayOneShot(_quickSound);
         _player.speed = 0;
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);

@@ -11,6 +11,7 @@ public class ManagerQuest1 : MonoBehaviour
 
     private CharacterInventory _inventory;
     private Manager _gm;
+    private BoxWoods _box;
 
     [Header("RADAR")]
     [SerializeField] Transform _boxPos;
@@ -24,6 +25,7 @@ public class ManagerQuest1 : MonoBehaviour
         _inventory = FindObjectOfType<CharacterInventory>();
         _radar = FindObjectOfType<LocationQuest>();
         _gm = FindObjectOfType<Manager>();
+        _box = FindObjectOfType<BoxWoods>();
     }
 
     private void Update()
@@ -44,6 +46,7 @@ public class ManagerQuest1 : MonoBehaviour
             _radar.StatusRadar(true);
             _radar.target = _boxPos;
             _gm.GreenTreesNormal();
+            _box.canQuick = true;
             Destroy(this);
         }
     }
