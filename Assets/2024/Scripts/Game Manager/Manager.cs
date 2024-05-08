@@ -18,7 +18,7 @@ public class Manager : MonoBehaviour
     [SerializeField] Animator[] _doorsGatesAnims;
     [SerializeField] GameObject[] _objsToHide;
     [SerializeField] Collider _firstTree;
-    [SerializeField] Button _buttonRope;
+    //[SerializeField] Button _buttonRope;
     private QuestUI _questUI;
 
     [Header("GAME OVER")]
@@ -92,7 +92,7 @@ public class Manager : MonoBehaviour
     private void BeginGame()
     {
         _quest1.enabled = false;
-        _buttonRope.enabled = false;
+        //_buttonRope.enabled = false;
         _firstTree.enabled = false;
         _winText.gameObject.SetActive(false);
         _gameOver.SetActive(false);
