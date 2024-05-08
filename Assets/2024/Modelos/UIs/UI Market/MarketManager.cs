@@ -17,10 +17,14 @@ public class MarketManager : MonoBehaviour, IScrollHandler
     private MenuPause _pause;
     public bool isShopping = false;
 
-    [SerializeField] GameObject[] _dogUpgrade;
+    [SerializeField] TMP_Text _textInventory;
+
+    [Header("INTRO")]
     [SerializeField] GameObject _canvas;
     [SerializeField] Image _intro;
-    [SerializeField] TMP_Text _textInventory;
+    private Sprite _rectSprite;
+    [SerializeField] Sprite _circleSprite;
+
 
     [Header("NAILS")]
     [SerializeField] int _costNails = 50;
@@ -36,6 +40,7 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 
     [Header("UPGRADES BOX ICONS")]
     [SerializeField] Image[] _boxes;
+    [SerializeField] GameObject[] _dogUpgrade;
 
     [Header("AUDIO")]
     [SerializeField] AudioClip[] _sounds;
@@ -72,10 +77,13 @@ public class MarketManager : MonoBehaviour, IScrollHandler
     {
         _intialScale = transform.localScale;
         _intro.gameObject.SetActive(false);
-        _canvas.SetActive(false);
+        //_canvas.SetActive(false);
+        _canvas.gameObject.transform.DOScale(0, 0);
 
         foreach (var dog in _dogUpgrade)
             dog.SetActive(false);
+
+        _rectSprite = _canvas.GetComponent<Image>().sprite;
     }
 
 
@@ -270,11 +278,16 @@ public class MarketManager : MonoBehaviour, IScrollHandler
         _scrollbar.value = 1;
         _intro.gameObject.SetActive(true);
         _intro.transform.DOScale(100f, 2f);
+
+        _canvas.GetComponent<Image>().sprite = _rectSprite;
+        _canvas.GetComponent<Image>().DOColor(Color.white, 0f);
+        _canvas.gameObject.transform.DOScale(1f , 0.5f);
+
         _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
         _player.speed = 0;
         yield return new WaitForSeconds(1f);
-        _intro.gameObject.SetActive(false);
-        _intro.transform.DOScale(0f, 2f);
+        //_intro.gameObject.SetActive(false);
+        //_intro.transform.DOScale(0f, 2f);
         _canvas.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -283,16 +296,29 @@ public class MarketManager : MonoBehaviour, IScrollHandler
     private IEnumerator ExitMarketCoroutine()
     {
         isShopping = false;
-        _intro.gameObject.SetActive(true);
-        _intro.transform.DOScale(100f, 0f);
-        _intro.transform.DOScale(0f, 2f);
-        _canvas.gameObject.SetActive(false);
-        yield return new WaitForSeconds(2f);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        //_intro.gameObject.SetActive(true);
+        //_intro.transform.DOScale(100f, 0f);
+        //_intro.transform.DOScale(0f, 2f);
+        //_canvas.gameObject.SetActive(false);
+
+        _intro.transform.DOScale(0f, 1f);
+        //_intro.transform.DOScale(0f, 2f);
+
+        yield return new WaitForSeconds(1f);
+        //_canvas.GetComponent<Image>().DOColor(Color.clear, 1f);
+        _canvas.GetComponent<Image>().sprite = _circleSprite;
+        _canvas.GetComponent<Image>().DOColor(new Color(1f, 1f, 1f, 0.5f), 1f);
+        _canvas.gameObject.transform.DOScale(0f, 0.5f);
+
+
+        yield return new WaitForSeconds(0.5f);
         _intro.gameObject.SetActive(false);
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _player.speed = _player.speedAux;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         _pause.Defreeze();
     }
 

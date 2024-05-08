@@ -31,7 +31,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6713703456141002043}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.558}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6065,7 +6065,7 @@ RectTransform:
   - {fileID: 7488189083415404970}
   - {fileID: 9130870997946780868}
   m_Father: {fileID: 6713703456141002043}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -11909,8 +11909,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6713703454944805641}
   - {fileID: 1258187391}
+  - {fileID: 6713703454944805641}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11992,10 +11992,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8076a0b0b0d5f124a9c7c4d7fd9ed1e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dogUpgrade: []
+  isShopping: 0
+  _textInventory: {fileID: 9184599071327076095}
   _canvas: {fileID: 6713703454944805640}
   _intro: {fileID: 1258187392}
-  _textInventory: {fileID: 9184599071327076095}
   _costNails: 50
   _amountNails: 20
   _txtAmountNails: {fileID: 438470217366126354}
@@ -12012,6 +12012,7 @@ MonoBehaviour:
   - {fileID: 1162717361489328139}
   - {fileID: 4417872281190506453}
   - {fileID: 7996236398445553123}
+  _dogUpgrade: []
   _sounds:
   - {fileID: 8300000, guid: e7fb482ed391db14eaa3a2b698127e2c, type: 3}
   - {fileID: 8300000, guid: cd6388049e89dcd4b87be60d97951369, type: 3}
@@ -12022,6 +12023,8 @@ MonoBehaviour:
   _txtButtonExit: {fileID: 48591788291385165}
   _styleSelected: {fileID: 11400000, guid: 4e4385104dda94149a769ffea7eb56e6, type: 2}
   _styleNormal: {fileID: 11400000, guid: eae537291702c55448ec2e0b70c45bdd, type: 2}
+  _buttonUpgrades: []
+  _buttonImagesUpgrades: []
 --- !u!82 &1467196758
 AudioSource:
   m_ObjectHideFlags: 0
