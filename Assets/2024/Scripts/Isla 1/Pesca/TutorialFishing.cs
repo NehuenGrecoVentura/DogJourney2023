@@ -83,6 +83,8 @@ public class TutorialFishing : MonoBehaviour
         NPCFishing npc = FindObjectOfType<NPCFishing>();
         if (npc != null) Destroy(npc);
         else return;
+    
+        _allFishings[0].gameObject.SetActive(true);
         Destroy(this);
     }
 

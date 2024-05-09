@@ -16,6 +16,7 @@ public class Fishing : MonoBehaviour
     private CameraOrbit _camPlayer;
 
     [Header("FISHING")]
+    [SerializeField] ParticleSystem _bubbles;
     public int _totalAmount = 3;
     private FishingMinigame _fishing;
     private Manager _gm;
@@ -39,6 +40,8 @@ public class Fishing : MonoBehaviour
     [SerializeField] RuntimeAnimatorController[] _animConrtollers;
     [SerializeField] GameObject _myRod;
     private Animator _myAnim;
+
+    
 
     [Header("SCORE")]
     [SerializeField] TMP_Text[] _score;
@@ -106,6 +109,7 @@ public class Fishing : MonoBehaviour
     private IEnumerator StartMiniGame()
     {
         completed = false;
+        _bubbles.Stop();
         _fishing._textAmount = _score;
         _fadeOut.DOColor(Color.black, 1f);
         yield return new WaitForSeconds(1f);
