@@ -11490,8 +11490,8 @@ MonoBehaviour:
   _buttonInteractive: 113
   isUpgraded: 0
   _posJump: {fileID: 0}
-  _jumpForce: 2
-  _duration: 1
+  _jumpForce: 3
+  _duration: 0.3
   _counts: 1
   _logs:
   - {fileID: 7303894162479019774}

@@ -11,9 +11,9 @@ public class Trunks : MonoBehaviour
 
     private DoTweenTest _doTweenMessage;
     private DoTweenManager _doTweenManager;
-    [SerializeField] Transform _posJump;
-    [SerializeField] float _jumpForce = 2f;
-    [SerializeField] float _duration = 1f;
+    [SerializeField] GameObject _posJump;
+    [SerializeField] private float _jumpForce;
+    [SerializeField] private float _duration;   
     [SerializeField] int _counts = 1;
     public GameObject[] _logs;
 
@@ -29,6 +29,7 @@ public class Trunks : MonoBehaviour
         _doTweenMessage = FindObjectOfType<DoTweenTest>();
         _doTweenManager = FindObjectOfType<DoTweenManager>();
         _gm = FindObjectOfType<Manager>();
+        _posJump = GameObject.Find("TroleyJumpPos");
     }
 
     void Start()
@@ -61,7 +62,7 @@ public class Trunks : MonoBehaviour
         // Si pertenece al arbol verde...
         if (gameObject.layer == 3)
         {
-            // Si no compré el upgrade, entonces junta de a uno.
+            // Si no comprï¿½ el upgrade, entonces junta de a uno.
             //if (!isUpgraded)
             if (!_gm.amountUpgrade)
             {
@@ -70,7 +71,7 @@ public class Trunks : MonoBehaviour
                 _doTweenMessage.ShowUIWood("+ 1");
             }
 
-            // Sino junta de a 10 (SI ESTÁ EN LA QUEST 6 SUMA DE A UNO PARA EL CONTADOR)
+            // Sino junta de a 10 (SI ESTï¿½ EN LA QUEST 6 SUMA DE A UNO PARA EL CONTADOR)
             else
             {
                 //_inventory.greenTrees += 10;
@@ -82,7 +83,7 @@ public class Trunks : MonoBehaviour
             }
         }
 
-        // Si es del arbol púrpura, usa la misma lógica que la del verde.
+        // Si es del arbol pï¿½rpura, usa la misma lï¿½gica que la del verde.
         else
         {
             //if (!isUpgraded)
@@ -123,7 +124,7 @@ public class Trunks : MonoBehaviour
             StartCoroutine(RecollectLogs());
         }
     }
-
+    
     private IEnumerator RecollectLogs()
     {
         yield return new WaitForSeconds(_duration);
