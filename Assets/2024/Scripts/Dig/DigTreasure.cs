@@ -5,6 +5,7 @@ using UnityEngine;
 public class DigTreasure : MonoBehaviour
 {
     private List<DigTreasure> _allTreasures = new List<DigTreasure>();
+    private SpawnRandom _random;
     private CharacterInventory _inventory;
     private ArchaeologistQuest1 _npc;
     private AudioSource _myAudio;
@@ -26,6 +27,7 @@ public class DigTreasure : MonoBehaviour
 
         _inventory = FindObjectOfType<CharacterInventory>();
         _npc = FindObjectOfType<ArchaeologistQuest1>();
+        _random = FindObjectOfType<SpawnRandom>();
 
         // Obtener todos los componentes DigTreasure en la escena y agregarlos a la lista
         var treasures = FindObjectsOfType<DigTreasure>();
@@ -149,6 +151,7 @@ public class DigTreasure : MonoBehaviour
         _myMesh.enabled = false;
         _myCol.enabled = false;
         yield return new WaitForSeconds(_timeToRespawn);
+        _random.SpawnObject(transform);
         _myMesh.enabled = true;
         _myCol.enabled = true;
         amountHit = _initialHit;

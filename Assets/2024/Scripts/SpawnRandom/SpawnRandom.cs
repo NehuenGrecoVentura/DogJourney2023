@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class SpawnRandom : MonoBehaviour
 {
     [SerializeField] GameObject objectToSpawn;
+    [SerializeField] Terrain _terrain;
     [SerializeField] GameObject containerPoints;
     [SerializeField] private Transform[] spawnPoints;
     private List<int> usedSpawnPointIndices = new List<int>();
@@ -17,15 +18,12 @@ public class SpawnRandom : MonoBehaviour
         for (int i = 0; i < childCount; i++)
         {
             spawnPoints[i] = containerPoints.transform.GetChild(i);
-        }        
+        }
+
+        SetPosTerrain();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Z)) SpawnObject();
-    }
-
-    void SpawnObject()
+    public void SpawnObject(Transform myTransform)
     {
         if (spawnPoints.Length == 0)
         {
@@ -56,9 +54,25 @@ public class SpawnRandom : MonoBehaviour
         Transform spawnPoint = spawnPoints[chosenIndex];
 
         // Spawnear el objeto en el punto seleccionado
-        Instantiate(objectToSpawn, spawnPoint.position, Quaternion.identity);
+        myTransform.position = spawnPoint.position;
 
         // Agregar el índice del punto de aparición utilizado a la lista de utilizados
         usedSpawnPointIndices.Add(chosenIndex);
+    }
+
+    private void SetPosTerrain()
+    {
+        foreach (Transform t in spawnPoints)
+        {
+            Vector3 position = t.position;
+            // Obtener la altura del terreno en la posición del objeto
+            float terrainHeight = _terrain.SampleHeight(position);
+
+            // Ajustar la posición vertical del objeto
+            position.y = terrainHeight + 0.5f;
+
+            // Asignar la nueva posición al objeto
+            t.position = position;
+        }
     }
 }

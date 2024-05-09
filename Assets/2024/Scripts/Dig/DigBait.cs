@@ -14,6 +14,7 @@ public class DigBait : MonoBehaviour
 
     [Header("RESPAWN")]
     [SerializeField] float _timeToRespawn = 5f;
+    private SpawnRandom _random;
     private Collider _myCol;
     private MeshRenderer _myMesh;
     private float _initialHit;
@@ -27,6 +28,7 @@ public class DigBait : MonoBehaviour
         _inventory = FindObjectOfType<CharacterInventory>();
         _quest = FindObjectOfType<FishingQuest2>();
         _doTween = FindObjectOfType<DoTweenTest>();
+        _random = FindObjectOfType<SpawnRandom>();
     }
 
     private void Start()
@@ -84,6 +86,7 @@ public class DigBait : MonoBehaviour
         _myMesh.enabled = false;
         _myCol.enabled = false;
         yield return new WaitForSeconds(_timeToRespawn);
+        _random.SpawnObject(transform);
         _myMesh.enabled = true;
         _myCol.enabled = true;
         amountHit = _initialHit;

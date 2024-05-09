@@ -21,6 +21,7 @@ public class Dig : MonoBehaviour
 
     [Header("RESPAWN")]
     [SerializeField] float _timeToRespawn = 5f;
+    private SpawnRandom _random;
     private Collider _myCol;
     private MeshRenderer _myMesh;
 
@@ -32,6 +33,7 @@ public class Dig : MonoBehaviour
 
         _message = FindObjectOfType<DoTweenManager>();
         _invetory = FindObjectOfType<CharacterInventory>();
+        _random = FindObjectOfType<SpawnRandom>();
     }
 
     private void Start()
@@ -105,6 +107,7 @@ public class Dig : MonoBehaviour
         _myMesh.enabled = false;
         _myCol.enabled = false;
         yield return new WaitForSeconds(_timeToRespawn);
+        _random.SpawnObject(transform);
         _myMesh.enabled = true;
         _myCol.enabled = true;
         amountHit = _initialHit;
