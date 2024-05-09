@@ -1,23 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class DigTreasure : MonoBehaviour
 {
     private List<DigTreasure> _allTreasures = new List<DigTreasure>();
     private CharacterInventory _inventory;
     private ArchaeologistQuest1 _npc;
-    private bool _isLast = false;
     private AudioSource _myAudio;
+    private Collider _myCol;
+    private MeshRenderer _myMesh;
+    private float _initialHit;
+    private bool _isLast = false;
 
-    [SerializeField] float _amountHit = 200f;
+    public float amountHit = 200f;
     [SerializeField] KeyCode _keyInteractive = KeyCode.Mouse0;
-
+    [SerializeField] HealthBarTreasure _healthBar;
+    [SerializeField] float _timeToRespawn = 5f;
 
     private void Awake()
     {
         _myAudio = GetComponent<AudioSource>();
+        _myCol = GetComponent<Collider>();
+        _myMesh = GetComponent<MeshRenderer>();
 
         _inventory = FindObjectOfType<CharacterInventory>();
         _npc = FindObjectOfType<ArchaeologistQuest1>();
@@ -36,6 +41,8 @@ public class DigTreasure : MonoBehaviour
     private void Start()
     {
         StartCoroutine(VerificarUnicoActivoPeriodicamente());
+        _healthBar.gameObject.SetActive(false);
+        _initialHit = amountHit;
     }
 
     private IEnumerator VerificarUnicoActivoPeriodicamente()
@@ -101,6 +108,12 @@ public class DigTreasure : MonoBehaviour
     }
 
 
+    private void OnTriggerEnter(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null) _healthBar.gameObject.SetActive(true);
+    }
+
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Character>();
@@ -111,15 +124,34 @@ public class DigTreasure : MonoBehaviour
             Vector3 pos = new Vector3(transform.position.x, player.transform.position.y, transform.position.z);
             player.gameObject.transform.LookAt(pos);
             player.HitDig();
-            _amountHit--;
+            amountHit--;
+            _healthBar.Bar();
 
-            if (_amountHit <= 0)
+            if (amountHit <= 0)
             {
-                _amountHit = 0;
+                amountHit = 0;
                 if (_isLast) TreasureLoot();
                 else RandomLoot();
-                Destroy(gameObject);
+                StartCoroutine(Respawn());
             }
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null) _healthBar.gameObject.SetActive(false);
+    }
+
+    private IEnumerator Respawn()
+    {
+        _healthBar.gameObject.SetActive(false);
+        _myMesh.enabled = false;
+        _myCol.enabled = false;
+        yield return new WaitForSeconds(_timeToRespawn);
+        _myMesh.enabled = true;
+        _myCol.enabled = true;
+        amountHit = _initialHit;
+        _healthBar.Bar();
     }
 }

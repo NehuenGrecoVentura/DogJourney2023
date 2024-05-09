@@ -1,13 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 public class Dig : MonoBehaviour
 {
-    [SerializeField] float _amountHit = 500f;
+    [SerializeField] DigHealthBar _healthBar;
+    
     [SerializeField] KeyCode _inputInteractive = KeyCode.Mouse0;
     private AudioSource _myAudio;
+
+    [Header("HIT")]
+    public float amountHit = 200f;
+    private float _initialHit;
 
     [Header("INVENTORY UI")]
     [SerializeField] RectTransform _boxSlide;
@@ -15,11 +19,25 @@ public class Dig : MonoBehaviour
     private DoTweenManager _message;
     private CharacterInventory _invetory;
 
+    [Header("RESPAWN")]
+    [SerializeField] float _timeToRespawn = 5f;
+    private Collider _myCol;
+    private MeshRenderer _myMesh;
+
     private void Awake()
     {
         _myAudio = GetComponent<AudioSource>();
+        _myCol = GetComponent<Collider>();
+        _myMesh = GetComponent<MeshRenderer>();
+
         _message = FindObjectOfType<DoTweenManager>();
         _invetory = FindObjectOfType<CharacterInventory>();
+    }
+
+    private void Start()
+    {
+        _healthBar.gameObject.SetActive(false);
+        _initialHit = amountHit;
     }
 
     private void FocusToFlower(Character player)
@@ -28,6 +46,11 @@ public class Dig : MonoBehaviour
         player.gameObject.transform.LookAt(pos);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null) _healthBar.gameObject.SetActive(true);
+    }
 
     private void OnTriggerStay(Collider other)
     {
@@ -37,11 +60,12 @@ public class Dig : MonoBehaviour
             if (!_myAudio.isPlaying) _myAudio.Play();
             FocusToFlower(player);
             player.HitDig();
-            _amountHit--;
+            amountHit--;
+            _healthBar.Bar();
 
-            if (_amountHit <= 0)
+            if (amountHit <= 0)
             {
-                _amountHit = 0;
+                amountHit = 0;
                 //_message.ShowUI("+1", _boxMessage, _textAmount);
                 //int randomIndex = Random.Range(0, 2);
 
@@ -63,9 +87,27 @@ public class Dig : MonoBehaviour
                 //}
 
                 _invetory.flowers++;
-                if(_invetory.flowers < 4)_message.ShowUI("+1", _boxSlide, _textAmount); // CAMBIAR CUANDO EXPANDAMOS A LA ISLA 2 ESTA LINEA.
-                Destroy(gameObject);
+                if (_invetory.flowers < 4) _message.ShowUI("+1", _boxSlide, _textAmount); // CAMBIAR CUANDO EXPANDAMOS A LA ISLA 2 ESTA LINEA.
+                StartCoroutine(Respawn());
             }
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null) _healthBar.gameObject.SetActive(false);
+    }
+
+    private IEnumerator Respawn()
+    {
+        _healthBar.gameObject.SetActive(false);
+        _myMesh.enabled = false;
+        _myCol.enabled = false;
+        yield return new WaitForSeconds(_timeToRespawn);
+        _myMesh.enabled = true;
+        _myCol.enabled = true;
+        amountHit = _initialHit;
+        _healthBar.Bar();
     }
 }
