@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using DG.Tweening;
 using System.Collections;
 
@@ -21,6 +22,8 @@ public class Trunks : MonoBehaviour
     private Collider _myCol;
     private Manager _gm;
     private Vector3 _initialSize;
+
+    [SerializeField] NavMeshAgent _trolleyNavMesh;
 
     private void Awake()
     {
@@ -112,6 +115,7 @@ public class Trunks : MonoBehaviour
 
         if (dog != null)
         {
+            _trolleyNavMesh.enabled = false;
             UpgradeTrolley();
             _myCol.enabled = false;
 
@@ -140,6 +144,7 @@ public class Trunks : MonoBehaviour
         }
 
         _myCol.enabled = true;
+        _trolleyNavMesh.enabled = true;
         gameObject.SetActive(false);
     }
 

@@ -21,36 +21,40 @@ public class FollowDogCarrito : MonoBehaviour
 
     private void Update()
     {
-        if (!DogFriend)
+        if (_agent.enabled)
         {
-            _agent.destination = _player.transform.position;
-        }
-        else
-        {
-
-            //_agent.destination = Dog.transform.position;
-
-            //Vector3 targetPosition = Dog.transform.position - Dog.transform.forward * _dist;
-            //_agent.SetDestination(targetPosition);
-
-
-
-            // Obtener la posición detrás del personaje
-            Vector3 targetPosition = Dog.transform.position - Dog.transform.forward * _dist;
-
-            // Mover el carrito hacia esa posición
-            _agent.SetDestination(targetPosition);
-
-            // Calcular la dirección hacia la posición del personaje
-            Vector3 direction = targetPosition - transform.position;
-            direction.y = 0f;
-
-            // Rotar suavemente el carrito hacia esa dirección
-            if (direction != Vector3.zero)
+            if (!DogFriend)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _speedRot * Time.deltaTime);
+                _agent.destination = _player.transform.position;
             }
-        } 
+            else
+            {
+
+                //_agent.destination = Dog.transform.position;
+
+                //Vector3 targetPosition = Dog.transform.position - Dog.transform.forward * _dist;
+                //_agent.SetDestination(targetPosition);
+
+
+
+                // Obtener la posición detrás del personaje
+                Vector3 targetPosition = Dog.transform.position - Dog.transform.forward * _dist;
+
+                // Mover el carrito hacia esa posición
+                _agent.SetDestination(targetPosition);
+
+                // Calcular la dirección hacia la posición del personaje
+                Vector3 direction = targetPosition - transform.position;
+                direction.y = 0f;
+
+                // Rotar suavemente el carrito hacia esa dirección
+                if (direction != Vector3.zero)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(direction);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _speedRot * Time.deltaTime);
+                }
+            }
+        }
+        
     }
 }
