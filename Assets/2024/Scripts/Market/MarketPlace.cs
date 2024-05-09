@@ -31,9 +31,14 @@ public class MarketPlace : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
-            //player.gameObject.transform.position = _exitPos.position;
+            player.gameObject.transform.position = _exitPos.position;
             _radar.StatusRadar(true);
             _market.isShopping = false;
         }      
+    }
+
+    public void SetPlayerPos(Character player)
+    {
+        player.gameObject.transform.position = _exitPos.position;
     }
 }

@@ -297,6 +297,9 @@ public class MarketManager : MonoBehaviour, IScrollHandler
     {
         isShopping = false;
 
+        MarketPlace market = FindObjectOfType<MarketPlace>();
+        market.SetPlayerPos(_player);
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
