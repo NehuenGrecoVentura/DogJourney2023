@@ -21,15 +21,15 @@ public class Dig : MonoBehaviour
 
     [Header("RESPAWN")]
     [SerializeField] float _timeToRespawn = 5f;
+    [SerializeField] MeshRenderer[] _myMeshes;
     private SpawnRandom _random;
     private Collider _myCol;
-    private MeshRenderer _myMesh;
+    
 
     private void Awake()
     {
         _myAudio = GetComponent<AudioSource>();
         _myCol = GetComponent<Collider>();
-        _myMesh = GetComponent<MeshRenderer>();
 
         _message = FindObjectOfType<DoTweenManager>();
         _invetory = FindObjectOfType<CharacterInventory>();
@@ -104,11 +104,21 @@ public class Dig : MonoBehaviour
     private IEnumerator Respawn()
     {
         _healthBar.gameObject.SetActive(false);
-        _myMesh.enabled = false;
+
+        foreach (var item in _myMeshes)
+        {
+            item.enabled = false;
+        }
+
         _myCol.enabled = false;
         yield return new WaitForSeconds(_timeToRespawn);
         _random.SpawnObject(transform);
-        _myMesh.enabled = true;
+
+        foreach (var item in _myMeshes)
+        {
+            item.enabled = true;
+        }
+
         _myCol.enabled = true;
         amountHit = _initialHit;
         _healthBar.Bar();
