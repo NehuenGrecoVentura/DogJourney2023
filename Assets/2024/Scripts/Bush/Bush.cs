@@ -55,7 +55,7 @@ public class Bush : MonoBehaviour
         {
             FocusToBrush(player);
 
-            if (Input.GetKey(_inputInteractive))
+            if (Input.GetKey(_inputInteractive) && !_invetory.shovelSelected)
             {
                 if (!_myAudio.isPlaying) _myAudio.Play();
                 player.HitTree();

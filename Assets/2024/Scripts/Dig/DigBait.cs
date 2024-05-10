@@ -66,18 +66,25 @@ public class DigBait : MonoBehaviour
                 if (amountHit <= 0)
                 {
                     amountHit = 0;
+                    _myAudio.Stop();
                     _quest.baitPicked++;
                     _doTween.ShowLootCoroutine(_rectLoot);
                     StartCoroutine(Respawn());
                 }
             }
         }
+
+        else if (player != null && !Input.GetKey(_keyInteractive)) _myAudio.Stop();
     }
 
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null) _healthBar.gameObject.SetActive(false);
+        if (player != null)
+        {
+            _myAudio.Stop();
+            _healthBar.gameObject.SetActive(false);
+        }
     }
 
     private IEnumerator Respawn()

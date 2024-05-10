@@ -100,6 +100,7 @@ public class QuickFishing : MonoBehaviour
         
         _iconFish.SetActive(false);
         _bubbles.Stop();
+        _fishing.fishedPicked = 0;
         _fishing._textAmount = _score;
         _fadeOut.DOColor(Color.black, 1f);
         yield return new WaitForSeconds(1f);

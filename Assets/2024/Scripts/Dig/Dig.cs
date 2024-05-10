@@ -88,17 +88,24 @@ public class Dig : MonoBehaviour
                 //        break;
                 //}
 
+                _myAudio.Stop();
                 _invetory.flowers++;
                 if (_invetory.flowers < 4) _message.ShowUI("+1", _boxSlide, _textAmount); // CAMBIAR CUANDO EXPANDAMOS A LA ISLA 2 ESTA LINEA.
                 StartCoroutine(Respawn());
             }
         }
+
+        else if (player != null && !Input.GetKey(_inputInteractive)) _myAudio.Stop();
     }
 
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null) _healthBar.gameObject.SetActive(false);
+        if (player != null)
+        {
+            _myAudio.Stop();
+            _healthBar.gameObject.SetActive(false);
+        }
     }
 
     private IEnumerator Respawn()

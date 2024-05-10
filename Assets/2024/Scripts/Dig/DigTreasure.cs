@@ -132,17 +132,24 @@ public class DigTreasure : MonoBehaviour
             if (amountHit <= 0)
             {
                 amountHit = 0;
+                _myAudio.Stop();
                 if (_isLast) TreasureLoot();
                 else RandomLoot();
                 StartCoroutine(Respawn());
             }
         }
+
+        else if (player != null && !Input.GetKey(_keyInteractive)) _myAudio.Stop();
     }
 
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null) _healthBar.gameObject.SetActive(false);
+        if (player != null)
+        {
+            _myAudio.Stop();
+            _healthBar.gameObject.SetActive(false);
+        }
     }
 
     private IEnumerator Respawn()
