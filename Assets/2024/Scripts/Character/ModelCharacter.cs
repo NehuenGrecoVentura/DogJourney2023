@@ -127,7 +127,7 @@ public class ModelCharacter
 
     public void HitDig()
     {
-        EventHitTree?.Invoke();
+        EventHitDig?.Invoke();
     }
 
     public void FreezePlayer(RigidbodyConstraints rb)

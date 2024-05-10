@@ -82,7 +82,7 @@ public class ViewCharacter
 
     public void HitDig()
     {
-        _anim.Play("Dig");
+        _anim.Play("Cavar");
     }
 
     public void Win(AudioClip audioWin)
