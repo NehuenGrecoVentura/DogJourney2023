@@ -8,6 +8,7 @@ public class MenuPause : MonoBehaviour
     [SerializeField] GameObject _canvas;
     [SerializeField] GameObject _menuPause;
     [SerializeField] GameObject _optionsMenu;
+    [SerializeField] GameObject _panel;
     [SerializeField] private bool _isFreeze, _isPause = false;
 
     [Header("PLAYER")]
@@ -32,6 +33,7 @@ public class MenuPause : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        _panel.SetActive(true);
         _canvas.SetActive(true);
         _menuPause.SetActive(true);
         _optionsMenu.SetActive(false);
@@ -44,6 +46,7 @@ public class MenuPause : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        _panel.SetActive(false);
         _menuPause.SetActive(false);
         _optionsMenu.SetActive(false);
         Time.timeScale = 1;
@@ -53,6 +56,7 @@ public class MenuPause : MonoBehaviour
 
     public void Options()
     {
+        _panel.SetActive(true);
         _menuPause.SetActive(false);
         _optionsMenu.SetActive(true);
     }

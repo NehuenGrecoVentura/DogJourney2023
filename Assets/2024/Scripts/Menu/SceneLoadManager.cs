@@ -27,8 +27,10 @@ public class SceneLoadManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
         _logo.SetActive(false);
         _menu.SetActive(false);
+
         _fadeOut.gameObject.SetActive(true);
         _fadeOut.DOScale(100, 2f);
         yield return new WaitForSeconds(2f);

@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] Image _backgroundButton;
     [SerializeField]
     private bool _isOptions = false;
+    private bool _isPressedAnyKey = false;
 
     [SerializeField] TMP_Text _txtPressButton;
     [SerializeField] TMP_Text[] _txtsMainMenu;
@@ -39,10 +40,11 @@ public class MainMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.anyKey && !_isOptions)
+        if (Input.anyKey && !_isPressedAnyKey)
         {
             Destroy(_txtPressButton);
             _mainMenu.gameObject.SetActive(true);
+            _isPressedAnyKey = true;
         }
 
         if (Input.GetKeyDown(KeyCode.Escape) && _isOptions) BackToMenu();

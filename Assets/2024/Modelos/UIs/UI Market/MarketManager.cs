@@ -295,13 +295,15 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 
     private IEnumerator ExitMarketCoroutine()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         isShopping = false;
 
         MarketPlace market = FindObjectOfType<MarketPlace>();
         market.SetPlayerPos(_player);
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        
 
         //_intro.gameObject.SetActive(true);
         //_intro.transform.DOScale(100f, 0f);
