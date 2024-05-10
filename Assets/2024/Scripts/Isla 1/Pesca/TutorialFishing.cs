@@ -7,6 +7,7 @@ using DG.Tweening;
 
 public class TutorialFishing : MonoBehaviour
 {
+    [SerializeField] ParticleSystem _bubbles;
     [SerializeField] RectTransform _boxMessage;
     [SerializeField] TMP_Text _message;
     [SerializeField, TextArea(4, 6)] string[] _lines;
@@ -44,7 +45,9 @@ public class TutorialFishing : MonoBehaviour
     [SerializeField] NPCFishing _npc;
 
     public GameObject[] score;
-    [SerializeField] Fishing[] _allFishings;
+    //[SerializeField] Fishing[] _allFishings;
+
+    [SerializeField] QuickFishing[] _allFishings;
 
     private void Awake()
     {
@@ -138,14 +141,22 @@ public class TutorialFishing : MonoBehaviour
         Destroy(score[1].gameObject);
 
 
-        _allFishings[0].gameObject.SetActive(true);
-        _allFishings[1].gameObject.SetActive(true);
+        //_allFishings[0].gameObject.SetActive(true);
+        //_allFishings[1].gameObject.SetActive(true);
+
+
+
+        foreach (var item in _allFishings)
+        {
+            item.gameObject.SetActive(true);
+        }
 
         Destroy(this);
     }
 
     private IEnumerator PlayCinematic()
     {
+        _bubbles.Stop();
         _questUI.UIStatus(false);
         _textName.text = "Alice";
         _player.SetFishingMode(true);
