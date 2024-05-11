@@ -111,6 +111,18 @@ public class Dialogue : MonoBehaviour
         canTalk = false;
     }
 
+    public void Cancel()
+    {
+        _player.speed = _player.speedAux;
+        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _cam.enabled = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        _didDialogueStart = false;
+        buttonConfirm.gameObject.SetActive(false);
+        _buttonCancel.gameObject.SetActive(false);
+        _boxDialogue.SetActive(false);
+    }
 
     public void EnterButton()
     {
