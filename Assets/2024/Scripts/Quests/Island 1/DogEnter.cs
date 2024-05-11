@@ -294,6 +294,7 @@ public class DogEnter : MonoBehaviour
     private IEnumerator EndingNormalCoroutine()
     {
         _dog.quickEnd = true;
+        _canQuick = false;
         _dog.OrderGoQuick(_maryNPC.gameObject.transform);
         _fadeOut.DOColor(Color.black, 1f);
         _player.speed = 0;

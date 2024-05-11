@@ -112,7 +112,7 @@ public class ModelCharacter
 
     public void SelectDogs(KeyCode inputInitialDog, KeyCode inputNextDog)
     {
-        _orderDog.SelectDog(inputInitialDog, inputNextDog);
+        //_orderDog.SelectDog(inputInitialDog, inputNextDog);
     }
 
     public void StopDog()

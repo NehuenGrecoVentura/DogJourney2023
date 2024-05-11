@@ -226,7 +226,7 @@ public class BoxWoods : MonoBehaviour
         Destroy(_camCinematic.gameObject);
         _camPlayer.gameObject.SetActive(true);
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
-        _player.speed = _player.speedAux;
+        _player.speed = _player.speedAux;  
 
         foreach (var item in _canvasQuests)
             item.gameObject.SetActive(false);
@@ -238,16 +238,19 @@ public class BoxWoods : MonoBehaviour
         _inventory.money += _rewardMoney;
         Destroy(_arrow);
         Destroy(_iconInteractive);
+
         yield return new WaitForSeconds(1f);
         QuestBroom mary = FindObjectOfType<QuestBroom>();
+        mary.gameObject.GetComponent<Collider>().enabled = false;
         _radar.target = mary.gameObject.transform;
-        mary.gameObject.GetComponent<BoxCollider>().enabled = true;
         mary.enabled = true;
         _camPlayer.gameObject.SetActive(false);
         _maryCam.gameObject.SetActive(true);
+
         yield return new WaitForSeconds(2f);
         _camPlayer.gameObject.SetActive(true);
         _maryCam.gameObject.SetActive(false);
+        mary.gameObject.GetComponent<Collider>().enabled = true;
         Destroy(_dogTutorial.gameObject);
         Destroy(gameObject);
     }

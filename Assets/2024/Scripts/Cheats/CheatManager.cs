@@ -66,7 +66,7 @@ public class CheatManager : MonoBehaviour
             else _inventory.upgradeLoot = false;
         }
 
-        if (Input.GetKeyDown(_keyTeletransport))
+        if (Input.GetKeyDown(_keyTeletransport) && Input.GetKey(KeyCode.LeftControl))
             transform.position = _posTeletransport.position;
 
         if (!Input.GetKey(_keySkipQuest)) return;
