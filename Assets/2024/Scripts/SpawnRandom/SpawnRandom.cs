@@ -69,7 +69,7 @@ public class SpawnRandom : MonoBehaviour
             float terrainHeight = _terrain.SampleHeight(position);
 
             // Ajustar la posición vertical del objeto
-            position.y = terrainHeight + 0.5f;
+            position.y = terrainHeight + 0.2f;
 
             // Asignar la nueva posición al objeto
             t.position = position;
