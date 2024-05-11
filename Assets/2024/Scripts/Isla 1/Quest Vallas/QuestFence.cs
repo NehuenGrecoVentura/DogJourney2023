@@ -115,7 +115,7 @@ public class QuestFence : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && !_activeQuest || _completedWoods)
+        if (player != null && (!_activeQuest || _completedWoods))
         {
             _iconInteract.SetActive(true);
             _dialogue.playerInRange = true;
@@ -209,7 +209,6 @@ public class QuestFence : MonoBehaviour
 
     private IEnumerator MessageBuild()
     {
-        //Destroy(_myCol);
         _myCol.enabled = false;
         _dialogue.playerInRange = false;
         _textName.text = _nameNPC;
