@@ -11,6 +11,7 @@ public class FirstMarket : MonoBehaviour
     [SerializeField] TMP_Text _textMessage;
     [SerializeField] TMP_Text _textName;
     [SerializeField, TextArea(4,6)] string _message;
+    [SerializeField] GameObject _messageBuildFinished;
     private CameraOrbit _camPlayer;
     private Collider _myCol;
     private bool _firstContact = false;
@@ -24,6 +25,7 @@ public class FirstMarket : MonoBehaviour
     private void Start()
     {
         _camFocusMarket.gameObject.SetActive(false);
+        _messageBuildFinished.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -58,6 +60,7 @@ public class FirstMarket : MonoBehaviour
         player.speed = player.speedAux;
         player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
         _myCol.enabled = true;
-        Destroy(this);
+        _messageBuildFinished.SetActive(true);
+        Destroy(gameObject);
     }
 }
