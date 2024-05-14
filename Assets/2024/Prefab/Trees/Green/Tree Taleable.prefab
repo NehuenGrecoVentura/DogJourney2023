@@ -6143,6 +6143,7 @@ MonoBehaviour:
   - {fileID: 1117960771175258307}
   - {fileID: 1913952512588508333}
   - {fileID: 1423415260605286116}
+  _trolleyNavMesh: {fileID: 0}
 --- !u!1 &3582024904042324624
 GameObject:
   m_ObjectHideFlags: 0
@@ -14585,6 +14586,20 @@ MonoBehaviour:
   _sapling: {fileID: 6294234342728099049}
   _decal: {fileID: 2481942111367932494}
   _hitBar: {fileID: 1067664358997491676}
+--- !u!64 &1835155092687006323
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7044970923717595127}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5910402680614279137, guid: 2f66084aeb0d52448a91583989f7d85b, type: 3}
 --- !u!4 &7678376875631367501 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2f66084aeb0d52448a91583989f7d85b,

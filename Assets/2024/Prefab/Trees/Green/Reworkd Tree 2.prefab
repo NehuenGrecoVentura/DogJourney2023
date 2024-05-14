@@ -9671,6 +9671,7 @@ GameObject:
   - component: {fileID: 6179305065893226709}
   - component: {fileID: 4719826178374039538}
   - component: {fileID: 6937720750527109924}
+  - component: {fileID: 3867549832550311580}
   m_Layer: 0
   m_Name: Regenerative
   m_TagString: Untagged
@@ -9874,6 +9875,20 @@ MonoBehaviour:
   _sapling: {fileID: 217588030131548385}
   _decal: {fileID: 2164838046835809325}
   _hitBar: {fileID: 1450985192847938349}
+--- !u!64 &3867549832550311580
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6354133666557171185}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2534964839176971238, guid: 0c8865374f8af96459803a524075818f, type: 3}
 --- !u!1 &6426565876510039115
 GameObject:
   m_ObjectHideFlags: 0
@@ -11499,6 +11514,7 @@ MonoBehaviour:
   - {fileID: 1723092737244274638}
   - {fileID: 4148138141383231571}
   - {fileID: 6426469843857405246}
+  _trolleyNavMesh: {fileID: 0}
 --- !u!1 &8351686554219136634
 GameObject:
   m_ObjectHideFlags: 0

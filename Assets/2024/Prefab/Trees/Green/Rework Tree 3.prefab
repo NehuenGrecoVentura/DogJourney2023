@@ -319,6 +319,7 @@ MonoBehaviour:
   - {fileID: 6556777769278018691}
   - {fileID: 2415446420864211417}
   - {fileID: 2764913326269282109}
+  _trolleyNavMesh: {fileID: 0}
 --- !u!1 &1193402494922549986
 GameObject:
   m_ObjectHideFlags: 0
@@ -787,6 +788,7 @@ GameObject:
   - component: {fileID: 2964651542382974795}
   - component: {fileID: 1797211391422458474}
   - component: {fileID: 1064818437900712872}
+  - component: {fileID: 2908442135522909654}
   m_Layer: 0
   m_Name: Regenerative
   m_TagString: Untagged
@@ -990,6 +992,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0424879, y: 0.09873888, z: 0.16695955}
   m_Center: {x: -0.0055493293, y: 0.012582916, z: 0.05868135}
+--- !u!64 &2908442135522909654
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2305479385203832200}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6654983148558528607, guid: 005a282525b685a49b7b03d5153dde05, type: 3}
 --- !u!1 &2603715688293907544
 GameObject:
   m_ObjectHideFlags: 0
