@@ -22,9 +22,13 @@ public class TreeRegenerative : MonoBehaviour
     [SerializeField] HitBar _hitBar;
 
     private CharacterInventory _inventory;
+    private BoxCollider _myCol;
+
     private void Awake()
     {
         _myAudio = GetComponent<AudioSource>();
+        _myCol = GetComponent<BoxCollider>();
+
         _player = FindObjectOfType<Character>();
         _quest4 = FindObjectOfType<HouseQuest4>();
         _doTween = FindObjectOfType<DoTweenManager>();
@@ -51,14 +55,14 @@ public class TreeRegenerative : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null) _hitBar.gameObject.SetActive(true);
+        if (player != null && _myCol.enabled) _hitBar.gameObject.SetActive(true);
     }
 
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Character>();
 
-        if (player != null)
+        if (player != null && _myCol.enabled)
         {
             FocusToTree();
 
@@ -100,7 +104,7 @@ public class TreeRegenerative : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null)
+        if (player != null && _myCol.enabled)
         {
             _decal.SetActive(false);
             _hitBar.gameObject.SetActive(false);

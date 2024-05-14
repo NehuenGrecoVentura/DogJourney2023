@@ -49,7 +49,7 @@ public class CinematicTree : CinematicManager, ICinematic
         foreach (var greenTree in _greenTrees)
         {
             if (greenTree.tag != "Purple Tree")
-                greenTree.GetComponent<Collider>().enabled = true;
+                greenTree.GetComponent<BoxCollider>().enabled = true;
         }
 
         _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);

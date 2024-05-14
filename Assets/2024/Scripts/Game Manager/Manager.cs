@@ -17,7 +17,7 @@ public class Manager : MonoBehaviour
     [SerializeField] float _winTextTime;
     [SerializeField] Animator[] _doorsGatesAnims;
     [SerializeField] GameObject[] _objsToHide;
-    [SerializeField] Collider _firstTree;
+    [SerializeField] BoxCollider _firstTree;
     //[SerializeField] Button _buttonRope;
     private QuestUI _questUI;
 
@@ -108,7 +108,7 @@ public class Manager : MonoBehaviour
             decal.SetActive(false);
 
         foreach (var col in _allTrees)
-            col.GetComponent<Collider>().enabled = false;
+            col.GetComponent<BoxCollider>().enabled = false;
     }
 
     public void QuestCompleted()
