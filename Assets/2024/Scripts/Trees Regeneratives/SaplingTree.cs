@@ -99,5 +99,6 @@ public class SaplingTree : MonoBehaviour
         timer = 0;
         scale = 0;
         _tree.RestartAmount();
+        // AGREGAR ACA NUEVO ARBOL
     }
 }

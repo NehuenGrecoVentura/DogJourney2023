@@ -6,6 +6,9 @@ public class TreeStump : MonoBehaviour
     [SerializeField] float _timeActive = 2.5f;
     [SerializeField] TreeChopping _treeComplete;
     [SerializeField] GameObject _particlesParent;
+    [SerializeField] Trunks _trunks;
+    [SerializeField] GameObject _decal;
+    [SerializeField] SaplingTree _sapling;
 
     private Vector3[] _initialPos;
     private GameObject[] _particles;
@@ -34,10 +37,10 @@ public class TreeStump : MonoBehaviour
 
     private IEnumerator Timer()
     {
-        yield return new WaitForSeconds(_timeActive);
+        _decal.SetActive(false);
 
-        // Activa el objeto TreeChopping
-        _treeComplete.gameObject.SetActive(true);
+        yield return new WaitForSeconds(_timeActive);
+        //_treeComplete.gameObject.SetActive(true);
 
         // Restaura las posiciones iniciales de las partículas
         for (int i = 0; i < _particles.Length; i++)
@@ -45,7 +48,8 @@ public class TreeStump : MonoBehaviour
             _particles[i].transform.position = _initialPos[i];
         }
 
-        // Desactiva este objeto
+        _sapling.gameObject.SetActive(true);
+        _trunks.gameObject.SetActive(true);
         gameObject.SetActive(false);
     }
 
