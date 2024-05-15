@@ -28,10 +28,13 @@ public class BillboardCam : MonoBehaviour
 
     void LateUpdate()
     {
-        // Calcula la dirección hacia la cámara del jugador
-        Vector3 directionToCamera = transform.position - _camPos.transform.position;
+        if (_camPos != null)
+        {
+            // Calcula la dirección hacia la cámara del jugador
+            Vector3 directionToCamera = transform.position - _camPos.transform.position;
 
-        // Apunta hacia la cámara, pero invierte el eje Z para corregir la inversión
-        transform.rotation = Quaternion.LookRotation(-directionToCamera, Vector3.up);
+            // Apunta hacia la cámara, pero invierte el eje Z para corregir la inversión
+            transform.rotation = Quaternion.LookRotation(-directionToCamera, Vector3.up);
+        }    
     }
 }
