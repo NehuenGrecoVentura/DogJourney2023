@@ -11,7 +11,6 @@ public class TreeChopping : MonoBehaviour
         _treeFall.SetActive(false);
     }
 
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
