@@ -176,7 +176,7 @@ public class FishingQuest2 : MonoBehaviour
         transform.LookAt(_player.gameObject.transform);
 
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
 
         _camEnding.gameObject.SetActive(true);
         _camPlayer.gameObject.SetActive(false);
@@ -231,7 +231,7 @@ public class FishingQuest2 : MonoBehaviour
         _camPlayer.gameObject.SetActive(true);
 
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
 
         _gm.QuestCompleted();
         _chainQuest.gameObject.SetActive(true);
@@ -265,7 +265,7 @@ public class FishingQuest2 : MonoBehaviour
         _camPlayer.gameObject.SetActive(false);
 
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
 
         _textNPCMessage.text = "Digs";
         _textMessage.text = _messages[0];
@@ -292,7 +292,7 @@ public class FishingQuest2 : MonoBehaviour
         _camPlayer.gameObject.SetActive(true);
 
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
 
         yield return new WaitForSeconds(0.6f);
         _boxMessage.gameObject.SetActive(false);

@@ -66,7 +66,7 @@ public class QuickFishing : MonoBehaviour
         else if (_isActive && !_completed)
         {
             _player.speed = 0;
-            _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+            _player.FreezePlayer();
         }
     }
 
@@ -119,7 +119,7 @@ public class QuickFishing : MonoBehaviour
         _camPlayer.gameObject.SetActive(false);
         _myCam.gameObject.SetActive(true);
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         _isActive = true;
 
         Destroy(_myCol);
@@ -168,6 +168,6 @@ public class QuickFishing : MonoBehaviour
         //yield return new WaitForSeconds(1f);
         //_boxMessage.gameObject.SetActive(false);
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
     }
 }

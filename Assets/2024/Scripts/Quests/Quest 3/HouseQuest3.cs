@@ -118,7 +118,7 @@ public class HouseQuest3 : MailQuest
             _letterQuest.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+            player.FreezePlayer();
         }
 
     }
@@ -153,13 +153,13 @@ public class HouseQuest3 : MailQuest
         _inventory.oils = 1;
         _quest.gameObject.SetActive(false);
         _nextQuest.enabled = true;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         _player.speed = 0;
         _camFocus.gameObject.SetActive(true);
         _camPlayer.gameObject.SetActive(false);
         _messageSlide.ShowMessage("+1", _iconOil);
         yield return new WaitForSeconds(2f);
-        _player.FreezePlayer(RigidbodyConstraints.None);
+        _player.DeFreezePlayer();
         _player.speed = _player.speedAux;
         _camPlayer.gameObject.SetActive(true);
         _radar.StatusRadar(true);

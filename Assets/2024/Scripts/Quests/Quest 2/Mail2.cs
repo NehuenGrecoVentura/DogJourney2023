@@ -102,7 +102,7 @@ public class Mail2 : MailQuest
         _canvasQuest.SetActive(true);
         _myAnim.SetBool("Quest", true);
         _myAudio.PlayOneShot(_soundClip);
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         Destroy(_letterQuest.gameObject);
@@ -130,7 +130,7 @@ public class Mail2 : MailQuest
         //_buttonAddDog.gameObject.SetActive(true);
         _iconInteract.SetActive(false);
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         Destroy(_camFocus.gameObject);
         Destroy(this);
     }
@@ -146,7 +146,7 @@ public class Mail2 : MailQuest
                 _letterQuest.gameObject.SetActive(true);
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
-                player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+                player.FreezePlayer();
                 _questActive = true;
             }
 
@@ -183,7 +183,7 @@ public class Mail2 : MailQuest
         yield return new WaitForSeconds(2f);
         _fadeOut.DOColor(Color.black, 1f);
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         yield return new WaitForSeconds(1f);
         _fadeOut.DOColor(new Color(0, 0, 0, 0), 1f);
         _dogCam.gameObject.SetActive(false);
@@ -216,7 +216,7 @@ public class Mail2 : MailQuest
         //yield return new WaitForSeconds(2f);
         _fadeOut.DOColor(Color.black, 1f);
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         yield return new WaitForSeconds(1f);
         _fadeOut.DOColor(new Color(0, 0, 0, 0), 1f);
         _camPlayer.gameObject.SetActive(false);

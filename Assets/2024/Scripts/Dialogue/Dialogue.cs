@@ -68,7 +68,7 @@ public class Dialogue : MonoBehaviour
     private void StartDialogue()
     {
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         _cam.enabled = false;
         _arrowTransform.DOScale(new Vector3(1.03f, 0.51f, 0.97f), 1f).SetLoops(-1, LoopType.Yoyo);
         _didDialogueStart = true;
@@ -100,7 +100,7 @@ public class Dialogue : MonoBehaviour
     public void Close()
     {
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         _cam.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -114,7 +114,7 @@ public class Dialogue : MonoBehaviour
     public void Cancel()
     {
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         _cam.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

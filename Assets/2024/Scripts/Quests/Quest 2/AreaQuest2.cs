@@ -35,7 +35,7 @@ public class AreaQuest2 : MonoBehaviour
         if (player != null && !_firstContact)
         {
             player.speed = 0;
-            player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+            player.FreezePlayer();
             StartCoroutine(FocusPuzzle());
         }
     }
@@ -56,7 +56,7 @@ public class AreaQuest2 : MonoBehaviour
         _boxMessage.DOAnchorPosY(70f, 0.5f);
         yield return new WaitForSeconds(5f);
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         //_boxMessage.transform.DOScale(0, 0.5f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
         _camPlayer.gameObject.SetActive(true);

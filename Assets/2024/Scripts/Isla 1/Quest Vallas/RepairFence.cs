@@ -25,10 +25,6 @@ public class RepairFence : MonoBehaviour
     [SerializeField, TextArea(6, 4)] string _messageEnd;
     [SerializeField] TMP_Text _textEnd;
 
-    //[Header("NEXT QUEST")]
-    //private FirstMarket _market;
-    //private LocationQuest _radar;
-
     private AudioSource _myAudio;
     [SerializeField] AudioClip _soundMessage;
     [SerializeField] AudioClip _soundConstruct;
@@ -42,9 +38,6 @@ public class RepairFence : MonoBehaviour
 
         _camPlayer = FindObjectOfType<CameraOrbit>();
         _player = FindObjectOfType<Character>();
-        //_gm = FindObjectOfType<Manager>();
-        //_radar = FindObjectOfType<LocationQuest>();
-        //_market = FindObjectOfType<FirstMarket>();
     }
 
     private void Start()
@@ -83,9 +76,8 @@ public class RepairFence : MonoBehaviour
         Destroy(_myCol);
         Destroy(_iconMaterial.gameObject);
         _myMesh.enabled = false;
-        _player.isConstruct = true;
-        _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        
+        
 
         _camPlayer.gameObject.SetActive(false);
         _cinematic.SetActive(true);
@@ -95,8 +87,13 @@ public class RepairFence : MonoBehaviour
 
         while (elapsedTime < 3f)
         {
-            if (elapsedTime > 0f) _player.PlayAnim("Build");
-
+            if (elapsedTime > 0f)
+            {
+                _player.FreezePlayer();
+                _player.isConstruct = true;
+                _player.PlayAnim("Build");
+            }
+                              
             // Incrementa el tiempo transcurrido
             elapsedTime += Time.deltaTime;
 
@@ -105,14 +102,14 @@ public class RepairFence : MonoBehaviour
         }
 
 
-        
-        //yield return new WaitForSeconds(4f);
+        _player.isConstruct = false;
+        //_player.FreezePlayer();
+
         _fadeOut.DOColor(Color.clear, 2f);
         Destroy(_fencesBroken);
         _fencesRepared.SetActive(true);
+        
         yield return new WaitForSeconds(2);
-        _player.isConstruct = false;
-
         _textEnd.text = _messageEnd;
         _message.DOAnchorPosY(-1000f, 0f);
         _message.localScale = new Vector3(1, 1, 1);
@@ -120,22 +117,13 @@ public class RepairFence : MonoBehaviour
         _myAudio.PlayOneShot(_soundMessage);
         _message.DOAnchorPosY(70f, 0.5f);
 
-
         yield return new WaitForSeconds(5f);
-        _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         _camPlayer.gameObject.SetActive(true);
-
-
         _message.gameObject.SetActive(false);
         _message.DOAnchorPosY(-1000f, 0f);
-
-
         Destroy(_cinematic);
-        //_gm.QuestCompleted();
-        //_radar.target = _market.gameObject.transform;
         _iconSeed.SetActive(true);
-        //Destroy(this);
         Destroy(gameObject);
     }
 }

@@ -47,8 +47,7 @@ public class NPCWomanMarket : MonoBehaviour
         _cinematic.SetActive(true);
         yield return new WaitForSeconds(_timeCinematic);
         _camPlayer.gameObject.SetActive(true); 
-        player.FreezePlayer(RigidbodyConstraints.None);
-        player.speed = player.speedAux;
+        player.DeFreezePlayer();
         _radar.StatusRadar(true);
         _radar.target = _posGates;
         Destroy(_cinematic);
@@ -60,8 +59,7 @@ public class NPCWomanMarket : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
-            player.FreezePlayer(RigidbodyConstraints.FreezeAll);
-            player.speed = 0;
+            player.FreezePlayer();
             _iconQuest.SetActive(false);
             _myAnim.SetBool("Quest", true);
         }
@@ -74,8 +72,7 @@ public class NPCWomanMarket : MonoBehaviour
         {
             if (!Input.GetKeyDown(KeyCode.Return))
             {
-                player.FreezePlayer(RigidbodyConstraints.FreezeAll);
-                player.speed = 0;
+                player.FreezePlayer();
                 _message.SetActive(true);
             }
 

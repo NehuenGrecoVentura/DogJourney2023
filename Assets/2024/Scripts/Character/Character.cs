@@ -67,6 +67,19 @@ public class Character : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //if (speed != 0)
+        //{
+        //    _controller.Move(rabbitPicked);
+        //    _myAnim.enabled = true;
+        //}
+
+        //else
+        //{
+
+        //    if (!isConstruct) _myAnim.enabled = false;
+        //    else _myAnim.enabled = true;
+        //}
+
         if (speed != 0)
         {
             _controller.Move(rabbitPicked);
@@ -75,10 +88,10 @@ public class Character : MonoBehaviour
 
         else
         {
-
-            if (!isConstruct) _myAnim.enabled = false;
+            if (!isConstruct) _myAnim.runtimeAnimatorController = _animController[2];
             else _myAnim.enabled = true;
         }
+
     }
 
     private void Update()
@@ -101,14 +114,29 @@ public class Character : MonoBehaviour
         _myAnim.Play(nameAnim);
     }
 
-    public void FreezePlayer(RigidbodyConstraints rb)
+    //public void FreezePlayer(RigidbodyConstraints rb)
+    //{
+    //    _model.FreezePlayer(rb);
+    //}
+
+    public void FreezePlayer()
     {
-        _model.FreezePlayer(rb);
+        _myRb.isKinematic = true;
+        speed = 0;
+        if (!_construct) _myAnim.runtimeAnimatorController = _animController[2];
+    }
+
+    public void DeFreezePlayer()
+    {
+        _myRb.isKinematic = false;
+        speed = speedAux;
+        _myAnim.runtimeAnimatorController = _animController[0];
     }
 
     public void MoveInStairs(float speedClimb)
     {
         PlayAnim("Up Stairs New");
+        speed = 0;
         _myRb.useGravity = false;
         _myRb.MovePosition(transform.position + Vector3.up * speedClimb * Time.fixedDeltaTime);
         transform.rotation = Quaternion.Euler(0, 90, 0);

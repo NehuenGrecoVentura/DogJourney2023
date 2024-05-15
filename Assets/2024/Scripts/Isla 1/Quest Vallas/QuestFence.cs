@@ -160,7 +160,7 @@ public class QuestFence : MonoBehaviour
         _fadeOut.DOColor(Color.clear, 0f);
         _iconInteract.SetActive(false);
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         _message.gameObject.SetActive(true);
         _message.localScale = new Vector3(1, 1, 1);
         _myAudio.PlayOneShot(_messageSound);
@@ -196,7 +196,7 @@ public class QuestFence : MonoBehaviour
         _camNPC.gameObject.SetActive(false);
         _fadeOut.DOColor(Color.clear, 1f);
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         _message.gameObject.SetActive(false);
 
 
@@ -216,7 +216,7 @@ public class QuestFence : MonoBehaviour
         _fadeOut.DOColor(Color.clear, 0f);
         _iconInteract.SetActive(false);
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         _message.gameObject.SetActive(true);
         _message.localScale = new Vector3(1, 1, 1);
         _myAudio.PlayOneShot(_messageSound);
@@ -225,7 +225,7 @@ public class QuestFence : MonoBehaviour
         _message.DOAnchorPosY(-1000f, 0.5f).OnComplete(() =>
         {
             _player.speed = _player.speedAux;
-            _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+            _player.DeFreezePlayer();
             _message.gameObject.SetActive(false);
             _iconBuild.gameObject.SetActive(true);
             Destroy(this);

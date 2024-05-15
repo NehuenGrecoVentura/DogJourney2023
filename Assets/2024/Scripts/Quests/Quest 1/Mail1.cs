@@ -60,7 +60,7 @@ public class Mail1 : MailQuest
             _letterQuest.gameObject.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+            player.FreezePlayer();
             _pause.Freeze();
         }
     }

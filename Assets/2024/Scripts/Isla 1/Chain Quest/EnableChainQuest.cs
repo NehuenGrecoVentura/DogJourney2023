@@ -66,7 +66,7 @@ public class EnableChainQuest : MonoBehaviour
         _cam1.gameObject.SetActive(true);
         _iconChain.SetActive(true);
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         _textName.text = "Special Quest";
         _textMessage.text = _message;
         _boxMessage.transform.localScale = new Vector3(1, 1, 1);
@@ -84,7 +84,7 @@ public class EnableChainQuest : MonoBehaviour
         _camPlayer.gameObject.SetActive(true);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
 
         _archaeologist.enabled = true;
         _archaeologist.GetComponent<BoxCollider>().enabled = true;

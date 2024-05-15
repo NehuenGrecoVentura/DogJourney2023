@@ -40,7 +40,7 @@ public class CinematicTrunks : MonoBehaviour
         _camTrunks.gameObject.SetActive(true);
         _camPlayer.gameObject.SetActive(false);
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         _boxMessage.GetComponent<RectTransform>().DOAnchorPosY(-1000f, 1f);
         yield return new WaitForSeconds(4f);
         _myAudio.Play();
@@ -51,7 +51,7 @@ public class CinematicTrunks : MonoBehaviour
         _camTrunks.gameObject.SetActive(false);
         _camPlayer.gameObject.SetActive(true);
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         _questUI.UIStatus(true);
         Destroy(gameObject);
     }

@@ -52,7 +52,7 @@ public class CinematicTree : CinematicManager, ICinematic
                 greenTree.GetComponent<BoxCollider>().enabled = true;
         }
 
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         _gm.GreenTreesShader();
         ObjStatus(true);
         _message.transform.DOScale(0f, 0.1f);

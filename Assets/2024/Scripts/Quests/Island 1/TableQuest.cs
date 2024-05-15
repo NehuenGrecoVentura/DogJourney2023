@@ -174,7 +174,7 @@ public class TableQuest : MonoBehaviour
     {
         _inventory.nails = 10;
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         Destroy(_myCol);
         Destroy(_iconInteract);
         _myAudio.PlayOneShot(_soundMessage);
@@ -213,7 +213,7 @@ public class TableQuest : MonoBehaviour
         _message.DOAnchorPosY(-1000f, 0.5f);
         _camPlayer.gameObject.SetActive(true);
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         _colTable.enabled = true;
         Destroy(_camCinematic.gameObject);
 

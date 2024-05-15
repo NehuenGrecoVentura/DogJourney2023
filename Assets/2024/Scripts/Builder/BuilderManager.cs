@@ -73,7 +73,7 @@ public class BuilderManager : MonoBehaviour
         _playCinematic = true;
         Destroy(_myRender);
         Destroy(_myCol);
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);       
+        _player.FreezePlayer();       
         _player.speed = 0;
         _player.PlayAnim("Build");
         _camPlayer.gameObject.SetActive(false);
@@ -91,7 +91,7 @@ public class BuilderManager : MonoBehaviour
 
         _radar.target = _posRadar;
         //if (gameObject.name == "Build Stairs") //_canvasQuest.SetActive(true);
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         _player.speed = _player.speedAux;
         Destroy(_iconsMaterials);
         Destroy(_cinematic);

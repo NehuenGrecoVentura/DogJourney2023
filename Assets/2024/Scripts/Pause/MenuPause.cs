@@ -76,7 +76,7 @@ public class MenuPause : MonoBehaviour
     public void Freeze()
     {
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         _isFreeze = true;
         _cam.sensitivity = new Vector2(0,0);
     }
@@ -84,7 +84,7 @@ public class MenuPause : MonoBehaviour
     public void Defreeze()
     {
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         _isFreeze = false;
         _cam.sensitivity = new Vector2(3, 3);
     }

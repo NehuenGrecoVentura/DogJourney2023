@@ -283,7 +283,7 @@ public class MarketManager : MonoBehaviour, IScrollHandler
         _canvas.GetComponent<Image>().DOColor(Color.white, 0f);
         _canvas.gameObject.transform.DOScale(1f , 0.5f);
 
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         _player.speed = 0;
         yield return new WaitForSeconds(1f);
         //_intro.gameObject.SetActive(false);
@@ -322,7 +322,7 @@ public class MarketManager : MonoBehaviour, IScrollHandler
 
         yield return new WaitForSeconds(0.5f);
         _intro.gameObject.SetActive(false);
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         _player.speed = _player.speedAux;
         _pause.Defreeze();
     }

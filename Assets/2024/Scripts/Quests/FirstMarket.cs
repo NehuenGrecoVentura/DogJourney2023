@@ -49,7 +49,7 @@ public class FirstMarket : MonoBehaviour
         _camFocusMarket.gameObject.SetActive(true);
         player.gameObject.transform.LookAt(_market.gameObject.transform);
         player.speed = 0;
-        player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        player.FreezePlayer();
         yield return new WaitForSeconds(6f);
         
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
@@ -58,7 +58,7 @@ public class FirstMarket : MonoBehaviour
         _camPlayer.gameObject.SetActive(true);
         _camFocusMarket.gameObject.SetActive(false);
         player.speed = player.speedAux;
-        player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        player.DeFreezePlayer();
         _myCol.enabled = true;
         _messageBuildFinished.SetActive(true);
         Destroy(gameObject);

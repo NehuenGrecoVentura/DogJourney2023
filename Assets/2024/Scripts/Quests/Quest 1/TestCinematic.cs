@@ -23,13 +23,13 @@ public class TestCinematic : MonoBehaviour
         _questUI.UIStatus(false);
         _camPlayer.gameObject.SetActive(false);
         cinematic.SetActive(true);
-        _player.FreezePlayer(RigidbodyConstraints.FreezePosition);
+        _player.FreezePlayer();
         _player.speed = 0;
         _player.PlayAnim("Idle");
         yield return new WaitForSeconds(timeCinematic);
         _questUI.UIStatus(true);
         _camPlayer.gameObject.SetActive(true);
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         _player.speed = _player.speedAux;
         Destroy(cinematic);
     }

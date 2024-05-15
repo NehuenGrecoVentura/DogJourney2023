@@ -147,7 +147,7 @@ public class ArchaeologistQuest1 : MonoBehaviour
         _myCol.enabled = false;
 
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
 
         _nameNPC.text = "Archaeologist";
         _textMessage.text = _messagesEnding[0];
@@ -187,7 +187,7 @@ public class ArchaeologistQuest1 : MonoBehaviour
         Destroy(_cinematicEnd);
 
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
 
         _gm.QuestCompleted();
         _iconTreasure.SetActive(false);

@@ -149,7 +149,7 @@ public class DogEnter : MonoBehaviour
         _dog.quickEnd = false;
         _mainCam.gameObject.SetActive(true);
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         _colTableQuest.enabled = true;
         _nextQuest.enabled = true;
         _radar.target = _nextQuest.gameObject.transform;
@@ -184,7 +184,7 @@ public class DogEnter : MonoBehaviour
         _cinematic.SetActive(true);
         _mainCam.gameObject.SetActive(false);
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
 
         yield return new WaitForSeconds(5f);
         _message.DOAnchorPosY(-1000f, 0f);
@@ -194,7 +194,7 @@ public class DogEnter : MonoBehaviour
         _cinematic.SetActive(false);
         _mainCam.gameObject.SetActive(true);
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
 
         _iconInterct.SetActive(true);
     }
@@ -205,7 +205,7 @@ public class DogEnter : MonoBehaviour
         _dogBroomCinematic.SetActive(true);
         _mainCam.gameObject.SetActive(false);
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         Destroy(_myCol);
         _dogBall.gameObject.transform.position = _enterPos.position;
 
@@ -240,7 +240,7 @@ public class DogEnter : MonoBehaviour
         Destroy(_dogBroomCinematic);
         _mainCam.gameObject.SetActive(true);
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
 
         Destroy(_cinematic);
         _radar.target = _maryNPC.gameObject.transform;
@@ -262,7 +262,7 @@ public class DogEnter : MonoBehaviour
         yield return new WaitForSeconds(2f);
         _fadeOut.DOColor(Color.black, 1f);
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         yield return new WaitForSeconds(1f);
         _fadeOut.DOColor(new Color(0,0,0,0), 1f);
         _maryNPC.ChangeController();
@@ -298,7 +298,7 @@ public class DogEnter : MonoBehaviour
         _dog.OrderGoQuick(_maryNPC.gameObject.transform);
         _fadeOut.DOColor(Color.black, 1f);
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         yield return new WaitForSeconds(1f);
         _fadeOut.DOColor(new Color(0, 0, 0, 0), 1f);
         _maryNPC.ChangeController();

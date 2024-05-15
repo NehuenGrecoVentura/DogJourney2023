@@ -217,7 +217,7 @@ public class FishingMinigame : MonoBehaviour
                 _camFish.enabled = true;
 
                 _character.speed = 0;
-                _character.FreezePlayer(RigidbodyConstraints.FreezeAll);
+                _character.FreezePlayer();
                 _radar.StatusRadar(false);
             }
 
@@ -227,7 +227,7 @@ public class FishingMinigame : MonoBehaviour
                 _camFish.enabled = false;
 
                 _character.speed = _character.speedAux;
-                _character.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+                _character.DeFreezePlayer();
                 _radar.StatusRadar(true);
             }
         }
@@ -263,7 +263,7 @@ public class FishingMinigame : MonoBehaviour
         _camFish.enabled = false;
 
         _character.speed = _character.speedAux;
-        _character.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _character.DeFreezePlayer();
         _radar.StatusRadar(true);
         fishedPicked = 0;
     }

@@ -31,7 +31,7 @@ public class TutorialScared : MonoBehaviour
     private IEnumerator ShowTutorial()
     {
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         _cinematic.SetActive(true);
         _camPlayer.gameObject.SetActive(false);
         yield return new WaitForSeconds(2f);
@@ -40,7 +40,7 @@ public class TutorialScared : MonoBehaviour
         yield return new WaitForSeconds(5f);
         _camPlayer.gameObject.SetActive(true);
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         Destroy(_message.transform.parent.gameObject);
         Destroy(_cinematic);
         Destroy(this);

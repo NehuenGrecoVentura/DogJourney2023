@@ -29,7 +29,7 @@ public class MailQuest : MonoBehaviour
     public void Confirm(GameObject letterQuest)
     {
         Character player = FindObjectOfType<Character>();
-        player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        player.DeFreezePlayer();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         Destroy(letterQuest);

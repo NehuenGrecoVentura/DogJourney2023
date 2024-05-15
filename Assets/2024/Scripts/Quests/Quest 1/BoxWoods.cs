@@ -122,7 +122,7 @@ public class BoxWoods : MonoBehaviour
         _camPlayer.gameObject.SetActive(false);
         _dogTutorial.gameObject.SetActive(true);
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         yield return new WaitForSeconds(1f);
         _boxTutorial.DOAnchorPosY(-100f, 0.5f);
         yield return new WaitForSeconds(3f);
@@ -130,7 +130,7 @@ public class BoxWoods : MonoBehaviour
         _camPlayer.gameObject.SetActive(true);
         _dogTutorial.gameObject.SetActive(false);
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
     }
 
 
@@ -139,7 +139,7 @@ public class BoxWoods : MonoBehaviour
         canQuick = false;
         _dogAudio.PlayOneShot(_quickSound);
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         _fadeOut.color = new Color(0, 0, 0, 0);
         _dog.quickEnd = true;
         _dog.OrderGoQuick(_posEndQuick);
@@ -172,7 +172,7 @@ public class BoxWoods : MonoBehaviour
         _animTruck.enabled = true;
         _arrow.SetActive(false);
         _iconInteractive.SetActive(false);
-        _player.FreezePlayer(RigidbodyConstraints.FreezePosition);
+        _player.FreezePlayer();
         _player.speed = 0;
         _barriel.UpBarriel(_timeCinematic);
     }
@@ -225,7 +225,7 @@ public class BoxWoods : MonoBehaviour
         Destroy(_animTruck.gameObject);
         Destroy(_camCinematic.gameObject);
         _camPlayer.gameObject.SetActive(true);
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         _player.speed = _player.speedAux;  
 
         foreach (var item in _canvasQuests)

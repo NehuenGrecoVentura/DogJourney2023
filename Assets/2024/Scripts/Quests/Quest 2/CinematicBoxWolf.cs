@@ -49,7 +49,7 @@ public class CinematicBoxWolf : MonoBehaviour
         _textName.text = "Tip";
         _radar.StatusRadar(false);
         Destroy(_col);
-        _player.FreezePlayer(RigidbodyConstraints.FreezePosition);
+        _player.FreezePlayer();
         _player.speed = 0;
 
         yield return new WaitForSeconds(8f);
@@ -65,7 +65,7 @@ public class CinematicBoxWolf : MonoBehaviour
         _boxMessage.DOAnchorPosY(-1000f, 0f);
 
 
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         _player.speed = _player.speedAux;
         _questUI.UIStatus(true);
         _questUI.AddNewTask(2, _newTask);

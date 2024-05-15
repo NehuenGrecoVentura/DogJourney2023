@@ -158,7 +158,7 @@ public class Manager : MonoBehaviour
     {
         _cam.gameObject.SetActive(false);
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         cinematicGameOver.SetActive(true);
         yield return new WaitForSeconds(time);
         _gameOver.SetActive(true);
@@ -167,7 +167,7 @@ public class Manager : MonoBehaviour
         yield return new WaitForSeconds(3f);
         _cam.gameObject.SetActive(true);
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         cinematicGameOver.SetActive(false);
         _gameOver.SetActive(false);
         _player.gameObject.transform.position = posRestart.position;
@@ -187,7 +187,7 @@ public class Manager : MonoBehaviour
 
         _cam.gameObject.SetActive(true);
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         cinematicGameOver.SetActive(false);
         _gameOver.SetActive(false);
         _player.gameObject.transform.position = posRestart.position;
@@ -233,7 +233,7 @@ public class Manager : MonoBehaviour
         chainsActive = true;
 
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
 
         _cam.gameObject.SetActive(false);
         _camScenario.gameObject.SetActive(true);
@@ -271,7 +271,7 @@ public class Manager : MonoBehaviour
         Destroy(_camScenario.gameObject);
 
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
 
         yield return new WaitForSeconds(0.6f);
         _boxMessage.gameObject.SetActive(false);

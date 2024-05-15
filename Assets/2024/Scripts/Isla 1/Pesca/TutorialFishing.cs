@@ -110,7 +110,7 @@ public class TutorialFishing : MonoBehaviour
 
         _player.gameObject.transform.LookAt(transform);
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
 
         _fadeOut.DOColor(Color.black, 1f).OnComplete(() => Destroy(_cinematic, 1f));
         yield return new WaitForSeconds(2f);
@@ -169,7 +169,7 @@ public class TutorialFishing : MonoBehaviour
         _npc.SetAnimQuest();
 
         _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         _questActive = true;
         _fadeOut.DOColor(Color.black, 1f);
         yield return new WaitForSeconds(2f);

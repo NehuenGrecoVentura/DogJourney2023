@@ -60,8 +60,7 @@ public class SeedQuest : MonoBehaviour
         Destroy(_myCol);
         _myMesh.enabled = false;
 
-        _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         _player.isConstruct = true;
         _radar.StatusRadar(false);
         _camPlayer.gameObject.SetActive(false);
@@ -72,8 +71,13 @@ public class SeedQuest : MonoBehaviour
 
         while (elapsedTime < 3f)
         {
-            if (elapsedTime > 0f) _player.PlayAnim("Build");
-
+            if (elapsedTime > 0f)
+            {
+                _player.FreezePlayer();
+                _player.isConstruct = true;
+                _player.PlayAnim("Build");
+            }
+                
             // Incrementa el tiempo transcurrido
             elapsedTime += Time.deltaTime;
 
@@ -81,10 +85,11 @@ public class SeedQuest : MonoBehaviour
             yield return null;
         }
 
+        _player.isConstruct = false;
         _flowers.SetActive(true);
         _fadeOut.DOColor(Color.clear, 2f);
+
         yield return new WaitForSeconds(2);
-        _player.isConstruct = false;
         _npc.transform.LookAt(_player.gameObject.transform);
         _text.text = _messsages[0];
         _message.DOAnchorPosY(-1000f, 0f);
@@ -144,8 +149,7 @@ public class SeedQuest : MonoBehaviour
         _message.DOAnchorPosY(-1000f, 0f);
         Destroy(_newAxe);
         _camPlayer.gameObject.SetActive(true);
-        _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         _gm.QuestCompleted();
         _gm.amountUpgrade = true;
         _radar.StatusRadar(true);

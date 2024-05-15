@@ -135,7 +135,7 @@ public class HouseQuest5 : MailQuest
             _letter.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+            player.FreezePlayer();
         }
     }
 
@@ -177,11 +177,11 @@ public class HouseQuest5 : MailQuest
         _nextQuest.enabled = true;
         _camFocus.gameObject.SetActive(true);
         _camPlayer.gameObject.SetActive(false);
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         _player.speed = 0;
         _messageSlide.ShowMessage("+ 1", _iconOil);
         yield return new WaitForSeconds(2f);
-        _player.FreezePlayer(RigidbodyConstraints.None);
+        _player.DeFreezePlayer();
         _player.speed = _player.speedAux;
         _camPlayer.gameObject.SetActive(true);
         _radar.StatusRadar(true);

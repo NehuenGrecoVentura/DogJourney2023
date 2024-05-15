@@ -41,13 +41,13 @@ public class MessageGateOil : MonoBehaviour
         _questManager.HideHUDQuest();
         _gates.UnlockNPCQuest3();
         Destroy(_message);
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
         _player.speed = 0;
         _camPlayer.gameObject.SetActive(false);
         _radar.StatusRadar(false);
         _camFocusQuest3.gameObject.SetActive(true);
         yield return new WaitForSeconds(2f);
-        _player.FreezePlayer(RigidbodyConstraints.None);
+        _player.DeFreezePlayer();
         _player.speed = _player.speedAux;
         _camPlayer.gameObject.SetActive(true);
         _radar.StatusRadar(true);

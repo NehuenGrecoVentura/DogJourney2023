@@ -48,7 +48,7 @@ public class BuildTable : MonoBehaviour
     {
         _player.isConstruct = false;
         _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         _tablePrefab.SetActive(true);
         Destroy(_iconNail.gameObject);
         Destroy(_iconWood.gameObject);
@@ -68,12 +68,16 @@ public class BuildTable : MonoBehaviour
     private IEnumerator Build()
     {
         _myAudio.Play();
+
         Destroy(_icon);
-        _iconWood.gameObject.SetActive(false);
-        _iconNail.gameObject.SetActive(false);
+        Destroy(_myCol);
+        Destroy(_iconWood.gameObject);
+        Destroy(_iconNail.gameObject);
+
+        //_iconWood.gameObject.SetActive(false);
+        //_iconNail.gameObject.SetActive(false);
         _player.isConstruct = true;
-        _player.speed = 0;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+        _player.FreezePlayer();
 
         float elapsedTime = 0f;
 
@@ -92,17 +96,16 @@ public class BuildTable : MonoBehaviour
         //Construct();
 
         _player.isConstruct = false;
-        _player.speed = _player.speedAux;
-        _player.FreezePlayer(RigidbodyConstraints.FreezeRotation);
+        _player.DeFreezePlayer();
         _tablePrefab.SetActive(true);
-        Destroy(_iconNail.gameObject);
-        Destroy(_iconWood.gameObject);
-        Destroy(_icon);
+        //Destroy(_iconNail.gameObject);
+        //Destroy(_iconWood.gameObject);
+        //Destroy(_icon);
         _inventory.greenTrees -= _totalWoods;
         _inventory.nails -= _totalNails;
         if (_inventory.greenTrees <= 0) _inventory.greenTrees = 0;
         if (_inventory.nails <= 0) _inventory.nails = 0;
-        Destroy(_myCol);
+        //Destroy(_myCol);
         _gm.QuestCompleted();
         _boxTAB.gameObject.SetActive(true);
         _npcFish.SetActive(true);

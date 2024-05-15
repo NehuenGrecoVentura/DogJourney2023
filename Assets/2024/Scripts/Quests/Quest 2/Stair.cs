@@ -100,6 +100,7 @@ public class Stair : MonoBehaviour
             if (_isUp)
             {
                 player.gameObject.transform.position = _posEnd.position;
+                player.speed = player.speedAux;
                 _isUp = false;
                 StopCoroutine(Climb());
             }

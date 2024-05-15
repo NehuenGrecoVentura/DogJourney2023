@@ -182,7 +182,7 @@ public class HouseQuest6 : MailQuest
             _letter.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            player.FreezePlayer(RigidbodyConstraints.FreezeAll);
+            player.FreezePlayer();
         }
     }
 
