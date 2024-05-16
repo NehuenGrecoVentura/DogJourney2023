@@ -1,0 +1,95 @@
+using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
+using TMPro;
+using DG.Tweening;
+
+public class QuestApple : MonoBehaviour
+{
+    [Header("INTERACT")]
+    [SerializeField] GameObject _iconInteract;
+    [SerializeField] KeyCode _keyInteract = KeyCode.F;
+    private BoxCollider _myCol;
+
+    [Header("DIALOGS")]
+    [SerializeField] Button _buttonConfirm;
+    [SerializeField] TMP_Text _textDialogue;
+    [SerializeField] TMP_Text _textName;
+    [SerializeField, TextArea(4,6)] string[] _linesDialogues;
+    [SerializeField] string _nameNPC = "Thomas";
+    [SerializeField] Dialogue _dialogue;
+
+    [Header("ANIM")]
+    [SerializeField] RuntimeAnimatorController[] _animController;
+    private Animator _myAnim;
+
+    [Header("QUEST")]
+    private QuestUI _questUI;
+    private bool _questActive = false;
+    private bool _questCompleted = false;
+
+    private void Awake()
+    {
+        _myAnim = GetComponent<Animator>();
+        _myCol = GetComponent<BoxCollider>();
+    }
+
+    private void Start()
+    {
+        _dialogue.gameObject.SetActive(false);
+        _iconInteract.SetActive(false);
+    }
+
+    private void Confirm()
+    {
+        _myCol.enabled = false;
+        _iconInteract.SetActive(false);
+        _dialogue.canTalk = false;
+        _dialogue.Close();
+    }
+
+    private void SetDialogue()
+    {
+        _textName.text = _nameNPC;
+        _iconInteract.SetActive(true);
+        _buttonConfirm.onClick.AddListener(() => Confirm());
+
+
+        if (!_questActive)
+        {
+            for (int i = 0; i < _dialogue._lines.Length; i++)
+                _dialogue._lines[i] = _linesDialogues[i];
+        }
+
+        _dialogue.gameObject.SetActive(true);
+        _dialogue.playerInRange = true;
+        _dialogue.canTalk = true;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null)
+        {
+            if (_myCol.enabled && !_questActive && !_questCompleted) SetDialogue();
+            else if (_questCompleted) _iconInteract.SetActive(true);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract)) print("TERMINADO");
+            //StartCoroutine(Ending());
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null)
+        {
+            _dialogue.playerInRange = false;
+            _iconInteract.SetActive(false);
+        }
+    }
+}
