@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using DG.Tweening;
 
@@ -15,7 +16,7 @@ public class QuestApple : MonoBehaviour
     [SerializeField] Button _buttonConfirm;
     [SerializeField] TMP_Text _textDialogue;
     [SerializeField] TMP_Text _textName;
-    [SerializeField, TextArea(4,6)] string[] _linesDialogues;
+    [SerializeField, TextArea(4, 6)] string[] _linesDialogues;
     [SerializeField] string _nameNPC = "Thomas";
     [SerializeField] Dialogue _dialogue;
 
@@ -24,20 +25,49 @@ public class QuestApple : MonoBehaviour
     private Animator _myAnim;
 
     [Header("QUEST")]
+    [SerializeField] int _amountApples = 10;
     private QuestUI _questUI;
     private bool _questActive = false;
     private bool _questCompleted = false;
+    private CharacterInventory _inventory;
+
+    [Header("THIEFS")]
+    [SerializeField] ThiefApple[] _thiefs;
 
     private void Awake()
     {
         _myAnim = GetComponent<Animator>();
         _myCol = GetComponent<BoxCollider>();
+
+        _inventory = FindObjectOfType<CharacterInventory>();
     }
 
     private void Start()
     {
         _dialogue.gameObject.SetActive(false);
         _iconInteract.SetActive(false);
+
+        foreach (var thief in _thiefs)
+        {
+            thief.gameObject.SetActive(false);
+        }
+
+        print("TOTAL THIEFS:" + _thiefs.Length.ToString());
+    }
+
+    private void Update()
+    {
+        if (_questActive)
+        {
+            _questUI.AddNewTask(1, "Collect apples from the trees (" + _inventory.apples.ToString() + "/" + _amountApples.ToString() + ")");
+
+            if (_questActive && _inventory.apples >= _amountApples)
+            {
+                _questUI.TaskCompleted(1);
+                _questCompleted = true;
+                _questActive = false;
+            }
+        }
     }
 
     private void Confirm()
@@ -46,6 +76,8 @@ public class QuestApple : MonoBehaviour
         _iconInteract.SetActive(false);
         _dialogue.canTalk = false;
         _dialogue.Close();
+        _questUI.ActiveUIQuest("The Great Harvest", "Collect apples from the trees", string.Empty, string.Empty);
+        _questActive = true;
     }
 
     private void SetDialogue()
@@ -80,7 +112,7 @@ public class QuestApple : MonoBehaviour
     {
         var player = other.GetComponent<Character>();
         if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract)) print("TERMINADO");
-            //StartCoroutine(Ending());
+        //StartCoroutine(Ending());
     }
 
     private void OnTriggerExit(Collider other)
