@@ -33,6 +33,9 @@ public class QuestApple : MonoBehaviour
 
     [Header("THIEFS")]
     [SerializeField] ThiefApple[] _thiefs;
+    [SerializeField] float _timeToSpwnThiefs = 8f;
+    private CinematicThieft _cinematic;
+    private bool _spawnActivate = false;
 
     private void Awake()
     {
@@ -42,6 +45,7 @@ public class QuestApple : MonoBehaviour
         _questUI = FindObjectOfType<QuestUI>();
         _trees = FindObjectsOfType<TreeApple>();
         _boxApple = FindObjectOfType<BoxApple>();
+        _cinematic = FindObjectOfType<CinematicThieft>();
     }
 
     private void Start()
@@ -53,8 +57,6 @@ public class QuestApple : MonoBehaviour
         {
             thief.gameObject.SetActive(false);
         }
-
-        print("TOTAL THIEFS:" + _thiefs.Length.ToString());
     }
 
     private void Update()
@@ -65,18 +67,24 @@ public class QuestApple : MonoBehaviour
 
             if (_questActive && _boxApple.totalInBox >= _boxApple.total)
             {
-                //StopCoroutine(SpawnThiefts());
                 _questUI.TaskCompleted(1);
                 _questCompleted = true;
+                _spawnActivate = false;
                 _questActive = false;
             }
 
-            //if (!_questCompleted) StartCoroutine(SpawnThiefts());
-            if (!_questCompleted && !IsInvoking("SpawnThiefts"))
+            if (!_questCompleted && !IsInvoking("SpawnThiefts") && _boxApple.totalInBox >= 2 && _boxApple.totalInBox < _boxApple.total && _spawnActivate)
             {
-                InvokeRepeating("SpawnThiefts", 0f, 5f);
+                InvokeRepeating("SpawnThiefts", 0f, _timeToSpwnThiefs);
             }
+
+            else if (_boxApple.totalInBox >= 2 && !_spawnActivate) _cinematic.Activate();
         }
+    }
+
+    public void SpawnActive()
+    {
+        _spawnActivate = true;
     }
 
     private void Confirm()
@@ -145,13 +153,6 @@ public class QuestApple : MonoBehaviour
 
     private void SpawnThiefts()
     {
-        //yield return new WaitForSeconds(5f);
-
-        //for (int i = 0; i < _thiefs.Length; i++)
-        //{
-        //    _thiefs[i].gameObject.SetActive(true);
-        //}
-
         int activeEnemyCount = 0;
         foreach (var thief in _thiefs)
         {
