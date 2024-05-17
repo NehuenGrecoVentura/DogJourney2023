@@ -1,76 +1,93 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class ThiefApple : MonoBehaviour
 {
     [SerializeField] Transform _posEscape;
+    [SerializeField] Transform _posFollow;
     [SerializeField] float _timeThief = 3f;
+    [SerializeField] float _speed = 5f;
 
     private BoxApple _boxApple;
     private Animator _myAnim;
-    private NavMeshAgent _navAgent;
     private BoxCollider _myCol;
+    private Rigidbody _myRb;
 
     private bool _isThief = false;
     private bool _isScared = false;
     private bool _isEscape = false;
 
+    private Vector3 _initialPos;
+
     private void Awake()
     {
         _myCol = GetComponent<BoxCollider>();
-        _navAgent = GetComponent<NavMeshAgent>();
         _myAnim = GetComponent<Animator>();
+        _myRb = GetComponent<Rigidbody>();
+
         _boxApple = FindObjectOfType<BoxApple>();
     }
 
-    private void Update()
+    private void Start()
     {
-        MoveToBox();
+        _initialPos = transform.position;
     }
 
-    private void MoveToBox()
+    private void FixedUpdate()
     {
-        if (_boxApple != null && !_isScared && !_isThief && !_isEscape)
+        if (!_isScared && !_isThief && !_isEscape) Movement(_posFollow);
+        else if (_isEscape)
         {
-            _navAgent.SetDestination(_boxApple.gameObject.transform.position);
-            _myAnim.SetBool("Move", true);
-        }
+            _myCol.enabled = true;
+            Movement(_posEscape);
+            Off();
+        }    
+    }
+
+    private void Movement(Transform pos)
+    {
+        Vector3 dir = (pos.position - transform.position).normalized;
+
+        // Aplica la velocidad de movimiento
+        _myRb.velocity = dir * _speed;
+
+        // Rotación suave hacia el objetivo (opcional)
+        Quaternion lookRotation = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        _myAnim.SetBool("Move", true);
+    }
+
+
+    private void Off()
+    {
+        float distanceToTarget = Vector3.Distance(transform.position, _posEscape.position);
+        if(distanceToTarget <= 2f)
+        {
+            transform.position = _initialPos;
+            transform.LookAt(_posFollow);
             
+            _isScared = false;
+            _isThief = false;
+            _isEscape = false;
+            gameObject.SetActive(false);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         var boxApple = other.GetComponent<BoxApple>();
-        if (boxApple != null && !_isThief)
-        {
-            StartCoroutine(Thief());
-        }
+        if (boxApple != null && !_isThief) StartCoroutine(Thief());
     }
 
     private IEnumerator Thief()
     {
-        _myCol.enabled = false;
         _myAnim.SetBool("Move", false);
-        _navAgent.isStopped = true;
+        _myCol.enabled = false;
+        _myRb.isKinematic = true;
         _isThief = true;
         yield return new WaitForSeconds(_timeThief);
-        StartCoroutine(Escape());
-    }
-
-    private IEnumerator Escape()
-    {
-        _navAgent.isStopped = false;
-        _isThief = false;
-        _isScared = false;
+        _myRb.isKinematic = false;
+        transform.LookAt(_posEscape);
         _isEscape = true;
-
-        _navAgent.SetDestination(_posEscape.position);
-        _myAnim.SetBool("Move", true);
-
-        yield return new WaitForSeconds(10f);
-        gameObject.SetActive(false);
-
     }
 }
