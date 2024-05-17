@@ -16,7 +16,6 @@ public class ThiefApple : MonoBehaviour
     private bool _isThief = false;
     private bool _isScared = false;
     private bool _isEscape = false;
-
     private Vector3 _initialPos;
 
     private void Awake()
@@ -99,7 +98,7 @@ public class ThiefApple : MonoBehaviour
             _myRb.isKinematic = true;
             _isThief = true;
             yield return new WaitForSeconds(_timeThief);
-            _boxApple.RemoveSomeApples();
+            _boxApple.RemoveSomeApples(_isScared);
             _isThief = false;
             _myRb.isKinematic = false;
             transform.LookAt(_posEscape);

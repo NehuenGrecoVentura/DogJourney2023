@@ -45,9 +45,15 @@ public class BoxApple : MonoBehaviour
         if (player != null) _iconInteract.transform.DOScale(0, 0.5f);
     }
 
-    public void RemoveSomeApples()
+    //public void RemoveSomeApples()
+    //{
+    //    int random = Random.Range(1, 3);
+    //    totalInBox -= random;
+    //}
+
+    public void RemoveSomeApples(bool isScared)
     {
         int random = Random.Range(1, 3);
-        totalInBox -= random;
+        if (!isScared) totalInBox -= random;
     }
 }

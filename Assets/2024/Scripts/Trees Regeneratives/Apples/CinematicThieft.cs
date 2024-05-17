@@ -12,15 +12,29 @@ public class CinematicThieft : MonoBehaviour
     [SerializeField] Dog _dog;
     [SerializeField] Transform _posDog;
     [SerializeField] TrolleyWood _trolley;
+    [SerializeField] Camera _dogCam;
+    [SerializeField] Camera _dogThieft;
+    [SerializeField] Camera _scaredCam;
+    [SerializeField] ThiefApple _thieft;
+    private bool _canScared = false;
 
     [Header("MESSAGE")]
-    [SerializeField, TextArea(4, 6)] string _message;
+    [SerializeField, TextArea(4, 6)] string[] _message;
     [SerializeField] BoxMessages _boxMessage;
 
     private void Start()
     {
         _cinematic.SetActive(false);
         _myCol.enabled = false;
+        _dogCam.gameObject.SetActive(false);
+        _dogThieft.gameObject.SetActive(false);
+        _scaredCam.gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && _canScared)
+            StartCoroutine(PlayCinematicScared());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -35,6 +49,8 @@ public class CinematicThieft : MonoBehaviour
         Destroy(_myCol);
         _player.FreezePlayer();
         _camPlayer.gameObject.SetActive(false);
+        _dogCam.gameObject.SetActive(false);
+        _dogThieft.gameObject.SetActive(true);
         _cinematic.SetActive(true);
         _questApple.SpawnActive();
 
@@ -44,14 +60,47 @@ public class CinematicThieft : MonoBehaviour
         _trolley.gameObject.transform.position = _posDog.position;
         _dog.GetComponent<NavMeshAgent>().enabled = true;
         _trolley.GetComponent<NavMeshAgent>().enabled = true;
+        _dog.transform.LookAt(_thieft.transform);
 
         yield return new WaitForSeconds(3f);
-        _boxMessage.ShowMessage(_message);
+        _boxMessage.ShowMessage(_message[0]);
 
         yield return new WaitForSeconds(5f);
         _boxMessage.CloseMessage();
+
+        yield return new WaitForSeconds(1f);
+        _boxMessage.ShowMessage(_message[1]);
+        Destroy(_dogThieft.gameObject);
+        _dogCam.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+        _canScared = true;
+        _player.DeFreezePlayer();
+        Destroy(_dogCam.gameObject);
+        _camPlayer.gameObject.SetActive(true);
+        _cinematic.SetActive(false);
+
+        yield return new WaitForSeconds(1f);
+        _boxMessage.DesactivateMessage();
+    }
+
+    private IEnumerator PlayCinematicScared()
+    {
+        _canScared = false;
+        _boxMessage.SetMessage("Tip");
+        _cinematic.SetActive(true);
+        _camPlayer.gameObject.SetActive(false);
+        _scaredCam.gameObject.SetActive(true);
+        _player.FreezePlayer();
+
+        yield return new WaitForSeconds(3f);
+        _boxMessage.ShowMessage(_message[2]);
+
+        yield return new WaitForSeconds(3f);
+        _boxMessage.CloseMessage();
         _player.DeFreezePlayer();
         _camPlayer.gameObject.SetActive(true);
+        Destroy(_scaredCam.gameObject);
         Destroy(_cinematic);
 
         yield return new WaitForSeconds(1f);

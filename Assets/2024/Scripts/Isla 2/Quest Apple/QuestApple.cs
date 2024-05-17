@@ -61,24 +61,33 @@ public class QuestApple : MonoBehaviour
 
     private void Update()
     {
+        bool hasEnoughApples = _boxApple.totalInBox >= 2;
+        bool isBoxFull = _boxApple.totalInBox >= _boxApple.total;
+
         if (_questActive)
         {
             _questUI.AddNewTask(1, "Collect apples from the trees (" + _boxApple.totalInBox.ToString() + "/" + _boxApple.total.ToString() + ")");
 
-            if (_questActive && _boxApple.totalInBox >= _boxApple.total)
+            if (isBoxFull)
             {
+                CancelInvoke("SpawnThiefts");
+                DesactivateThiefts();
                 _questUI.TaskCompleted(1);
                 _questCompleted = true;
                 _spawnActivate = false;
                 _questActive = false;
             }
 
-            if (!_questCompleted && !IsInvoking("SpawnThiefts") && _boxApple.totalInBox >= 2 && _boxApple.totalInBox < _boxApple.total && _spawnActivate)
-            {
+            else if (!_questCompleted && !IsInvoking("SpawnThiefts") && hasEnoughApples && _spawnActivate)
                 InvokeRepeating("SpawnThiefts", 0f, _timeToSpwnThiefs);
-            }
 
-            else if (_boxApple.totalInBox >= 2 && !_spawnActivate) _cinematic.Activate();
+            else if (!_spawnActivate && hasEnoughApples) _cinematic.Activate();
+
+            else if (IsInvoking("SpawnThiefts") && _boxApple.totalInBox <= 1)
+                CancelInvoke("SpawnThiefts");
+
+
+            else if (_boxApple.totalInBox <= 0) _boxApple.totalInBox = 0;
         }
     }
 
@@ -100,7 +109,6 @@ public class QuestApple : MonoBehaviour
             tree.enabled = true;
             tree.GetComponent<BoxCollider>().enabled = true;
         }
-
 
         _questActive = true;
     }
@@ -172,6 +180,14 @@ public class QuestApple : MonoBehaviour
                     break;
                 }
             }
+        }
+    }
+
+    private void DesactivateThiefts()
+    {
+        foreach (var item in _thiefs)
+        {
+            item.gameObject.SetActive(false);
         }
     }
 }

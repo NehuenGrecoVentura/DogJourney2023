@@ -12,8 +12,12 @@ public class BoxMessages : MonoBehaviour
     public void SetMessage(string name)
     {
         _boxMessage.localScale = new Vector3(1, 1, 1);
-        _boxMessage.DOAnchorPosY(0f, 0f);
+        _boxMessage.DOAnchorPosY(-1000f, 0f);
         _textName.text = name;
+        _textMessage.rectTransform.anchoredPosition = new Vector2(0.2341f, _textMessage.rectTransform.anchoredPosition.y);
+        _textMessage.rectTransform.sizeDelta = new Vector2(1030.737f, _textMessage.rectTransform.sizeDelta.y);
+        _textMessage.fontSize = 40;
+        _textMessage.alignment = TextAlignmentOptions.TopLeft;
     }
 
     public void ShowMessage(string message)
@@ -25,7 +29,7 @@ public class BoxMessages : MonoBehaviour
 
     public void CloseMessage()
     {
-        _boxMessage.DOAnchorPosY(0f, 0.5f);
+        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
     }
 
     public void DesactivateMessage()
