@@ -16,6 +16,8 @@ public class Rabbit : MonoBehaviour, IPick
     private bool _escape = false;
     private Character _player;
     [SerializeField] Transform _initialPosEscape;
+    private Animator _myAnim;
+    private Vector3 _myPos;
 
     [Header("INTERACT")]
     [SerializeField] KeyCode _keyInteractive = KeyCode.F;
@@ -24,13 +26,16 @@ public class Rabbit : MonoBehaviour, IPick
     private void Awake()
     {
         _nv = GetComponent<NavMeshAgent>();
+        _myAnim = GetComponent<Animator>();
         _myCol = GetComponent<Collider>();
+
         _player = FindObjectOfType<Character>();
     }
 
     void Start()
     {
         _initialPos = transform.position;
+        _myPos = transform.position;
         _iconInteract.SetActive(false);
     }
 
@@ -41,6 +46,21 @@ public class Rabbit : MonoBehaviour, IPick
             StopAllCoroutines();
             transform.position = _handPos.position;
         }
+
+        // Verifica si la posición actual del objeto es diferente a la posición anterior
+        if (transform.position != _myPos)
+        {
+            // Si la posición ha cambiado, significa que el objeto se ha movido
+            _myAnim.SetBool("Move", true);
+        }
+        else
+        {
+            // Si la posición no ha cambiado, el objeto está en idle
+            _myAnim.SetBool("Move", false);
+        }
+
+        // Actualiza la posición anterior con la nueva posición del objeto
+        _myPos = transform.position;
     }
 
     public void Pick()
@@ -66,6 +86,7 @@ public class Rabbit : MonoBehaviour, IPick
         _myCol.enabled = false;
         yield return new WaitForSeconds(0.1f);
         _nv.SetDestination(_cavePos.position);
+        _myAnim.SetBool("Move", true);
     }
 
     #endregion
@@ -83,6 +104,7 @@ public class Rabbit : MonoBehaviour, IPick
         _myCol.enabled = true;
         yield return new WaitForSeconds(0.1f);
         _nv.SetDestination(_initialPos);
+
     }
 
     public void GoToCarrot(Transform carrotPos)
