@@ -1,18 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class BoxApple : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public int total = 10;
+    public int totalInBox = 0;
+
+    [Header("INTERACT")]
+    [SerializeField] GameObject _iconInteract;
+    [SerializeField] KeyCode _keyInteract = KeyCode.F;
+
+    private void Start()
     {
-        
+        _iconInteract.transform.DOScale(0, 0);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        var player = other.GetComponent<Character>();
+        if (player != null)
+        {
+            if (player.rabbitPicked) _iconInteract.transform.DOScale(1.25f, 0.5f);
+            else _iconInteract.transform.DOScale(0, 0.5f);
+        }  
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null && player.rabbitPicked && Input.GetKeyDown(_keyInteract))
+        {
+            totalInBox++;
+            player.ItemsPicked(true, false, false);
+            player.rabbitPicked = false;
+            _iconInteract.transform.DOScale(0, 0.5f);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null) _iconInteract.transform.DOScale(0, 0.5f);
     }
 }

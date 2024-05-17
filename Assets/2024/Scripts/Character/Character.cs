@@ -33,7 +33,12 @@ public class Character : MonoBehaviour
     private bool _test1, _test2;
 
     [SerializeField] RuntimeAnimatorController[] _animController;
+
+    [Header("ITEMS PICKED")]
     [SerializeField] GameObject _rod;
+    [SerializeField] GameObject _axe;
+    [SerializeField] GameObject _shovel;
+    [SerializeField] GameObject _apples;
 
     private void Awake()
     {
@@ -44,7 +49,7 @@ public class Character : MonoBehaviour
         _construct = FindObjectOfType<BuilderManager>();
 
         _model = new ModelCharacter(_myRb, speed, speedRun, _speedCrouch, speedAux, isClimb, transform, _camPos, _gravity, _orderDog, _test1, _test2, _rayDist, _rayPoint1, _rayPoint2);
-        _view = new ViewCharacter(_myAnim, _myAudio, _soundsCall);
+        _view = new ViewCharacter(_myAnim, _myAudio, _soundsCall, _axe, _shovel, _apples);
         _controller = new ControllerCharacter(_model);
 
         _model.EventIdle += _view.IdleAnim;
@@ -146,6 +151,11 @@ public class Character : MonoBehaviour
     {
         isConstruct = rodActive;
         _rod.SetActive(rodActive);
+    }
+
+    public void ItemsPicked(bool axe, bool shovel, bool apples)
+    {
+        _view.PickStatus(axe, shovel, apples);
     }
 
     private void OnTriggerStay(Collider other)

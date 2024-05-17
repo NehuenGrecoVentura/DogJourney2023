@@ -25,12 +25,11 @@ public class QuestApple : MonoBehaviour
     private Animator _myAnim;
 
     [Header("QUEST")]
-    [SerializeField] int _amountApples = 10;
     private QuestUI _questUI;
     private TreeApple[] _trees;
     private bool _questActive = false;
     private bool _questCompleted = false;
-    private CharacterInventory _inventory;
+    private BoxApple _boxApple;
 
     [Header("THIEFS")]
     [SerializeField] ThiefApple[] _thiefs;
@@ -40,9 +39,9 @@ public class QuestApple : MonoBehaviour
         _myAnim = GetComponent<Animator>();
         _myCol = GetComponent<BoxCollider>();
 
-        _inventory = FindObjectOfType<CharacterInventory>();
         _questUI = FindObjectOfType<QuestUI>();
         _trees = FindObjectsOfType<TreeApple>();
+        _boxApple = FindObjectOfType<BoxApple>();
     }
 
     private void Start()
@@ -62,9 +61,9 @@ public class QuestApple : MonoBehaviour
     {
         if (_questActive)
         {
-            _questUI.AddNewTask(1, "Collect apples from the trees (" + _inventory.apples.ToString() + "/" + _amountApples.ToString() + ")");
+            _questUI.AddNewTask(1, "Collect apples from the trees (" + _boxApple.totalInBox.ToString() + "/" + _boxApple.total.ToString() + ")");
 
-            if (_questActive && _inventory.apples >= _amountApples)
+            if (_questActive && _boxApple.totalInBox >= _boxApple.total)
             {
                 _questUI.TaskCompleted(1);
                 _questCompleted = true;
