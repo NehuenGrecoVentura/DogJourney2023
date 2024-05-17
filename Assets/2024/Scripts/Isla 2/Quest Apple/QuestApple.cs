@@ -65,9 +65,16 @@ public class QuestApple : MonoBehaviour
 
             if (_questActive && _boxApple.totalInBox >= _boxApple.total)
             {
+                //StopCoroutine(SpawnThiefts());
                 _questUI.TaskCompleted(1);
                 _questCompleted = true;
                 _questActive = false;
+            }
+
+            //if (!_questCompleted) StartCoroutine(SpawnThiefts());
+            if (!_questCompleted && !IsInvoking("SpawnThiefts"))
+            {
+                InvokeRepeating("SpawnThiefts", 0f, 5f);
             }
         }
     }
@@ -85,6 +92,7 @@ public class QuestApple : MonoBehaviour
             tree.enabled = true;
             tree.GetComponent<BoxCollider>().enabled = true;
         }
+
 
         _questActive = true;
     }
@@ -131,6 +139,38 @@ public class QuestApple : MonoBehaviour
         {
             _dialogue.playerInRange = false;
             _iconInteract.SetActive(false);
+        }
+    }
+
+
+    private void SpawnThiefts()
+    {
+        //yield return new WaitForSeconds(5f);
+
+        //for (int i = 0; i < _thiefs.Length; i++)
+        //{
+        //    _thiefs[i].gameObject.SetActive(true);
+        //}
+
+        int activeEnemyCount = 0;
+        foreach (var thief in _thiefs)
+        {
+            if (thief.gameObject.activeSelf)
+            {
+                activeEnemyCount++;
+            }
+        }
+
+        if (activeEnemyCount < 3)
+        {
+            foreach (var thief in _thiefs)
+            {
+                if (!thief.gameObject.activeSelf)
+                {
+                    thief.gameObject.SetActive(true);
+                    break;
+                }
+            }
         }
     }
 }

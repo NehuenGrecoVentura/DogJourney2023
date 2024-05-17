@@ -36,12 +36,23 @@ public class ThiefApple : MonoBehaviour
     private void FixedUpdate()
     {
         if (!_isScared && !_isThief && !_isEscape) Movement(_posFollow);
-        else if (_isEscape)
+        else if (_isEscape || _isScared)
         {
             _myCol.enabled = true;
             Movement(_posEscape);
             Off();
         }    
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && !_isScared && _isThief)
+        {
+            StopCoroutine(Thief());
+            _myRb.isKinematic = false;
+            _isScared = true;
+            _isThief = false;
+        }
     }
 
     private void Movement(Transform pos)
@@ -81,13 +92,23 @@ public class ThiefApple : MonoBehaviour
 
     private IEnumerator Thief()
     {
-        _myAnim.SetBool("Move", false);
-        _myCol.enabled = false;
-        _myRb.isKinematic = true;
-        _isThief = true;
-        yield return new WaitForSeconds(_timeThief);
-        _myRb.isKinematic = false;
-        transform.LookAt(_posEscape);
-        _isEscape = true;
+        if (!_isScared)
+        {
+            _myAnim.SetBool("Move", false);
+            _myCol.enabled = false;
+            _myRb.isKinematic = true;
+            _isThief = true;
+            yield return new WaitForSeconds(_timeThief);
+            _boxApple.RemoveSomeApples();
+            _isThief = false;
+            _myRb.isKinematic = false;
+            transform.LookAt(_posEscape);
+            _isEscape = true;
+        }
+
+        else
+        {
+            StopCoroutine("Thief");
+        }
     }
 }
