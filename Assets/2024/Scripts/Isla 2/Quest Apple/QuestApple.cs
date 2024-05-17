@@ -40,6 +40,7 @@ public class QuestApple : MonoBehaviour
         _myCol = GetComponent<BoxCollider>();
 
         _inventory = FindObjectOfType<CharacterInventory>();
+        _questUI = FindObjectOfType<QuestUI>();
     }
 
     private void Start()
