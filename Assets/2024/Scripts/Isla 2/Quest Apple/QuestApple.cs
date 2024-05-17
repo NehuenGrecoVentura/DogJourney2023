@@ -27,6 +27,7 @@ public class QuestApple : MonoBehaviour
     [Header("QUEST")]
     [SerializeField] int _amountApples = 10;
     private QuestUI _questUI;
+    private TreeApple[] _trees;
     private bool _questActive = false;
     private bool _questCompleted = false;
     private CharacterInventory _inventory;
@@ -41,6 +42,7 @@ public class QuestApple : MonoBehaviour
 
         _inventory = FindObjectOfType<CharacterInventory>();
         _questUI = FindObjectOfType<QuestUI>();
+        _trees = FindObjectsOfType<TreeApple>();
     }
 
     private void Start()
@@ -78,6 +80,13 @@ public class QuestApple : MonoBehaviour
         _dialogue.canTalk = false;
         _dialogue.Close();
         _questUI.ActiveUIQuest("The Great Harvest", "Collect apples from the trees", string.Empty, string.Empty);
+
+        foreach (var tree in _trees)
+        {
+            tree.enabled = true;
+            tree.GetComponent<BoxCollider>().enabled = true;
+        }
+
         _questActive = true;
     }
 
