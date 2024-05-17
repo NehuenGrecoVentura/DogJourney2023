@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using DG.Tweening;
 
@@ -30,6 +28,7 @@ public class QuestApple : MonoBehaviour
     private bool _questActive = false;
     private bool _questCompleted = false;
     private BoxApple _boxApple;
+    private Manager _gm;
 
     [Header("THIEFS")]
     [SerializeField] ThiefApple[] _thiefs;
@@ -46,6 +45,7 @@ public class QuestApple : MonoBehaviour
         _trees = FindObjectsOfType<TreeApple>();
         _boxApple = FindObjectOfType<BoxApple>();
         _cinematic = FindObjectOfType<CinematicThieft>();
+        _gm = FindObjectOfType<Manager>();
     }
 
     private void Start()
@@ -70,9 +70,11 @@ public class QuestApple : MonoBehaviour
 
             if (isBoxFull)
             {
+                _myCol.enabled = true;
                 CancelInvoke("SpawnThiefts");
                 DesactivateThiefts();
                 _questUI.TaskCompleted(1);
+                _questUI.AddNewTask(2, "Take the box to Thomas");
                 _questCompleted = true;
                 _spawnActivate = false;
                 _questActive = false;
@@ -144,8 +146,14 @@ public class QuestApple : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract)) print("TERMINADO");
-        //StartCoroutine(Ending());
+        if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract))
+        {
+            _myCol.enabled = false;
+            player.rabbitPicked = false;
+            _gm.QuestCompleted();
+            Destroy(_boxApple.gameObject);
+            Destroy(this);
+        }
     }
 
     private void OnTriggerExit(Collider other)

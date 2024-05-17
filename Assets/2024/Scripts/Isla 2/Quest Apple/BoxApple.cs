@@ -11,6 +11,8 @@ public class BoxApple : MonoBehaviour
     [Header("INTERACT")]
     [SerializeField] GameObject _iconInteract;
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
+    [SerializeField] Transform _parentHands;
+   
 
     private void Start()
     {
@@ -22,7 +24,7 @@ public class BoxApple : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
-            if (player.rabbitPicked) _iconInteract.transform.DOScale(1.25f, 0.5f);
+            if (player.rabbitPicked && totalInBox < total) _iconInteract.transform.DOScale(1.25f, 0.5f);
             else _iconInteract.transform.DOScale(0, 0.5f);
         }  
     }
@@ -37,6 +39,12 @@ public class BoxApple : MonoBehaviour
             player.rabbitPicked = false;
             _iconInteract.transform.DOScale(0, 0.5f);
         }
+
+        else if (player != null && !player.rabbitPicked && Input.GetKeyDown(_keyInteract) && totalInBox >= total)
+        {
+            player.rabbitPicked = true;
+            transform.parent = _parentHands;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -44,12 +52,6 @@ public class BoxApple : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null) _iconInteract.transform.DOScale(0, 0.5f);
     }
-
-    //public void RemoveSomeApples()
-    //{
-    //    int random = Random.Range(1, 3);
-    //    totalInBox -= random;
-    //}
 
     public void RemoveSomeApples(bool isScared)
     {
