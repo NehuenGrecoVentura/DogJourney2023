@@ -130,6 +130,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 218656605546267079, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 917.0918
+      objectReference: {fileID: 0}
+    - target: {fileID: 218656605546267079, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 373.57883
+      objectReference: {fileID: 0}
+    - target: {fileID: 1386836592520529043, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 917.0918
+      objectReference: {fileID: 0}
+    - target: {fileID: 1386836592520529043, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 373.57883
+      objectReference: {fileID: 0}
+    - target: {fileID: 1793121405135737573, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 917.0918
+      objectReference: {fileID: 0}
+    - target: {fileID: 1793121405135737573, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 373.57883
+      objectReference: {fileID: 0}
     - target: {fileID: 1853806637644821372, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -165,6 +195,31 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 2091520247932271320, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 2091520247932271320, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 2091520247932271320, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2091520247932271320, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2192229058866231209, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -508.99994
+      objectReference: {fileID: 0}
     - target: {fileID: 2321309528123286547, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -194,6 +249,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615125628529174844, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615125628529174844, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615125628529174844, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615125628529174844, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2667814516558602423, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
         type: 3}
@@ -330,6 +405,26 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2741807960376393895, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3172219112083114712, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 917.0918
+      objectReference: {fileID: 0}
+    - target: {fileID: 3172219112083114712, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 373.57883
+      objectReference: {fileID: 0}
+    - target: {fileID: 3366711007108090951, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -508.99994
+      objectReference: {fileID: 0}
     - target: {fileID: 3785193169265617227, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -364,6 +459,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4009818998606737605, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -508.99994
       objectReference: {fileID: 0}
     - target: {fileID: 4269837626605662963, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
         type: 3}
@@ -400,6 +500,26 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 4342228279854401546, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 4342228279854401546, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 4342228279854401546, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4342228279854401546, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4467915980579022207, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -434,6 +554,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4716567938643871949, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 917.0918
+      objectReference: {fileID: 0}
+    - target: {fileID: 4716567938643871949, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 373.57883
       objectReference: {fileID: 0}
     - target: {fileID: 5088463668664563860, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
         type: 3}
@@ -474,6 +604,56 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Special Flowers Amount Texts
+      objectReference: {fileID: 0}
+    - target: {fileID: 5406788172478143653, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 917.0918
+      objectReference: {fileID: 0}
+    - target: {fileID: 5406788172478143653, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 373.57883
+      objectReference: {fileID: 0}
+    - target: {fileID: 5615256556144507386, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 5615256556144507386, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 5615256556144507386, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5615256556144507386, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5623418767506634589, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 5623418767506634589, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 5623418767506634589, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5623418767506634589, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5851693530599733219, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
         type: 3}
@@ -520,6 +700,36 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5963347164045622492, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -509
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223381253236746675, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223381253236746675, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223381253236746675, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6223381253236746675, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6235903256989750727, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -509.00003
+      objectReference: {fileID: 0}
     - target: {fileID: 6273091047972664900, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -555,6 +765,31 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 6989270403376463052, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -508.99994
+      objectReference: {fileID: 0}
+    - target: {fileID: 7783794358978186776, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 7783794358978186776, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 7783794358978186776, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7783794358978186776, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8176165635408499620, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
         type: 3}
       propertyPath: m_Name
@@ -564,6 +799,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Normal Flower Amount Texts
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470878719758356259, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -508.99994
+      objectReference: {fileID: 0}
+    - target: {fileID: 8998258395635538929, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 917.0918
+      objectReference: {fileID: 0}
+    - target: {fileID: 8998258395635538929, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 373.57883
       objectReference: {fileID: 0}
     - target: {fileID: 9122420267455886212, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
         type: 3}

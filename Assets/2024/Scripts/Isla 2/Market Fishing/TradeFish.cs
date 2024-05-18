@@ -142,18 +142,26 @@ public class TradeFish : MonoBehaviour
 
         _txtValueNormalFlower.text = "$ 10";
         _txtAmountNormalFlower.text = "x 1 = 3";
+        _txtAmountNormalFlower.GetComponentInChildren<Image>().sprite = _spriteFlowers;
 
         _txtValueSpecialFlower.text = "$ 50";
         _txtAmountSpecialFlower.text = "x 1 = 1";
+        _txtAmountSpecialFlower.GetComponentInChildren<Image>().sprite = _spriteFlowers;
 
         _txtValueSpecialFish.text = "$ 100";
         _txtAmountSpecialFish.text = "x 1 = 3";
+        _txtAmountSpecialFish.GetComponentInChildren<Image>().sprite = _spriteCommonFish;
+
 
         _txtValueNail.text = "$ 200";
         _txtAmountNail.text = "x 1";
+        _txtAmountNail.GetComponentInChildren<Image>().sprite = _spriteCommonFish;
 
         _txtValueApple.text = "$ 10";
         _txtAmountApple.text = "x 1 = 3";
+        _txtAmountApple.GetComponentInChildren<Image>().sprite = _spriteApple;
+
+
     }
 
     public void TradeSpecialFish()
