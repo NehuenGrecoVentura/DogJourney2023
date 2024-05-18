@@ -103,7 +103,7 @@ public class QuickFishing : MonoBehaviour
     private IEnumerator Error()
     {
         _boxMessage.SetMessage("FISHING");
-        _boxMessage.ShowMessage("You don't have enough bait to fish.");
+        _boxMessage.ShowMessage("You don't have enough bait to fish. You need at least 3.");
         yield return new WaitForSeconds(3f);
         _boxMessage.CloseMessage();
         yield return new WaitForSeconds(1f);
