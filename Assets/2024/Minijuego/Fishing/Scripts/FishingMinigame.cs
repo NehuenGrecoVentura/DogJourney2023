@@ -67,9 +67,23 @@ public class FishingMinigame : MonoBehaviour
 
     [Header("FISH MESH")]
     [SerializeField] GameObject _fishMesh;
-    [SerializeField] SpriteRenderer _spriteFish;
-    [SerializeField] SpriteRenderer _spriteFishWin;
+
+    // SPRITE PEZ COMUN
+    public SpriteRenderer _spriteFish;
+    public SpriteRenderer _spriteFishWin;
+
+    public SpriteRenderer spriteRed;
+    public SpriteRenderer spriteFishRedWin;
+
+    public SpriteRenderer spriteBacalao;
+    public SpriteRenderer spriteFishBacalaoWin;
+
+    public bool red = false;
+    public bool common = true;
+    public bool bacalao = false;
+
     [SerializeField] GameObject _canvasRenderFish;
+
 
     [Header("UI")]
     [SerializeField] Image[] _count;
@@ -92,7 +106,11 @@ public class FishingMinigame : MonoBehaviour
     private void Start()
     {
         _camFish.enabled = false;
+
         _spriteFishWin.transform.DOScale(0f, 0f);
+        spriteFishBacalaoWin.transform.DOScale(0f, 0f);
+        spriteFishRedWin.transform.DOScale(0f, 0f);
+
         //_canvasRenderFish.SetActive(false);
 
         foreach (TMP_Text text in _textAmount)
@@ -134,7 +152,30 @@ public class FishingMinigame : MonoBehaviour
 
     private void CheckDir()
     {
-        _spriteFish.flipY = (Fish.transform.position.y > fishDestination.transform.position.y);
+        if (common)
+        {
+            _spriteFish.gameObject.SetActive(true);
+            _spriteFish.flipY = (Fish.transform.position.y > fishDestination.transform.position.y);
+            spriteRed.gameObject.SetActive(false);
+            spriteBacalao.gameObject.SetActive(false);
+        }
+
+        if (red)
+        {
+            spriteRed.gameObject.SetActive(true);
+            spriteRed.flipY = (Fish.transform.position.y > fishDestination.transform.position.y);
+            _spriteFish.gameObject.SetActive(false);
+            spriteBacalao.gameObject.SetActive(false);
+        }
+
+        if (bacalao)
+        {
+            spriteBacalao.gameObject.SetActive(true);
+            spriteBacalao.flipY = (Fish.transform.position.y > fishDestination.transform.position.y);
+            spriteRed.gameObject.SetActive(false);
+            _spriteFish.gameObject.SetActive(false);
+        }
+
     }
 
     private void Catch()
@@ -172,7 +213,16 @@ public class FishingMinigame : MonoBehaviour
             Fish.SetActive(false);
             HookTrasn.gameObject.SetActive(false);
             _myAudio.Play();
-            _spriteFishWin.transform.DOScale(1f, 0.5f).OnComplete(() => _spriteFishWin.transform.DOScale(0f, 1f));
+
+            if (common)
+                _spriteFishWin.transform.DOScale(1f, 0.5f).OnComplete(() => _spriteFishWin.transform.DOScale(0f, 1f));
+
+            if (red)
+                spriteFishRedWin.transform.DOScale(1f, 0.5f).OnComplete(() => spriteFishRedWin.transform.DOScale(0f, 1f));
+
+            if (bacalao)
+                spriteFishBacalaoWin.transform.DOScale(1f, 0.5f).OnComplete(() => spriteFishBacalaoWin.transform.DOScale(0f, 1f));
+
             yield return new WaitForSeconds(3f);
             _myAudio.Stop();
             overWatch = 0;
