@@ -315,6 +315,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2667814517825809873, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.00006005168
+      objectReference: {fileID: 0}
+    - target: {fileID: 2741807960376393895, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3785193169265617227, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -420,6 +430,21 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5120694121031997410, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_Name
+      value: Special Flowers Amount Texts
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851693530599733219, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_Name
+      value: Apples Amount Texts
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863317436423603384, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_Name
+      value: Nails Amount Texts
+      objectReference: {fileID: 0}
     - target: {fileID: 5872126907205603889, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -489,6 +514,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8176165635408499620, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_Name
+      value: Common Fish Amount Texts
+      objectReference: {fileID: 0}
+    - target: {fileID: 8270875227546977203, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_Name
+      value: Normal Flower Amount Texts
+      objectReference: {fileID: 0}
+    - target: {fileID: 9122420267455886212, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae,
+        type: 3}
+      propertyPath: m_Name
+      value: Special Fish Amount Texts
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c99cb81e4dad9b4f98079a6a8c0ebae, type: 3}
@@ -866,6 +906,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _trades: 000000000000
+  _spriteCommonFish: {fileID: 21300000, guid: 0675830c7ff6c6345b754a56a7d0557e, type: 3}
+  _spriteSpecialFish: {fileID: 21300000, guid: 6491b18894bd5c2448898de34ec4db04, type: 2}
+  _spriteFlowers: {fileID: 21300000, guid: 8daa3e480013c9245a91f5a6c12e4474, type: 3}
+  _spriteNail: {fileID: 21300000, guid: 8daa3e480013c9245a91f5a6c12e4474, type: 3}
+  _spriteApple: {fileID: 21300000, guid: 316c5cd0639bf1549853835b5fa29b0d, type: 3}
+  _txtValueBait: {fileID: 0}
+  _txtValueApple: {fileID: 0}
+  _txtValueCommonFish: {fileID: 0}
+  _txtValueSpecialFish: {fileID: 0}
+  _txtValueNormalFlower: {fileID: 0}
+  _txtValueSpecialFlower: {fileID: 0}
+  _txtValueNai: {fileID: 0}
 --- !u!4 &2039608162
 Transform:
   m_ObjectHideFlags: 0

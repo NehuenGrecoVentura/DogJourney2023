@@ -2,10 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TradeFish : MonoBehaviour
 {
     [SerializeField] bool[] _trades;
+
+    [SerializeField] Sprite _spriteCommonFish;
+    [SerializeField] Sprite _spriteSpecialFish;
+    [SerializeField] Sprite _spriteFlowers;
+    [SerializeField] Sprite _spriteNail;
+    [SerializeField] Sprite _spriteApple;
+
+    [Header("TEXT VALUES")]
+    [SerializeField] TMP_Text _txtValueBait;
+    [SerializeField] TMP_Text _txtValueApple;
+    [SerializeField] TMP_Text _txtValueCommonFish;
+    [SerializeField] TMP_Text _txtValueSpecialFish;
+    [SerializeField] TMP_Text _txtValueNormalFlower;
+    [SerializeField] TMP_Text _txtValueSpecialFlower;
+    [SerializeField] TMP_Text _txtValueNail;
+
+    [Header("TEXT AMOUNT")]
+    [SerializeField] TMP_Text _txtAmountBait;
+    [SerializeField] TMP_Text _txtAmountApple;
+    [SerializeField] TMP_Text _txtAmountCommonFish;
+    [SerializeField] TMP_Text _txtAmountSpecialFish;
+    [SerializeField] TMP_Text _txtAmountNormalFlower;
+    [SerializeField] TMP_Text _txtAmountSpecialFlower;
+    [SerializeField] TMP_Text _txtAmountNail;
 
     #region NO BORRAR - EVENTS TRIGGERS PARA BOTONES
 
@@ -111,6 +136,7 @@ public class TradeFish : MonoBehaviour
     public void TradeCommonFish()
     {
         TradeItem(0);
+
     }
 
     public void TradeSpecialFish()
