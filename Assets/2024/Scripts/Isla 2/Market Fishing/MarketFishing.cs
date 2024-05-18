@@ -18,6 +18,7 @@ public class MarketFishing : MonoBehaviour
     [SerializeField] TMP_FontAsset[] _textsMaterials;
     [SerializeField] TMP_Text _amountFish;
     [SerializeField] TMP_Text _amountBaits;
+    [SerializeField] TMP_Text _amountSpecialFish;
 
     private void Start()
     {
@@ -35,22 +36,12 @@ public class MarketFishing : MonoBehaviour
     {
         if (_canvasMarket.activeSelf)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                _pause.Defreeze();
-                _player.DeFreezePlayer();
-
-                _camMarket.gameObject.SetActive(false);
-                _camPlayer.gameObject.SetActive(true);
-
-                _myCol.enabled = true;
-                _canvasMarket.SetActive(false);
-            }
-
+            if (Input.GetKeyDown(KeyCode.Escape)) ExitMarket();
             else
             {
                 _amountBaits.text = "x " + _inventory.baits.ToString();
                 _amountFish.text = "x " + _inventory.fishes.ToString();
+                _amountSpecialFish.text = "x " + _inventory.specialFishes.ToString();
             }
         }
     }
@@ -79,12 +70,21 @@ public class MarketFishing : MonoBehaviour
 
     public void BuyBaits()
     {
-        _inventory.baits += 5;
+        if(_inventory.money >= 100)
+        {
+            _inventory.baits += 5;
+            _inventory.money -= 100;
+        }
+        
     }
 
     public void BuyFishes()
     {
-        _inventory.fishes += 5;
+        if (_inventory.fishes >= 100)
+        {
+            _inventory.baits += 5;
+            _inventory.money -= 100;
+        }
     }
 
     public void SellBaits()
@@ -110,7 +110,7 @@ public class MarketFishing : MonoBehaviour
         const int fishPrice = 50;
         const int singleFishPrice = 5;
 
-        if (_inventory.baits >= 3)
+        if (_inventory.fishes >= 3)
         {
             int fishesToSell = Mathf.Min(_inventory.fishes / 3 * 3, _inventory.fishes);
             _inventory.fishes -= fishesToSell;
@@ -121,6 +121,40 @@ public class MarketFishing : MonoBehaviour
             _inventory.fishes = 0;
             _inventory.money += singleFishPrice;
         }
+    }
+
+    public void SellSpecialFishes()
+    {
+        const int fishPrice = 100;
+        const int singleFishPrice = 50;
+
+        if (_inventory.specialFishes >= 3)
+        {
+            int fishesToSell = Mathf.Min(_inventory.specialFishes / 3 * 3, _inventory.specialFishes);
+            _inventory.specialFishes -= fishesToSell;
+            _inventory.money += fishesToSell / 3 * fishPrice;
+        }
+        else if (_inventory.specialFishes == 1)
+        {
+            _inventory.specialFishes = 0;
+            _inventory.money += singleFishPrice;
+        }
+    }
+
+    public void ExitMarket()
+    {
+
+        _pause.Defreeze();
+        _player.DeFreezePlayer();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        _camMarket.gameObject.SetActive(false);
+        _camPlayer.gameObject.SetActive(true);
+
+        _myCol.enabled = true;
+        _canvasMarket.SetActive(false);
     }
 
     public void EnterButton(TMP_Text text)
