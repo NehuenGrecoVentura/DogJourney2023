@@ -76,6 +76,7 @@ public class CharacterInventory : MonoBehaviour
         AmountItem(4, money);
         AmountItem(5, fishes);
         AmountItem(6, baits);
+        AmountItem(7, specialFishes);
 
 
         if (Input.GetKeyDown(KeyCode.X))
