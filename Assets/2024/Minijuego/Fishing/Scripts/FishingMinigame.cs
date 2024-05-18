@@ -206,7 +206,10 @@ public class FishingMinigame : MonoBehaviour
         if (Victory)
         {
             fishedPicked++;
-            _inventory.fishes++;
+            
+            if(common) _inventory.fishes++;
+            if (red || bacalao) _inventory.specialFishes++;
+
             _textAmount[1].text = fishedPicked.ToString();
 
             Gaming = false;
@@ -238,7 +241,6 @@ public class FishingMinigame : MonoBehaviour
             HookTrasn.localScale = _initialScale;
             HookTrasn.transform.position = _initialPos;
 
-            _inventory.baits--;
             Gaming = true;
         }
     }

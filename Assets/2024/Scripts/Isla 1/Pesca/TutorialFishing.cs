@@ -155,6 +155,8 @@ public class TutorialFishing : MonoBehaviour
             item.gameObject.SetActive(true);
         }
 
+
+        _inventory.baits = 0;
         Destroy(this);
     }
 

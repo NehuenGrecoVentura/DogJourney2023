@@ -38,6 +38,11 @@ public class QuickFishing : MonoBehaviour
     [SerializeField] Transform _posEnter;
     [SerializeField] Transform _posExit;
 
+    [Header("FISH TYPE")]
+    [SerializeField] bool _common;
+    [SerializeField] bool _red;
+    [SerializeField] bool _bacalao;
+
     private void Awake()
     {
         _myCol = GetComponent<Collider>();
@@ -82,10 +87,6 @@ public class QuickFishing : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
-            //if (Input.GetKeyDown(KeyCode.F) && !_isActive && _inventory.baits >= 3)
-            //    StartCoroutine(StartMiniGame());
-
-
             if (Input.GetKeyDown(KeyCode.F) && !_isActive)
             {
                 if (_inventory.baits >= 3) StartCoroutine(StartMiniGame());
@@ -113,8 +114,28 @@ public class QuickFishing : MonoBehaviour
     private IEnumerator StartMiniGame()
     {
         _completed = false;
-        
-        
+
+        if (_common)
+        {
+            _fishing.common = true;
+            _fishing.red = false;
+            _fishing.bacalao = false;
+        }
+
+        if (_red)
+        {
+            _fishing.common = false;
+            _fishing.red = true;
+            _fishing.bacalao = false;
+        }
+
+        if (_bacalao)
+        {
+            _fishing.common = false;
+            _fishing.red = false;
+            _fishing.bacalao = true;
+        }
+
         _iconFish.SetActive(false);
         _bubbles.Stop();
         _fishing.fishedPicked = 0;
@@ -169,6 +190,7 @@ public class QuickFishing : MonoBehaviour
 
         Destroy(_myCam.gameObject);
         _camPlayer.gameObject.SetActive(true);
+        _inventory.baits -= 3;
 
         yield return new WaitForSeconds(2f);
         _player.speed = _player.speedAux;
