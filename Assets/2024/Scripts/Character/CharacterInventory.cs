@@ -14,6 +14,7 @@ public class CharacterInventory : MonoBehaviour
     public int seeds = 0;
     public int flowers = 0;
     public int apples = 0;
+    public int fishes = 0;
     public bool upgradeLoot = false;
 
     [Header("MY TOOLS")]

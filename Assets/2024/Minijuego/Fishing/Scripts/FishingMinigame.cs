@@ -63,7 +63,7 @@ public class FishingMinigame : MonoBehaviour
     private LocationQuest _radar;
     public bool start;
     private int overWatch;
-    
+
 
     [Header("FISH MESH")]
     [SerializeField] GameObject _fishMesh;
@@ -79,10 +79,14 @@ public class FishingMinigame : MonoBehaviour
     [Header("AUDIOS")]
     private AudioSource _myAudio;
 
+    private CharacterInventory _inventory;
+
     private void Awake()
     {
         _myAudio = GetComponent<AudioSource>();
+
         _radar = FindObjectOfType<LocationQuest>();
+        _inventory = FindObjectOfType<CharacterInventory>();
     }
 
     private void Start()
@@ -139,7 +143,7 @@ public class FishingMinigame : MonoBehaviour
 
         if (Mathf.Abs(distance) < CaptureRange)
             Capture += Time.deltaTime / Random.Range(DifficultyCaptureMin, DifficultyCaptureMax);
-        
+
         else Capture -= Time.deltaTime * Random.Range(DifficultyEscapeMin, DifficultyEscapeMax);
         Capture = Mathf.Clamp01(Capture);
         ChargeBar.transform.localScale = new Vector3(transform.localScale.x, Capture, 0.8f);
@@ -161,6 +165,7 @@ public class FishingMinigame : MonoBehaviour
         if (Victory)
         {
             fishedPicked++;
+            _inventory.fishes++;
             _textAmount[1].text = fishedPicked.ToString();
 
             Gaming = false;

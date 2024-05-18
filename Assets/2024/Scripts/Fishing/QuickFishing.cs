@@ -30,11 +30,7 @@ public class QuickFishing : MonoBehaviour
     private bool _completed = false;
 
     [Header("MESSAGE")]
-    //[SerializeField] RectTransform _boxMessage;
     [SerializeField] Image _fadeOut;
-    //[SerializeField] TMP_Text _textMessage;
-    //[SerializeField] TMP_Text _textName;
-    //[SerializeField, TextArea(4, 6)] string _message;
 
     [Header("POS")]
     [SerializeField] Transform _posEnter;
@@ -111,8 +107,6 @@ public class QuickFishing : MonoBehaviour
             item.gameObject.SetActive(true);
         }
 
-        //transform.position = _posExit.position;
-
         _player.gameObject.transform.position = _posEnter.position;
         _player.SetFishingMode(true);
         _player.PlayAnim("Fish");
@@ -146,8 +140,6 @@ public class QuickFishing : MonoBehaviour
         _fadeOut.DOColor(Color.black, 1f);
 
         yield return new WaitForSeconds(1f);
-        //transform.position = _posEnter.position;
-
         _player.SetFishingMode(false);
         _player.gameObject.transform.position = _posExit.position;
         _player.PlayAnim("Hit");
@@ -158,15 +150,6 @@ public class QuickFishing : MonoBehaviour
         _camPlayer.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(2f);
-        //_textName.text = "Fisherman";
-        //_textMessage.text = _message;
-        //_boxMessage.localScale = new Vector3(1, 1, 1);
-        //_boxMessage.gameObject.SetActive(true);
-        //_boxMessage.DOAnchorPosY(70f, 0.5f);
-        //yield return new WaitForSeconds(3f);
-        //_boxMessage.DOAnchorPosY(-1000f, 0.5f);
-        //yield return new WaitForSeconds(1f);
-        //_boxMessage.gameObject.SetActive(false);
         _player.speed = _player.speedAux;
         _player.DeFreezePlayer();
     }
