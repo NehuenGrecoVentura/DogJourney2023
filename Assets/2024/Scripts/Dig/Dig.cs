@@ -89,13 +89,23 @@ public class Dig : MonoBehaviour
                 //}
 
                 _myAudio.Stop();
+                player.isConstruct = false;
+                player.DeFreezePlayer();
                 _invetory.flowers++;
                 if (_invetory.flowers < 4) _message.ShowUI("+1", _boxSlide, _textAmount); // CAMBIAR CUANDO EXPANDAMOS A LA ISLA 2 ESTA LINEA.
                 StartCoroutine(Respawn());
             }
         }
 
-        else if (player != null && !Input.GetKey(_inputInteractive)) _myAudio.Stop();
+        else if (player != null && !Input.GetKey(_inputInteractive))
+        {
+            _myAudio.Stop();
+            player.isConstruct = false;
+            player.DeFreezePlayer();
+        }
+            
+            
+            
     }
 
     private void OnTriggerExit(Collider other)
@@ -105,6 +115,8 @@ public class Dig : MonoBehaviour
         {
             _myAudio.Stop();
             _healthBar.gameObject.SetActive(false);
+            player.isConstruct = false;
+            player.DeFreezePlayer();
         }
     }
 

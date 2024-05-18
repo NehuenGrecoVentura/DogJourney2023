@@ -133,13 +133,20 @@ public class DigTreasure : MonoBehaviour
             {
                 amountHit = 0;
                 _myAudio.Stop();
+                player.isConstruct = false;
+                player.DeFreezePlayer();
                 if (_isLast) TreasureLoot();
                 else RandomLoot();
                 StartCoroutine(Respawn());
             }
         }
 
-        else if (player != null && !Input.GetKey(_keyInteractive)) _myAudio.Stop();
+        else if (player != null && !Input.GetKey(_keyInteractive))
+        {
+            _myAudio.Stop();
+            player.isConstruct = false;
+            player.DeFreezePlayer();
+        } 
     }
 
     private void OnTriggerExit(Collider other)
@@ -149,6 +156,8 @@ public class DigTreasure : MonoBehaviour
         {
             _myAudio.Stop();
             _healthBar.gameObject.SetActive(false);
+            player.isConstruct = false;
+            player.DeFreezePlayer();
         }
     }
 
