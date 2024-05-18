@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -13,6 +11,7 @@ public class TradeFish : MonoBehaviour
     [SerializeField] Sprite _spriteFlowers;
     [SerializeField] Sprite _spriteNail;
     [SerializeField] Sprite _spriteApple;
+    [SerializeField] Sprite _spriteBait;
 
     [Header("TEXT VALUES")]
     [SerializeField] TMP_Text _txtValueBait;
@@ -32,95 +31,6 @@ public class TradeFish : MonoBehaviour
     [SerializeField] TMP_Text _txtAmountSpecialFlower;
     [SerializeField] TMP_Text _txtAmountNail;
 
-    #region NO BORRAR - EVENTS TRIGGERS PARA BOTONES
-
-    //public void TradeCommonFish()
-    //{
-    //    if (_trades.Length > 0)
-    //    {
-    //        _trades[0] = true;
-
-    //        for (int i = 1; i < _trades.Length; i++)
-    //        {
-    //            _trades[i] = false;
-    //        }
-    //    }
-    //    else return;
-    //}
-
-    //public void TradeSpecialFish()
-    //{
-    //    if (_trades.Length >= 2)
-    //    {
-    //        for (int i = 0; i < _trades.Length; i++)
-    //        {
-    //            _trades[i] = false;
-    //        }
-
-    //        _trades[1] = true;
-    //    }
-    //    else return;
-    //}
-
-
-    //public void TradeNormalFlowers()
-    //{
-    //    if (_trades.Length >= 3)
-    //    {
-    //        for (int i = 0; i < _trades.Length; i++)
-    //        {
-    //            _trades[i] = false;
-    //        }
-
-    //        _trades[2] = true;
-    //    }
-    //    else return;
-    //}
-
-    //public void TradeSpecialFlowers()
-    //{
-    //    if (_trades.Length >= 4)
-    //    {
-    //        for (int i = 0; i < _trades.Length; i++)
-    //        {
-    //            _trades[i] = false;
-    //        }
-
-    //        _trades[3] = true;
-    //    }
-    //    else return;
-    //}
-
-    //public void TradeNails()
-    //{
-    //    if (_trades.Length >= 5)
-    //    {
-    //        for (int i = 0; i < _trades.Length; i++)
-    //        {
-    //            _trades[i] = false;
-    //        }
-
-    //        _trades[4] = true;
-    //    }
-    //    else return;
-    //}
-
-    //public void TradeApples()
-    //{
-    //    if (_trades.Length >= 6)
-    //    {
-    //        for (int i = 0; i < _trades.Length; i++)
-    //        {
-    //            _trades[i] = false;
-    //        }
-
-    //        _trades[5] = true;
-    //    }
-    //    else return;
-    //}
-
-    #endregion
-
     private void TradeItem(int index)
     {
         if (index >= 0 && index < _trades.Length)
@@ -139,6 +49,7 @@ public class TradeFish : MonoBehaviour
 
         _txtValueBait.text = "$ 20";
         _txtAmountBait.text = "x 1";
+        _txtAmountBait.GetComponentInChildren<Image>().sprite = _spriteBait;
 
         _txtValueNormalFlower.text = "$ 10";
         _txtAmountNormalFlower.text = "x 1 = 3";
@@ -160,8 +71,6 @@ public class TradeFish : MonoBehaviour
         _txtValueApple.text = "$ 10";
         _txtAmountApple.text = "x 1 = 3";
         _txtAmountApple.GetComponentInChildren<Image>().sprite = _spriteApple;
-
-
     }
 
     public void TradeSpecialFish()
@@ -169,22 +78,28 @@ public class TradeFish : MonoBehaviour
         TradeItem(1);
 
         _txtValueBait.text = "$ 20";
-        _txtAmountBait.text = "x 5 baits";
+        _txtAmountBait.text = "x 5";
+        _txtAmountBait.GetComponentInChildren<Image>().sprite = _spriteBait;
 
         _txtValueNormalFlower.text = "$ 10";
-        _txtAmountNormalFlower.text = "x 1 = 10 Normal Flower";
+        _txtAmountNormalFlower.text = "x 1 = 10";
+        _txtAmountNormalFlower.GetComponentInChildren<Image>().sprite = _spriteFlowers;
 
         _txtValueSpecialFlower.text = "$ 50";
-        _txtAmountSpecialFlower.text = "x 1 = 2 Special Flower";
+        _txtAmountSpecialFlower.text = "x 1 = 2";
+        _txtAmountSpecialFlower.GetComponentInChildren<Image>().sprite = _spriteFlowers;
 
         _txtValueCommonFish.text = "$ 30";
-        _txtAmountSpecialFish.text = "x 1 = 3 Special Fish";
+        _txtAmountCommonFish.text = "x 1 = 3";
+        _txtAmountCommonFish.GetComponentInChildren<Image>().sprite = _spriteSpecialFish;
 
         _txtValueNail.text = "$ 200";
-        _txtAmountNail.text = "x 1 = 0.5 Nails";
+        _txtAmountNail.text = "x 1 = 0.5";
+        _txtAmountNail.GetComponentInChildren<Image>().sprite = _spriteNail;
 
         _txtValueApple.text = "$ 10";
-        _txtAmountApple.text = "x 1 = 10 Apples";
+        _txtAmountApple.text = "x 1 = 10";
+        _txtAmountApple.GetComponentInChildren<Image>().sprite = _spriteApple;
     }
 
     public void TradeNormalFlowers()
@@ -212,19 +127,27 @@ public class TradeFish : MonoBehaviour
         TradeItem(6);
 
         _txtValueNormalFlower.text = "$ 10";
-        _txtAmountNormalFlower.text = "x 1 = 2 Normal Flower";
+        _txtAmountNormalFlower.text = "x 1 = 2";
+        _txtAmountNormalFlower.GetComponentInChildren<Image>().sprite = _spriteFlowers;
 
         _txtValueSpecialFlower.text = "$ 50";
-        _txtAmountSpecialFlower.text = "x 1 = 0.4 Special Flower";
+        _txtAmountSpecialFlower.text = "x 1 = 0.4";
+        _txtAmountSpecialFlower.GetComponentInChildren<Image>().sprite = _spriteFlowers;
 
         _txtValueCommonFish.text = "$ 30";
-        _txtAmountSpecialFish.text = "x 1 = 0.67 Normal Fish";
+        _txtAmountCommonFish.text = "x 1 = 0.67";
+        _txtAmountCommonFish.GetComponentInChildren<Image>().sprite = _spriteCommonFish;
+
+        _txtValueSpecialFish.text = "$ 100";
+        _txtAmountSpecialFish.text = "x 1 = 0.2";
+        _txtAmountSpecialFish.GetComponentInChildren<Image>().sprite = _spriteSpecialFish;
 
         _txtValueNail.text = "$ 200";
-        _txtAmountNail.text = "x 1 = 0.1 Nails";
+        _txtAmountNail.text = "x 1 = 0.1";
+        _txtAmountNail.GetComponentInChildren<Image>().sprite = _spriteNail;
 
         _txtValueApple.text = "$ 10";
         _txtAmountApple.text = "x 1 = 2 Apples";
-
+        _txtAmountApple.GetComponentInChildren<Image>().sprite = _spriteApple;
     }
 }

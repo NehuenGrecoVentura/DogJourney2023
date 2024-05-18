@@ -1369,6 +1369,7 @@ MonoBehaviour:
   _spriteFlowers: {fileID: 21300000, guid: 8daa3e480013c9245a91f5a6c12e4474, type: 3}
   _spriteNail: {fileID: 21300000, guid: 8daa3e480013c9245a91f5a6c12e4474, type: 3}
   _spriteApple: {fileID: 21300000, guid: 316c5cd0639bf1549853835b5fa29b0d, type: 3}
+  _spriteBait: {fileID: 21300000, guid: 9d64f930f14a5bd4aabd204132adade3, type: 3}
   _txtValueBait: {fileID: 286904159}
   _txtValueApple: {fileID: 286904158}
   _txtValueCommonFish: {fileID: 286904157}
