@@ -70,12 +70,20 @@ public class DigBait : MonoBehaviour
                     _quest.baitPicked++;
                     _inventory.baits++;
                     _doTween.ShowLootCoroutine(_rectLoot);
+                    player.isConstruct = false;
+                    player.DeFreezePlayer();
                     StartCoroutine(Respawn());
                 }
             }
         }
 
-        else if (player != null && !Input.GetKey(_keyInteractive)) _myAudio.Stop();
+        else if (player != null && !Input.GetKey(_keyInteractive))
+        {
+            _myAudio.Stop();
+            player.isConstruct = false;
+            player.DeFreezePlayer();
+            //player.PlayAnim("Idle");
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -85,6 +93,9 @@ public class DigBait : MonoBehaviour
         {
             _myAudio.Stop();
             _healthBar.gameObject.SetActive(false);
+            player.isConstruct = false;
+            player.DeFreezePlayer();
+            //player.PlayAnim("Idle");
         }
     }
 
