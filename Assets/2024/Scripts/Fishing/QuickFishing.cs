@@ -26,11 +26,13 @@ public class QuickFishing : MonoBehaviour
     private Manager _gm;
     private Character _player;
     private Collider _myCol;
+    private CharacterInventory _inventory;
     private bool _isActive = false;
     private bool _completed = false;
 
     [Header("MESSAGE")]
     [SerializeField] Image _fadeOut;
+    private BoxMessages _boxMessage;
 
     [Header("POS")]
     [SerializeField] Transform _posEnter;
@@ -44,6 +46,8 @@ public class QuickFishing : MonoBehaviour
         _player = FindObjectOfType<Character>();
         _camPlayer = FindObjectOfType<CameraOrbit>();
         _gm = FindObjectOfType<Manager>();
+        _inventory = FindObjectOfType<CharacterInventory>();
+        _boxMessage = FindObjectOfType<BoxMessages>();
     }
 
 
@@ -78,8 +82,15 @@ public class QuickFishing : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
+            //if (Input.GetKeyDown(KeyCode.F) && !_isActive && _inventory.baits >= 3)
+            //    StartCoroutine(StartMiniGame());
+
+
             if (Input.GetKeyDown(KeyCode.F) && !_isActive)
-                StartCoroutine(StartMiniGame());
+            {
+                if (_inventory.baits >= 3) StartCoroutine(StartMiniGame());
+                else StartCoroutine(Error());
+            }              
         }
     }
 
@@ -87,6 +98,16 @@ public class QuickFishing : MonoBehaviour
     {
         var player = other.GetComponent<Character>();
         if (player != null && !_isActive) _iconInteract.SetActive(false);
+    }
+
+    private IEnumerator Error()
+    {
+        _boxMessage.SetMessage("FISHING");
+        _boxMessage.ShowMessage("You don't have enough bait to fish.");
+        yield return new WaitForSeconds(3f);
+        _boxMessage.CloseMessage();
+        yield return new WaitForSeconds(1f);
+        _boxMessage.DesactivateMessage();
     }
 
     private IEnumerator StartMiniGame()

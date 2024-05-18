@@ -188,7 +188,7 @@ public class FishingMinigame : MonoBehaviour
             HookTrasn.localScale = _initialScale;
             HookTrasn.transform.position = _initialPos;
 
-
+            _inventory.baits--;
             Gaming = true;
         }
     }

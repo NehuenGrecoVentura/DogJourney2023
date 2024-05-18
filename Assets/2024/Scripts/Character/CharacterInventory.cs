@@ -15,6 +15,7 @@ public class CharacterInventory : MonoBehaviour
     public int flowers = 0;
     public int apples = 0;
     public int fishes = 0;
+    public int baits = 0;
     public bool upgradeLoot = false;
 
     [Header("MY TOOLS")]
@@ -72,6 +73,8 @@ public class CharacterInventory : MonoBehaviour
         AmountItem(2, nails);
         AmountItem(3, ropes);
         AmountItem(4, money);
+        AmountItem(5, fishes);
+        AmountItem(6, baits);
 
 
         if (Input.GetKeyDown(KeyCode.X))

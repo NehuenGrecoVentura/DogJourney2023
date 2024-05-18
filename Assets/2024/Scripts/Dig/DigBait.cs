@@ -68,6 +68,7 @@ public class DigBait : MonoBehaviour
                     amountHit = 0;
                     _myAudio.Stop();
                     _quest.baitPicked++;
+                    _inventory.baits++;
                     _doTween.ShowLootCoroutine(_rectLoot);
                     StartCoroutine(Respawn());
                 }
