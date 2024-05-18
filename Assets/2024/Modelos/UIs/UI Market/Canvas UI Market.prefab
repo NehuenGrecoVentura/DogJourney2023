@@ -1296,7 +1296,7 @@ RectTransform:
   m_GameObject: {fileID: 5414927991647228735}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9130870997946780868}
@@ -11996,6 +11996,7 @@ MonoBehaviour:
   _textInventory: {fileID: 9184599071327076095}
   _canvas: {fileID: 6713703454944805640}
   _intro: {fileID: 1258187392}
+  _circleSprite: {fileID: 0}
   _costNails: 50
   _amountNails: 20
   _txtAmountNails: {fileID: 438470217366126354}

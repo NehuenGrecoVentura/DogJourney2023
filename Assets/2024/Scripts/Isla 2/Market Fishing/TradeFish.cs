@@ -137,11 +137,46 @@ public class TradeFish : MonoBehaviour
     {
         TradeItem(0);
 
+        _txtValueBait.text = "$ 20";
+        _txtAmountBait.text = "x 1";
+
+        _txtValueNormalFlower.text = "$ 10";
+        _txtAmountNormalFlower.text = "x 1 = 3";
+
+        _txtValueSpecialFlower.text = "$ 50";
+        _txtAmountSpecialFlower.text = "x 1 = 1";
+
+        _txtValueSpecialFish.text = "$ 100";
+        _txtAmountSpecialFish.text = "x 1 = 3";
+
+        _txtValueNail.text = "$ 200";
+        _txtAmountNail.text = "x 1";
+
+        _txtValueApple.text = "$ 10";
+        _txtAmountApple.text = "x 1 = 3";
     }
 
     public void TradeSpecialFish()
     {
         TradeItem(1);
+
+        _txtValueBait.text = "$ 20";
+        _txtAmountBait.text = "x 5 baits";
+
+        _txtValueNormalFlower.text = "$ 10";
+        _txtAmountNormalFlower.text = "x 1 = 10 Normal Flower";
+
+        _txtValueSpecialFlower.text = "$ 50";
+        _txtAmountSpecialFlower.text = "x 1 = 2 Special Flower";
+
+        _txtValueCommonFish.text = "$ 30";
+        _txtAmountSpecialFish.text = "x 1 = 3 Special Fish";
+
+        _txtValueNail.text = "$ 200";
+        _txtAmountNail.text = "x 1 = 0.5 Nails";
+
+        _txtValueApple.text = "$ 10";
+        _txtAmountApple.text = "x 1 = 10 Apples";
     }
 
     public void TradeNormalFlowers()
@@ -162,5 +197,26 @@ public class TradeFish : MonoBehaviour
     public void TradeApples()
     {
         TradeItem(5);
+    }
+
+    public void TradeBaits()
+    {
+        TradeItem(6);
+
+        _txtValueNormalFlower.text = "$ 10";
+        _txtAmountNormalFlower.text = "x 1 = 2 Normal Flower";
+
+        _txtValueSpecialFlower.text = "$ 50";
+        _txtAmountSpecialFlower.text = "x 1 = 0.4 Special Flower";
+
+        _txtValueCommonFish.text = "$ 30";
+        _txtAmountSpecialFish.text = "x 1 = 0.67 Normal Fish";
+
+        _txtValueNail.text = "$ 200";
+        _txtAmountNail.text = "x 1 = 0.1 Nails";
+
+        _txtValueApple.text = "$ 10";
+        _txtAmountApple.text = "x 1 = 2 Apples";
+
     }
 }
