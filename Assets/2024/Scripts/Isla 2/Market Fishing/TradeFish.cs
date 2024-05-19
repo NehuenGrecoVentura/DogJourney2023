@@ -47,6 +47,15 @@ public class TradeFish : MonoBehaviour
     [SerializeField] TMP_Text _txtAmountSpecialFlower;
     [SerializeField] TMP_Text _txtAmountNail;
 
+    [Header("BUTTONS MAKE TRADE")]
+    [SerializeField] Button _buttonCommonFish;
+    [SerializeField] Button _buttonSpecialFish;
+    [SerializeField] Button _buttonFlowerFish;
+    [SerializeField] Button _buttonSpecialFlowerFish;
+    [SerializeField] Button _buttonNail;
+    [SerializeField] Button _buttonApple;
+    [SerializeField] Button _buttonBait;
+
     private void Awake()
     {
         _myCol = GetComponent<Collider>();
@@ -58,7 +67,7 @@ public class TradeFish : MonoBehaviour
 
     private void Start()
     {
-        _iconInteract.transform.DOScale(0f,0f);
+        _iconInteract.transform.DOScale(0f, 0f);
         _canvas.SetActive(false);
     }
 
@@ -89,7 +98,7 @@ public class TradeFish : MonoBehaviour
         Cursor.visible = true;
         _canvas.SetActive(true);
     }
-    
+
     public void CloseMarket()
     {
         _myCol.enabled = true;
@@ -220,6 +229,35 @@ public class TradeFish : MonoBehaviour
         _txtAmountApple.GetComponentInChildren<Image>().sprite = _spriteApple;
     }
 
+    public void MakeTrade()
+    {
+        if (_trades[0])
+        {
+            if (_inventory.money >= 20 && _inventory.fishes > 1)
+            {
+                _inventory.baits++;
+                _inventory.fishes--;
+                _inventory.money -= 20;
+                print("PESCADO COMUN COMPRADO");
+            }
+
+            else print("TE FALTA PLATA O PECES");
+        }
+
+        if (_trades[0])
+        {
+            if (_inventory.money >= 20 && _inventory.fishes > 1)
+            {
+                _inventory.baits++;
+                _inventory.fishes--;
+                _inventory.money -= 20;
+                print("PESCADO COMUN COMPRADO");
+            }
+
+            else print("TE FALTA PLATA O PECES");
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
@@ -229,7 +267,7 @@ public class TradeFish : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && Input.GetKeyDown(_keyInteract)) 
+        if (player != null && Input.GetKeyDown(_keyInteract))
             OpenMarket();
     }
 
