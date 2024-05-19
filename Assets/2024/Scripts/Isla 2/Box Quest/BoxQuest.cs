@@ -153,8 +153,8 @@ public class BoxQuest : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         _fadeOut.DOColor(Color.clear, 1f);
-        _camFocus.gameObject.SetActive(true);
         _dogCam.gameObject.SetActive(false);
+        _camFocus.gameObject.SetActive(true);
         _player.gameObject.transform.position = _posEnd.position;
 
         yield return new WaitForSeconds(1f);
@@ -162,6 +162,7 @@ public class BoxQuest : MonoBehaviour
 
         yield return new WaitForSeconds(4f);
         Destroy(_camFocus.gameObject);
+        _camPlayer.gameObject.SetActive(true);
         _boxMessage.CloseMessage();
         _gm.QuestCompleted();
         _dog.quickEnd = false;
@@ -189,6 +190,7 @@ public class BoxQuest : MonoBehaviour
 
         yield return new WaitForSeconds(4f);
         Destroy(_camFocus.gameObject);
+        _camPlayer.gameObject.SetActive(true);
         _boxMessage.CloseMessage();
         _gm.QuestCompleted();
         _radar.target = _nextQuest.transform;
