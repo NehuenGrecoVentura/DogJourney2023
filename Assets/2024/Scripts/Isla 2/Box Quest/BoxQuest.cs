@@ -163,6 +163,7 @@ public class BoxQuest : MonoBehaviour
         yield return new WaitForSeconds(4f);
         Destroy(_camFocus.gameObject);
         _camPlayer.gameObject.SetActive(true);
+        _player.DeFreezePlayer();
         _boxMessage.CloseMessage();
         _gm.QuestCompleted();
         _dog.quickEnd = false;
@@ -191,6 +192,7 @@ public class BoxQuest : MonoBehaviour
         yield return new WaitForSeconds(4f);
         Destroy(_camFocus.gameObject);
         _camPlayer.gameObject.SetActive(true);
+        _player.DeFreezePlayer();
         _boxMessage.CloseMessage();
         _gm.QuestCompleted();
         _radar.target = _nextQuest.transform;
