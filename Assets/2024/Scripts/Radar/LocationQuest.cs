@@ -28,23 +28,40 @@ public class LocationQuest : MonoBehaviour
 
     void TargetPos()
     {
-        float minX = _iconLocation.GetPixelAdjustedRect().width / 2;
-        float maxX = Screen.width - minX;
-        float minY = _iconLocation.GetPixelAdjustedRect().height / 2;
-        float maxY = Screen.height - minY;
+        //float minX = _iconLocation.GetPixelAdjustedRect().width / 2;
+        //float maxX = Screen.width - minX;
+        //float minY = _iconLocation.GetPixelAdjustedRect().height / 2;
+        //float maxY = Screen.height - minY;
+        //Vector2 pos = Camera.main.WorldToScreenPoint(target.position + _offset);
+
+        //if (Vector3.Dot((target.position - transform.position), transform.forward) < 0)
+        //{
+        //    if (pos.x < Screen.width / 2) pos.x = maxX;
+        //    else pos.x = minX;
+        //}
+
+        //pos.x = Mathf.Clamp(pos.x, minX, maxX);
+        //pos.y = Mathf.Clamp(pos.y, minY, maxY);
+        //_iconLocation.transform.position = pos;
+        //_distNumber.text = ((int)Vector3.Distance(target.position, transform.position)).ToString() + "m";
+
+        if (target == null) return;
+
+        Vector3 playerPos = _player.transform.position;
+        float distance = Vector3.Distance(playerPos, target.position);
+        _distNumber.text = ((int)distance).ToString() + "m";
+
         Vector2 pos = Camera.main.WorldToScreenPoint(target.position + _offset);
 
-        if (Vector3.Dot((target.position - transform.position), transform.forward) < 0)
+        if (Vector3.Dot((target.position - playerPos), _player.transform.forward) < 0)
         {
-            if (pos.x < Screen.width / 2) pos.x = maxX;
-            else pos.x = minX;
+            pos.x = (pos.x < Screen.width / 2) ? Screen.width - pos.x : pos.x;
         }
 
-        pos.x = Mathf.Clamp(pos.x, minX, maxX);
-        pos.y = Mathf.Clamp(pos.y, minY, maxY);
-        _iconLocation.transform.position = pos;
-        _distNumber.text = ((int)Vector3.Distance(target.position, transform.position)).ToString() + "m";
-        //HideMap();
+        pos.x = Mathf.Clamp(pos.x, 0, Screen.width);
+        pos.y = Mathf.Clamp(pos.y, 0, Screen.height);
+
+        _iconLocation.rectTransform.position = pos;
     }
 
     public void StatusRadar(bool active)
@@ -54,6 +71,7 @@ public class LocationQuest : MonoBehaviour
 
     private void HideMap()
     {
+        if (target != null) return;
         float dist = Vector3.Distance(transform.position, target.position);
 
         if (dist <= _distanceHide)
