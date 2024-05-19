@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +14,7 @@ public class BoxQuest : MonoBehaviour
     [SerializeField, TextArea(4, 6)] string[] _linesDialogues;
     [SerializeField] string _nameNPC = "Albert";
     [SerializeField] Button _buttonConfirm;
-    
+
     [Header("MESSAGE")]
     [SerializeField] BoxMessages _boxMessage;
     [SerializeField] string[] _message;
@@ -33,8 +32,10 @@ public class BoxQuest : MonoBehaviour
     [SerializeField] QuestUI _questUI;
     private bool _questActive = false;
     private bool _questCompleted = false;
+    private bool _canQuick = false;
 
     [Header("FINISH")]
+    [SerializeField] Animator _myAnim;
     [SerializeField] GameObject _myBroom;
     [SerializeField] Manager _gm;
 
@@ -49,12 +50,22 @@ public class BoxQuest : MonoBehaviour
         _fadeOut.color = new Color(0, 0, 0, 0);
     }
 
+    private void Update()
+    {
+        if (_canQuick && Input.GetKeyDown(KeyCode.Space))
+        {
+            _canQuick = false;
+        }
+    }
+
     private void Confirm()
     {
         _myCol.enabled = false;
         _dialogue.canTalk = false;
         _dialogue.Close();
         _iconInteract.SetActive(false);
+        _radar.StatusRadar(true);
+        _radar.target = _boxQuestPos.transform;
         _questUI.ActiveUIQuest("The Box", "Pick up the box", string.Empty, string.Empty);
         _questActive = true;
     }
@@ -92,9 +103,9 @@ public class BoxQuest : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract))
         {
-            _myCol.enabled = false;
-            player.rabbitPicked = false;
             _gm.QuestCompleted();
+            Destroy(_myCol);
+            Destroy(_iconInteract);
             Destroy(this);
         }
     }
@@ -107,5 +118,16 @@ public class BoxQuest : MonoBehaviour
             _dialogue.playerInRange = false;
             _iconInteract.SetActive(false);
         }
+    }
+
+    public void BoxPicked()
+    {
+        _radar.target = transform;
+        _myAnim.SetBool("Quest", false);
+        _myCol.enabled = true;
+        _questUI.TaskCompleted(1);
+        _questUI.AddNewTask(3, "Return the box to its owner");
+        _canQuick = true;
+        _questCompleted = true;
     }
 }

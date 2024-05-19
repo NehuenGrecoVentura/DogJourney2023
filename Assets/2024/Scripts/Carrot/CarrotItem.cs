@@ -7,6 +7,7 @@ public class CarrotItem : MonoBehaviour
     [SerializeField] KeyCode _keyInteractive;
     [SerializeField] Transform _posHand;
     [SerializeField] GameObject _sphereInteract;
+    [SerializeField] Collider _myCol;
 
     public bool carrotPicked = false;
 
@@ -64,8 +65,9 @@ public class CarrotItem : MonoBehaviour
 
     private void PickObject()
     {
-        objectPicked = true;
+        _myCol.enabled = false;
         _iconInteractive.SetActive(false);
+        objectPicked = true;
     }
 
     private void CarryObject()
@@ -78,5 +80,6 @@ public class CarrotItem : MonoBehaviour
     {
         objectPicked = false;
         transform.position = transform.position;
+        _myCol.enabled = true;
     }
 }

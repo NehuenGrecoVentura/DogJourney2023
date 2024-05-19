@@ -76,6 +76,8 @@ public class WolfStatic : MonoBehaviour
             _nv.SetDestination(_rabbitFollow.gameObject.transform.position);
             _myAnim.SetBool("Patrol", true);
             _myAnim.SetBool("Idle", false);
+
+            Destroy(_rabbitFollow.gameObject, 5f);
             Destroy(transform.parent.gameObject, 5f);
         }
     }

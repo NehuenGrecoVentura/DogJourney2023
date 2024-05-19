@@ -1,42 +1,46 @@
 using UnityEngine;
 
-public class BoxQuest2 : Box
-{    
-    [SerializeField] Animator _animNPCQuest2;
-    private QuestUI _questUI;
-
-    [Header("TEXT QUEST")]
-    [SerializeField] string _textPick;
-    [SerializeField] string _textNextStage;
-
-    [Header("RADAR")]
-    [SerializeField] Transform _nextPos;
-    private LocationQuest _radar;
+public class BoxQuest2 : MonoBehaviour
+{
+    [Header("INTERACT")]
+    [SerializeField] GameObject _iconInteract;
+    [SerializeField] KeyCode _keyInteract = KeyCode.Q;
+    [SerializeField] BoxQuest _npc;
 
     [Header("AUDIO")]
-    [SerializeField] AudioClip _soundNotification;
-    private AudioSource _myAudio;
+    [SerializeField] AudioSource _myAudio;
 
-    private void Awake()
+    private void Start()
     {
-        _myAudio = GetComponent<AudioSource>();
-
-        _questUI = FindObjectOfType<QuestUI>();
-        _radar = FindObjectOfType<LocationQuest>();
+        _iconInteract.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         var dog = other.GetComponent<Dog>();
-        if (dog != null)
-        {
-            _myAudio.PlayOneShot(_soundNotification);
-            _radar.target = _nextPos;
-            inventory.upgradeLoot = true;
-            _questUI.TaskCompleted(1);
-            _questUI.AddNewTask(3, _textNextStage);
-            _animNPCQuest2.SetBool("Quest", false);
-            Destroy(gameObject);
-        }
+        if (dog != null) BoxPicked();
+
+        var player = other.GetComponent<Character>();
+        if (player != null) _iconInteract.SetActive(true);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null && Input.GetKeyDown(_keyInteract)) 
+            _iconInteract.SetActive(false);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null) _iconInteract.SetActive(false);
+    }
+
+    private void BoxPicked()
+    {
+        _myAudio.Play();
+        _npc.BoxPicked();
+        Destroy(gameObject);
     }
 }
