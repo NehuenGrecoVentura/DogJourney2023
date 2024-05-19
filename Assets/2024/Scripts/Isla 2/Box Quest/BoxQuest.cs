@@ -64,6 +64,8 @@ public class BoxQuest : MonoBehaviour
     {
         if (_canQuick && Input.GetKeyDown(KeyCode.Space))
             StartCoroutine(EndingQuick());
+
+        transform.LookAt(_player.gameObject.transform.position);
     }
 
     private void Confirm()
