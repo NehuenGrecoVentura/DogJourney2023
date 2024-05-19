@@ -23,12 +23,6 @@ public class CinematicThieft : MonoBehaviour
     [SerializeField, TextArea(4, 6)] string[] _message;
     [SerializeField] BoxMessages _boxMessage;
 
-    OrderDog _order;
-    private void Awake()
-    {
-        _order = FindObjectOfType<OrderDog>();
-    }
-
     private void Start()
     {
         _cinematic.SetActive(false);
@@ -40,12 +34,6 @@ public class CinematicThieft : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Space) && _canScared)
-        //{
-        //    if(_ladrones[0].gameObject.activeSelf || _ladrones[1].gameObject.activeSelf || _ladrones[2].gameObject.activeSelf || _ladrones[3].gameObject.activeSelf || _ladrones[4].gameObject.activeSelf || _ladrones[5].gameObject.activeSelf)
-        //            StartCoroutine(PlayCinematicScared());
-        //}     
-
         if (Input.GetKeyDown(KeyCode.Space) && _canScared && CheckThieft())
             StartCoroutine(PlayCinematicScared());        
     }

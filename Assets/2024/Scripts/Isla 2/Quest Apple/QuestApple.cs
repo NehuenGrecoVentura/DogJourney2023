@@ -1,14 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using DG.Tweening;
+using System.Collections;
 
 public class QuestApple : MonoBehaviour
 {
     [Header("INTERACT")]
     [SerializeField] GameObject _iconInteract;
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
-    private BoxCollider _myCol;
+    [SerializeField] BoxCollider _myCol;
 
     [Header("DIALOGS")]
     [SerializeField] Button _buttonConfirm;
@@ -20,38 +20,38 @@ public class QuestApple : MonoBehaviour
 
     [Header("ANIM")]
     [SerializeField] RuntimeAnimatorController[] _animController;
-    private Animator _myAnim;
+    [SerializeField] Animator _myAnim;
 
     [Header("QUEST")]
-    private QuestUI _questUI;
+    [SerializeField] QuestUI _questUI;
+    [SerializeField] BoxApple _boxApple;
     private TreeApple[] _trees;
     private bool _questActive = false;
     private bool _questCompleted = false;
-    private BoxApple _boxApple;
-    private Manager _gm;
 
     [Header("THIEFS")]
     [SerializeField] ThiefApple[] _thiefs;
     [SerializeField] float _timeToSpwnThiefs = 8f;
-    private CinematicThieft _cinematic;
+    [SerializeField] CinematicThieft _cinematic;
     private bool _spawnActivate = false;
+
+    [Header("FINISH")]
+    [SerializeField] BoxMessages _boxMessage;
+    [SerializeField] Manager _gm;
+    [SerializeField, TextArea(4,6)] string _messageEnd;
+    [SerializeField] CameraOrbit _camPlayer;
+    [SerializeField] Camera _camEnding;
 
     private void Awake()
     {
-        _myAnim = GetComponent<Animator>();
-        _myCol = GetComponent<BoxCollider>();
-
-        _questUI = FindObjectOfType<QuestUI>();
         _trees = FindObjectsOfType<TreeApple>();
-        _boxApple = FindObjectOfType<BoxApple>();
-        _cinematic = FindObjectOfType<CinematicThieft>();
-        _gm = FindObjectOfType<Manager>();
     }
 
     private void Start()
     {
         _dialogue.gameObject.SetActive(false);
         _iconInteract.SetActive(false);
+        _camEnding.gameObject.SetActive(false);
 
         foreach (var thief in _thiefs)
         {
@@ -147,13 +147,14 @@ public class QuestApple : MonoBehaviour
     {
         var player = other.GetComponent<Character>();
         if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract))
-        {
-            _myCol.enabled = false;
-            player.rabbitPicked = false;
-            _gm.QuestCompleted();
-            Destroy(_boxApple.gameObject);
-            Destroy(this);
-        }
+            StartCoroutine(Ending(player));
+        //{
+        //    //_myCol.enabled = false;
+        //    //player.rabbitPicked = false;
+        //    //_gm.QuestCompleted();
+        //    //Destroy(_boxApple.gameObject);
+        //    //Destroy(this);
+        //}
     }
 
     private void OnTriggerExit(Collider other)
@@ -165,7 +166,6 @@ public class QuestApple : MonoBehaviour
             _iconInteract.SetActive(false);
         }
     }
-
 
     private void SpawnThiefts()
     {
@@ -197,5 +197,32 @@ public class QuestApple : MonoBehaviour
         {
             item.gameObject.SetActive(false);
         }
+    }
+
+    private IEnumerator Ending(Character player)
+    {
+        player.transform.LookAt(transform);
+        player.FreezePlayer();
+        _camPlayer.gameObject.SetActive(false);
+        _camEnding.gameObject.SetActive(true);
+        Destroy(_myCol);
+        _iconInteract.SetActive(false);
+        _boxMessage.SetMessage(_nameNPC);
+
+        yield return new WaitForSeconds(1f);
+        _boxMessage.ShowMessage(_messageEnd);
+
+        yield return new WaitForSeconds(3f);
+        _boxMessage.CloseMessage();
+
+        yield return new WaitForSeconds(0.5f);
+        _camPlayer.gameObject.SetActive(true);
+        Destroy(_camEnding.gameObject);
+        _boxMessage.DesactivateMessage();
+        player.DeFreezePlayer();
+        player.rabbitPicked = false;
+        _gm.QuestCompleted();
+        Destroy(_boxApple.gameObject);
+        Destroy(this);
     }
 }
