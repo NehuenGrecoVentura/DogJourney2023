@@ -1,11 +1,9 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 
 public class TradeFish : MonoBehaviour
 {
-    [SerializeField] bool[] _trades;
     [SerializeField] GameObject _canvas;
     private CharacterInventory _inventory;
     private Collider _myCol;
@@ -16,49 +14,21 @@ public class TradeFish : MonoBehaviour
     [SerializeField] GameObject _iconInteract;
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
 
-    [Header("SPRITES")]
-    [SerializeField] Sprite _spriteCommonFish;
-    [SerializeField] Sprite _spriteSpecialFish;
-    [SerializeField] Sprite _spriteFlowers;
-    [SerializeField] Sprite _spriteNail;
-    [SerializeField] Sprite _spriteApple;
-    [SerializeField] Sprite _spriteBait;
-
     [Header("TEXTS INVENTORY")]
     [SerializeField] TMP_Text _txtInvFishCommon;
     [SerializeField] TMP_Text _txtInvSpecialFish;
     [SerializeField] TMP_Text _txtInvBait;
+    [SerializeField] TMP_Text _txtInvMoney;
 
-    [Header("TEXT VALUES")]
-    [SerializeField] TMP_Text _txtValueBait;
-    [SerializeField] TMP_Text _txtValueApple;
-    [SerializeField] TMP_Text _txtValueCommonFish;
-    [SerializeField] TMP_Text _txtValueSpecialFish;
-    [SerializeField] TMP_Text _txtValueNormalFlower;
-    [SerializeField] TMP_Text _txtValueSpecialFlower;
-    [SerializeField] TMP_Text _txtValueNail;
-
-    [Header("TEXT AMOUNT")]
-    [SerializeField] TMP_Text _txtAmountBait;
-    [SerializeField] TMP_Text _txtAmountApple;
-    [SerializeField] TMP_Text _txtAmountCommonFish;
-    [SerializeField] TMP_Text _txtAmountSpecialFish;
-    [SerializeField] TMP_Text _txtAmountNormalFlower;
-    [SerializeField] TMP_Text _txtAmountSpecialFlower;
-    [SerializeField] TMP_Text _txtAmountNail;
-
-    [Header("BUTTONS MAKE TRADE")]
-    [SerializeField] Button _buttonCommonFish;
-    [SerializeField] Button _buttonSpecialFish;
-    [SerializeField] Button _buttonFlowerFish;
-    [SerializeField] Button _buttonSpecialFlowerFish;
-    [SerializeField] Button _buttonNail;
-    [SerializeField] Button _buttonApple;
-    [SerializeField] Button _buttonBait;
+    [Header("AUDIOS")]
+    [SerializeField] AudioClip _soundError;
+    [SerializeField] AudioClip _soundTrade;
+    private AudioSource _myAudio;
 
     private void Awake()
     {
         _myCol = GetComponent<Collider>();
+        _myAudio = GetComponent<AudioSource>();
 
         _inventory = FindObjectOfType<CharacterInventory>();
         _pause = FindObjectOfType<MenuPause>();
@@ -83,6 +53,7 @@ public class TradeFish : MonoBehaviour
             _txtInvFishCommon.text = "x " + _inventory.fishes.ToString();
             _txtInvSpecialFish.text = "x " + _inventory.specialFishes.ToString();
             _txtInvBait.text = "x " + _inventory.baits.ToString();
+            _txtInvMoney.text = "x " + _inventory.money.ToString();
         }
 
         else return;
@@ -109,154 +80,119 @@ public class TradeFish : MonoBehaviour
         _canvas.SetActive(false);
     }
 
-    private void TradeItem(int index)
+    private void MakeTrade(ref int amountInInventory, ref int item, int price, int add)
     {
-        if (index >= 0 && index < _trades.Length)
+        if (amountInInventory >= price && price > 0)
         {
-            for (int i = 0; i < _trades.Length; i++)
-            {
-                _trades[i] = (i == index);
-            }
-        }
-        else return;
-    }
-
-    public void TradeCommonFish()
-    {
-        TradeItem(0);
-
-        _txtValueBait.text = "$ 20";
-        _txtAmountBait.text = "x 1";
-        _txtAmountBait.GetComponentInChildren<Image>().sprite = _spriteBait;
-
-        _txtValueNormalFlower.text = "$ 10";
-        _txtAmountNormalFlower.text = "x 1 = 3";
-        _txtAmountNormalFlower.GetComponentInChildren<Image>().sprite = _spriteFlowers;
-
-        _txtValueSpecialFlower.text = "$ 50";
-        _txtAmountSpecialFlower.text = "x 1 = 1";
-        _txtAmountSpecialFlower.GetComponentInChildren<Image>().sprite = _spriteFlowers;
-
-        _txtValueSpecialFish.text = "$ 100";
-        _txtAmountSpecialFish.text = "x 1 = 3";
-        _txtAmountSpecialFish.GetComponentInChildren<Image>().sprite = _spriteCommonFish;
-
-
-        _txtValueNail.text = "$ 200";
-        _txtAmountNail.text = "x 1";
-        _txtAmountNail.GetComponentInChildren<Image>().sprite = _spriteCommonFish;
-
-        _txtValueApple.text = "$ 10";
-        _txtAmountApple.text = "x 1 = 3";
-        _txtAmountApple.GetComponentInChildren<Image>().sprite = _spriteApple;
-    }
-
-    public void TradeSpecialFish()
-    {
-        TradeItem(1);
-
-        _txtValueBait.text = "$ 20";
-        _txtAmountBait.text = "x 5";
-        _txtAmountBait.GetComponentInChildren<Image>().sprite = _spriteBait;
-
-        _txtValueNormalFlower.text = "$ 10";
-        _txtAmountNormalFlower.text = "x 1 = 10";
-        _txtAmountNormalFlower.GetComponentInChildren<Image>().sprite = _spriteFlowers;
-
-        _txtValueSpecialFlower.text = "$ 50";
-        _txtAmountSpecialFlower.text = "x 1 = 2";
-        _txtAmountSpecialFlower.GetComponentInChildren<Image>().sprite = _spriteFlowers;
-
-        _txtValueCommonFish.text = "$ 30";
-        _txtAmountCommonFish.text = "x 1 = 3";
-        _txtAmountCommonFish.GetComponentInChildren<Image>().sprite = _spriteSpecialFish;
-
-        _txtValueNail.text = "$ 200";
-        _txtAmountNail.text = "x 1 = 0.5";
-        _txtAmountNail.GetComponentInChildren<Image>().sprite = _spriteNail;
-
-        _txtValueApple.text = "$ 10";
-        _txtAmountApple.text = "x 1 = 10";
-        _txtAmountApple.GetComponentInChildren<Image>().sprite = _spriteApple;
-    }
-
-    public void TradeNormalFlowers()
-    {
-        TradeItem(2);
-    }
-
-    public void TradeSpecialFlowers()
-    {
-        TradeItem(3);
-    }
-
-    public void TradeNails()
-    {
-        TradeItem(4);
-    }
-
-    public void TradeApples()
-    {
-        TradeItem(5);
-    }
-
-    public void TradeBaits()
-    {
-        TradeItem(6);
-
-        _txtValueNormalFlower.text = "$ 10";
-        _txtAmountNormalFlower.text = "x 1 = 2";
-        _txtAmountNormalFlower.GetComponentInChildren<Image>().sprite = _spriteFlowers;
-
-        _txtValueSpecialFlower.text = "$ 50";
-        _txtAmountSpecialFlower.text = "x 1 = 0.4";
-        _txtAmountSpecialFlower.GetComponentInChildren<Image>().sprite = _spriteFlowers;
-
-        _txtValueCommonFish.text = "$ 30";
-        _txtAmountCommonFish.text = "x 1 = 0.67";
-        _txtAmountCommonFish.GetComponentInChildren<Image>().sprite = _spriteCommonFish;
-
-        _txtValueSpecialFish.text = "$ 100";
-        _txtAmountSpecialFish.text = "x 1 = 0.2";
-        _txtAmountSpecialFish.GetComponentInChildren<Image>().sprite = _spriteSpecialFish;
-
-        _txtValueNail.text = "$ 200";
-        _txtAmountNail.text = "x 1 = 0.1";
-        _txtAmountNail.GetComponentInChildren<Image>().sprite = _spriteNail;
-
-        _txtValueApple.text = "$ 10";
-        _txtAmountApple.text = "x 1 = 2";
-        _txtAmountApple.GetComponentInChildren<Image>().sprite = _spriteApple;
-    }
-
-    public void MakeTrade()
-    {
-        if (_trades[0])
-        {
-            if (_inventory.money >= 20 && _inventory.fishes > 1)
-            {
-                _inventory.baits++;
-                _inventory.fishes--;
-                _inventory.money -= 20;
-                print("PESCADO COMUN COMPRADO");
-            }
-
-            else print("TE FALTA PLATA O PECES");
+            amountInInventory -= price;
+            item += add;
+            _myAudio.PlayOneShot(_soundTrade);
         }
 
-        if (_trades[0])
-        {
-            if (_inventory.money >= 20 && _inventory.fishes > 1)
-            {
-                _inventory.baits++;
-                _inventory.fishes--;
-                _inventory.money -= 20;
-                print("PESCADO COMUN COMPRADO");
-            }
-
-            else print("TE FALTA PLATA O PECES");
-        }
+        else _myAudio.PlayOneShot(_soundError);
     }
+
+    #region INTERACAMBIOS PECES COMUNES
+
+    public void TradeCommonToBait()
+    {
+        MakeTrade(ref _inventory.fishes, ref _inventory.baits, 1, 1);
+    }
+
+    public void TradeCommonToNormalFlower()
+    {
+        MakeTrade(ref _inventory.fishes, ref _inventory.flowers, 1, 3);
+    }
+
+    public void TradeCommonToSpecialFlower()
+    {
+        MakeTrade(ref _inventory.fishes, ref _inventory.flowers, 1, 1);
+    }
+
+    public void TradeCommonToSpecialFish()
+    {
+        MakeTrade(ref _inventory.fishes, ref _inventory.specialFishes, 1, 1);
+    }
+
+    public void TradeCommonToNail()
+    {
+        MakeTrade(ref _inventory.fishes, ref _inventory.nails, 1, 1);
+    }
+
+    public void TradeCommonToApple()
+    {
+        MakeTrade(ref _inventory.fishes, ref _inventory.baits, 1, 3);
+    }
+
+    #endregion
+
+    #region INTERCAMBIOS PECES ESPECIALES
+
+    public void TradeSpecialFishToCommon()
+    {
+        MakeTrade(ref _inventory.specialFishes, ref _inventory.fishes, 1, 3);
+    }
+
+    public void TradeSpecialFishToNormalFlowers()
+    {
+        MakeTrade(ref _inventory.specialFishes, ref _inventory.flowers, 1, 10);
+    }
+
+    public void TradeSpecialFishToSpecialFlowers()
+    {
+        MakeTrade(ref _inventory.specialFishes, ref _inventory.flowers, 1, 2);
+    }
+
+    public void TradeSpecialFishToNail()
+    {
+        MakeTrade(ref _inventory.specialFishes, ref _inventory.flowers, 1, 1);
+    }
+
+    public void TradeSpecialFishToApple()
+    {
+        MakeTrade(ref _inventory.specialFishes, ref _inventory.apples, 1, 10);
+    }
+
+    public void TradeSpecialFishToBait()
+    {
+        MakeTrade(ref _inventory.specialFishes, ref _inventory.baits, 1, 5);
+    }
+
+
+    #endregion
+
+    #region INTERCAMBIOS CARNADAS
+
+    public void TradeBaitToCommon()
+    {
+        MakeTrade(ref _inventory.baits, ref _inventory.fishes, 2, 5);
+    }
+
+    public void TradeBaitToSpecialFish()
+    {
+        MakeTrade(ref _inventory.baits, ref _inventory.specialFishes, 5, 1);
+    }
+
+    public void TradeBaitToNormalFlower()
+    {
+        MakeTrade(ref _inventory.flowers, ref _inventory.fishes, 1, 10);
+    }
+
+    public void TradeBaitToSpecialFlower()
+    {
+        MakeTrade(ref _inventory.flowers, ref _inventory.fishes, 3, 2);
+    }
+
+    public void TradeBaitToNail()
+    {
+        MakeTrade(ref _inventory.baits, ref _inventory.nails, 1, 1);
+    }
+
+    public void TradeBaitToApple()
+    {
+        MakeTrade(ref _inventory.baits, ref _inventory.apples, 1, 2);
+    }
+    #endregion
 
     private void OnTriggerEnter(Collider other)
     {
