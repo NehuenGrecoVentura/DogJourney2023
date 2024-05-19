@@ -29,7 +29,6 @@ public class Dog : MonoBehaviour
     [Header("TELETRANSPORT")]
     [SerializeField] Camera _camPlayer;
     [SerializeField] float _offsetDistance = 2f;
-    private Vector3 _teletransportPos = new Vector3();
     public bool quickEnd = false;
     public bool canTeletransport = true;
 

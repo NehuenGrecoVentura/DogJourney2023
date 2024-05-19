@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class BoxQuest : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class BoxQuest : MonoBehaviour
 
     [Header("MESSAGE")]
     [SerializeField] BoxMessages _boxMessage;
-    [SerializeField, TextArea(4,6)] string[] _message;
+    [SerializeField, TextArea(4,6)] string _message;
     [SerializeField] Image _fadeOut;
 
     [Header("RADAR")]
@@ -27,10 +28,13 @@ public class BoxQuest : MonoBehaviour
     [Header("CAMERAS")]
     [SerializeField] Camera _camFocus;
     [SerializeField] Camera _dogCam;
+    [SerializeField] CameraOrbit _camPlayer;
 
     [Header("QUEST")]
     [SerializeField] QuestUI _questUI;
     [SerializeField] CharacterInventory _inventory;
+    [SerializeField] Dog _dog;
+    [SerializeField] Character _player;
     private bool _questActive = false;
     private bool _questCompleted = false;
     private bool _canQuick = false;
@@ -39,6 +43,12 @@ public class BoxQuest : MonoBehaviour
     [SerializeField] Animator _myAnim;
     [SerializeField] GameObject _myBroom;
     [SerializeField] Manager _gm;
+    [SerializeField] QuestApple _nextQuest;
+    [SerializeField] Transform _posEnd;
+
+    [Header("AUDIO")]
+    [SerializeField] AudioClip _soundMessage;
+    [SerializeField] AudioSource _myAudio;
 
     void Start()
     {
@@ -53,9 +63,7 @@ public class BoxQuest : MonoBehaviour
     private void Update()
     {
         if (_canQuick && Input.GetKeyDown(KeyCode.Space))
-        {
-            _canQuick = false;
-        }
+            StartCoroutine(EndingQuick());
     }
 
     private void Confirm()
@@ -102,12 +110,7 @@ public class BoxQuest : MonoBehaviour
     {
         var player = other.GetComponent<Character>();
         if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract))
-        {
-            _gm.QuestCompleted();
-            Destroy(_myCol);
-            Destroy(_iconInteract);
-            Destroy(this);
-        }
+            StartCoroutine(Ending());
     }
 
     private void OnTriggerExit(Collider other)
@@ -130,5 +133,70 @@ public class BoxQuest : MonoBehaviour
         _questUI.AddNewTask(3, "Return the box to its owner");
         _canQuick = true;
         _questCompleted = true;
+    }
+
+    private IEnumerator EndingQuick()
+    {
+        _canQuick = false;
+        Destroy(_myCol);
+        Destroy(_iconInteract);
+        _boxMessage.SetMessage(_nameNPC);
+ 
+        _camPlayer.gameObject.SetActive(false);
+        _dogCam.gameObject.SetActive(true);
+        _dog.quickEnd = true;
+        _dog.OrderGoQuick(transform);
+
+        yield return new WaitForSeconds(2f);
+        _fadeOut.DOColor(Color.black, 1f);
+        _player.FreezePlayer();
+
+        yield return new WaitForSeconds(1f);
+        _fadeOut.DOColor(Color.clear, 1f);
+        _camFocus.gameObject.SetActive(true);
+        _dogCam.gameObject.SetActive(false);
+        _player.gameObject.transform.position = _posEnd.position;
+
+        yield return new WaitForSeconds(1f);
+        _boxMessage.ShowMessage(_message);
+
+        yield return new WaitForSeconds(4f);
+        Destroy(_camFocus.gameObject);
+        _boxMessage.CloseMessage();
+        _gm.QuestCompleted();
+        _dog.quickEnd = false;
+        _radar.target = _nextQuest.transform;
+
+        yield return new WaitForSeconds(1f);
+        _boxMessage.DesactivateMessage();
+        Destroy(this);
+    }
+
+    private IEnumerator Ending()
+    {
+        _canQuick = false;
+        _dog.quickEnd = false;
+        Destroy(_myCol);
+        Destroy(_iconInteract);
+        _boxMessage.SetMessage(_nameNPC);
+
+        _camPlayer.gameObject.SetActive(false);
+        _camFocus.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(1f);
+        _player.transform.LookAt(transform);
+        _boxMessage.ShowMessage(_message);
+
+        yield return new WaitForSeconds(4f);
+        Destroy(_camFocus.gameObject);
+        _boxMessage.CloseMessage();
+        _gm.QuestCompleted();
+        _radar.target = _nextQuest.transform;
+        _nextQuest.enabled = true;
+        _nextQuest.GetComponent<Collider>().enabled = true;
+
+        yield return new WaitForSeconds(1f);
+        _boxMessage.DesactivateMessage();
+        Destroy(this);
     }
 }
