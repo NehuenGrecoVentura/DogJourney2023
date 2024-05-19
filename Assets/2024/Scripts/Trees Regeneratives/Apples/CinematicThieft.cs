@@ -17,6 +17,8 @@ public class CinematicThieft : MonoBehaviour
     [SerializeField] Camera _scaredCam;
     [SerializeField] ThiefApple _thieft;
     [SerializeField] ThiefApple[] _ladrones;
+    [SerializeField] OrderDog _order;
+    [SerializeField] GameObject _targetDog;
     private bool _canScared = false;
 
     [Header("MESSAGE")]
@@ -67,14 +69,22 @@ public class CinematicThieft : MonoBehaviour
         _cinematic.SetActive(true);
         _questApple.SpawnActive();
 
-        _dog.Stop();
-        _dog.GetComponent<NavMeshAgent>().enabled = false;
-        _trolley.GetComponent<NavMeshAgent>().enabled = false;
-        _dog.transform.parent.transform.position = _posDog.position;
-        _trolley.gameObject.transform.position = _posDog.position;
-        _dog.GetComponent<NavMeshAgent>().enabled = true;
-        _trolley.GetComponent<NavMeshAgent>().enabled = true;
-        _dog.transform.LookAt(_thieft.transform);
+        if (_order.activeOrders)
+        {
+            _targetDog.transform.position = _posDog.position;
+        }
+
+        else
+        {
+            _dog.Stop();
+            _dog.GetComponent<NavMeshAgent>().enabled = false;
+            _trolley.GetComponent<NavMeshAgent>().enabled = false;
+            _dog.transform.parent.transform.position = _posDog.position;
+            _trolley.gameObject.transform.position = _posDog.position;
+            _dog.GetComponent<NavMeshAgent>().enabled = true;
+            _trolley.GetComponent<NavMeshAgent>().enabled = true;
+            _dog.transform.LookAt(_thieft.transform);
+        }
 
         yield return new WaitForSeconds(3f);
         _boxMessage.ShowMessage(_message[0]);

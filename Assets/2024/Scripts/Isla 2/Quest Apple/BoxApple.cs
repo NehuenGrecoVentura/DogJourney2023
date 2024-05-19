@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
 public class BoxApple : MonoBehaviour
 {
+    [Header("AMOUNT")]
     public int total = 10;
     public int totalInBox = 0;
 
@@ -12,7 +11,7 @@ public class BoxApple : MonoBehaviour
     [SerializeField] GameObject _iconInteract;
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
     [SerializeField] Transform _parentHands;
-   
+    [SerializeField] Collider[] _myCols;
 
     private void Start()
     {
@@ -24,7 +23,7 @@ public class BoxApple : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
-            if (player.rabbitPicked && totalInBox < total) _iconInteract.transform.DOScale(1.25f, 0.5f);
+            if (player.rabbitPicked && totalInBox < total) _iconInteract.transform.DOScale(0.25f, 0.5f);
             else _iconInteract.transform.DOScale(0, 0.5f);
         }  
     }
@@ -44,6 +43,11 @@ public class BoxApple : MonoBehaviour
         {
             player.rabbitPicked = true;
             transform.parent = _parentHands;
+
+            foreach (Collider item in _myCols)
+            {
+                Destroy(item);
+            }
         }
     }
 
