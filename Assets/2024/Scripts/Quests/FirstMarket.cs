@@ -60,7 +60,8 @@ public class FirstMarket : MonoBehaviour
         player.speed = player.speedAux;
         player.DeFreezePlayer();
         _myCol.enabled = true;
-        _messageBuildFinished.SetActive(true);
-        Destroy(gameObject);
+        //_messageBuildFinished.SetActive(true);
+        //Destroy(gameObject);
+        Destroy(this);
     }
 }

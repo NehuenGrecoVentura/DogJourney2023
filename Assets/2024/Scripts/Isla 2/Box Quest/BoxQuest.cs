@@ -17,7 +17,7 @@ public class BoxQuest : MonoBehaviour
 
     [Header("MESSAGE")]
     [SerializeField] BoxMessages _boxMessage;
-    [SerializeField] string[] _message;
+    [SerializeField, TextArea(4,6)] string[] _message;
     [SerializeField] Image _fadeOut;
 
     [Header("RADAR")]
@@ -30,6 +30,7 @@ public class BoxQuest : MonoBehaviour
 
     [Header("QUEST")]
     [SerializeField] QuestUI _questUI;
+    [SerializeField] CharacterInventory _inventory;
     private bool _questActive = false;
     private bool _questCompleted = false;
     private bool _canQuick = false;
@@ -38,7 +39,6 @@ public class BoxQuest : MonoBehaviour
     [SerializeField] Animator _myAnim;
     [SerializeField] GameObject _myBroom;
     [SerializeField] Manager _gm;
-
 
     void Start()
     {
@@ -122,6 +122,7 @@ public class BoxQuest : MonoBehaviour
 
     public void BoxPicked()
     {
+        _inventory.upgradeLoot = true;
         _radar.target = transform;
         _myAnim.SetBool("Quest", false);
         _myCol.enabled = true;
