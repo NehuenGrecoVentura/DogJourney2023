@@ -24,7 +24,7 @@ public class Apple : MonoBehaviour
         if (player != null && Input.GetKeyDown(_buttonInteractive))
         {
             player.rabbitPicked = true;
-            player.ItemsPicked(false, false, true);
+            player.ItemsPicked(false, false, true, false);
             _iconInteractive.transform.DOScale(0f, 0.5f);
             gameObject.SetActive(false);
         }

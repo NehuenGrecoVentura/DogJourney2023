@@ -39,6 +39,7 @@ public class Character : MonoBehaviour
     [SerializeField] GameObject _axe;
     [SerializeField] GameObject _shovel;
     [SerializeField] GameObject _apples;
+    [SerializeField] GameObject _basket;
 
     private void Awake()
     {
@@ -49,7 +50,7 @@ public class Character : MonoBehaviour
         _construct = FindObjectOfType<BuilderManager>();
 
         _model = new ModelCharacter(_myRb, speed, speedRun, _speedCrouch, speedAux, isClimb, transform, _camPos, _gravity, _orderDog, _test1, _test2, _rayDist, _rayPoint1, _rayPoint2);
-        _view = new ViewCharacter(_myAnim, _myAudio, _soundsCall, _axe, _shovel, _apples);
+        _view = new ViewCharacter(_myAnim, _myAudio, _soundsCall, _axe, _shovel, _apples, _basket);
         _controller = new ControllerCharacter(_model);
 
         _model.EventIdle += _view.IdleAnim;
@@ -155,9 +156,9 @@ public class Character : MonoBehaviour
         _rod.SetActive(rodActive);
     }
 
-    public void ItemsPicked(bool axe, bool shovel, bool apples)
+    public void ItemsPicked(bool axe, bool shovel, bool apples, bool basket)
     {
-        _view.PickStatus(axe, shovel, apples);
+        _view.PickStatus(axe, shovel, apples, basket);
     }
 
     private void OnTriggerStay(Collider other)

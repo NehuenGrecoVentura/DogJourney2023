@@ -148,13 +148,6 @@ public class QuestApple : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract))
             StartCoroutine(Ending(player));
-        //{
-        //    //_myCol.enabled = false;
-        //    //player.rabbitPicked = false;
-        //    //_gm.QuestCompleted();
-        //    //Destroy(_boxApple.gameObject);
-        //    //Destroy(this);
-        //}
     }
 
     private void OnTriggerExit(Collider other)
@@ -201,6 +194,8 @@ public class QuestApple : MonoBehaviour
 
     private IEnumerator Ending(Character player)
     {
+        player.rabbitPicked = false;
+        player.ItemsPicked(false, false, false, false);
         player.transform.LookAt(transform);
         player.FreezePlayer();
         _camPlayer.gameObject.SetActive(false);
@@ -220,9 +215,7 @@ public class QuestApple : MonoBehaviour
         Destroy(_camEnding.gameObject);
         _boxMessage.DesactivateMessage();
         player.DeFreezePlayer();
-        player.rabbitPicked = false;
         _gm.QuestCompleted();
-        Destroy(_boxApple.gameObject);
         Destroy(this);
     }
 }

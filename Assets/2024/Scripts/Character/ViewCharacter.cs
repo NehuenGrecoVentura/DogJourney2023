@@ -5,9 +5,9 @@ public class ViewCharacter
     private Animator _anim;
     private AudioSource _audio;
     private AudioClip[] _soundsCallDog;
-    private GameObject _axePrefab, _shovelPrefab, _applesPrefab;
+    private GameObject _axePrefab, _shovelPrefab, _applesPrefab, _basket;
 
-    public ViewCharacter(Animator anim, AudioSource audio, AudioClip[] soundsCall, GameObject axe, GameObject shovel, GameObject apples)
+    public ViewCharacter(Animator anim, AudioSource audio, AudioClip[] soundsCall, GameObject axe, GameObject shovel, GameObject apples, GameObject basket)
     {
         _anim = anim;
         _audio = audio;
@@ -15,6 +15,7 @@ public class ViewCharacter
         _axePrefab = axe;
         _shovelPrefab = shovel;
         _applesPrefab = apples;
+        _basket = basket;
     }
 
     void AnimState(bool walk, bool run, bool crouch, bool crouchWalk)
@@ -95,22 +96,11 @@ public class ViewCharacter
         _audio.PlayOneShot(audioWin);
     }
 
-
-    public void PickStatus(bool axe, bool shovel, bool apples)
+    public void PickStatus(bool axe, bool shovel, bool apples, bool basket)
     {
         _axePrefab.gameObject.SetActive(axe);
         _shovelPrefab.gameObject.SetActive(shovel);
         _applesPrefab.gameObject.SetActive(apples);
+        _basket.gameObject.SetActive(basket);
     }
-
-
-    //public void ApplesPick()
-    //{
-    //    PickStatus(false, false, true);   
-    //}
-
-    //public void AxePick()
-    //{
-    //    PickStatus(true, false, false);
-    //}
 }

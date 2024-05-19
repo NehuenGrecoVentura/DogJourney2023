@@ -10,8 +10,6 @@ public class BoxApple : MonoBehaviour
     [Header("INTERACT")]
     [SerializeField] GameObject _iconInteract;
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
-    [SerializeField] Transform _parentHands;
-    [SerializeField] Collider[] _myCols;
 
     private void Start()
     {
@@ -34,7 +32,7 @@ public class BoxApple : MonoBehaviour
         if (player != null && player.rabbitPicked && Input.GetKeyDown(_keyInteract))
         {
             totalInBox++;
-            player.ItemsPicked(true, false, false);
+            player.ItemsPicked(true, false, false, false);
             player.rabbitPicked = false;
             _iconInteract.transform.DOScale(0, 0.5f);
         }
@@ -42,12 +40,8 @@ public class BoxApple : MonoBehaviour
         else if (player != null && !player.rabbitPicked && Input.GetKeyDown(_keyInteract) && totalInBox >= total)
         {
             player.rabbitPicked = true;
-            transform.parent = _parentHands;
-
-            foreach (Collider item in _myCols)
-            {
-                Destroy(item);
-            }
+            player.ItemsPicked(false, false, false, true);
+            Destroy(gameObject);
         }
     }
 
