@@ -18,11 +18,15 @@ public class ThiefApple : MonoBehaviour
     private bool _isEscape = false;
     private Vector3 _initialPos;
 
+    [SerializeField] AudioClip[] _soundsDog;
+    private AudioSource _myAudio;
+
     private void Awake()
     {
         _myCol = GetComponent<BoxCollider>();
         _myAnim = GetComponent<Animator>();
         _myRb = GetComponent<Rigidbody>();
+        _myAudio = GetComponent<AudioSource>();
 
         _boxApple = FindObjectOfType<BoxApple>();
     }
@@ -48,6 +52,14 @@ public class ThiefApple : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !_isScared && _isThief)
         {
             StopCoroutine(Thief());
+
+            if (_soundsDog.Length > 0)
+            {
+                AudioClip sound = _soundsDog[Random.Range(0, _soundsDog.Length)];
+                _myAudio.PlayOneShot(sound);
+            }
+            else return;
+
             _myRb.isKinematic = false;
             _isScared = true;
             _isThief = false;

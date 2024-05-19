@@ -16,11 +16,18 @@ public class CinematicThieft : MonoBehaviour
     [SerializeField] Camera _dogThieft;
     [SerializeField] Camera _scaredCam;
     [SerializeField] ThiefApple _thieft;
+    [SerializeField] ThiefApple[] _ladrones;
     private bool _canScared = false;
 
     [Header("MESSAGE")]
     [SerializeField, TextArea(4, 6)] string[] _message;
     [SerializeField] BoxMessages _boxMessage;
+
+    OrderDog _order;
+    private void Awake()
+    {
+        _order = FindObjectOfType<OrderDog>();
+    }
 
     private void Start()
     {
@@ -33,8 +40,26 @@ public class CinematicThieft : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && _canScared)
-            StartCoroutine(PlayCinematicScared());
+        //if (Input.GetKeyDown(KeyCode.Space) && _canScared)
+        //{
+        //    if(_ladrones[0].gameObject.activeSelf || _ladrones[1].gameObject.activeSelf || _ladrones[2].gameObject.activeSelf || _ladrones[3].gameObject.activeSelf || _ladrones[4].gameObject.activeSelf || _ladrones[5].gameObject.activeSelf)
+        //            StartCoroutine(PlayCinematicScared());
+        //}     
+
+        if (Input.GetKeyDown(KeyCode.Space) && _canScared && CheckThieft())
+            StartCoroutine(PlayCinematicScared());        
+    }
+
+    bool CheckThieft()
+    {
+        foreach (ThiefApple ladron in _ladrones)
+        {
+            if (ladron.gameObject.activeSelf)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -54,6 +79,7 @@ public class CinematicThieft : MonoBehaviour
         _cinematic.SetActive(true);
         _questApple.SpawnActive();
 
+        _dog.Stop();
         _dog.GetComponent<NavMeshAgent>().enabled = false;
         _trolley.GetComponent<NavMeshAgent>().enabled = false;
         _dog.transform.parent.transform.position = _posDog.position;
