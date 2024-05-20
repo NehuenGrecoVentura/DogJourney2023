@@ -65,7 +65,7 @@ public class CarrotItem : MonoBehaviour
 
     private void PickObject()
     {
-        _myCol.enabled = false;
+        //_myCol.enabled = false;
         _iconInteractive.SetActive(false);
         objectPicked = true;
     }
@@ -80,6 +80,6 @@ public class CarrotItem : MonoBehaviour
     {
         objectPicked = false;
         transform.position = transform.position;
-        _myCol.enabled = true;
+        //_myCol.enabled = true;
     }
 }
