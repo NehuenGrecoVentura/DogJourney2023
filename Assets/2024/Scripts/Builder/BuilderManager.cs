@@ -5,7 +5,7 @@ using DG.Tweening;
 public class BuilderManager : MonoBehaviour
 {
     [SerializeField] GameObject _objToBuild;
-    [SerializeField] GameObject _objToDestroy;
+    [SerializeField] GameObject[] _objToDestroy;
     [SerializeField] GameObject _iconsMaterials;
 
     [Header("ITEMS")]
@@ -26,7 +26,6 @@ public class BuilderManager : MonoBehaviour
     private Character _player;
     private bool _playCinematic = false;
     public CharacterInventory _inventory;
-    //[SerializeField] GameObject _canvasQuest;
 
     [Header("RADAR")]
     [SerializeField] Transform _posRadar;
@@ -67,7 +66,6 @@ public class BuilderManager : MonoBehaviour
     {
         _questUI.UIStatus(false);
         _myAudio.PlayOneShot(_audioBuild);
-        //_canvasQuest.SetActive(false);
         _radar.StatusRadar(false);
         _iconsMaterials.SetActive(false);
         _playCinematic = true;
@@ -80,7 +78,20 @@ public class BuilderManager : MonoBehaviour
         _cinematic.SetActive(true);
         yield return new WaitForSeconds(3.5f);
         _objToBuild.SetActive(true);
-        Destroy(_objToDestroy);
+
+        //foreach (var item in _objToDestroy)
+        //{
+        //    Destroy(item);
+        //}
+
+        if (_objToDestroy != null && _objToDestroy.Length > 0)
+        {
+            foreach (var item in _objToDestroy)
+            {
+                if (item != null) Destroy(item);
+            }
+        }
+
         _playCinematic = false;
         yield return new WaitForSeconds(_timeToBuild);
         _camPlayer.gameObject.SetActive(true);
@@ -112,7 +123,7 @@ public class BuilderManager : MonoBehaviour
         _inventory.ropes -= _amountItem2;
     }
 
-    public void  BuildObj(int item1, int item2)
+    public void BuildObj(int item1, int item2)
     {
         if (Input.GetKey(_keyInteractive))
         {
@@ -146,10 +157,7 @@ public class BuilderManager : MonoBehaviour
         {
             _item1.material.color = Color.white;
             _item2.material.color = Color.white;
-            //_item1.transform.DOScale(0f, 0.5f);
-            //_item2.transform.DOScale(0f, 0.5f);
             StartCoroutine(ExitCoroutine());
-            //_iconsMaterials.SetActive(false);
             _player.isConstruct = false;
         }   
     }

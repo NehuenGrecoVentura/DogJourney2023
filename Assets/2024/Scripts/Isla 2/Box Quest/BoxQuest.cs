@@ -48,6 +48,7 @@ public class BoxQuest : MonoBehaviour
 
     [Header("AUDIO")]
     [SerializeField] AudioClip _soundMessage;
+    [SerializeField] AudioClip _soundConfirm;
     [SerializeField] AudioSource _myAudio;
 
     void Start()
@@ -170,6 +171,8 @@ public class BoxQuest : MonoBehaviour
         _gm.QuestCompleted();
         _dog.quickEnd = false;
         _radar.target = _nextQuest.transform;
+        _nextQuest.enabled = true;
+        _nextQuest.GetComponent<Collider>().enabled = true;
 
         yield return new WaitForSeconds(1f);
         _boxMessage.DesactivateMessage();
