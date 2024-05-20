@@ -25,6 +25,7 @@ public class QuestApple : MonoBehaviour
     [Header("QUEST")]
     [SerializeField] QuestUI _questUI;
     [SerializeField] BoxApple _boxApple;
+    [SerializeField] Character _player;
     private TreeApple[] _trees;
     private bool _questActive = false;
     private bool _questCompleted = false;
@@ -34,6 +35,9 @@ public class QuestApple : MonoBehaviour
     [SerializeField] float _timeToSpwnThiefs = 8f;
     [SerializeField] CinematicThieft _cinematic;
     private bool _spawnActivate = false;
+
+    [Header("RADAR")]
+    [SerializeField] LocationQuest _radar;
 
     [Header("FINISH")]
     [SerializeField] BoxMessages _boxMessage;
@@ -57,10 +61,14 @@ public class QuestApple : MonoBehaviour
         {
             thief.gameObject.SetActive(false);
         }
+
+        _myAnim.runtimeAnimatorController = _animController[1];
     }
 
     private void Update()
     {
+        transform.LookAt(_player.transform);
+
         bool hasEnoughApples = _boxApple.totalInBox >= 2;
         bool isBoxFull = _boxApple.totalInBox >= _boxApple.total;
 
@@ -70,6 +78,9 @@ public class QuestApple : MonoBehaviour
 
             if (isBoxFull)
             {
+                _radar.target = transform;
+                _radar.StatusRadar(true);
+                _myAnim.SetBool("Quest", false);
                 _myCol.enabled = true;
                 CancelInvoke("SpawnThiefts");
                 DesactivateThiefts();
@@ -112,6 +123,8 @@ public class QuestApple : MonoBehaviour
             tree.GetComponent<BoxCollider>().enabled = true;
         }
 
+        _myAnim.SetBool("Quest", true);
+        _radar.StatusRadar(false);
         _questActive = true;
     }
 
@@ -203,6 +216,7 @@ public class QuestApple : MonoBehaviour
         Destroy(_myCol);
         _iconInteract.SetActive(false);
         _boxMessage.SetMessage(_nameNPC);
+        _myAnim.SetBool("Quest", true);
 
         yield return new WaitForSeconds(1f);
         _boxMessage.ShowMessage(_messageEnd);

@@ -75,9 +75,10 @@ public class BoxQuest : MonoBehaviour
         _dialogue.canTalk = false;
         _dialogue.Close();
         _iconInteract.SetActive(false);
+        _myAudio.PlayOneShot(_soundConfirm);
         _radar.StatusRadar(true);
         _radar.target = _boxQuestPos.transform;
-        _questUI.ActiveUIQuest("The Box", "Pick up the box", string.Empty, string.Empty);
+        _questUI.ActiveUIQuest("The Box", "Pick up the box", string.Empty, string.Empty);   
         _questActive = true;
     }
 
@@ -162,6 +163,7 @@ public class BoxQuest : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         _boxMessage.ShowMessage(_message);
+        _myAudio.PlayOneShot(_soundMessage);
 
         yield return new WaitForSeconds(4f);
         Destroy(_camFocus.gameObject);
@@ -193,6 +195,7 @@ public class BoxQuest : MonoBehaviour
         yield return new WaitForSeconds(1f);
         _player.transform.LookAt(transform);
         _boxMessage.ShowMessage(_message);
+        _myAudio.PlayOneShot(_soundMessage);
 
         yield return new WaitForSeconds(4f);
         Destroy(_camFocus.gameObject);
