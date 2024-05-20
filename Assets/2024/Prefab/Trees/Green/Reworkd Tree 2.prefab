@@ -14680,7 +14680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _soundHit: {fileID: 8300000, guid: 127b36b03f3e868479d1bd656a98eb91, type: 3}
-  amountHit: 500
+  amountHit: 400
   initialAmount: 0
   _inputInteractive: 323
   _treeFall: {fileID: 3318683392151225950}
