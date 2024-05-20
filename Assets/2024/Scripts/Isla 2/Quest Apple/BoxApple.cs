@@ -6,6 +6,11 @@ public class BoxApple : MonoBehaviour
     [Header("AMOUNT")]
     public int total = 10;
     public int totalInBox = 0;
+    [SerializeField] GameObject _amount1;
+    [SerializeField] GameObject _amount3;
+    [SerializeField] GameObject _amount5;
+    [SerializeField] GameObject _amount8;
+    [SerializeField] GameObject _amount10;
 
     [Header("INTERACT")]
     [SerializeField] GameObject _iconInteract;
@@ -14,6 +19,69 @@ public class BoxApple : MonoBehaviour
     private void Start()
     {
         _iconInteract.transform.DOScale(0, 0);
+
+        _amount1.gameObject.SetActive(false);
+        _amount3.gameObject.SetActive(false);
+        _amount5.gameObject.SetActive(false);
+        _amount8.gameObject.SetActive(false);
+        _amount10.gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if(totalInBox <= 0)
+        {
+            _amount1.gameObject.SetActive(false);
+            _amount3.gameObject.SetActive(false);
+            _amount5.gameObject.SetActive(false);
+            _amount8.gameObject.SetActive(false);
+            _amount10.gameObject.SetActive(false);
+        }
+
+        else if (totalInBox >= 2 && totalInBox < 3)
+        {
+            _amount1.gameObject.SetActive(true);
+            _amount3.gameObject.SetActive(false);
+            _amount5.gameObject.SetActive(false);
+            _amount8.gameObject.SetActive(false);
+            _amount10.gameObject.SetActive(false);
+        }
+
+        else if (totalInBox >= 3 && totalInBox < 5)
+        {
+            _amount1.gameObject.SetActive(true);
+            _amount3.gameObject.SetActive(true);
+            _amount5.gameObject.SetActive(false);
+            _amount8.gameObject.SetActive(false);
+            _amount10.gameObject.SetActive(false);
+        }
+
+        else if (totalInBox >= 5 && totalInBox < 8)
+        {
+            _amount1.gameObject.SetActive(true);
+            _amount3.gameObject.SetActive(true);
+            _amount5.gameObject.SetActive(true);
+            _amount8.gameObject.SetActive(false);
+            _amount10.gameObject.SetActive(false);
+        }
+
+        else if (totalInBox >= 8 && totalInBox < total)
+        {
+            _amount1.gameObject.SetActive(true);
+            _amount3.gameObject.SetActive(true);
+            _amount5.gameObject.SetActive(true);
+            _amount8.gameObject.SetActive(true);
+            _amount10.gameObject.SetActive(false);
+        }
+
+        else if (totalInBox >= total)
+        {
+            _amount1.gameObject.SetActive(true);
+            _amount3.gameObject.SetActive(true);
+            _amount5.gameObject.SetActive(true);
+            _amount8.gameObject.SetActive(true);
+            _amount10.gameObject.SetActive(true);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
