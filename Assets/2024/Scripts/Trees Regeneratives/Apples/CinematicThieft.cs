@@ -63,9 +63,10 @@ public class CinematicThieft : MonoBehaviour
     private IEnumerator PlayCinematic()
     {
         _boxMessage.SetMessage("Tip");
-        Destroy(_myCol);
-        _questUI.UIStatus(false);
         _player.FreezePlayer();
+        Destroy(_myCol);
+
+        _questUI.UIStatus(false);
         _camPlayer.gameObject.SetActive(false);
         _dogCam.gameObject.SetActive(false);
         _dogThieft.gameObject.SetActive(true);

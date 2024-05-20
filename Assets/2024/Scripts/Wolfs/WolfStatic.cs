@@ -50,12 +50,15 @@ public class WolfStatic : MonoBehaviour
 
         if (rabbit != null && rabbit.rabbitPicked)
         {
+            _player.FreezePlayer();
+
             foreach (var col in _myCols)
                 Destroy(col);
 
             Destroy(rabbit.gameObject);
             _rabbitFollow.SetActive(true);
             StartCoroutine(PursuitRabbit());
+            StartCoroutine(DefreezePlayer());
         }
 
         if(dog != null)
@@ -70,7 +73,6 @@ public class WolfStatic : MonoBehaviour
     {
         while (true)
         {
-            StartCoroutine(DefreezePlayer());
             _player.rabbitPicked = false;
             _escapeCinematic.SetActive(true);
             yield return new WaitForSeconds(0.1f);
@@ -85,7 +87,7 @@ public class WolfStatic : MonoBehaviour
 
     private IEnumerator DefreezePlayer()
     {
-        _player.FreezePlayer();
+        
         yield return new WaitForSeconds(4f);
         _player.DeFreezePlayer();
     }
