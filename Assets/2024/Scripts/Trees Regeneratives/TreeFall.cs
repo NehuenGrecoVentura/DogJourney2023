@@ -16,6 +16,15 @@ public class TreeFall : MonoBehaviour
     [SerializeField] GameObject _decal;
     public bool _isFall;
 
+    [Header("AUDIOS")]
+    [SerializeField] AudioClip[] _sounds;
+    private AudioSource _myAudio;
+
+    private void Awake()
+    {
+        _myAudio = GetComponent<AudioSource>();
+    }
+
     void Start()
     {
         //_initialTime = _timeToOff;
@@ -45,6 +54,11 @@ public class TreeFall : MonoBehaviour
     {
         _decal.SetActive(false);
         _trunks.gameObject.SetActive(true);
+
+        int random = Random.Range(0, _sounds.Length);
+        AudioClip sound = _sounds[random];
+        _myAudio.clip = sound;
+        _myAudio.Play();
 
         yield return new WaitForSeconds(_timeToOff);
         //_treeComplete.gameObject.SetActive(true);
