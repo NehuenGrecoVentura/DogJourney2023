@@ -25,6 +25,7 @@ public class CinematicThieft : MonoBehaviour
     [Header("MESSAGE")]
     [SerializeField, TextArea(4, 6)] string[] _message;
     [SerializeField] BoxMessages _boxMessage;
+    [SerializeField] AudioSource _myAudio;
 
     private void Start()
     {
@@ -90,12 +91,14 @@ public class CinematicThieft : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
         _boxMessage.ShowMessage(_message[0]);
+        _myAudio.Play();
 
         yield return new WaitForSeconds(5f);
         _boxMessage.CloseMessage();
 
         yield return new WaitForSeconds(1f);
         _boxMessage.ShowMessage(_message[1]);
+        _myAudio.Play();
         Destroy(_dogThieft.gameObject);
         _dogCam.gameObject.SetActive(true);
 
@@ -123,6 +126,7 @@ public class CinematicThieft : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
         _boxMessage.ShowMessage(_message[2]);
+        _myAudio.Play();
 
         yield return new WaitForSeconds(3f);
         _boxMessage.CloseMessage();
