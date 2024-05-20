@@ -70,6 +70,7 @@ public class WolfStatic : MonoBehaviour
     {
         while (true)
         {
+            StartCoroutine(DefreezePlayer());
             _player.rabbitPicked = false;
             _escapeCinematic.SetActive(true);
             yield return new WaitForSeconds(0.1f);
@@ -80,5 +81,12 @@ public class WolfStatic : MonoBehaviour
             Destroy(_rabbitFollow.gameObject, 5f);
             Destroy(transform.parent.gameObject, 5f);
         }
+    }
+
+    private IEnumerator DefreezePlayer()
+    {
+        _player.FreezePlayer();
+        yield return new WaitForSeconds(4f);
+        _player.DeFreezePlayer();
     }
 }

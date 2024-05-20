@@ -9,7 +9,7 @@ public class CarrotItem : MonoBehaviour
     [SerializeField] GameObject _sphereInteract;
     [SerializeField] Collider _myCol;
 
-    public bool carrotPicked = false;
+    //public bool carrotPicked = false;
 
     private bool _playerDetected = false;
     public bool objectPicked = false;
@@ -81,5 +81,10 @@ public class CarrotItem : MonoBehaviour
         objectPicked = false;
         transform.position = transform.position;
         //_myCol.enabled = true;
+    }
+
+    public void DesactiveIcon()
+    {
+        _iconInteractive.SetActive(false);
     }
 }

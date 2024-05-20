@@ -7,17 +7,9 @@ public class AreaRabbit : MonoBehaviour
 
     [Header("MESSAGE SLIDE")]
     [SerializeField] Sprite _iconMessage;
-    private MessageSlide _messageSlide;
 
     [Header("MESSAGE")]
     [SerializeField] GameObject _boxMessage;
-    private Vector3 _initialPosBoxMessage;
-
-
-    private void Awake()
-    {
-        _messageSlide = FindObjectOfType<MessageSlide>();
-    }
 
     private void Start()
     {
@@ -38,10 +30,10 @@ public class AreaRabbit : MonoBehaviour
         {
             if (!carrot.objectPicked)
             {
-                //_boxMessage.GetComponent<RectTransform>().DOMoveY(-1000, 1f);
                 Destroy(_boxMessage, 1.2f);
                 _myRabbit.GoToCarrot(carrot.gameObject.transform);
                 carrot.GetComponent<Collider>().enabled = false;
+                carrot.DesactiveIcon();
                 Destroy(carrot.gameObject, 2f);
                 Destroy(gameObject);
             }
@@ -50,14 +42,7 @@ public class AreaRabbit : MonoBehaviour
             {
                 _boxMessage.SetActive(true);
                 _boxMessage.transform.DOScale(0.8f, 0.5f);
-                //_boxMessage.GetComponent<RectTransform>().DOMoveY(-1000, 1f);
-                //_messageSlide.ShowMessage("TO DROP THE CARROT", _iconMessage);
-            }   
-                
-                
-                
-                
-                
+            }      
         }
     }
 
@@ -68,8 +53,6 @@ public class AreaRabbit : MonoBehaviour
         {
             _myRabbit.Out();
             _boxMessage.transform.DOScale(0f, 0.5f);
-        }
-            
-            
+        } 
     }
 }
