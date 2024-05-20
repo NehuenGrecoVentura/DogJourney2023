@@ -42,7 +42,7 @@ public class CinematicTrunks : MonoBehaviour
         _player.speed = 0;
         _player.FreezePlayer();
         _boxMessage.GetComponent<RectTransform>().DOAnchorPosY(-1000f, 1f);
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(2f);
         _myAudio.Play();
         _boxMessage.SetActive(true);
         _boxMessage.GetComponent<RectTransform>().DOAnchorPosY(-170f, 1f);

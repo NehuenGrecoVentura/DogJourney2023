@@ -27,7 +27,7 @@ public class TreeWithBall : MonoBehaviour
 
     private void Update()
     {
-        if (_tree.amountHit <= 2)
+        if (_tree.amountHit <= 10)
         {
             foreach (var gate in _gatesDoors)
                 gate.enabled = true;
