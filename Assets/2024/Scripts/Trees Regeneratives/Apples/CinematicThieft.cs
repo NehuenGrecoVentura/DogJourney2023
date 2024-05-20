@@ -19,6 +19,7 @@ public class CinematicThieft : MonoBehaviour
     [SerializeField] ThiefApple[] _ladrones;
     [SerializeField] OrderDog _order;
     [SerializeField] GameObject _targetDog;
+    [SerializeField] QuestUI _questUI;
     private bool _canScared = false;
 
     [Header("MESSAGE")]
@@ -62,6 +63,7 @@ public class CinematicThieft : MonoBehaviour
     {
         _boxMessage.SetMessage("Tip");
         Destroy(_myCol);
+        _questUI.UIStatus(false);
         _player.FreezePlayer();
         _camPlayer.gameObject.SetActive(false);
         _dogCam.gameObject.SetActive(false);
@@ -103,6 +105,7 @@ public class CinematicThieft : MonoBehaviour
         Destroy(_dogCam.gameObject);
         _camPlayer.gameObject.SetActive(true);
         _cinematic.SetActive(false);
+        _questUI.UIStatus(true);
 
         yield return new WaitForSeconds(1f);
         _boxMessage.DesactivateMessage();
@@ -116,6 +119,7 @@ public class CinematicThieft : MonoBehaviour
         _camPlayer.gameObject.SetActive(false);
         _scaredCam.gameObject.SetActive(true);
         _player.FreezePlayer();
+        _questUI.UIStatus(false);
 
         yield return new WaitForSeconds(3f);
         _boxMessage.ShowMessage(_message[2]);
@@ -124,6 +128,7 @@ public class CinematicThieft : MonoBehaviour
         _boxMessage.CloseMessage();
         _player.DeFreezePlayer();
         _camPlayer.gameObject.SetActive(true);
+        _questUI.UIStatus(true);
         Destroy(_scaredCam.gameObject);
         Destroy(_cinematic);
 

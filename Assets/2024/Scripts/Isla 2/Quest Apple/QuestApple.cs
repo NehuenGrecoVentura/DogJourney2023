@@ -22,6 +22,11 @@ public class QuestApple : MonoBehaviour
     [SerializeField] RuntimeAnimatorController[] _animController;
     [SerializeField] Animator _myAnim;
 
+    [Header("AUDIO")]
+    [SerializeField] AudioClip _soundConfirm;
+    [SerializeField] AudioClip _soundMessage;
+    [SerializeField] AudioSource _myAudio;
+
     [Header("QUEST")]
     [SerializeField] QuestUI _questUI;
     [SerializeField] BoxApple _boxApple;
@@ -124,6 +129,7 @@ public class QuestApple : MonoBehaviour
         }
 
         _myAnim.SetBool("Quest", true);
+        _myAudio.PlayOneShot(_soundConfirm);
         _radar.StatusRadar(false);
         _questActive = true;
     }
@@ -220,6 +226,7 @@ public class QuestApple : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         _boxMessage.ShowMessage(_messageEnd);
+        _myAudio.PlayOneShot(_soundMessage);
 
         yield return new WaitForSeconds(3f);
         _boxMessage.CloseMessage();
