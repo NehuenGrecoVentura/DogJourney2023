@@ -67,17 +67,17 @@ public class WolfSleeping : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        var player = collision.gameObject.GetComponent<Character>();
-        if (player != null && _area.playerInArea)
-        {
-            _myAudio.PlayOneShot(_wolfSound);
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    var player = collision.gameObject.GetComponent<Character>();
+    //    if (player != null && _area.playerInArea)
+    //    {
+    //        _myAudio.PlayOneShot(_wolfSound);
 
-            foreach (var wolf in _allWolfs)
-                wolf.WakeUpWolf();
+    //        foreach (var wolf in _allWolfs)
+    //            wolf.WakeUpWolf();
 
-            _manager.GameOver(_cinematicGameOver, 5f, "Don't get too close to the wolves", _posRestart);
-        }
-    }
+    //        _manager.GameOver(_cinematicGameOver, 5f, "Don't get too close to the wolves", _posRestart);
+    //    }
+    //}
 }
