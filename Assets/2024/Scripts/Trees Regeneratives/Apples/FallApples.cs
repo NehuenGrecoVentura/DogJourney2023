@@ -14,6 +14,15 @@ public class FallApples : MonoBehaviour
     private GameObject[] _particles;
     public bool _isFall;
 
+    [Header("AUDIOS")]
+    [SerializeField] AudioClip[] _sounds;
+    private AudioSource _myAudio;
+
+    private void Awake()
+    {
+        _myAudio = GetComponent<AudioSource>();
+    }
+
     void Start()
     {
         //_initialTime = _timeToOff;
@@ -43,6 +52,11 @@ public class FallApples : MonoBehaviour
     {
         _decal.SetActive(false);
         _apples.gameObject.SetActive(true);
+
+        int random = Random.Range(0, _sounds.Length);
+        AudioClip sound = _sounds[random];
+        _myAudio.clip = sound;
+        _myAudio.Play();
 
         yield return new WaitForSeconds(_timeToOff);
 
