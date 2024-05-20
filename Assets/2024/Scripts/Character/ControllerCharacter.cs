@@ -34,10 +34,10 @@ public class ControllerCharacter : MonoBehaviour
         if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl)) _model.Walk(itemPicked);
 
         // Si no estoy agachado, entonces corro.
-        else if (Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl)) _model.Run();
+        else if (Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl)) _model.Run(itemPicked);
 
         // Si no corro, entonces estoy caminando agachado.
-        else if (Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.LeftShift)) _model.CrouchWalk();
+        else if (Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.LeftShift)) _model.CrouchWalk(itemPicked);
 
         if (Input.GetKeyDown(KeyCode.Q)) _model.CallMoveDog();
         if (Input.GetKeyDown(KeyCode.R)) _model.CallAllDogs();
@@ -50,7 +50,7 @@ public class ControllerCharacter : MonoBehaviour
         if (!Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftShift)) _model.Idle(itemPicked);
 
         // Si me agacho y no corro, entonces estoy en agachado en idle.
-        else if (Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.LeftShift)) _model.IdleCrouch();
+        else if (Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.LeftShift)) _model.IdleCrouch(itemPicked);
 
         if (Input.GetKeyDown(KeyCode.Q)) _model.CallIdleDog();
         else if (Input.GetKeyDown(KeyCode.R)) _model.CallAllDogs();

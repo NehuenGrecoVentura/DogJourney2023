@@ -29,7 +29,7 @@ public class BoxApple : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && player.rabbitPicked && Input.GetKeyDown(_keyInteract))
+        if (player != null && player.rabbitPicked && Input.GetKeyDown(_keyInteract) && totalInBox < total)
         {
             totalInBox++;
             player.ItemsPicked(true, false, false, false);

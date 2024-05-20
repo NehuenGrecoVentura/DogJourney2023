@@ -97,7 +97,6 @@ public class Character : MonoBehaviour
             if (!isConstruct) _myAnim.runtimeAnimatorController = _animController[2];
             else _myAnim.enabled = true;
         }
-
     }
 
     private void Update()

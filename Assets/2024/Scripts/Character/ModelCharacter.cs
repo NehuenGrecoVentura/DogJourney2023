@@ -74,21 +74,32 @@ public class ModelCharacter
         _speed = _speedAux;
     }
 
-    public void Run()
+    public void Run(bool itemPicked)
     {
-        EventRun?.Invoke();
+        //EventRun?.Invoke();
+        //_speed = _speedRun;
+
+        if (!itemPicked) EventRun?.Invoke();
+        else EventPickWalk?.Invoke();
         _speed = _speedRun;
     }
 
-    public void IdleCrouch()
+    public void IdleCrouch(bool itemPicked)
     {
-        EventIdleCrouch?.Invoke();
+        //EventIdleCrouch?.Invoke();
+        //_speed = _speedCrouch;
+
+        if(!itemPicked) EventIdleCrouch?.Invoke();
+        else EventPickIdle?.Invoke();
         _speed = _speedCrouch;
     }
 
-    public void CrouchWalk()
+    public void CrouchWalk(bool itemPicked)
     {
-        EventWalkCrouch?.Invoke();
+        //EventWalkCrouch?.Invoke();
+        //_speed = _speedCrouch;
+        if (!itemPicked) EventWalkCrouch?.Invoke();
+        else EventPickWalk?.Invoke();
         _speed = _speedCrouch;
     }
 
