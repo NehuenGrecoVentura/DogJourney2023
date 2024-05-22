@@ -31,6 +31,7 @@ public class QuestSearch : MonoBehaviour
     [SerializeField] int _total = 4;
     [SerializeField] int _found = 0;
     [SerializeField] Character _player;
+    [SerializeField] ItemFound _item;
     private bool _questActive = false;
     private bool _questCompleted = false;
 
@@ -46,20 +47,17 @@ public class QuestSearch : MonoBehaviour
     [Header("RADAR")]
     [SerializeField] LocationQuest _radar;
 
+    [Header("FINISH")]
+    [SerializeField] Camera _camFocus;
+    [SerializeField] Manager _gm;
+
     void Start()
     {
         _dialogue.gameObject.SetActive(false);
         _iconInteract.SetActive(false);
         _cinematic.SetActive(false);
         _focusDog.gameObject.SetActive(false);
-    }
-
-    private void Update()
-    {
-        if (_questActive)
-        {
-            _questUI.AddNewTask(1, "Find buried objects (" + _found.ToString() + "/" + _total.ToString() + ")");
-        }
+        _camFocus.gameObject.SetActive(false);
     }
 
     private void Confirm()
@@ -71,6 +69,7 @@ public class QuestSearch : MonoBehaviour
         _myAudio.PlayOneShot(_soundConfirm);
         _radar.StatusRadar(false);
         _questUI.ActiveUIQuest("Hunting Treasures", "Find buried objects", string.Empty, string.Empty);
+        _questUI.AddNewTask(1, "Find buried objects (" + _found.ToString() + "/" + _total.ToString() + ")");
         StartCoroutine(StartQuest());
         _questActive = true;
     }
@@ -102,12 +101,12 @@ public class QuestSearch : MonoBehaviour
         }
     }
 
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    var player = other.GetComponent<Character>();
-    //    if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract))
-    //        StartCoroutine(Ending());
-    //}
+    private void OnTriggerStay(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract))
+            StartCoroutine(Finish(player));
+    }
 
     private void OnTriggerExit(Collider other)
     {
@@ -165,5 +164,51 @@ public class QuestSearch : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         _boxMessage.DesactivateMessage();
+    }
+
+    private IEnumerator Finish(Character player)
+    {
+        _myCol.enabled = false;
+        _iconInteract.SetActive(false);
+
+        _boxMessage.SetMessage(_nameNPC);
+        player.FreezePlayer();
+
+        _camFocus.gameObject.SetActive(true);
+        _camPlayer.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(1f);
+        _boxMessage.ShowMessage(_messages[2]);
+
+        yield return new WaitForSeconds(3f);
+        _boxMessage.CloseMessage();
+        Destroy(_camFocus.gameObject);
+        _camPlayer.gameObject.SetActive(true);
+        player.DeFreezePlayer();
+        _gm.QuestCompleted();
+
+        yield return new WaitForSeconds(0.5f);
+        _boxMessage.DesactivateMessage();
+        Destroy(this);
+    }
+
+    public void AddFound()
+    {
+        if (_found < _total)
+        {
+            _found++;
+            _questUI.AddNewTask(1, "Find buried objects (" + _found.ToString() + "/" + _total.ToString() + ")");
+        }
+             
+        else
+        {
+            Destroy(_item.transform.parent.gameObject);
+            _questUI.TaskCompleted(1);
+            _questUI.AddNewTask(2, "Go back and show him all the items found");
+            _radar.target = transform;
+            _radar.StatusRadar(true);
+            _questCompleted = true;
+
+        }
     }
 }
