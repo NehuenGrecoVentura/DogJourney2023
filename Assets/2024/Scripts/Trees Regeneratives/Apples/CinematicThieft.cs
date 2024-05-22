@@ -73,22 +73,33 @@ public class CinematicThieft : MonoBehaviour
         _cinematic.SetActive(true);
         _questApple.SpawnActive();
 
-        if (_order.activeOrders)
-        {
-            _targetDog.transform.position = _posDog.position;
-        }
+        //if (_order.activeOrders)
+        //{
+        //    _targetDog.transform.position = _posDog.position;
+        //}
 
-        else
-        {
-            _dog.Stop();
-            _dog.GetComponent<NavMeshAgent>().enabled = false;
-            _trolley.GetComponent<NavMeshAgent>().enabled = false;
-            _dog.transform.parent.transform.position = _posDog.position;
-            _trolley.gameObject.transform.position = _posDog.position;
-            _dog.GetComponent<NavMeshAgent>().enabled = true;
-            _trolley.GetComponent<NavMeshAgent>().enabled = true;
-            _dog.transform.LookAt(_thieft.transform);
-        }
+        //else
+        //{
+        //    _dog.Stop();
+        //    _dog.GetComponent<NavMeshAgent>().enabled = false;
+        //    _trolley.GetComponent<NavMeshAgent>().enabled = false;
+        //    _dog.transform.parent.transform.position = _posDog.position;
+        //    _trolley.gameObject.transform.position = _posDog.position;
+        //    _dog.GetComponent<NavMeshAgent>().enabled = true;
+        //    _trolley.GetComponent<NavMeshAgent>().enabled = true;
+        //    _dog.transform.LookAt(_thieft.transform);
+        //}
+
+        NavMeshAgent agentDog = _dog.GetComponent<NavMeshAgent>();
+        NavMeshAgent agentTrolley = _trolley.GetComponent<NavMeshAgent>();
+
+        _targetDog.transform.position = _posDog.position;
+        agentDog.enabled = false;
+        agentTrolley.enabled = false;
+        _dog.canTeletransport = false;
+        _dog.transform.parent.transform.position = _posDog.position;
+        _trolley.transform.position = _dog.transform.position;
+        _dog.transform.parent.LookAt(_thieft.transform);
 
         yield return new WaitForSeconds(3f);
         _boxMessage.ShowMessage(_message[0]);

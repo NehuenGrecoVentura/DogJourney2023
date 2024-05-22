@@ -159,9 +159,11 @@ public class QuestSearch : MonoBehaviour
         _camPlayer.gameObject.SetActive(true);
         _boxMessage.CloseMessage();
         _questUI.UIStatus(true);
+        _dog.canTeletransport = true;
+        agentDog.enabled = true;
+        agentTrolley.enabled = true;
 
         yield return new WaitForSeconds(1f);
         _boxMessage.DesactivateMessage();
-       
     }
 }

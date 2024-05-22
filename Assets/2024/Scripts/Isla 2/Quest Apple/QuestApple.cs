@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
@@ -50,6 +51,8 @@ public class QuestApple : MonoBehaviour
     [SerializeField, TextArea(4,6)] string _messageEnd;
     [SerializeField] CameraOrbit _camPlayer;
     [SerializeField] Camera _camEnding;
+    [SerializeField] NavMeshAgent[] _agents;
+    [SerializeField] Dog _dog;
 
     private void Awake()
     {
@@ -91,6 +94,13 @@ public class QuestApple : MonoBehaviour
                 DesactivateThiefts();
                 _questUI.TaskCompleted(1);
                 _questUI.AddNewTask(2, "Take the box to Thomas");
+
+                foreach (var item in _agents)
+                {
+                    item.enabled = true;
+                }
+
+                _dog.canTeletransport = true;
                 _questCompleted = true;
                 _spawnActivate = false;
                 _questActive = false;
