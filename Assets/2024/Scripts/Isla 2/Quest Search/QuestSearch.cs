@@ -192,7 +192,7 @@ public class QuestSearch : MonoBehaviour
         Destroy(this);
     }
 
-    public void AddFound()
+    public void AddFound(GameObject item)
     {
         if (_found < _total)
         {
@@ -207,6 +207,7 @@ public class QuestSearch : MonoBehaviour
             _questUI.AddNewTask(2, "Go back and show him all the items found");
             _radar.target = transform;
             _radar.StatusRadar(true);
+            Destroy(item);
             _questCompleted = true;
 
         }
