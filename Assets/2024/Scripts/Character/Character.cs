@@ -6,10 +6,10 @@ public class Character : MonoBehaviour
     private ViewCharacter _view;
     private ControllerCharacter _controller;
 
-    private Rigidbody _myRb;
-    private Animator _myAnim;
-    private AudioSource _myAudio;
-    private OrderDog _orderDog;
+    [SerializeField] Rigidbody _myRb;
+    [SerializeField] Animator _myAnim;
+    [SerializeField] AudioSource _myAudio;
+    [SerializeField] OrderDog _orderDog;
     private BuilderManager _construct;
 
     public float speed = 10f;
@@ -43,10 +43,10 @@ public class Character : MonoBehaviour
 
     private void Awake()
     {
-        _myRb = GetComponent<Rigidbody>();
-        _myAnim = GetComponent<Animator>();
-        _myAudio = GetComponent<AudioSource>();
-        _orderDog = GetComponent<OrderDog>();
+        //_myRb = GetComponent<Rigidbody>();
+        //_myAnim = GetComponent<Animator>();
+        //_myAudio = GetComponent<AudioSource>();
+        //_orderDog = GetComponent<OrderDog>();
         _construct = FindObjectOfType<BuilderManager>();
 
         _model = new ModelCharacter(_myRb, speed, speedRun, _speedCrouch, speedAux, isClimb, transform, _camPos, _gravity, _orderDog, _test1, _test2, _rayDist, _rayPoint1, _rayPoint2);
