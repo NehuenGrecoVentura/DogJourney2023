@@ -159,6 +159,8 @@ public class QuestSearch : MonoBehaviour
         _boxMessage.CloseMessage();
         _questUI.UIStatus(true);
         _dog.canTeletransport = true;
+        _item.Repos();
+        _found = 1;
         agentDog.enabled = true;
         agentTrolley.enabled = true;
 
