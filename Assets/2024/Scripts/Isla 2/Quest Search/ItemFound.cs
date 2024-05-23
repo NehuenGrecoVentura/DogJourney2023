@@ -28,6 +28,7 @@ public class ItemFound : MonoBehaviour
     void Start()
     {
         _iconInteract.SetActive(false);
+        _sensor.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -107,7 +108,5 @@ public class ItemFound : MonoBehaviour
         {
             _iconInteract.SetActive(false);
         }
-            
-            
     }
 }

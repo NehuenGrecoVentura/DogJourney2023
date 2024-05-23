@@ -32,6 +32,7 @@ public class QuestSearch : MonoBehaviour
     [SerializeField] int _found = 0;
     [SerializeField] Character _player;
     [SerializeField] ItemFound _item;
+    [SerializeField] Slider _sensor;
     private bool _questActive = false;
     private bool _questCompleted = false;
 
@@ -58,6 +59,7 @@ public class QuestSearch : MonoBehaviour
         _cinematic.SetActive(false);
         _focusDog.gameObject.SetActive(false);
         _camFocus.gameObject.SetActive(false);
+        _sensor.gameObject.SetActive(false);
     }
 
     private void Confirm()
@@ -163,7 +165,8 @@ public class QuestSearch : MonoBehaviour
         _found = 1;
         agentDog.enabled = true;
         agentTrolley.enabled = true;
-
+        _sensor.gameObject.SetActive(true);
+        _questUI.AddNewTask(1, "Find buried objects (" + "1" + "/" + _total.ToString() + ")");
         yield return new WaitForSeconds(1f);
         _boxMessage.DesactivateMessage();
     }
