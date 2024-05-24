@@ -1,41 +1,54 @@
 using UnityEngine;
 using System.Collections;
-using DG.Tweening;
 
 public class MessageStealth : MonoBehaviour
 {
-    [Header("MESSAGE")]
-    [SerializeField] RectTransform _boxMessage;
-    private Collider _myCol;
+    [Header("CINEMATIC")]
+    [SerializeField] GameObject _cinematic;
+    [SerializeField] CameraOrbit _camPlayer;
+    [SerializeField] Collider _myCol;
+    [SerializeField] BoxMessages _boxMessage;
+    [SerializeField, TextArea(4, 6)] string[] _messages;
+    [SerializeField] Character _player;
 
-    private void Awake()
+    private void Start()
     {
-        _myCol = GetComponent<Collider>();
-    }
-
-    void Start()
-    {
-        _boxMessage.gameObject.SetActive(false);
-        _boxMessage.DOAnchorPosY(-1000f, 0f);
-        _boxMessage.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-
+        _cinematic.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null) StartCoroutine(Display());
+        if (player != null && _myCol.enabled) StartCoroutine(Display(player));
     }
 
-    private IEnumerator Display()
+    private IEnumerator Display(Character player)
     {
-        
+
+        //Destroy(_myCol);
+        _myCol.enabled = false;
+
+        _boxMessage.SetMessage("Stealth");
+        player.FreezePlayer();
+        _camPlayer.gameObject.SetActive(false);
+        _cinematic.SetActive(true);
+
+        yield return new WaitForSeconds(1f);
+        _boxMessage.ShowMessage(_messages[0]);
+
+        yield return new WaitForSeconds(3f);
+        _boxMessage.CloseMessage();
+
+        yield return new WaitForSeconds(0.5f);
+        _boxMessage.ShowMessage(_messages[1]);
+
+        yield return new WaitForSeconds(3f);
+        Destroy(_cinematic);
+        _camPlayer.gameObject.SetActive(true);
+        player.DeFreezePlayer();
+
+        yield return new WaitForSeconds(0.5f);
         Destroy(_myCol);
-        _boxMessage.gameObject.SetActive(true);
-        _boxMessage.DOAnchorPosY(-100f, 0.5f);
-        yield return new WaitForSeconds(4f);
-        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
-        Destroy(_boxMessage.transform.parent.gameObject, 2f);
-        Destroy(this, 2f);
+        Destroy(this);
     }
 }
