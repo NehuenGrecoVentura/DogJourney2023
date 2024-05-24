@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class Manzanas_Player : MonoBehaviour
 {
     [SerializeField] GameObject Box;
-    [SerializeField] int Lifes;
+    [SerializeField] int Lives;
+    [SerializeField] private int MaxLives;
     [SerializeField] int Score;
     [SerializeField] Rigidbody _rb;
     [SerializeField] float speed;
@@ -16,6 +17,7 @@ public class Manzanas_Player : MonoBehaviour
     [SerializeField] Transform Derecha;
     [SerializeField] float Energy;
     [SerializeField] float MaxEnergy;
+    public bool GameOver;
    // [SerializeField] Image bar;
     private void Start()
     {
@@ -27,26 +29,42 @@ public class Manzanas_Player : MonoBehaviour
         Score++;
     }
 
-    public void RemoveLife()
+    public void RemoveLive()
     {
-        Lifes--;
+        Lives--;
+    }
+
+    public void Reset()
+    {
+        _rb.velocity = Vector3.zero;
+        Score = 0;
+        Lives = MaxLives;
     }
 
     private void Update()
     {
-        if(Input.GetKey(KeyCode.LeftShift) == true)
+        if (Lives <= 0)
         {
-            Run(true);
+            GameOver = true;
         }
-        else
+
+        if (!GameOver)
         {
-            Run(false);
+            if(Input.GetKey(KeyCode.LeftShift) == true)
+            {
+                Run(true);
+            }
+            else
+            {
+                Run(false);
+            }
+            var hor = Input.GetAxis("Horizontal");
+            if (hor != 0)
+            {
+                Move(new Vector3(-hor, 2.85f, 0));
+            }
         }
-        var hor = Input.GetAxis("Horizontal");
-        if (hor != 0)
-        {
-            Move(new Vector3(-hor, 2.85f, 0));
-        }
+       
     }
 
     public void Move(Vector3 dir)

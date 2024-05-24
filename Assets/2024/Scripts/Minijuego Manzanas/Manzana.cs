@@ -52,13 +52,13 @@ public class Manzana : MonoBehaviour
         if(other.gameObject.name == "CatchBox")
         {
             Debug.Log("Atrapado");
-            Player.AddScore();
             ManzanaFactory.Instance.ReturnManzana(this);
+            Player.AddScore();
         }
 
         if (other.gameObject.name == "Suelo")
         {
-            Player.RemoveLife();
+            Player.RemoveLive();
             ManzanaFactory.Instance.ReturnManzana(this);
         }
         

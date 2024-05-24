@@ -15,13 +15,37 @@ public class Manzana_Manager : MonoBehaviour
     [SerializeField] private Transform Izquierda;
     [SerializeField] private Transform Derecha;
     [SerializeField] private int RandomWay;
+
+    [SerializeField] private Manzanas_Player MP;
+
+    [SerializeField] private bool Gaming;
+    [SerializeField] private CameraOrbit _camPlayer;
+    [SerializeField] private Camera _camApple;
+    [SerializeField] private Character _character;
+    [SerializeField] private LocationQuest _radar;
+    [SerializeField] private AudioSource _myAudio;
+    [SerializeField] private CharacterInventory _inventory;
+    
+    private void Start()
+    {
+        Random();
+        _myAudio = GetComponent<AudioSource>();
+        _radar = FindObjectOfType<LocationQuest>();
+        _inventory = FindObjectOfType<CharacterInventory>();
+        Gaming = false;
+    }
+
     void Spawn()
     {
         var m = ManzanaFactory.Instance.pool.GetObject();
-        Random();
-
         m.transform.position = transform.position + transform.forward;
         m.transform.forward = transform.forward;
+    }
+
+    private void Reset()
+    {
+        rb.velocity = Vector3.zero;
+        MP.Reset();
     }
 
     void move()
@@ -46,16 +70,29 @@ public class Manzana_Manager : MonoBehaviour
 
     private void Update()
     {
-        move();
-        SpawnerTimer -= Time.deltaTime;
-        if (SpawnerTimer <= 0)
+        if (Input.GetKeyDown(KeyCode.M))
         {
-            
-            Spawn();
-            Random();
+            Gaming = !Gaming;
+            Game();
         }
-
-        
+        if (Gaming)
+        {
+            if (MP.GameOver)
+            {
+                Debug.Log("perdiste");
+                Gaming = false;
+                rb.velocity = Vector3.zero;
+                Game();
+            }
+            
+            move();
+            SpawnerTimer -= Time.deltaTime;
+            if (SpawnerTimer <= 0)
+            {
+                Spawn();
+                Random();
+            }
+        }
     }
     
     private void OnTriggerEnter(Collider other)
@@ -67,6 +104,32 @@ public class Manzana_Manager : MonoBehaviour
         if(other.gameObject.name == "OutBoxD")
         {
             transform.position = Izquierda.position;
+        }
+    }
+
+    private void Game()
+    {
+        if (Gaming)
+        {
+            Reset();
+            MP.GameOver = false;
+            _camPlayer.enabled = false;
+            _camApple.enabled = true;
+            _character.speed = 0;
+            _character.FreezePlayer();
+            _radar.StatusRadar(false);
+            
+        }
+        else
+        {
+            Reset();
+            MP.GameOver = true;
+            _camPlayer.enabled = true;
+            _camApple.enabled = false;
+            _character.speed = _character.speedAux;
+            _character.DeFreezePlayer();
+            _radar.StatusRadar(true);
+            
         }
     }
 }
