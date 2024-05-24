@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 8063f6cf6801a8a4cbf29f6541a228ed
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _Diana_Diana_Normal: {fileID: 2800000, guid: 09a2635b36a3c0341907ab28ff1e04e3,
+      type: 3}
+  - _Diana_Diana_BaseColor: {fileID: 2800000, guid: ddc3cb7d1d1d9f242a17bc73af5c8399,
+      type: 3}
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
