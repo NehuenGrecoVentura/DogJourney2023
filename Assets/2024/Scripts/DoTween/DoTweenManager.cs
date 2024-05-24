@@ -59,4 +59,14 @@ public class DoTweenManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         obj.gameObject.SetActive(false);
     }
+
+    public void EffectScaleLoop(Transform obj, float scale)
+    {
+        obj.DOScale(scale, 0.5f).SetLoops(-1, LoopType.Yoyo);
+    }
+
+    public void StopAnim(Transform obj)
+    {
+        obj.DOKill();
+    }
 }

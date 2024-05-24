@@ -24,6 +24,7 @@ public class QuestSearch : MonoBehaviour
     [SerializeField] Dog _dog;
     [SerializeField] TrolleyWood _trolley;
     [SerializeField] Camera _focusDog;
+    [SerializeField] DoTweenManager _doTween;
 
     [Header("QUEST")]
     [SerializeField] string _nameNPC = "Christine";
@@ -156,6 +157,14 @@ public class QuestSearch : MonoBehaviour
         _dog.transform.parent.LookAt(_player.transform);
 
         yield return new WaitForSeconds(2f);
+        _boxMessage.CloseMessage();
+
+        yield return new WaitForSeconds(1f);
+        _boxMessage.ShowMessage(_messages[2]);
+        _sensor.gameObject.SetActive(true);
+        _doTween.EffectScaleLoop(_sensor.transform, 2.5f);
+
+        yield return new WaitForSeconds(4f);
         Destroy(_cinematic);
         _camPlayer.gameObject.SetActive(true);
         _boxMessage.CloseMessage();
@@ -167,6 +176,8 @@ public class QuestSearch : MonoBehaviour
         agentTrolley.enabled = true;
         _sensor.gameObject.SetActive(true);
         _questUI.AddNewTask(1, "Find buried objects (" + "1" + "/" + _total.ToString() + ")");
+        _doTween.StopAnim(_sensor.transform);
+
         yield return new WaitForSeconds(1f);
         _boxMessage.DesactivateMessage();
     }
@@ -183,7 +194,7 @@ public class QuestSearch : MonoBehaviour
         _camPlayer.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(1f);
-        _boxMessage.ShowMessage(_messages[2]);
+        _boxMessage.ShowMessage(_messages[3]);
 
         yield return new WaitForSeconds(3f);
         _boxMessage.CloseMessage();
