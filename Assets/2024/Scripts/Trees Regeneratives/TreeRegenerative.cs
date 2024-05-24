@@ -3,7 +3,7 @@ using UnityEngine;
 public class TreeRegenerative : MonoBehaviour
 {
     private Character _player;
-    private HouseQuest4 _quest4;
+    //private HouseQuest4 _quest4;
     private DoTweenManager _doTween;
 
     private AudioSource _myAudio;
@@ -30,7 +30,7 @@ public class TreeRegenerative : MonoBehaviour
         _myCol = GetComponent<BoxCollider>();
 
         _player = FindObjectOfType<Character>();
-        _quest4 = FindObjectOfType<HouseQuest4>();
+        //_quest4 = FindObjectOfType<HouseQuest4>();
         _doTween = FindObjectOfType<DoTweenManager>();
         _inventory = FindObjectOfType<CharacterInventory>();
     }
@@ -67,20 +67,32 @@ public class TreeRegenerative : MonoBehaviour
             FocusToTree();
 
             if (!Input.GetKey(_inputInteractive))
-                _hitBar.gameObject.SetActive(true);
-
-            else if (Input.GetKey(_inputInteractive) && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
             {
-                if (!_inventory.shovelSelected)
-                    player.HitTree();
+                _hitBar.gameObject.SetActive(true);
+                player.enabled = true;
+                player.MainAnim();
             }
+                
+
+            //else if (Input.GetKey(_inputInteractive) && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
+            //{
+            //    if (!_inventory.shovelSelected)
+            //        player.HitTree();
+            //}
 
             else
             {
                 if (!_inventory.shovelSelected)
                 {
+                    //_doTween.Shake(gameObject.transform);
+                    //player.HitTree();
+                    //amountHit--;
+                    //if (!_myAudio.isPlaying) _myAudio.PlayOneShot(_soundHit);
+                    //_hitBar.Bar();
+
                     _doTween.Shake(gameObject.transform);
                     player.HitTree();
+                    player.enabled = false;
                     amountHit--;
                     if (!_myAudio.isPlaying) _myAudio.PlayOneShot(_soundHit);
                     _hitBar.Bar();
@@ -94,10 +106,12 @@ public class TreeRegenerative : MonoBehaviour
                 _decal.SetActive(false);
                 _treeFall.gameObject.SetActive(true);
                 _treeFall._isFall = true;
+                player.enabled = true;
+                player.MainAnim();
                 gameObject.SetActive(false);
             }
 
-            if (amountHit <= 0 && _quest4.quest4Active) _quest4.amount++;
+            //if (amountHit <= 0 && _quest4.quest4Active) _quest4.amount++;
         }
     }
 
@@ -108,6 +122,8 @@ public class TreeRegenerative : MonoBehaviour
         {
             _decal.SetActive(false);
             _hitBar.gameObject.SetActive(false);
+            player.enabled = true;
+            player.MainAnim();
         }
     }
 

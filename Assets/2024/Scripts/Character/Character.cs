@@ -106,7 +106,14 @@ public class Character : MonoBehaviour
 
     public void HitTree()
     {
-        _model.HitTree();
+        //_model.HitTree();
+
+        _myAnim.runtimeAnimatorController = _animController[3];
+    }
+
+    public void MainAnim()
+    {
+        _myAnim.runtimeAnimatorController = _animController[0];
     }
 
     public void HitDig()
