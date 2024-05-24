@@ -21,6 +21,11 @@ public class ThiefApple : MonoBehaviour
     [SerializeField] AudioClip[] _soundsDog;
     private AudioSource _myAudio;
 
+    [Header("FACES")]
+    [SerializeField] Material _matScared;
+    [SerializeField] MeshRenderer _face;
+    private Material _initialFace;
+
     private void Awake()
     {
         _myCol = GetComponent<BoxCollider>();
@@ -34,6 +39,7 @@ public class ThiefApple : MonoBehaviour
     private void Start()
     {
         _initialPos = transform.position;
+        _initialFace = _face.material;
     }
 
     private void FixedUpdate()
@@ -60,6 +66,8 @@ public class ThiefApple : MonoBehaviour
             }
             else return;
 
+
+            _face.material = _matScared;
             _myRb.isKinematic = false;
             _isScared = true;
             _isThief = false;
@@ -87,6 +95,7 @@ public class ThiefApple : MonoBehaviour
         {
             transform.position = _initialPos;
             transform.LookAt(_posFollow);
+            _face.material = _initialFace;
             
             _isScared = false;
             _isThief = false;
