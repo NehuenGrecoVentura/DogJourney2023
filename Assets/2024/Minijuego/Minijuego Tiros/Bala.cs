@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Bala : MonoBehaviour
 {
-    [SerializeField] private TirosCharacter Player;
     [SerializeField] private float LifeTime;
     [SerializeField] private float MaxLife;
     [SerializeField] private Rigidbody rb;
@@ -12,7 +11,7 @@ public class Bala : MonoBehaviour
 
     private void Start()
     {
-        Player = FindObjectOfType<TirosCharacter>();
+        
     }
 
     void Update()
@@ -49,9 +48,15 @@ public class Bala : MonoBehaviour
         b.gameObject.SetActive(false);
     }
 
+
     private void OnCollisionEnter(Collision other)
     {
-        //Programar un choque contra objetivo, añadir puntaje
-        //Programar un choque contra obstaculo, quitar una vida
+        TirosMovil temp;
+        temp = other.gameObject.GetComponent<TirosMovil>();
+        if (temp != null)
+        {
+            temp.gotHit();
+            BalaFactory.Instance.ReturnBala(this);
+        }
     }
 }

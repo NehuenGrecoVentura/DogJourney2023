@@ -17,7 +17,6 @@ public class Manzana_Manager : MonoBehaviour
     [SerializeField] private int RandomWay;
 
     [SerializeField] private Manzanas_Player MP;
-
     [SerializeField] private bool Gaming;
     [SerializeField] private CameraOrbit _camPlayer;
     [SerializeField] private Camera _camApple;
