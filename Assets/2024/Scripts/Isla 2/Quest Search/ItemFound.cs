@@ -27,7 +27,7 @@ public class ItemFound : MonoBehaviour
 
     void Start()
     {
-        _iconInteract.SetActive(false);
+        _iconInteract.transform.DOScale(0f, 0f);
         _sensor.gameObject.SetActive(false);
     }
 
@@ -37,10 +37,15 @@ public class ItemFound : MonoBehaviour
         float invertedDist = 1 - (dist / _maxDist);
         _sensor.value = invertedDist;
 
-        if (_isSearching && dist <= 1f)
+        //if (_isSearching && dist <= 1f)
+        //{
+
+        //    StartCoroutine(DogSearch());
+        //}
+
+        if (_isSearching && dist <= 3f)
         {
-            
-            StartCoroutine(DogSearch());
+            _iconInteract.transform.DOScale(1f, 0.5f);
         }
     }
 
@@ -52,7 +57,7 @@ public class ItemFound : MonoBehaviour
             Transform nextPos = _repos[_index];
             transform.position = nextPos.position;
             _quest.AddFound(gameObject);
-            _iconInteract.SetActive(false);
+            _iconInteract.transform.DOScale(0f, 0.5f);
             _myCol.enabled = true;
         }
 
@@ -80,7 +85,7 @@ public class ItemFound : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null) _iconInteract.SetActive(true);
+        if (player != null) _iconInteract.transform.DOScale(1f, 0.5f);
 
         var dog = other.GetComponent<Dog>();
         if(dog != null && _isSearching)
@@ -106,7 +111,7 @@ public class ItemFound : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
-            _iconInteract.SetActive(false);
+            _iconInteract.transform.DOScale(0f, 0.5f);
         }
     }
 }
