@@ -30,7 +30,7 @@ public class QuestSearch : MonoBehaviour
     [SerializeField] string _nameNPC = "Christine";
     [SerializeField] QuestUI _questUI;
     [SerializeField] int _total = 4;
-    [SerializeField] int _found = 0;
+    public int _found = 0;
     [SerializeField] Character _player;
     [SerializeField] ItemFound _item;
     [SerializeField] Slider _sensor;

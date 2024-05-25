@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -22,6 +21,10 @@ public class ItemFound : MonoBehaviour
     [SerializeField] DogBall _dogBall;
     [SerializeField] Slider _sensor;
     [SerializeField] float _maxDist = 10f;
+
+    [Header("CAM FOCUS")]
+    [SerializeField] Camera _camFocus;
+    [SerializeField] CameraOrbit _camPlayer;
 
     private bool _isSearching = false;
 
@@ -57,6 +60,7 @@ public class ItemFound : MonoBehaviour
             Transform nextPos = _repos[_index];
             transform.position = nextPos.position;
             _quest.AddFound(gameObject);
+            ChangeCam(false, true);
             _iconInteract.transform.DOScale(0f, 0.5f);
             _myCol.enabled = true;
         }
@@ -71,6 +75,8 @@ public class ItemFound : MonoBehaviour
         _dog.Stop();
         _dog.Search();
 
+
+        ChangeCam(true, false);
         Animator animDog = _dog.GetComponentInParent<Animator>();
 
         yield return new WaitForSeconds(3f);
@@ -80,6 +86,15 @@ public class ItemFound : MonoBehaviour
         animDog.enabled = true;
 
         Repos();
+    }
+
+    public void ChangeCam(bool camFocus, bool camPlayer)
+    {
+        if(_quest._found >= 1)
+        {
+            _camFocus.gameObject.SetActive(camFocus);
+            _camPlayer.gameObject.SetActive(camPlayer);
+        } 
     }
 
     private void OnTriggerEnter(Collider other)
