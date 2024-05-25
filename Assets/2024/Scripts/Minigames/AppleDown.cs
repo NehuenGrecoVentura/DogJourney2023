@@ -4,26 +4,29 @@ public class AppleDown : MonoBehaviour
 {
     [SerializeField] Rigidbody _rb;
     [SerializeField] float _speedDown = 1f;
-    private Vector3 _initialPos;
 
-    private void Start()
+    private void OnEnable()
     {
-        _initialPos = transform.position;
+        _rb.velocity = Vector3.down * _speedDown;
     }
 
-    private void FixedUpdate()
-    {
-        Vector3 movement = Vector3.down * _speedDown * Time.fixedDeltaTime;
-        _rb.MovePosition(_rb.position + movement);
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    var player = collision.gameObject.GetComponent<Character>();
+    //    var terrain = collision.gameObject.GetComponent<Terrain>();
 
-    private void OnCollisionEnter(Collision collision)
+    //    if (player != null || terrain != null) gameObject.SetActive(false);
+    //    else if (player != null) print("PUNTO");
+    //    else if (terrain != null) print("FALLO");
+    //}
+
+    private void OnTriggerEnter(Collider other)
     {
-        var player = collision.gameObject.GetComponent<Character>();
-        if (player != null)
-        {
-            transform.position = _initialPos;
-            gameObject.SetActive(false);
-        }
+        var player = other.GetComponent<Character>();
+        var terrain = other.GetComponent<Terrain>();
+
+        if (player != null || terrain != null) gameObject.SetActive(false);
+        else if (player != null) print("PUNTO");
+        else if (terrain != null) print("FALLO");
     }
 }
