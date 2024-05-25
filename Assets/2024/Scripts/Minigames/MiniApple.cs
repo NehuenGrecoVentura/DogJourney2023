@@ -97,23 +97,7 @@ public class MiniApple : MonoBehaviour
 
     private void SpawnObject()
     {
-        //// Obtener el ancho y largo del objeto de spawn
-        //float halfWidth = _objectFromSpawn.transform.localScale.x / 2f;
-        //float halfLength = _objectFromSpawn.transform.localScale.z / 2f;
-
-        //// Generar coordenadas aleatorias dentro del área de spawn
-        //float randomX = Random.Range(-halfWidth, halfWidth);
-        //float randomZ = Random.Range(-halfLength, halfLength);
-
-        //// Crear posición de instancia
-        //Vector3 spawnPosition = new Vector3(
-        //    _objectFromSpawn.transform.position.x + randomX,
-        //    _objectFromSpawn.transform.position.y,
-        //    _objectFromSpawn.transform.position.z + randomZ
-        //);
-
         GameObject apple = PoolApple.Instance.RequestApple();
-        //apple.transform.position = spawnPosition;
         apple.transform.position = _spawner.position;
     }
 

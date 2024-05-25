@@ -18,7 +18,11 @@ public class Manzanas_Player : MonoBehaviour
     [SerializeField] float Energy;
     [SerializeField] float MaxEnergy;
     public bool GameOver;
-   // [SerializeField] Image bar;
+    // [SerializeField] Image bar;
+
+    [SerializeField] Animator _myAnim;
+    [SerializeField] Collider _myCol;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -58,14 +62,42 @@ public class Manzanas_Player : MonoBehaviour
             {
                 Run(false);
             }
-            var hor = Input.GetAxis("Horizontal");
-            if (hor != 0)
-            {
-                Move(new Vector3(-hor, 2.85f, 0));
-            }
+            //var hor = Input.GetAxis("Horizontal");
+            //if (hor != 0)
+            //{
+            //    Move(new Vector3(-hor, 2.85f, 0));
+            //}
         }
        
     }
+
+
+    private void FixedUpdate()
+    {
+        // Obtener la entrada horizontal (A o D, o las flechas izquierda y derecha)
+        float moveHorizontal = Input.GetAxis("Horizontal");
+
+        // Calcular el vector de movimiento basado en la entrada y la velocidad
+        Vector3 movement = new Vector3(-moveHorizontal, 0.0f, 0.0f) * speed;
+
+        // Aplicar el movimiento al Rigidbody
+        _rb.velocity = movement;
+
+        if (moveHorizontal != 0) _myAnim.SetBool("Move", true);
+        else _myAnim.SetBool("Move", false);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void Move(Vector3 dir)
     {
@@ -100,13 +132,33 @@ public class Manzanas_Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.name == "OutBoxI")
+        //if(other.gameObject.name == "OutBoxI")
+        //{
+        //    transform.position = Derecha.position;
+
+        //}
+        //if(other.gameObject.name == "OutBoxD")
+        //{
+        //    transform.position = Izquierda.position;
+        //}
+
+        if (other.gameObject.name == "OutBoxI")
         {
-            transform.position = Derecha.position;
+            StartCoroutine(SpawnSide(Derecha.position));
+
         }
-        if(other.gameObject.name == "OutBoxD")
+        if (other.gameObject.name == "OutBoxD")
         {
-            transform.position = Izquierda.position;
+            StartCoroutine(SpawnSide(Izquierda.position));
         }
+    }
+
+    private IEnumerator SpawnSide(Vector3 pos)
+    {
+        transform.position = pos;
+        transform.position = new Vector3(transform.position.x, 9.59f, transform.position.z);
+        _myCol.enabled = false;
+        yield return new WaitForSeconds(0.5f);
+        _myCol.enabled = true;
     }
 }

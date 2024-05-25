@@ -117,7 +117,6 @@ public class Manzana_Manager : MonoBehaviour
             _character.speed = 0;
             _character.FreezePlayer();
             _radar.StatusRadar(false);
-            
         }
         else
         {
