@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1906242337612396569}
   - component: {fileID: 7486356189533115926}
   - component: {fileID: 238103746222078168}
+  - component: {fileID: 7958911796283275957}
   m_Layer: 0
   m_Name: Popcorn Machine Prefab
   m_TagString: Untagged
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7958911796283275957
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7159914430393825368}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5172349, y: 0.60816944, z: 0.94134814}
+  m_Center: {x: 0.0020947903, y: -0.021281537, z: -0.47021094}
