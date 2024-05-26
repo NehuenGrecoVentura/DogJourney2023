@@ -124,6 +124,18 @@ public class TradeFish : MonoBehaviour
         MakeTrade(ref _inventory.fishes, ref _inventory.baits, 1, 3);
     }
 
+    public void TradeCommonToBox()
+    {
+        if (_inventory.fishes >= 13)
+        {
+            _inventory.fishes -= 13;
+            _inventory.upgradeLoot = true;
+            _myAudio.PlayOneShot(_soundTrade);
+        }
+
+        else _myAudio.PlayOneShot(_soundError);
+    }
+
     #endregion
 
     #region INTERCAMBIOS PECES ESPECIALES
@@ -158,6 +170,17 @@ public class TradeFish : MonoBehaviour
         MakeTrade(ref _inventory.specialFishes, ref _inventory.baits, 1, 5);
     }
 
+    public void TradeSpecialFishToBox()
+    {
+        if (_inventory.specialFishes >= 4)
+        {
+            _inventory.fishes -= 4;
+            _inventory.upgradeLoot = true;
+            _myAudio.PlayOneShot(_soundTrade);
+        }
+
+        else _myAudio.PlayOneShot(_soundError);
+    }
 
     #endregion
 
@@ -192,6 +215,19 @@ public class TradeFish : MonoBehaviour
     {
         MakeTrade(ref _inventory.baits, ref _inventory.apples, 1, 2);
     }
+
+    public void TradeBaitToBox()
+    {
+        if (_inventory.fishes >= 20)
+        {
+            _inventory.fishes -= 20;
+            _inventory.upgradeLoot = true;
+            _myAudio.PlayOneShot(_soundTrade);
+        }
+
+        else _myAudio.PlayOneShot(_soundError);
+    }
+
     #endregion
 
     private void OnTriggerEnter(Collider other)
