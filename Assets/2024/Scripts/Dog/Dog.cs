@@ -107,6 +107,11 @@ public class Dog : MonoBehaviour
         _anim.Play("Search");
     }
 
+    public void Angry()
+    {
+        _anim.Play("Angry");
+    }
+
     public void OrderGo()
     {
         if (!quickEnd && _player.transform.position.y < 18f && !scared)
@@ -120,8 +125,6 @@ public class Dog : MonoBehaviour
     {
         if (quickEnd) StartCoroutine(_model.OrderGOQick(quickPos));
     }
-
-
 
     public void Stop()
     {

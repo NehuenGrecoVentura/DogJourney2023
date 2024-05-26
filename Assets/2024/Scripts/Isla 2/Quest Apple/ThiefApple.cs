@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ThiefApple : MonoBehaviour
 {
+    [SerializeField] Dog _dog;
     [SerializeField] Transform _posEscape;
     [SerializeField] Transform _posFollow;
     [SerializeField] float _timeThief = 3f;
@@ -59,6 +60,8 @@ public class ThiefApple : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !_isScared && isThief && canScared)
         {
             StopCoroutine(Thief());
+            _dog.Angry();
+            _dog.transform.LookAt(transform);
 
             if (_soundsDog.Length > 0)
             {
