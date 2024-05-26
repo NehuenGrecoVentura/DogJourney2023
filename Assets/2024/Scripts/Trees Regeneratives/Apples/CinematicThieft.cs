@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
 
 public class CinematicThieft : MonoBehaviour
 {
@@ -38,7 +39,8 @@ public class CinematicThieft : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && _canScared && CheckThieft())
+        bool thiefActive = _ladrones.Any(elemento => elemento.isThief);
+        if (Input.GetKeyDown(KeyCode.Space) && _canScared && CheckThieft() && thiefActive)
             StartCoroutine(PlayCinematicScared());        
     }
 
@@ -73,23 +75,6 @@ public class CinematicThieft : MonoBehaviour
         _cinematic.SetActive(true);
         _questApple.SpawnActive();
 
-        //if (_order.activeOrders)
-        //{
-        //    _targetDog.transform.position = _posDog.position;
-        //}
-
-        //else
-        //{
-        //    _dog.Stop();
-        //    _dog.GetComponent<NavMeshAgent>().enabled = false;
-        //    _trolley.GetComponent<NavMeshAgent>().enabled = false;
-        //    _dog.transform.parent.transform.position = _posDog.position;
-        //    _trolley.gameObject.transform.position = _posDog.position;
-        //    _dog.GetComponent<NavMeshAgent>().enabled = true;
-        //    _trolley.GetComponent<NavMeshAgent>().enabled = true;
-        //    _dog.transform.LookAt(_thieft.transform);
-        //}
-
         NavMeshAgent agentDog = _dog.GetComponent<NavMeshAgent>();
         NavMeshAgent agentTrolley = _trolley.GetComponent<NavMeshAgent>();
 
@@ -116,6 +101,13 @@ public class CinematicThieft : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
         _canScared = true;
+
+
+        foreach (var item in _ladrones)
+        {
+            item.canScared = true;
+        }
+
         _player.DeFreezePlayer();
         Destroy(_dogCam.gameObject);
         _camPlayer.gameObject.SetActive(true);

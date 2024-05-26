@@ -13,7 +13,8 @@ public class ThiefApple : MonoBehaviour
     private BoxCollider _myCol;
     private Rigidbody _myRb;
 
-    private bool _isThief = false;
+    public bool isThief = false;
+    [HideInInspector] public bool canScared = false;
     private bool _isScared = false;
     private bool _isEscape = false;
     private Vector3 _initialPos;
@@ -44,7 +45,7 @@ public class ThiefApple : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_isScared && !_isThief && !_isEscape) Movement(_posFollow);
+        if (!_isScared && !isThief && !_isEscape) Movement(_posFollow);
         else if (_isEscape || _isScared)
         {
             _myCol.enabled = true;
@@ -55,7 +56,7 @@ public class ThiefApple : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !_isScared && _isThief)
+        if (Input.GetKeyDown(KeyCode.Space) && !_isScared && isThief && canScared)
         {
             StopCoroutine(Thief());
 
@@ -66,11 +67,10 @@ public class ThiefApple : MonoBehaviour
             }
             else return;
 
-
             _face.material = _matScared;
             _myRb.isKinematic = false;
             _isScared = true;
-            _isThief = false;
+            isThief = false;
         }
     }
 
@@ -98,7 +98,7 @@ public class ThiefApple : MonoBehaviour
             _face.material = _initialFace;
             
             _isScared = false;
-            _isThief = false;
+            isThief = false;
             _isEscape = false;
             gameObject.SetActive(false);
         }
@@ -107,7 +107,7 @@ public class ThiefApple : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var boxApple = other.GetComponent<BoxApple>();
-        if (boxApple != null && !_isThief) StartCoroutine(Thief());
+        if (boxApple != null && !isThief) StartCoroutine(Thief());
     }
 
     private IEnumerator Thief()
@@ -117,10 +117,10 @@ public class ThiefApple : MonoBehaviour
             _myAnim.SetBool("Move", false);
             _myCol.enabled = false;
             _myRb.isKinematic = true;
-            _isThief = true;
+            isThief = true;
             yield return new WaitForSeconds(_timeThief);
             _boxApple.RemoveSomeApples(_isScared);
-            _isThief = false;
+            isThief = false;
             _myRb.isKinematic = false;
             transform.LookAt(_posEscape);
             _isEscape = true;
