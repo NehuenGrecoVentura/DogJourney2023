@@ -14,6 +14,7 @@ public class ItemFound : MonoBehaviour
     [SerializeField] KeyCode _keyInteract = KeyCode.Q;
     [SerializeField] Collider _myCol;
     [SerializeField] ParticleSystemRenderer _smoke;
+    private bool _isSearching = false;
 
     [Header("REPOS")]
     [SerializeField] Transform[] _repos;
@@ -30,7 +31,10 @@ public class ItemFound : MonoBehaviour
     [SerializeField] Camera _camFocus;
     [SerializeField] CameraOrbit _camPlayer;
 
-    private bool _isSearching = false;
+    [Header("AUDIOS")]
+    [SerializeField] AudioSource _myAudio;
+    [SerializeField] AudioClip _soundSearch;
+    [SerializeField] AudioClip _soundItem;
 
     void Start()
     {
@@ -78,6 +82,7 @@ public class ItemFound : MonoBehaviour
     {
         if (_repos.Length > 0)
         {
+            _myAudio.PlayOneShot(_soundItem);
             _index = (_index + 1) % _repos.Length;
             Transform nextPos = _repos[_index];
             transform.position = nextPos.position;
@@ -97,6 +102,7 @@ public class ItemFound : MonoBehaviour
         _dog.Stop();
         _dog.Search();
         _smoke.enabled = true;
+        _myAudio.PlayOneShot(_soundSearch);
 
         ChangeCam(true, false);
         Animator animDog = _dog.GetComponentInParent<Animator>();
@@ -107,6 +113,7 @@ public class ItemFound : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
         animDog.enabled = true;
+        _myAudio.Stop();
 
         Repos();
     }

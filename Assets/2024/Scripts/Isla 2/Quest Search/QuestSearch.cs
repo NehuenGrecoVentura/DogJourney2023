@@ -43,6 +43,9 @@ public class QuestSearch : MonoBehaviour
     [SerializeField] AudioSource _myAudio;
     [SerializeField] AudioClip _soundConfirm;
     [SerializeField] AudioClip _soundMessage;
+    [SerializeField] AudioClip _soundSearch;
+    [SerializeField] AudioClip _soundDogSearch;
+    [SerializeField] AudioClip _soundDog;
 
     [Header("MESSAGE")]
     [SerializeField] BoxMessages _boxMessage;
@@ -82,7 +85,6 @@ public class QuestSearch : MonoBehaviour
 
     private void SetDialogue()
     {
-        //_iconInteract.SetActive(true);
         _iconInteract.transform.DOScale(0.01f, 0.5f);
         _buttonConfirm.onClick.AddListener(() => Confirm());
 
@@ -147,24 +149,28 @@ public class QuestSearch : MonoBehaviour
         _dog.transform.parent.transform.position = _introPosDog.position;
         _trolley.transform.position = _dog.transform.position;
 
+        _myAudio.PlayOneShot(_soundSearch);
+
+
         yield return new WaitForSeconds(2f);
         _cinematic.SetActive(true);
         Destroy(_focusDog.gameObject);
         _dogBall.transform.position = _posDogBall.position;
         _dog.transform.parent.transform.position = _posDogBall.position;
         _dog.Search();
-        //_smokeSearch.gameObject.SetActive(true);
+        _myAudio.PlayOneShot(_soundDogSearch);
         _system.enabled = true;
 
         yield return new WaitForSeconds(3f);
         _boxMessage.ShowMessage(_messages[0]);
         animDog.enabled = false;
-        //_smokeSearch.gameObject.SetActive(false);
         _system.enabled = false;
+        _myAudio.Stop();
 
         yield return new WaitForSeconds(0.1f);
         animDog.enabled = true;
         _dog.transform.parent.LookAt(_player.transform);
+        _myAudio.PlayOneShot(_soundDog);
 
         yield return new WaitForSeconds(2f);
         _boxMessage.CloseMessage();
