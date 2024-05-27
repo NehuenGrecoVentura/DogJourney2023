@@ -21,6 +21,7 @@ public class ThiefApple : MonoBehaviour
     private Vector3 _initialPos;
 
     [SerializeField] AudioClip[] _soundsDog;
+    [SerializeField] AudioSource _dogAudio;
     private AudioSource _myAudio;
 
     [Header("FACES")]
@@ -62,11 +63,11 @@ public class ThiefApple : MonoBehaviour
             StopCoroutine(Thief());
             _dog.Angry();
             _dog.transform.LookAt(transform);
-
+            StartCoroutine(SoundScared());
             if (_soundsDog.Length > 0)
             {
                 AudioClip sound = _soundsDog[Random.Range(0, _soundsDog.Length)];
-                _myAudio.PlayOneShot(sound);
+                _dogAudio.PlayOneShot(sound);
             }
             else return;
 
@@ -75,6 +76,12 @@ public class ThiefApple : MonoBehaviour
             _isScared = true;
             isThief = false;
         }
+    }
+
+    IEnumerator SoundScared()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _myAudio.Play();
     }
 
     private void Movement(Transform pos)
