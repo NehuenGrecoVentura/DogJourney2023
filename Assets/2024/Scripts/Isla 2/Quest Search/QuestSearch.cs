@@ -26,7 +26,6 @@ public class QuestSearch : MonoBehaviour
     [SerializeField] TrolleyWood _trolley;
     [SerializeField] Camera _focusDog;
     [SerializeField] DoTweenManager _doTween;
-    //[SerializeField] ParticleSystem _smokeSearch;
     [SerializeField] ParticleSystemRenderer _system;
 
     [Header("QUEST")]
@@ -59,13 +58,11 @@ public class QuestSearch : MonoBehaviour
     void Start()
     {
         _dialogue.gameObject.SetActive(false);
-        //_iconInteract.SetActive(false);
         _iconInteract.transform.DOScale(0, 0);
         _cinematic.SetActive(false);
         _focusDog.gameObject.SetActive(false);
         _camFocus.gameObject.SetActive(false);
         _sensor.gameObject.SetActive(false);
-        //_smokeSearch.gameObject.SetActive(false);
         _system.enabled = false;
     }
 

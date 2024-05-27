@@ -13,6 +13,7 @@ public class ItemFound : MonoBehaviour
     [SerializeField] GameObject _iconInteract;
     [SerializeField] KeyCode _keyInteract = KeyCode.Q;
     [SerializeField] Collider _myCol;
+    [SerializeField] ParticleSystemRenderer _smoke;
 
     [Header("REPOS")]
     [SerializeField] Transform[] _repos;
@@ -36,6 +37,7 @@ public class ItemFound : MonoBehaviour
         _iconInteract.transform.DOScale(0f, 0f);
         _sensor.gameObject.SetActive(false);
         _textTooFar.gameObject.SetActive(false);
+        _smoke.enabled = false;
     }
 
     private void Update()
@@ -94,13 +96,14 @@ public class ItemFound : MonoBehaviour
         _myCol.enabled = false;
         _dog.Stop();
         _dog.Search();
-
+        _smoke.enabled = true;
 
         ChangeCam(true, false);
         Animator animDog = _dog.GetComponentInParent<Animator>();
 
         yield return new WaitForSeconds(3f);
         animDog.enabled = false;
+        _smoke.enabled = false;
 
         yield return new WaitForSeconds(0.1f);
         animDog.enabled = true;
