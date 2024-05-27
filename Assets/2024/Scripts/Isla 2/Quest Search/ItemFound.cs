@@ -103,6 +103,7 @@ public class ItemFound : MonoBehaviour
         _dog.Search();
         _smoke.enabled = true;
         _myAudio.PlayOneShot(_soundSearch);
+        _player.enabled = false;
 
         ChangeCam(true, false);
         Animator animDog = _dog.GetComponentInParent<Animator>();
@@ -114,6 +115,7 @@ public class ItemFound : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         animDog.enabled = true;
         _myAudio.Stop();
+        _player.enabled = true;
 
         Repos();
     }

@@ -53,6 +53,7 @@ public class QuestApple : MonoBehaviour
     [SerializeField] Camera _camEnding;
     [SerializeField] NavMeshAgent[] _agents;
     [SerializeField] Dog _dog;
+    [SerializeField] QuestSearch _nextQuest;
 
     private void Awake()
     {
@@ -243,6 +244,7 @@ public class QuestApple : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
         _camPlayer.gameObject.SetActive(true);
+        _radar.target = _nextQuest.transform;
         Destroy(_camEnding.gameObject);
         _boxMessage.DesactivateMessage();
         player.DeFreezePlayer();
