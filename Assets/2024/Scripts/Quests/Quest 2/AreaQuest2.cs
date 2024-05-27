@@ -3,6 +3,7 @@ using System.Collections;
 
 public class AreaQuest2 : MonoBehaviour
 {
+    [SerializeField] GameObject _iconQuest;
     [Header("CINEMATIC")]
     [SerializeField] GameObject _cinematicRabbit;
     [SerializeField] Camera _camBuild;
@@ -44,6 +45,7 @@ public class AreaQuest2 : MonoBehaviour
     private IEnumerator FocusPuzzle()
     {
         _firstContact = true;
+        Destroy(_iconQuest);
         _boxMessages.SetMessage(_name);
 
         _camPlayer.gameObject.SetActive(false);
