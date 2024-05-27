@@ -34,6 +34,8 @@ public class CheatManager : MonoBehaviour
     [SerializeField] GameObject _boxMessage;
     [SerializeField] Image _iconMessage;
 
+    private TreeRegenerative[] _allTrees;
+
     private void Awake()
     {
         _inventory = GetComponent<CharacterInventory>();
@@ -46,6 +48,7 @@ public class CheatManager : MonoBehaviour
         _questFishing = FindObjectOfType<TutorialFishing>();
         _questRepair = FindObjectOfType<QuestFence>();
         _fishingQuest2 = FindObjectOfType<FishingQuest2>();
+        _allTrees = FindObjectsOfType<TreeRegenerative>();
     }
 
     void Update()
@@ -84,6 +87,13 @@ public class CheatManager : MonoBehaviour
                 _textMessage.fontSize = 40;
                 _textMessage.alignment = TextAlignmentOptions.TopLeft;
                 _iconMessage.gameObject.SetActive(false);
+
+                foreach (TreeRegenerative item in _allTrees)
+                {
+                    item.GetComponent<BoxCollider>().enabled = true;
+                    item.enabled = true;
+                }
+
                 _quest1Skiped = true;
                 break;
 

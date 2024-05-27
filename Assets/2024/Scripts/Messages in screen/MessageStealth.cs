@@ -46,8 +46,10 @@ public class MessageStealth : MonoBehaviour
         Destroy(_cinematic);
         _camPlayer.gameObject.SetActive(true);
         player.DeFreezePlayer();
+        _boxMessage.CloseMessage();
 
         yield return new WaitForSeconds(0.5f);
+        _boxMessage.DesactivateMessage();
         Destroy(_myCol);
         Destroy(this);
     }
