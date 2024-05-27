@@ -2,10 +2,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class ItemFound : MonoBehaviour
 {
     [SerializeField] QuestSearch _quest;
+    [SerializeField] Character _player;
 
     [Header("INTERACT")]
     [SerializeField] GameObject _iconInteract;
@@ -21,6 +23,7 @@ public class ItemFound : MonoBehaviour
     [SerializeField] DogBall _dogBall;
     [SerializeField] Slider _sensor;
     [SerializeField] float _maxDist = 10f;
+    [SerializeField] TMP_Text _textTooFar;
 
     [Header("CAM FOCUS")]
     [SerializeField] Camera _camFocus;
@@ -32,6 +35,7 @@ public class ItemFound : MonoBehaviour
     {
         _iconInteract.transform.DOScale(0f, 0f);
         _sensor.gameObject.SetActive(false);
+        _textTooFar.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -50,6 +54,22 @@ public class ItemFound : MonoBehaviour
         {
             _iconInteract.transform.DOScale(1f, 0.5f);
         }
+
+
+        
+
+        float distPlayer = Vector3.Distance(transform.position, _player.transform.position);
+        if (Input.GetKeyDown(KeyCode.Q) && _quest._found > 0)
+        {
+            if (distPlayer >= 100) _textTooFar.gameObject.SetActive(true);
+            else _textTooFar.gameObject.SetActive(false);
+
+        }
+
+        else return;
+
+
+
     }
 
     public void Repos()
