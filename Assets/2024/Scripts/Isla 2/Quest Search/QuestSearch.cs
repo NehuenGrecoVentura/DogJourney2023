@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class QuestSearch : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class QuestSearch : MonoBehaviour
     [SerializeField] TrolleyWood _trolley;
     [SerializeField] Camera _focusDog;
     [SerializeField] DoTweenManager _doTween;
+    //[SerializeField] ParticleSystem _smokeSearch;
+    [SerializeField] ParticleSystemRenderer _system;
 
     [Header("QUEST")]
     [SerializeField] string _nameNPC = "Christine";
@@ -56,11 +59,14 @@ public class QuestSearch : MonoBehaviour
     void Start()
     {
         _dialogue.gameObject.SetActive(false);
-        _iconInteract.SetActive(false);
+        //_iconInteract.SetActive(false);
+        _iconInteract.transform.DOScale(0, 0);
         _cinematic.SetActive(false);
         _focusDog.gameObject.SetActive(false);
         _camFocus.gameObject.SetActive(false);
         _sensor.gameObject.SetActive(false);
+        //_smokeSearch.gameObject.SetActive(false);
+        _system.enabled = false;
     }
 
     private void Confirm()
@@ -79,7 +85,8 @@ public class QuestSearch : MonoBehaviour
 
     private void SetDialogue()
     {
-        _iconInteract.SetActive(true);
+        //_iconInteract.SetActive(true);
+        _iconInteract.transform.DOScale(0.01f, 0.5f);
         _buttonConfirm.onClick.AddListener(() => Confirm());
 
         if (!_questActive)
@@ -100,7 +107,7 @@ public class QuestSearch : MonoBehaviour
         if (player != null)
         {
             if (_myCol.enabled && !_questActive && !_questCompleted) SetDialogue();
-            else if (_questCompleted) _iconInteract.SetActive(true);
+            else if (_questCompleted) _iconInteract.transform.DOScale(0.01f, 0.5f);  //_iconInteract.SetActive(true);
         }
     }
 
@@ -117,7 +124,8 @@ public class QuestSearch : MonoBehaviour
         if (player != null)
         {
             _dialogue.playerInRange = false;
-            _iconInteract.SetActive(false);
+            _iconInteract.transform.DOScale(0f, 0.5f);
+            //_iconInteract.SetActive(false);
         }
     }
 
@@ -148,10 +156,15 @@ public class QuestSearch : MonoBehaviour
         _dogBall.transform.position = _posDogBall.position;
         _dog.transform.parent.transform.position = _posDogBall.position;
         _dog.Search();
+        //_smokeSearch.gameObject.SetActive(true);
+        _system.enabled = true;
 
         yield return new WaitForSeconds(3f);
         _boxMessage.ShowMessage(_messages[0]);
         animDog.enabled = false;
+        //_smokeSearch.gameObject.SetActive(false);
+        _system.enabled = false;
+
         yield return new WaitForSeconds(0.1f);
         animDog.enabled = true;
         _dog.transform.parent.LookAt(_player.transform);
