@@ -24,7 +24,11 @@ public class Manzana_Manager : MonoBehaviour
     [SerializeField] private LocationQuest _radar;
     [SerializeField] private AudioSource _myAudio;
     [SerializeField] private CharacterInventory _inventory;
-    
+
+    [Header("MESH BARRIL")]
+    [SerializeField] Transform _barrilMesh;
+    [SerializeField] float _speedRotBarril;
+
     private void Start()
     {
         Random();
@@ -52,12 +56,14 @@ public class Manzana_Manager : MonoBehaviour
         if (RandomWay >= 5)
         {
             rb.velocity = Vector3.left * speed;
+            _barrilMesh.transform.Rotate(0, 0, _speedRotBarril * Time.deltaTime);
         }
         else
         {
             rb.velocity = Vector3.right * speed;
+            _barrilMesh.transform.Rotate(0, 0, -_speedRotBarril * Time.deltaTime);
         }
-        
+
     }
 
     void Random()
@@ -83,7 +89,7 @@ public class Manzana_Manager : MonoBehaviour
                 rb.velocity = Vector3.zero;
                 Game();
             }
-            
+
             move();
             SpawnerTimer -= Time.deltaTime;
             if (SpawnerTimer <= 0)
@@ -93,14 +99,14 @@ public class Manzana_Manager : MonoBehaviour
             }
         }
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.name == "OutBoxI")
+        if (other.gameObject.name == "OutBoxI")
         {
             transform.position = Derecha.position;
         }
-        if(other.gameObject.name == "OutBoxD")
+        if (other.gameObject.name == "OutBoxD")
         {
             transform.position = Izquierda.position;
         }
@@ -127,7 +133,7 @@ public class Manzana_Manager : MonoBehaviour
             _character.speed = _character.speedAux;
             _character.DeFreezePlayer();
             _radar.StatusRadar(true);
-            
+
         }
     }
 }
