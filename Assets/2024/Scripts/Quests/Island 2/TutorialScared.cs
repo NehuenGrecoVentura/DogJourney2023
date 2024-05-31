@@ -6,14 +6,8 @@ public class TutorialScared : MonoBehaviour
 {
     [SerializeField] GameObject _cinematic;
     [SerializeField] RectTransform _message;
-    private Character _player;
-    private CameraOrbit _camPlayer;
-
-    private void Awake()
-    {
-        _player = FindObjectOfType<Character>();
-        _camPlayer = FindObjectOfType<CameraOrbit>();
-    }
+    [SerializeField] Character _player;
+    [SerializeField] CameraOrbit _camPlayer;
 
     void Start()
     {
