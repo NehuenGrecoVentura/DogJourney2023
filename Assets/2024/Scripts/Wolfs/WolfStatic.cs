@@ -16,7 +16,7 @@ public class WolfStatic : MonoBehaviour
 
     [Header("AUDIO")]
     [SerializeField] AudioClip _soundWolf;
-    private AudioSource _myAudio;
+    [SerializeField] AudioSource _myAudio;
 
     private void Awake()
     {
