@@ -20,7 +20,11 @@ public class TirosCharacter : MonoBehaviour
     [SerializeField] private float timer;
     [SerializeField] private bool CanShoot;
     public bool GameOver;
-   // [SerializeField] Image bar;
+    // [SerializeField] Image bar;
+
+    [Header("MESH PLAYER")]
+    [SerializeField] Animator _animPlayer;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -90,13 +94,14 @@ public class TirosCharacter : MonoBehaviour
         if (hor != 0)
         {
             Move(new Vector3(-hor, 5f, 0));
+            _animPlayer.SetBool("Move", true);
         }
         else
         {
             _rb.velocity = Vector3.zero;
+            _animPlayer.SetBool("Move", false);
         }
     }
-    
 
     public void Move(Vector3 dir)
     {
