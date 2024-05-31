@@ -16,7 +16,6 @@ public class SimonManager : MonoBehaviour
     [SerializeField] private int SimStart;
     [SerializeField] private float StartSimTime;
     public static List<int> userList, SimonList;
-    [SerializeField] private List<int> SimonList2;
     public bool SimonDiciendo;
     
      
@@ -47,12 +46,10 @@ public class SimonManager : MonoBehaviour
         SimonDiciendo = true;
         userList = new List<int>();
         SimonList = new List<int>();
-        SimonList2 = new List<int>();
         for (int i = 0; i < SimMax; i++)
         {
             int rng = Random.Range(0, 4);
             SimonList.Add(rng);
-            SimonList2.Add(rng);
             Botons[rng].Click();
             yield return new WaitForSeconds(StartSimTime);
         }

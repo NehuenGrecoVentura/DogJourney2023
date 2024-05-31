@@ -48,6 +48,10 @@ public class TirosMovil : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
+        if (!Target)
+        {
+            Random();
+        }
         if(other.gameObject.name == "OutBoxI")
         {
             transform.position = Derecha.position;
