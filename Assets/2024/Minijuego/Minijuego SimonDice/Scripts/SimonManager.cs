@@ -15,7 +15,7 @@ public class SimonManager : MonoBehaviour
      private int SimMax;
     [SerializeField] private int SimStart;
     [SerializeField] private float StartSimTime;
-    public static List<int> userList, SimonList;
+    public  List<int> userList, SimonList;
     public bool SimonDiciendo;
     
      
