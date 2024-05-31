@@ -35,7 +35,6 @@ public class MinijuegoTalaManager : MonoBehaviour
         Coder1.Reset();
         Coder2.Reset();
         SpawnCoder();
-        Timer = 0;
     }
 
     private void SpawnCoder()
@@ -122,6 +121,7 @@ public class MinijuegoTalaManager : MonoBehaviour
             _character.speed = 0;
             _character.FreezePlayer();
             _radar.StatusRadar(false);
+            Timer = 0;
             Reset();
             CallCoder();
         }

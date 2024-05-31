@@ -111,8 +111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d073140425ea047a615cbc1c44e70f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LifeTime: 1
-  MaxLife: 1
+  LifeTime: 1.5
+  MaxLife: 1.5
   rb: {fileID: 3458009511782846396}
   Speed: 100
 --- !u!54 &3458009511782846396
