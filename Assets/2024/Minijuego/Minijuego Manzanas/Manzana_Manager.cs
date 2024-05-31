@@ -29,6 +29,9 @@ public class Manzana_Manager : MonoBehaviour
     [SerializeField] Transform _barrilMesh;
     [SerializeField] float _speedRotBarril;
 
+    [Header("UI SCORE")]
+    [SerializeField] GameObject _canvasScore;
+
     private void Start()
     {
         Random();
@@ -36,6 +39,7 @@ public class Manzana_Manager : MonoBehaviour
         _radar = FindObjectOfType<LocationQuest>();
         _inventory = FindObjectOfType<CharacterInventory>();
         Gaming = false;
+        _canvasScore.SetActive(false);
     }
 
     void Spawn()
@@ -123,6 +127,7 @@ public class Manzana_Manager : MonoBehaviour
             _character.speed = 0;
             _character.FreezePlayer();
             _radar.StatusRadar(false);
+            _canvasScore.SetActive(true);
         }
         else
         {
@@ -133,7 +138,7 @@ public class Manzana_Manager : MonoBehaviour
             _character.speed = _character.speedAux;
             _character.DeFreezePlayer();
             _radar.StatusRadar(true);
-
+            _canvasScore.SetActive(false);
         }
     }
 }

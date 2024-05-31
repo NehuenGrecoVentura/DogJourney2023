@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Manzanas_Player : MonoBehaviour
 {
     [SerializeField] GameObject Box;
     [SerializeField] int Lives;
-    [SerializeField] private int MaxLives;
-    [SerializeField] int Score;
+    [SerializeField] private int MaxLives; 
     [SerializeField] Rigidbody _rb;
     [SerializeField] float speed;
     [SerializeField] private float baseSpeed;
@@ -20,8 +20,14 @@ public class Manzanas_Player : MonoBehaviour
     public bool GameOver;
     // [SerializeField] Image bar;
 
+    [Header("PLAYER MESH")]
     [SerializeField] Animator _myAnim;
     [SerializeField] Collider _myCol;
+
+    [Header("UI SCORE")]
+    [SerializeField] Image[] _spritesApples;
+    [SerializeField] TMP_Text _textScore;
+    [SerializeField] int Score;
 
     private void Start()
     {
@@ -31,11 +37,23 @@ public class Manzanas_Player : MonoBehaviour
     public void AddScore()
     {
         Score++;
+        _textScore.text = "Score: " + Score.ToString();
     }
 
     public void RemoveLive()
     {
-        Lives--;
+        //Lives--;
+
+        if (Lives > 0)
+        {
+            Lives--;
+
+            // Esta funcion quita el último icono de vida
+            if (Lives >= 0) _spritesApples[Lives].gameObject.SetActive(false);
+            else return;
+        }
+
+        else return;
     }
 
     public void Reset()
@@ -43,6 +61,11 @@ public class Manzanas_Player : MonoBehaviour
         _rb.velocity = Vector3.zero;
         Score = 0;
         Lives = MaxLives;
+
+        foreach (Image icon in _spritesApples)
+        {
+            icon.gameObject.SetActive(true);
+        }
     }
 
     private void Update()
@@ -71,7 +94,6 @@ public class Manzanas_Player : MonoBehaviour
        
     }
 
-
     private void FixedUpdate()
     {
         // Obtener la entrada horizontal (A o D, o las flechas izquierda y derecha)
@@ -86,18 +108,6 @@ public class Manzanas_Player : MonoBehaviour
         if (moveHorizontal != 0) _myAnim.SetBool("Move", true);
         else _myAnim.SetBool("Move", false);
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     public void Move(Vector3 dir)
     {
@@ -142,6 +152,7 @@ public class Manzanas_Player : MonoBehaviour
         //    transform.position = Izquierda.position;
         //}
 
+        // Fix para que no se buguee el mesh del player cuando cambia de posición
         if (other.gameObject.name == "OutBoxI")
         {
             StartCoroutine(SpawnSide(Derecha.position));
