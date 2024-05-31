@@ -21,9 +21,6 @@ public class WolfSleeping : MonoBehaviour
     [SerializeField] AudioClip _wolfSound;
     private AudioSource _myAudio;
 
-
-    
-
     private void Awake()
     {
         _myAnim = GetComponent<Animator>();
