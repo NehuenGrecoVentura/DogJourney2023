@@ -35,6 +35,7 @@ public class MinijuegoTalaManager : MonoBehaviour
         Coder1.Reset();
         Coder2.Reset();
         SpawnCoder();
+        Timer = 0;
     }
 
     private void SpawnCoder()
