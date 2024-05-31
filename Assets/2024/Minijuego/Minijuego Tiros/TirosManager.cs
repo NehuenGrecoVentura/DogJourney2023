@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class TirosManager : MonoBehaviour
 {
@@ -16,6 +18,11 @@ public class TirosManager : MonoBehaviour
     [Header("UI SCORE")]
     [SerializeField] GameObject _canvasScore;
     
+    [Header("INTRO")]
+    [SerializeField] Image _fadeOut;
+    [SerializeField] Camera _camIntro;
+    private bool _firstContact = true;
+
     private void Start()
     {
         _myAudio = GetComponent<AudioSource>();
@@ -23,6 +30,8 @@ public class TirosManager : MonoBehaviour
         _inventory = FindObjectOfType<CharacterInventory>();
         Gaming = false;
         _canvasScore.SetActive(false);
+        _fadeOut.DOColor(Color.clear, 0f);
+        _camIntro.enabled = false;
     }
     
     private void Reset()
@@ -31,10 +40,12 @@ public class TirosManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.B) && !Gaming)
         {
-            Gaming = !Gaming;
-            Game();
+            //Gaming = !Gaming;
+            //Game();
+
+            StartCoroutine(BeginPlay());
         }
         if (Gaming)
         {
@@ -73,5 +84,35 @@ public class TirosManager : MonoBehaviour
 
         }
     }
-}
 
+    private IEnumerator BeginPlay()
+    {
+        _character.FreezePlayer();
+        _fadeOut.DOColor(Color.black, 1f);
+        
+        yield return new WaitForSeconds(2f);
+        _camIntro.enabled = true;
+        _camPlayer.enabled = false;
+        _fadeOut.DOColor(Color.clear, 1f);
+
+        if (_firstContact)
+        {
+            yield return new WaitForSeconds(1f);
+            _camIntro.transform.DOMoveZ(_camApple.transform.position.z, 3f);
+
+            yield return new WaitForSeconds(3f);
+            _camIntro.enabled = false;
+            Gaming = !Gaming;
+            Game();
+            _firstContact = false;
+        }
+
+        else
+        {
+            yield return new WaitForSeconds(1f);
+            Gaming = !Gaming;
+            Game();
+        }
+        
+    }
+}
