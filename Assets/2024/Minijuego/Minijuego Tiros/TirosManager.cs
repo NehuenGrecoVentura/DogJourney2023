@@ -12,6 +12,9 @@ public class TirosManager : MonoBehaviour
     [SerializeField] private LocationQuest _radar;
     [SerializeField] private AudioSource _myAudio;
     [SerializeField] private CharacterInventory _inventory;
+
+    [Header("UI SCORE")]
+    [SerializeField] GameObject _canvasScore;
     
     private void Start()
     {
@@ -19,6 +22,7 @@ public class TirosManager : MonoBehaviour
         _radar = FindObjectOfType<LocationQuest>();
         _inventory = FindObjectOfType<CharacterInventory>();
         Gaming = false;
+        _canvasScore.SetActive(false);
     }
     
     private void Reset()
@@ -53,6 +57,7 @@ public class TirosManager : MonoBehaviour
             _character.speed = 0;
             _character.FreezePlayer();
             _radar.StatusRadar(false);
+            _canvasScore.SetActive(true);
             
         }
         else
@@ -64,7 +69,8 @@ public class TirosManager : MonoBehaviour
             _character.speed = _character.speedAux;
             _character.DeFreezePlayer();
             _radar.StatusRadar(true);
-            
+            _canvasScore.SetActive(false);
+
         }
     }
 }

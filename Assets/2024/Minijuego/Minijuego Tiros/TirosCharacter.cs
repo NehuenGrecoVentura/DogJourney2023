@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class TirosCharacter : MonoBehaviour
 {
-[SerializeField] GameObject Box;
+    [SerializeField] GameObject Box;
     [SerializeField] int Lives;
     [SerializeField] private int MaxLives;
-    [SerializeField] int Score;
     [SerializeField] Rigidbody _rb;
     [SerializeField] float speed;
     [SerializeField] private float baseSpeed;
@@ -25,6 +26,11 @@ public class TirosCharacter : MonoBehaviour
     [Header("MESH PLAYER")]
     [SerializeField] Animator _animPlayer;
 
+    [Header("UI SCORE")]
+    [SerializeField] int Score;
+    [SerializeField] TMP_Text _textScore;
+    [SerializeField] Image[] _spritesLifes;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -33,11 +39,23 @@ public class TirosCharacter : MonoBehaviour
     public void AddScore()
     {
         Score++;
+        _textScore.text = "Score: " + Score.ToString();
     }
 
     public void RemoveLive()
     {
-        Lives--;
+        //Lives--;
+
+        if (Lives > 0)
+        {
+            Lives--;
+
+            // Esta funcion quita el último icono de vida
+            if (Lives >= 0) _spritesLifes[Lives].gameObject.SetActive(false);
+            else return;
+        }
+
+        else return;
     }
 
     public void Reset()
@@ -45,17 +63,22 @@ public class TirosCharacter : MonoBehaviour
         _rb.velocity = Vector3.zero;
         Score = 0;
         Lives = MaxLives;
+
+        foreach (Image icon in _spritesLifes)
+        {
+            icon.gameObject.SetActive(true);
+        }
     }
 
     private void Update()
     {
         if (Lives <= 0) { GameOver = true; }
         if (!GameOver)
-        { 
+        {
             CheckGun();
             CheckMove();
         }
-        
+
     }
 
     void CheckGun()
@@ -82,7 +105,7 @@ public class TirosCharacter : MonoBehaviour
     void CheckMove()
     {
 
-        if(Input.GetKey(KeyCode.LeftShift) == true)
+        if (Input.GetKey(KeyCode.LeftShift) == true)
         {
             Run(true);
         }
@@ -109,14 +132,14 @@ public class TirosCharacter : MonoBehaviour
         dir.z = 0;
         _rb.velocity = dir * speed;
     }
-    
+
     void Spawn()
     {
         var b = BalaFactory.Instance.pool.GetObject();
         b.transform.position = spawnPointGun.position + transform.forward;
         b.transform.forward = spawnPointGun.forward;
     }
-    
+
     public void Run(bool isRun)
     {
         if (Energy > 0)
@@ -137,16 +160,16 @@ public class TirosCharacter : MonoBehaviour
             if (Energy > MaxEnergy) Energy = MaxEnergy;
         }
 
-       //bar.fillAmount = Energy / MaxEnergy;
+        //bar.fillAmount = Energy / MaxEnergy;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.name == "OutBoxI")
+        if (other.gameObject.name == "OutBoxI")
         {
             transform.position = Derecha.position;
         }
-        if(other.gameObject.name == "OutBoxD")
+        if (other.gameObject.name == "OutBoxD")
         {
             transform.position = Izquierda.position;
         }
