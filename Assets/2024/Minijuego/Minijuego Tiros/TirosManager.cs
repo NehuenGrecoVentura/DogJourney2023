@@ -17,11 +17,16 @@ public class TirosManager : MonoBehaviour
 
     [Header("UI SCORE")]
     [SerializeField] GameObject _canvasScore;
-    
+
     [Header("INTRO")]
+    [SerializeField] Image[] _count;
     [SerializeField] Image _fadeOut;
     [SerializeField] Camera _camIntro;
     private bool _firstContact = true;
+
+    [Header("MESSAGE")]
+    [SerializeField] BoxMessages _boxMessage;
+    [SerializeField, TextArea(4, 6)] string _message;
 
     private void Start()
     {
@@ -51,9 +56,11 @@ public class TirosManager : MonoBehaviour
         {
             if (TP.GameOver)
             {
-                Debug.Log("perdiste");
-                Gaming = false;
-                Game();
+                //Debug.Log("perdiste");
+                //Gaming = false;
+                //Game();
+
+                StartCoroutine(ExitGame());
             }
         }
     }
@@ -87,6 +94,8 @@ public class TirosManager : MonoBehaviour
 
     private IEnumerator BeginPlay()
     {
+        _boxMessage.SetMessage("Mini Game");
+
         _character.FreezePlayer();
         _fadeOut.DOColor(Color.black, 1f);
         
@@ -99,11 +108,26 @@ public class TirosManager : MonoBehaviour
         {
             yield return new WaitForSeconds(1f);
             _camIntro.transform.DOMoveZ(_camApple.transform.position.z, 3f);
+            
+            yield return new WaitForSeconds(3f);
+            _boxMessage.ShowMessage(_message);
 
             yield return new WaitForSeconds(3f);
+            _boxMessage.CloseMessage();
+
+            for (int i = 0; i < _count.Length; i++)
+            {
+                _count[i].DOColor(Color.white, 0.5f);
+                yield return new WaitForSeconds(1f);
+                _count[i].DOColor(Color.clear, 0.5f);
+            }
+
             _camIntro.enabled = false;
             Gaming = !Gaming;
             Game();
+
+            yield return new WaitForSeconds(0.5f);
+            _boxMessage.DesactivateMessage();
             _firstContact = false;
         }
 
@@ -113,6 +137,15 @@ public class TirosManager : MonoBehaviour
             Gaming = !Gaming;
             Game();
         }
-        
+    }
+
+    private IEnumerator ExitGame()
+    {
+        Gaming = false;
+        _canvasScore.SetActive(false);
+        _fadeOut.DOColor(Color.black, 0.5f);
+        yield return new WaitForSeconds(1f);
+        _fadeOut.DOColor(Color.clear, 1f);
+        Game();
     }
 }
