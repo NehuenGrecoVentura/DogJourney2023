@@ -8,7 +8,6 @@ public class DogEnter : MonoBehaviour
 {
     [Header("SPAWN BROOM")]
     [SerializeField] GameObject _broomPrefab;
-    [SerializeField] Transform _posSpawn;
     public bool broomPicked = false;
 
     [Header("INTERACT")]
