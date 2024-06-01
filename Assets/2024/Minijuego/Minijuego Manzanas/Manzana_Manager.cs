@@ -96,8 +96,9 @@ public class Manzana_Manager : MonoBehaviour
         {
             //Gaming = !Gaming;
             //Game();
+            if (!Gaming) StartCoroutine(BeginPlay());
+            else StartCoroutine(ExitGame());
 
-            StartCoroutine(BeginPlay());
         }
         if (Gaming)
         {
