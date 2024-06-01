@@ -17,16 +17,16 @@ public class TirosManager : MonoBehaviour
 
     [Header("UI SCORE")]
     [SerializeField] GameObject _canvasScore;
+    [SerializeField] PuestoTiros _puestoTiros;
+    private Collider _colPuesto;
 
-    [Header("INTRO")]
-    [SerializeField] Image[] _count;
+    [Header("FADE OUT")]
     [SerializeField] Image _fadeOut;
-    [SerializeField] Camera _camIntro;
-    private bool _firstContact = true;
 
-    [Header("MESSAGE")]
-    [SerializeField] BoxMessages _boxMessage;
-    [SerializeField, TextArea(4, 6)] string _message;
+    private void Awake()
+    {
+        _colPuesto = _puestoTiros.GetComponent<Collider>();
+    }
 
     private void Start()
     {
@@ -36,7 +36,7 @@ public class TirosManager : MonoBehaviour
         Gaming = false;
         _canvasScore.SetActive(false);
         _fadeOut.DOColor(Color.clear, 0f);
-        _camIntro.enabled = false;
+        _camApple.gameObject.SetActive(false);
     }
     
     private void Reset()
@@ -45,13 +45,11 @@ public class TirosManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B) && !Gaming)
-        {
-            //Gaming = !Gaming;
-            //Game();
-
-            StartCoroutine(BeginPlay());
-        }
+        //if (Input.GetKeyDown(KeyCode.B))
+        //{
+        //    //Gaming = !Gaming;
+        //    //Game();
+        //}
         if (Gaming)
         {
             if (TP.GameOver)
@@ -70,8 +68,10 @@ public class TirosManager : MonoBehaviour
         {
             Reset();
             TP.GameOver = false;
-            _camPlayer.enabled = false;
-            _camApple.enabled = true;
+            //_camPlayer.enabled = false;
+            _camPlayer.gameObject.SetActive(false);
+            //_camApple.enabled = true;
+            _camApple.gameObject.SetActive(true);
             _character.speed = 0;
             _character.FreezePlayer();
             _radar.StatusRadar(false);
@@ -82,60 +82,14 @@ public class TirosManager : MonoBehaviour
         {
             Reset();
             TP.GameOver = true;
-            _camPlayer.enabled = true;
-            _camApple.enabled = false;
+            //_camPlayer.enabled = true;
+            _camPlayer.gameObject.SetActive(true);
+            //_camApple.enabled = false;
+            _camApple.gameObject.SetActive(false);
             _character.speed = _character.speedAux;
             _character.DeFreezePlayer();
             _radar.StatusRadar(true);
             _canvasScore.SetActive(false);
-
-        }
-    }
-
-    private IEnumerator BeginPlay()
-    {
-        _boxMessage.SetMessage("Mini Game");
-
-        _character.FreezePlayer();
-        _fadeOut.DOColor(Color.black, 1f);
-        
-        yield return new WaitForSeconds(2f);
-        _camIntro.enabled = true;
-        _camPlayer.enabled = false;
-        _fadeOut.DOColor(Color.clear, 1f);
-
-        if (_firstContact)
-        {
-            yield return new WaitForSeconds(1f);
-            _camIntro.transform.DOMoveZ(_camApple.transform.position.z, 3f);
-            
-            yield return new WaitForSeconds(3f);
-            _boxMessage.ShowMessage(_message);
-
-            yield return new WaitForSeconds(3f);
-            _boxMessage.CloseMessage();
-
-            for (int i = 0; i < _count.Length; i++)
-            {
-                _count[i].DOColor(Color.white, 0.5f);
-                yield return new WaitForSeconds(1f);
-                _count[i].DOColor(Color.clear, 0.5f);
-            }
-
-            _camIntro.enabled = false;
-            Gaming = !Gaming;
-            Game();
-
-            yield return new WaitForSeconds(0.5f);
-            _boxMessage.DesactivateMessage();
-            _firstContact = false;
-        }
-
-        else
-        {
-            yield return new WaitForSeconds(1f);
-            Gaming = !Gaming;
-            Game();
         }
     }
 
@@ -146,6 +100,13 @@ public class TirosManager : MonoBehaviour
         _fadeOut.DOColor(Color.black, 0.5f);
         yield return new WaitForSeconds(1f);
         _fadeOut.DOColor(Color.clear, 1f);
+        Game();
+        _colPuesto.enabled = true;
+    }
+
+    public void StartGame()
+    {
+        Gaming = !Gaming;
         Game();
     }
 }
