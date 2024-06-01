@@ -33,6 +33,8 @@ public class Manzana_Manager : MonoBehaviour
 
     [Header("UI SCORE")]
     [SerializeField] GameObject _canvasScore;
+    [SerializeField] PuestoManzana _puestoManzana;
+    private Collider _colPuesto;
 
     [Header("INTRO")]
     [SerializeField] Image _fadeOut;
@@ -41,6 +43,11 @@ public class Manzana_Manager : MonoBehaviour
     [SerializeField] BoxMessages _boxMessage;
     [SerializeField, TextArea(4, 6)] string _message;
     private bool _firstContact = true;
+
+    private void Awake()
+    {
+        _colPuesto = _puestoManzana.GetComponent<Collider>();
+    }
 
     private void Start()
     {
@@ -52,7 +59,8 @@ public class Manzana_Manager : MonoBehaviour
 
         _canvasScore.SetActive(false);
         _fadeOut.DOColor(Color.clear, 0f);
-        _camIntro.enabled = false;
+        _camIntro.gameObject.SetActive(false);
+        _camApple.gameObject.SetActive(false);
     }
 
     void Spawn()
@@ -92,14 +100,11 @@ public class Manzana_Manager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            //Gaming = !Gaming;
-            //Game();
-            if (!Gaming) StartCoroutine(BeginPlay());
-            else StartCoroutine(ExitGame());
-
-        }
+        //if (Input.GetKeyDown(KeyCode.M))
+        //{
+        //    //Gaming = !Gaming;
+        //    //Game();
+        //}
         if (Gaming)
         {
             if (MP.GameOver)
@@ -140,8 +145,10 @@ public class Manzana_Manager : MonoBehaviour
         {
             Reset();
             MP.GameOver = false;
-            _camPlayer.enabled = false;
-            _camApple.enabled = true;
+            //_camPlayer.enabled = false;
+            _camPlayer.gameObject.SetActive(false);
+            //_camApple.enabled = true;
+            _camApple.gameObject.SetActive(true);
             _character.speed = 0;
             _character.FreezePlayer();
             _radar.StatusRadar(false);
@@ -151,8 +158,10 @@ public class Manzana_Manager : MonoBehaviour
         {
             Reset();
             MP.GameOver = true;
-            _camPlayer.enabled = true;
-            _camApple.enabled = false;
+            //_camPlayer.enabled = true;
+            _camPlayer.gameObject.SetActive(true);
+            //_camApple.enabled = false;
+            _camApple.gameObject.SetActive(false);
             _character.speed = _character.speedAux;
             _character.DeFreezePlayer();
             _radar.StatusRadar(true);
@@ -160,52 +169,52 @@ public class Manzana_Manager : MonoBehaviour
         }
     }
 
-    private IEnumerator BeginPlay()
-    {
-        _boxMessage.SetMessage("Mini Game");
+    //private IEnumerator BeginPlay()
+    //{
+    //    _boxMessage.SetMessage("Mini Game");
 
-        _character.FreezePlayer();
-        _fadeOut.DOColor(Color.black, 1f);
+    //    _character.FreezePlayer();
+    //    _fadeOut.DOColor(Color.black, 1f);
 
-        yield return new WaitForSeconds(2f);
-        _camIntro.enabled = true;
-        _camPlayer.enabled = false;
-        _fadeOut.DOColor(Color.clear, 1f);
+    //    yield return new WaitForSeconds(2f);
+    //    _camIntro.enabled = true;
+    //    _camPlayer.enabled = false;
+    //    _fadeOut.DOColor(Color.clear, 1f);
 
-        if (_firstContact)
-        {
-            yield return new WaitForSeconds(1f);
-            _camIntro.transform.DOMove(_camApple.transform.position, 3f);
+    //    if (_firstContact)
+    //    {
+    //        yield return new WaitForSeconds(1f);
+    //        _camIntro.transform.DOMove(_camApple.transform.position, 3f);
 
-            yield return new WaitForSeconds(3f);
-            _boxMessage.ShowMessage(_message);
+    //        yield return new WaitForSeconds(3f);
+    //        _boxMessage.ShowMessage(_message);
 
-            yield return new WaitForSeconds(3f);
-            _boxMessage.CloseMessage();
+    //        yield return new WaitForSeconds(3f);
+    //        _boxMessage.CloseMessage();
 
-            for (int i = 0; i < _count.Length; i++)
-            {
-                _count[i].DOColor(Color.white, 0.5f);
-                yield return new WaitForSeconds(1f);
-                _count[i].DOColor(Color.clear, 0.5f);
-            }
+    //        for (int i = 0; i < _count.Length; i++)
+    //        {
+    //            _count[i].DOColor(Color.white, 0.5f);
+    //            yield return new WaitForSeconds(1f);
+    //            _count[i].DOColor(Color.clear, 0.5f);
+    //        }
 
-            _camIntro.enabled = false;
-            Gaming = !Gaming;
-            Game();
+    //        _camIntro.enabled = false;
+    //        Gaming = !Gaming;
+    //        Game();
 
-            yield return new WaitForSeconds(0.5f);
-            _boxMessage.DesactivateMessage();
-            _firstContact = false;
-        }
+    //        yield return new WaitForSeconds(0.5f);
+    //        _boxMessage.DesactivateMessage();
+    //        _firstContact = false;
+    //    }
 
-        else
-        {
-            yield return new WaitForSeconds(1f);
-            Gaming = !Gaming;
-            Game();
-        }
-    }
+    //    else
+    //    {
+    //        yield return new WaitForSeconds(1f);
+    //        Gaming = !Gaming;
+    //        Game();
+    //    }
+    //}
 
     private IEnumerator ExitGame()
     {
@@ -214,6 +223,14 @@ public class Manzana_Manager : MonoBehaviour
         _fadeOut.DOColor(Color.black, 0.5f);
         yield return new WaitForSeconds(1f);
         _fadeOut.DOColor(Color.clear, 1f);
+        rb.velocity = Vector3.zero;
+        Game();
+        _colPuesto.enabled = true;
+    }
+
+    public void StartGame()
+    {
+        Gaming = !Gaming;
         Game();
     }
 }
