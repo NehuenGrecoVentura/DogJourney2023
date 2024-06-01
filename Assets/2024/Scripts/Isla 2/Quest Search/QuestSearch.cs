@@ -124,7 +124,6 @@ public class QuestSearch : MonoBehaviour
         {
             _dialogue.playerInRange = false;
             _iconInteract.transform.DOScale(0f, 0.5f);
-            //_iconInteract.SetActive(false);
         }
     }
 
@@ -141,22 +140,23 @@ public class QuestSearch : MonoBehaviour
 
         NavMeshAgent agentDog = _dog.GetComponent<NavMeshAgent>();
         NavMeshAgent agentTrolley = _dog.GetComponent<NavMeshAgent>();
-        Animator animDog = _dog.GetComponentInParent<Animator>();
+        //Animator animDog = _dog.GetComponentInParent<Animator>();
+        Animator animDog = _dog.GetComponent<Animator>();
 
         agentDog.enabled = false;
         agentTrolley.enabled = false;
         _dog.canTeletransport = false;
-        _dog.transform.parent.transform.position = _introPosDog.position;
+        //_dog.transform.parent.transform.position = _introPosDog.position;
+        _dog.transform.position = _introPosDog.position;
         _trolley.transform.position = _dog.transform.position;
-
         _myAudio.PlayOneShot(_soundSearch);
-
 
         yield return new WaitForSeconds(2f);
         _cinematic.SetActive(true);
         Destroy(_focusDog.gameObject);
         _dogBall.transform.position = _posDogBall.position;
-        _dog.transform.parent.transform.position = _posDogBall.position;
+        //_dog.transform.parent.transform.position = _posDogBall.position;
+        _dog.transform.position = _posDogBall.position;
         _dog.Search();
         _myAudio.PlayOneShot(_soundDogSearch);
         _system.enabled = true;
@@ -169,7 +169,8 @@ public class QuestSearch : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
         animDog.enabled = true;
-        _dog.transform.parent.LookAt(_player.transform);
+        //_dog.transform.parent.LookAt(_player.transform);
+        _dog.transform.LookAt(_player.transform);
         _myAudio.PlayOneShot(_soundDog);
 
         yield return new WaitForSeconds(2f);
