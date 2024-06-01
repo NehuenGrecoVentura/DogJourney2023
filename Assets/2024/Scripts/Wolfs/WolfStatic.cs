@@ -9,24 +9,14 @@ public class WolfStatic : MonoBehaviour
     [SerializeField] GameObject _escapeCinematic;
     [SerializeField] Collider[] _myCols;
     public Transform restartPlayer;
-    private Manager _manager;
-    private NavMeshAgent _nv;
-    private Animator _myAnim;
-    private Character _player;
+    [SerializeField] Manager _manager;
+    [SerializeField] NavMeshAgent _nv;
+    [SerializeField] Animator _myAnim;
+    [SerializeField] Character _player;
 
     [Header("AUDIO")]
     [SerializeField] AudioClip _soundWolf;
     [SerializeField] AudioSource _myAudio;
-
-    private void Awake()
-    {
-        _nv = GetComponent<NavMeshAgent>();
-        _myAnim = GetComponent<Animator>();
-        _myAudio = GetComponent<AudioSource>();
-
-        _manager = FindObjectOfType<Manager>();
-        _player = FindObjectOfType<Character>();
-    }
 
     private void Start()
     {
@@ -61,7 +51,7 @@ public class WolfStatic : MonoBehaviour
             StartCoroutine(DefreezePlayer());
         }
 
-        if(dog != null)
+        if (dog != null)
         {
             _myAudio.PlayOneShot(_soundWolf);
             dog.scared = true;
@@ -81,13 +71,12 @@ public class WolfStatic : MonoBehaviour
             _myAnim.SetBool("Idle", false);
 
             Destroy(_rabbitFollow.gameObject, 5f);
-            Destroy(transform.parent.gameObject, 5f);
+            Destroy(gameObject, 5f);
         }
     }
 
     private IEnumerator DefreezePlayer()
     {
-        
         yield return new WaitForSeconds(4f);
         _player.DeFreezePlayer();
     }

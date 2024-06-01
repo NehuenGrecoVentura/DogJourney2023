@@ -157,7 +157,6 @@ public class Manager : MonoBehaviour
     private IEnumerator ShowGameOver(GameObject cinematicGameOver, float time, string messageGameOver, Transform posRestart)
     {
         _cam.gameObject.SetActive(false);
-        //_player.speed = 0;
         _player.FreezePlayer();
         cinematicGameOver.SetActive(true);
         yield return new WaitForSeconds(time);
@@ -166,7 +165,6 @@ public class Manager : MonoBehaviour
         _isGameOver = true;
         yield return new WaitForSeconds(3f);
         _cam.gameObject.SetActive(true);
-        //_player.speed = _player.speedAux;
         _player.DeFreezePlayer();
         cinematicGameOver.SetActive(false);
         _gameOver.SetActive(false);
