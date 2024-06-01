@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class Manzana_Manager : MonoBehaviour
 {
@@ -32,6 +34,14 @@ public class Manzana_Manager : MonoBehaviour
     [Header("UI SCORE")]
     [SerializeField] GameObject _canvasScore;
 
+    [Header("INTRO")]
+    [SerializeField] Image _fadeOut;
+    [SerializeField] Image[] _count;
+    [SerializeField] Camera _camIntro;
+    [SerializeField] BoxMessages _boxMessage;
+    [SerializeField, TextArea(4, 6)] string _message;
+    private bool _firstContact = true;
+
     private void Start()
     {
         Random();
@@ -39,7 +49,10 @@ public class Manzana_Manager : MonoBehaviour
         _radar = FindObjectOfType<LocationQuest>();
         _inventory = FindObjectOfType<CharacterInventory>();
         Gaming = false;
+
         _canvasScore.SetActive(false);
+        _fadeOut.DOColor(Color.clear, 0f);
+        _camIntro.enabled = false;
     }
 
     void Spawn()
@@ -81,17 +94,21 @@ public class Manzana_Manager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.M))
         {
-            Gaming = !Gaming;
-            Game();
+            //Gaming = !Gaming;
+            //Game();
+
+            StartCoroutine(BeginPlay());
         }
         if (Gaming)
         {
             if (MP.GameOver)
             {
-                Debug.Log("perdiste");
-                Gaming = false;
-                rb.velocity = Vector3.zero;
-                Game();
+                //Debug.Log("perdiste");
+                //Gaming = false;
+                //rb.velocity = Vector3.zero;
+                //Game();
+
+                StartCoroutine(ExitGame());
             }
 
             move();
@@ -140,5 +157,62 @@ public class Manzana_Manager : MonoBehaviour
             _radar.StatusRadar(true);
             _canvasScore.SetActive(false);
         }
+    }
+
+    private IEnumerator BeginPlay()
+    {
+        _boxMessage.SetMessage("Mini Game");
+
+        _character.FreezePlayer();
+        _fadeOut.DOColor(Color.black, 1f);
+
+        yield return new WaitForSeconds(2f);
+        _camIntro.enabled = true;
+        _camPlayer.enabled = false;
+        _fadeOut.DOColor(Color.clear, 1f);
+
+        if (_firstContact)
+        {
+            yield return new WaitForSeconds(1f);
+            _camIntro.transform.DOMove(_camApple.transform.position, 3f);
+
+            yield return new WaitForSeconds(3f);
+            _boxMessage.ShowMessage(_message);
+
+            yield return new WaitForSeconds(3f);
+            _boxMessage.CloseMessage();
+
+            for (int i = 0; i < _count.Length; i++)
+            {
+                _count[i].DOColor(Color.white, 0.5f);
+                yield return new WaitForSeconds(1f);
+                _count[i].DOColor(Color.clear, 0.5f);
+            }
+
+            _camIntro.enabled = false;
+            Gaming = !Gaming;
+            Game();
+
+            yield return new WaitForSeconds(0.5f);
+            _boxMessage.DesactivateMessage();
+            _firstContact = false;
+        }
+
+        else
+        {
+            yield return new WaitForSeconds(1f);
+            Gaming = !Gaming;
+            Game();
+        }
+    }
+
+    private IEnumerator ExitGame()
+    {
+        Gaming = false;
+        _canvasScore.SetActive(false);
+        _fadeOut.DOColor(Color.black, 0.5f);
+        yield return new WaitForSeconds(1f);
+        _fadeOut.DOColor(Color.clear, 1f);
+        Game();
     }
 }
