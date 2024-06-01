@@ -50,7 +50,7 @@ public class TirosCharacter : MonoBehaviour
         {
             Lives--;
 
-            // Esta funcion quita el último icono de vida
+            // Esta funcion quita el último icono de vida activo
             if (Lives >= 0) _spritesLifes[Lives].gameObject.SetActive(false);
             else return;
         }
