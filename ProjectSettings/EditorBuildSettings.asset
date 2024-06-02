@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/MENU FINAL.unity
     guid: 8a2efe642549db74bb21a410e1465ebe
   - enabled: 1
-    path: Assets/Scenes/Minijuegos.unity
-    guid: b14d4e20470eacc498228052281d8f87
+    path: Assets/Scenes/NEHUEN-MINIJUEGOS.unity
+    guid: 4a94f362ca17bc748a1b141375c876cd
   m_configObjects: {}

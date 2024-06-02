@@ -22,6 +22,7 @@ public class Rabbit : MonoBehaviour, IPick
     [Header("INTERACT")]
     [SerializeField] KeyCode _keyInteractive = KeyCode.F;
     [SerializeField] GameObject _iconInteract;
+    [SerializeField] SkinnedMeshRenderer _myMesh;
 
     private void Awake()
     {
@@ -61,6 +62,14 @@ public class Rabbit : MonoBehaviour, IPick
 
         // Actualiza la posición anterior con la nueva posición del objeto
         _myPos = transform.position;
+
+        if (!_myCol.enabled && transform.position.y >= 2.96f)
+        {
+            _myMesh.enabled = false;
+        }
+
+        else _myMesh.enabled = true;
+
     }
 
     public void Pick()
