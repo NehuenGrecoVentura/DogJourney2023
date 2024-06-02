@@ -71,6 +71,7 @@ public class WolfStatic : MonoBehaviour
             _myAnim.SetBool("Idle", false);
 
             Destroy(_rabbitFollow.gameObject, 5f);
+            Destroy(_escapeCinematic, 5f);
             Destroy(gameObject, 5f);
         }
     }
