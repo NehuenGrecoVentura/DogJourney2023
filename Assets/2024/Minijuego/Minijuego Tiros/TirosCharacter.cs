@@ -35,6 +35,7 @@ public class TirosCharacter : MonoBehaviour
     [SerializeField] AudioSource _myAudio;
     [SerializeField] AudioClip _soundGood;
     [SerializeField] AudioClip _soundFail;
+    [SerializeField] AudioClip _soundShoot;
 
     private void Start()
     {
@@ -146,6 +147,7 @@ public class TirosCharacter : MonoBehaviour
         var b = BalaFactory.Instance.pool.GetObject();
         b.transform.position = spawnPointGun.position + transform.forward;
         b.transform.forward = spawnPointGun.forward;
+        _myAudio.PlayOneShot(_soundShoot);
     }
 
     public void Run(bool isRun)

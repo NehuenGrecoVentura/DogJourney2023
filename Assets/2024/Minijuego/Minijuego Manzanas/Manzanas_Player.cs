@@ -29,6 +29,11 @@ public class Manzanas_Player : MonoBehaviour
     [SerializeField] TMP_Text _textScore;
     [SerializeField] int Score;
 
+    [Header("AUDIO")]
+    [SerializeField] AudioSource _myAudio;
+    [SerializeField] AudioClip _soundGood;
+    [SerializeField] AudioClip _soundFail;
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -38,11 +43,14 @@ public class Manzanas_Player : MonoBehaviour
     {
         Score++;
         _textScore.text = "Score: " + Score.ToString();
+        _myAudio.PlayOneShot(_soundGood);
     }
 
     public void RemoveLive()
     {
         //Lives--;
+
+        _myAudio.PlayOneShot(_soundFail);
 
         if (Lives > 0)
         {

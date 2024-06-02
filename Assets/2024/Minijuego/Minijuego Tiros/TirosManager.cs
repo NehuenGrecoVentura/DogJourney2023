@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class TirosManager : MonoBehaviour
 {
@@ -76,7 +77,6 @@ public class TirosManager : MonoBehaviour
             _character.FreezePlayer();
             _radar.StatusRadar(false);
             _canvasScore.SetActive(true);
-            
         }
         else
         {
