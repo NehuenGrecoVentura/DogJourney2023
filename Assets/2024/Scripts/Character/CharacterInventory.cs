@@ -17,6 +17,7 @@ public class CharacterInventory : MonoBehaviour
     public int fishes = 0;
     public int specialFishes = 0;
     public int baits = 0;
+    public int tickets = 0;
     public bool upgradeLoot = false;
 
     [Header("MY TOOLS")]
