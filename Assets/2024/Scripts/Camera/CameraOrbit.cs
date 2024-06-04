@@ -16,6 +16,9 @@ public class CameraOrbit : MonoBehaviour
     public float minZoomDistance = 1.0f; // Distancia mínima permitida
     public float maxZoomDistance = 10.0f; // Distancia máxima permitida
 
+    public float suavidad = 10f;
+    private bool _playerBlocked = false;
+
     //public float minY, maxY;
     //public float maxAllowed;
 
@@ -109,10 +112,24 @@ public class CameraOrbit : MonoBehaviour
             if (Physics.Raycast(point, direction, out hit, maxDistance))
             {
                 distance = Mathf.Min((hit.point - follow.position).magnitude, distance);
+                _playerBlocked = true; // La cámara está colisionando
             }
         }
 
-        transform.position = follow.position + direction * distance;
+        if (_playerBlocked)
+        {
+            // Movimiento suavizado de la cámara solo cuando está colisionando
+            Vector3 targetPosition = follow.position + direction * distance;
+            transform.position = Vector3.Lerp(transform.position, targetPosition, suavidad * Time.deltaTime);
+        }
+        else
+        {
+            // Movimiento normal de la cámara cuando no está colisionando
+            transform.position = follow.position + direction * distance;
+        }
+
         transform.rotation = Quaternion.LookRotation(follow.position - transform.position);
+
+        _playerBlocked = false; // Restablece el estado de colisión
     }
 }
