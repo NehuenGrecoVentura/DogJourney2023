@@ -15,10 +15,10 @@ public class SimonManager : MonoBehaviour
     [SerializeField] private AudioSource _myAudio;
     [SerializeField] private CharacterInventory _inventory;
     [SerializeField] private SimonBoton[] Botons;
-     private int SimMax;
+    private int SimMax;
     [SerializeField] private int SimStart;
     [SerializeField] private float StartSimTime;
-    public  List<int> userList, SimonList;
+    public List<int> userList, SimonList;
     public bool SimonDiciendo;
 
     [Header("UI SCORE")]
@@ -26,6 +26,8 @@ public class SimonManager : MonoBehaviour
     [SerializeField] PuestoSimonDice _puestoSimon;
     [SerializeField] TMP_Text _txtScore;
     [SerializeField] int _score;
+    public int _lives = 3;
+    [SerializeField] Image[] _iconsLives;
     private Collider _colPuesto;
 
     [Header("INTRO")]
@@ -46,6 +48,16 @@ public class SimonManager : MonoBehaviour
         _colPuesto = _puestoSimon.GetComponent<Collider>();
     }
 
+
+    private void Update()
+    {
+        if(_lives <= 0)
+        {
+            StartCoroutine(ExitGame());
+        }
+    }
+
+
     public void Reset()
     {
         SimMax = SimStart;
@@ -56,7 +68,7 @@ public class SimonManager : MonoBehaviour
     {
         StartCoroutine(SimonDice());
     }
-    
+
     IEnumerator SimonDice()
     {
         Debug.Log("Observe and prepare");
@@ -79,15 +91,32 @@ public class SimonManager : MonoBehaviour
 
     public void PlayerClicking(SimonBoton b, AudioSource audioSource, AudioClip soundButton, AudioClip soundError)
     {
+        //userList.Add(b.ID);
+        //if (userList[userList.Count - 1] != SimonList[userList.Count - 1])
+        //{
+        //    Debug.Log("GameOver");
+        //    Gaming = false;
+        //    Game();
+        //}
+
+        //else if (userList.Count == SimonList.Count && _lives > 0)
+        //{
+        //    Next();
+        //    Debug.Log("next Lvl");
+        //}
+
         userList.Add(b.ID);
-        if(userList[userList.Count-1] != SimonList[userList.Count-1])
+
+        if (userList[userList.Count - 1] != SimonList[userList.Count - 1])
         {
             audioSource.PlayOneShot(soundError);
-            Debug.Log("GameOver");
-            Gaming = false;
-            Game();
+            _lives--; 
+
+            if (_lives > 0) _iconsLives[_lives].gameObject.SetActive(false);
+            else StartCoroutine(ExitGame());  
         }
-        else if (userList.Count == SimonList.Count)
+
+        else if (userList.Count == SimonList.Count && _lives > 0)
         {
             audioSource.PlayOneShot(soundButton);
             Next();
@@ -96,7 +125,7 @@ public class SimonManager : MonoBehaviour
             Debug.Log("next Lvl");
         }
     }
-    
+
     //private void Update()
     //{
     //    if (Input.GetKeyDown(KeyCode.N))
@@ -131,7 +160,7 @@ public class SimonManager : MonoBehaviour
             _character.DeFreezePlayer();
             _radar.StatusRadar(true);
             LockMouse();
-            
+
             _colPuesto.enabled = true;
             _canvasScore.SetActive(false);
         }
@@ -151,6 +180,13 @@ public class SimonManager : MonoBehaviour
 
     public void StartGame()
     {
+        _lives = 3;
+
+        foreach (Image icon in _iconsLives)
+        {
+            icon.gameObject.SetActive(true);
+        }
+
         Gaming = !Gaming;
         Game();
     }
@@ -158,11 +194,13 @@ public class SimonManager : MonoBehaviour
     private IEnumerator ExitGame()
     {
         Gaming = false;
+        LockMouse();
         _canvasScore.SetActive(false);
         _fadeOut.DOColor(Color.black, 0.5f);
         yield return new WaitForSeconds(1f);
         _fadeOut.DOColor(Color.clear, 1f);
         Game();
         _colPuesto.enabled = true;
+        _lives = 3;
     }
 }
