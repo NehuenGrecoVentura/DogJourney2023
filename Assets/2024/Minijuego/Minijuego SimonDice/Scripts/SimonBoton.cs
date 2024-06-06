@@ -9,6 +9,11 @@ public class SimonBoton : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private SimonManager manager;
 
+    [Header("AUDIO")]
+    [SerializeField] AudioSource _myAudio;
+    [SerializeField] AudioClip _soundButton;
+    [SerializeField] AudioClip _soundError;
+
     private void Start()
     {
         manager = FindObjectOfType<SimonManager>();
@@ -18,6 +23,7 @@ public class SimonBoton : MonoBehaviour
     {
         _animator.enabled = true;
         _animator.SetTrigger("Click");
+        _myAudio.PlayOneShot(_soundButton);
     }
 
     private void OnMouseDown()
@@ -25,7 +31,7 @@ public class SimonBoton : MonoBehaviour
         if (!manager.SimonDiciendo)
         {
             Click();
-            manager.PlayerClicking(this);
+            manager.PlayerClicking(this, _myAudio, _soundButton, _soundError);
             Debug.Log("click " + ID);
         }
 
