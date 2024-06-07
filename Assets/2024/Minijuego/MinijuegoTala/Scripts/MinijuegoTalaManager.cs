@@ -2,6 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using DG.Tweening;
 
 public class MinijuegoTalaManager : MonoBehaviour
 {
@@ -19,7 +22,16 @@ public class MinijuegoTalaManager : MonoBehaviour
     [SerializeField] private bool Move1;
     [SerializeField] private float Timer;
     [SerializeField] private float MaxTimer;
+    
+    [Header("UI SCORE")]
+    [SerializeField] GameObject _canvasScore;
     [SerializeField] private int Score;
+    [SerializeField] TMP_Text _txtScore;
+    [SerializeField] PuestoTala _puestoTala;
+    [SerializeField] Image _fadeOut;
+    private Collider _colPuesto;
+
+
     private void Start()
     {
         _myAudio = GetComponent<AudioSource>();
@@ -27,7 +39,8 @@ public class MinijuegoTalaManager : MonoBehaviour
         _inventory = FindObjectOfType<CharacterInventory>();
         Gaming = false;
         SpawnCoder();
-        
+        _canvasScore.SetActive(false);
+        _colPuesto = _puestoTala.GetComponent<Collider>();
     }
     
     public void Reset()
@@ -79,6 +92,7 @@ public class MinijuegoTalaManager : MonoBehaviour
     {
         Timer = Timer - 0.2f;
         Score++;
+        _txtScore.text = "SCORE: " + Score.ToString();
     }
 
     public void WrongClick()
@@ -94,10 +108,16 @@ public class MinijuegoTalaManager : MonoBehaviour
             Timer += Time.deltaTime;
             if (Timer >= MaxTimer)
             {
-                Gaming = false;
-                Game();
-                Debug.Log("Perdiste");
-                Debug.Log("tu escore fue de " + Score);
+                //Gaming = false;
+                //Game();
+                //Debug.Log("Perdiste");
+                //Debug.Log("tu escore fue de " + Score);
+
+                StartCoroutine(ExitGame());
+
+
+
+
             }
             if (Move1)
             {
@@ -106,32 +126,57 @@ public class MinijuegoTalaManager : MonoBehaviour
             }
             CheckDones();
         }
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Gaming = !Gaming;
-            Game();
-        }
+        //if (Input.GetKeyDown(KeyCode.T))
+        //{
+        //    Gaming = !Gaming;
+        //    Game();
+        //}
     }
     private void Game()
     {
         if (Gaming)
         {
-            _camPlayer.enabled = false;
-            _camTala.enabled = true;
+            //_camPlayer.enabled = false;
+            _camPlayer.gameObject.SetActive(false);
+            //_camTala.enabled = true;
+            _camTala.gameObject.SetActive(true);
             _character.speed = 0;
             _character.FreezePlayer();
             _radar.StatusRadar(false);
+            _canvasScore.SetActive(true);
             Timer = 0;
             Reset();
             CallCoder();
         }
         else
         {
-            _camPlayer.enabled = true;
-            _camTala.enabled = false;
+            //_camPlayer.enabled = true;
+            _camPlayer.gameObject.SetActive(true);
+            //_camTala.enabled = false;
+            _camTala.gameObject.SetActive(false);
             _character.speed = _character.speedAux;
             _character.DeFreezePlayer();
             _radar.StatusRadar(true);
         }
+    }
+
+    public void StartGame()
+    {
+        Gaming = !Gaming;
+        Game();
+    }
+
+    private IEnumerator ExitGame()
+    {
+        Gaming = false;
+        _canvasScore.SetActive(false);
+        _fadeOut.DOColor(Color.black, 0.5f);
+        yield return new WaitForSeconds(1f);
+        _fadeOut.DOColor(Color.clear, 1f);
+        Game();
+        _colPuesto.enabled = true;
+        Timer = 0;
+        Reset();
+        CallCoder();
     }
 }
