@@ -29,6 +29,7 @@ public class MinijuegoTalaManager : MonoBehaviour
     [SerializeField] TMP_Text _txtScore;
     [SerializeField] PuestoTala _puestoTala;
     [SerializeField] Image _fadeOut;
+    [SerializeField] Slider _sliderTimer;
     private Collider _colPuesto;
 
 
@@ -41,6 +42,9 @@ public class MinijuegoTalaManager : MonoBehaviour
         SpawnCoder();
         _canvasScore.SetActive(false);
         _colPuesto = _puestoTala.GetComponent<Collider>();
+
+        _sliderTimer.maxValue = MaxTimer;
+        _sliderTimer.value = MaxTimer;
     }
     
     public void Reset()
@@ -106,6 +110,9 @@ public class MinijuegoTalaManager : MonoBehaviour
         if (Gaming)
         {
             Timer += Time.deltaTime;
+
+            _sliderTimer.value = Timer;
+
             if (Timer >= MaxTimer)
             {
                 //Gaming = false;
