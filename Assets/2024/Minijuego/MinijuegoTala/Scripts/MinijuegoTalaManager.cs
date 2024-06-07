@@ -45,7 +45,7 @@ public class MinijuegoTalaManager : MonoBehaviour
     [Header("ASSETS")]
     [SerializeField] GameObject _axe;
     [SerializeField] GameObject _wood;
-    private Quaternion _initialRot;
+    [SerializeField] ParticleSystemRenderer _particleWood;
 
     private void Start()
     {
@@ -61,7 +61,6 @@ public class MinijuegoTalaManager : MonoBehaviour
         _sliderTimer.value = MaxTimer;
         _initialColor = _sliderColor.color;
         _initialColorBackground = _sliderColorBackgorund.color;
-        _initialRot = _wood.transform.rotation;
     }
     
     public void Reset()
@@ -114,9 +113,11 @@ public class MinijuegoTalaManager : MonoBehaviour
         Timer = Timer - 0.2f;
         Score++;
         _txtScore.text = "SCORE: " + Score.ToString();
+        
+        StopCoroutine(MoveAxe());
         StartCoroutine(Feedback(Color.green));
         _axe.GetComponent<Animator>().Play("Cortar");
-        //StartCoroutine(MoveAxe());
+        StartCoroutine(MoveAxe());
         _myAudio.PlayOneShot(_soundGood);
     }
 
@@ -132,14 +133,9 @@ public class MinijuegoTalaManager : MonoBehaviour
 
     private IEnumerator MoveAxe()
     {
-        //_axe.transform.rotation = _initialRot;
-        //Vector3 initialEulerAngles = _initialRot.eulerAngles;
-        //_axe.transform.DORotate(new Vector3(204.948f, 270.869f, -307.234f), 0.5f);
-        //yield return new WaitForSeconds(0.5f);
-        //_axe.transform.DORotate(initialEulerAngles, 0.5f);
-
-        _axe.GetComponent<Animator>().Play("Talar");
-        yield return new WaitForSeconds(1f);
+        _particleWood.enabled = true;
+        yield return new WaitForSeconds(0.2f);
+        _particleWood.enabled = false;
     }
 
 
