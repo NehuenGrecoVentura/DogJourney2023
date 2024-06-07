@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Transactions;
 using UnityEngine;
+using DG.Tweening;
 
 public class MinijuegoTalaCoder : MonoBehaviour
 {
@@ -89,15 +90,31 @@ public class MinijuegoTalaCoder : MonoBehaviour
         {
             transform.position = GamePoint.position;
             ImActive = true;
+
+
+            //transform.DOMove(GamePoint.position, 0.5f);
+            //ImActive = true;
+
+
         }
         else if(Done)
         {
             transform.position = outPoint.position;
             ImActive = false;
+
+            //transform.DOMove(outPoint.position, 0.5f);
+            //ImActive = false;
+
         }
-        ArrowA.transform.position = ASpawn.position;
-        ArrowB.transform.position = BSpawn.position;
-        ArrowC.transform.position = CSpawn.position;
+        //ArrowA.transform.position = ASpawn.position;
+        //ArrowB.transform.position = BSpawn.position;
+        //ArrowC.transform.position = CSpawn.position;
+
+
+        ArrowA.transform.DOMove(ASpawn.position, 0.5f);
+        ArrowB.transform.DOMove(BSpawn.position, 0.5f);
+        ArrowC.transform.DOMove(CSpawn.position, 0.5f);
+
     }
     
     private void updateArrows()
