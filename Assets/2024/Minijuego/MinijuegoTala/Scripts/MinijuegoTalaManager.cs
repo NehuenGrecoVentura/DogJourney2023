@@ -13,15 +13,12 @@ public class MinijuegoTalaManager : MonoBehaviour
     [SerializeField] private Camera _camTala;
     [SerializeField] private Character _character;
     [SerializeField] private LocationQuest _radar;
-    [SerializeField] private AudioSource _myAudio;
     [SerializeField] private CharacterInventory _inventory;
     
     [SerializeField] private MinijuegoTalaCoder Coder1;
     [SerializeField] private MinijuegoTalaCoder Coder2;
     private int CoderActive;
     [SerializeField] private bool Move1;
-    [SerializeField] private float Timer;
-    [SerializeField] private float MaxTimer;
     
     [Header("UI SCORE")]
     [SerializeField] GameObject _canvasScore;
@@ -29,9 +26,21 @@ public class MinijuegoTalaManager : MonoBehaviour
     [SerializeField] TMP_Text _txtScore;
     [SerializeField] PuestoTala _puestoTala;
     [SerializeField] Image _fadeOut;
-    [SerializeField] Slider _sliderTimer;
     private Collider _colPuesto;
 
+    [Header("TIMER")]
+    [SerializeField] private float Timer;
+    [SerializeField] private float MaxTimer;
+    [SerializeField] Slider _sliderTimer;
+    [SerializeField] Image _sliderColor;
+    [SerializeField] Image _sliderColorBackgorund;
+    private Color _initialColor;
+    private Color _initialColorBackground;
+
+    [Header("AUDIO")]
+    [SerializeField] private AudioSource _myAudio;
+    [SerializeField] private AudioClip _soundGood;
+    [SerializeField] private AudioClip _soundWrong;
 
     private void Start()
     {
@@ -45,6 +54,8 @@ public class MinijuegoTalaManager : MonoBehaviour
 
         _sliderTimer.maxValue = MaxTimer;
         _sliderTimer.value = MaxTimer;
+        _initialColor = _sliderColor.color;
+        _initialColorBackground = _sliderColorBackgorund.color;
     }
     
     public void Reset()
@@ -97,12 +108,26 @@ public class MinijuegoTalaManager : MonoBehaviour
         Timer = Timer - 0.2f;
         Score++;
         _txtScore.text = "SCORE: " + Score.ToString();
+        StartCoroutine(Feedback(Color.green));
+        _myAudio.PlayOneShot(_soundGood);
+    }
+
+    private IEnumerator Feedback(Color color)
+    {
+        _sliderColor.color = color;
+        Color darkerColor = Color.Lerp(color, Color.black, 0.5f);
+        _sliderColorBackgorund.color = darkerColor;
+        yield return new WaitForSeconds(0.5f);
+        _sliderColor.color = _initialColor;
+        _sliderColorBackgorund.color = _initialColorBackground;
     }
 
     public void WrongClick()
     {
         Timer = Timer + 1f;
         Score--;
+        StartCoroutine(Feedback(Color.red));
+        _myAudio.PlayOneShot(_soundWrong);
     }
 
     private void Update()
@@ -110,7 +135,6 @@ public class MinijuegoTalaManager : MonoBehaviour
         if (Gaming)
         {
             Timer += Time.deltaTime;
-
             _sliderTimer.value = Timer;
 
             if (Timer >= MaxTimer)
@@ -121,16 +145,14 @@ public class MinijuegoTalaManager : MonoBehaviour
                 //Debug.Log("tu escore fue de " + Score);
 
                 StartCoroutine(ExitGame());
-
-
-
-
             }
+
             if (Move1)
             {
                 CallCoder();
                 Move1 = false;
             }
+
             CheckDones();
         }
         //if (Input.GetKeyDown(KeyCode.T))
