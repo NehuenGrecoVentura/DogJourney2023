@@ -46,6 +46,9 @@ public class MinijuegoTalaManager : MonoBehaviour
     [SerializeField] GameObject _axe;
     [SerializeField] GameObject _wood;
     [SerializeField] ParticleSystemRenderer _particleWood;
+    [SerializeField] Transform _posStartWood;
+    [SerializeField] Transform _posOutWood;
+    [SerializeField] Transform _posGameWood;
 
     private void Start()
     {
@@ -61,6 +64,9 @@ public class MinijuegoTalaManager : MonoBehaviour
         _sliderTimer.value = MaxTimer;
         _initialColor = _sliderColor.color;
         _initialColorBackground = _sliderColorBackgorund.color;
+
+
+        _wood.transform.position = _posStartWood.position;
     }
     
     public void Reset()
@@ -68,6 +74,8 @@ public class MinijuegoTalaManager : MonoBehaviour
         Coder1.Reset();
         Coder2.Reset();
         SpawnCoder();
+
+        _wood.transform.DOMove(_posGameWood.position, 0.5f);
     }
 
     private void SpawnCoder()
