@@ -56,7 +56,7 @@ public class Manzanas_Player : MonoBehaviour
         {
             Lives--;
 
-            // Esta funcion quita el último icono de vida
+            // Esta funcion quita el ï¿½ltimo icono de vida
             if (Lives >= 0) _spritesApples[Lives].gameObject.SetActive(false);
             else return;
         }
@@ -148,7 +148,7 @@ public class Manzanas_Player : MonoBehaviour
        //bar.fillAmount = Energy / MaxEnergy;
     }
 
-    private void OnTriggerEnter(Collider other)
+   /* private void OnTriggerEnter(Collider other)
     {
         //if(other.gameObject.name == "OutBoxI")
         //{
@@ -160,7 +160,7 @@ public class Manzanas_Player : MonoBehaviour
         //    transform.position = Izquierda.position;
         //}
 
-        // Fix para que no se buguee el mesh del player cuando cambia de posición
+        // Fix para que no se buguee el mesh del player cuando cambia de posiciï¿½n
         if (other.gameObject.name == "OutBoxI")
         {
             StartCoroutine(SpawnSide(Derecha.position));
@@ -170,7 +170,7 @@ public class Manzanas_Player : MonoBehaviour
         {
             StartCoroutine(SpawnSide(Izquierda.position));
         }
-    }
+    }*/
 
     private IEnumerator SpawnSide(Vector3 pos)
     {
