@@ -144,9 +144,9 @@ public class ChainParkQuest : MonoBehaviour
 
     private IEnumerator Ending(Character player)
     {
-        Destroy(_myCol);
-        Destroy(_iconInteract);
-        Destroy(_iconQuest);
+        _myCol.enabled = false;
+        _iconInteract.transform.DOScale(0f, 0.5f);
+        _iconQuest.transform.DOScale(0f, 0.5f);
         _boxMessage.SetMessage(_nameNPC);
         player.FreezePlayer();
         _fadeOut.DOColor(Color.black, 1f);

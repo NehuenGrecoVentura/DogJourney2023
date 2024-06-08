@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -28,6 +27,7 @@ public class ChainZone3 : MonoBehaviour
     [SerializeField] int _nailsRequired = 100;
     [SerializeField] int _moneyRequired = 300;
     [SerializeField] int _ticketsRequired = 200;
+    [SerializeField] GameObject _iconBuildBridge;
     private bool _questActive = false;
     private bool _questCompleted = false;
 
@@ -42,6 +42,7 @@ public class ChainZone3 : MonoBehaviour
     [Header("CAMERAS")]
     [SerializeField] Camera _camEnd;
     [SerializeField] CameraOrbit _camPlayer;
+    [SerializeField] Camera _camFocusIconBuild;
 
     [Header("AUDIO")]
     [SerializeField] AudioSource _myAudio;
@@ -51,7 +52,9 @@ public class ChainZone3 : MonoBehaviour
     {
         _dialogue.gameObject.SetActive(false);
         _camEnd.gameObject.SetActive(false);
+        _camFocusIconBuild.gameObject.SetActive(false);
         _notification.gameObject.SetActive(false);
+        _iconBuildBridge.gameObject.SetActive(false);
         _iconInteract.transform.DOScale(0f, 0f);
         _fadeOut.DOColor(Color.clear, 0f);
     }
@@ -149,7 +152,7 @@ public class ChainZone3 : MonoBehaviour
 
     private IEnumerator Ending(Character player)
     {
-        Destroy(_myCol);
+        _myCol.enabled = false;
         _iconInteract.transform.DOScale(0f, 0.5f);
         _iconQuest.transform.DOScale(0f, 0.5f);
         _boxMessage.SetMessage(_nameNPC);
@@ -178,6 +181,13 @@ public class ChainZone3 : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
         Destroy(_camEnd.gameObject);
+        _camFocusIconBuild.gameObject.SetActive(true);
+        
+        yield return new WaitForSeconds(1f);
+        _iconBuildBridge.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+        Destroy(_camFocusIconBuild.gameObject);
         player.DeFreezePlayer();
         _camPlayer.gameObject.SetActive(true);
         _boxMessage.CloseMessage();
