@@ -14,9 +14,13 @@ public class SimonBoton : MonoBehaviour
     [SerializeField] AudioClip _soundButton;
     [SerializeField] AudioClip _soundError;
 
+    [Header("SELECT")]
+    [SerializeField] Outline _outlineSelect;
+
     private void Start()
     {
         manager = FindObjectOfType<SimonManager>();
+        _outlineSelect.enabled = false;
     }
 
     public void Click()
@@ -32,8 +36,19 @@ public class SimonBoton : MonoBehaviour
         {
             Click();
             manager.PlayerClicking(this, _myAudio, _soundButton, _soundError);
+            //_outlineSelect.enabled = false;
             Debug.Log("click " + ID);
         }
 
+    }
+
+    private void OnMouseEnter()
+    {
+        _outlineSelect.enabled = true;
+    }
+
+    private void OnMouseExit()
+    {
+        _outlineSelect.enabled = false;
     }
 }
