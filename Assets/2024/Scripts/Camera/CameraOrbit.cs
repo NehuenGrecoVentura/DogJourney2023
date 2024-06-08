@@ -18,6 +18,7 @@ public class CameraOrbit : MonoBehaviour
 
     public float suavidad = 10f;
     private bool _playerBlocked = false;
+    private bool _zoomBlocked = false;
 
     //public float minY, maxY;
     //public float maxAllowed;
@@ -82,10 +83,27 @@ public class CameraOrbit : MonoBehaviour
 
 
 
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            if (!_zoomBlocked)
+            {
+                maxDistance = 20;
+                _zoomBlocked = true;
+            }
+
+            else
+            {
+                maxDistance = 50;
+                _zoomBlocked = false;
+            }
+        }
+
+
+
 
         float scroll = Input.GetAxis("Mouse ScrollWheel");
 
-        if (scroll != 0)
+        if (scroll != 0 && !_zoomBlocked)
         {
             float zoomAmount = scroll * zoomSensitivity; // Sensibilidad del zoom
             maxDistance -= zoomAmount; // Ajusta la distancia máxima de la cámara
