@@ -29,6 +29,7 @@ public class SimonManager : MonoBehaviour
     public int _lives = 3;
     [SerializeField] Image[] _iconsLives;
     private Collider _colPuesto;
+    private ChainParkQuest _chainQuest;
 
     [Header("INTRO")]
     [SerializeField] Image _fadeOut;
@@ -38,6 +39,11 @@ public class SimonManager : MonoBehaviour
     [SerializeField] private float _speedRot;
     [SerializeField] Transform _circle;
     private Quaternion _initialRot;
+
+    private void Awake()
+    {
+        _chainQuest = FindObjectOfType<ChainParkQuest>();
+    }
 
     private void Start()
     {
@@ -136,7 +142,10 @@ public class SimonManager : MonoBehaviour
         {
             audioSource.PlayOneShot(soundButton);
             Next();
+
             _score += 10;
+            if (_chainQuest != null && _chainQuest.enabled) _chainQuest.AddScore(_score);
+
             _txtScore.text = "SCORE: " + _score.ToString();
             Debug.Log("next Lvl");
         }

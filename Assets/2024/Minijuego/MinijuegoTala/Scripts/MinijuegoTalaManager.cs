@@ -27,6 +27,7 @@ public class MinijuegoTalaManager : MonoBehaviour
     [SerializeField] PuestoTala _puestoTala;
     [SerializeField] Image _fadeOut;
     private Collider _colPuesto;
+    private ChainParkQuest _chainQuest;
 
     [Header("TIMER")]
     [SerializeField] private float Timer;
@@ -49,6 +50,11 @@ public class MinijuegoTalaManager : MonoBehaviour
     [SerializeField] Transform _posStartWood;
     [SerializeField] Transform _posOutWood;
     [SerializeField] Transform _posGameWood;
+
+    private void Awake()
+    {
+        _chainQuest = FindObjectOfType<ChainParkQuest>();
+    }
 
     private void Start()
     {
@@ -117,7 +123,11 @@ public class MinijuegoTalaManager : MonoBehaviour
     public void GoodClick()
     {
         Timer = Timer - 0.2f;
+        
         Score++;
+
+        if (_chainQuest != null && _chainQuest.questActive) _chainQuest.AddScore(Score);
+
         _txtScore.text = "SCORE: " + Score.ToString();
         
         StopCoroutine(MoveAxe());
