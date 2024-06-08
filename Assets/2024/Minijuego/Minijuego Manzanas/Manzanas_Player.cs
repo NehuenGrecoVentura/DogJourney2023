@@ -27,6 +27,7 @@ public class Manzanas_Player : MonoBehaviour
     [Header("UI SCORE")]
     [SerializeField] Image[] _spritesApples;
     [SerializeField] TMP_Text _textScore;
+    [SerializeField] TMP_Text _textScoreChain;
     [SerializeField] int Score;
     [SerializeField] ChainParkQuest _chainQuest;
 
@@ -43,7 +44,7 @@ public class Manzanas_Player : MonoBehaviour
     public void AddScore()
     {
         Score++;
-        if (_chainQuest != null && _chainQuest.questActive) _chainQuest.AddScore(Score);
+        if (_chainQuest != null && _chainQuest.questActive) _chainQuest.AddScore(Score, _textScoreChain);
 
         _textScore.text = "Score: " + Score.ToString();
         _myAudio.PlayOneShot(_soundGood);

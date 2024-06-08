@@ -29,6 +29,7 @@ public class TirosCharacter : MonoBehaviour
     [Header("UI SCORE")]
     [SerializeField] int Score;
     [SerializeField] TMP_Text _textScore;
+    [SerializeField] TMP_Text _textScoreChain;
     [SerializeField] Image[] _spritesLifes;
     private ChainParkQuest _chainQuest;
 
@@ -51,7 +52,7 @@ public class TirosCharacter : MonoBehaviour
     public void AddScore()
     {
         Score++;
-        if (_chainQuest != null && _chainQuest.questActive) _chainQuest.AddScore(Score);
+        if (_chainQuest != null && _chainQuest.questActive) _chainQuest.AddScore(Score, _textScoreChain);
 
         _textScore.text = "Score: " + Score.ToString();
         _myAudio.PlayOneShot(_soundGood);

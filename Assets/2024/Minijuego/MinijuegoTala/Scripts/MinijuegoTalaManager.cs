@@ -22,8 +22,10 @@ public class MinijuegoTalaManager : MonoBehaviour
     
     [Header("UI SCORE")]
     [SerializeField] GameObject _canvasScore;
+    [SerializeField] GameObject _canvasChainScore;
     [SerializeField] private int Score;
     [SerializeField] TMP_Text _txtScore;
+    [SerializeField] TMP_Text _txtScoreChain;
     [SerializeField] PuestoTala _puestoTala;
     [SerializeField] Image _fadeOut;
     private Collider _colPuesto;
@@ -64,6 +66,7 @@ public class MinijuegoTalaManager : MonoBehaviour
         Gaming = false;
         SpawnCoder();
         _canvasScore.SetActive(false);
+        _canvasChainScore.SetActive(false);
         _colPuesto = _puestoTala.GetComponent<Collider>();
 
         _sliderTimer.maxValue = MaxTimer;
@@ -126,7 +129,7 @@ public class MinijuegoTalaManager : MonoBehaviour
         
         Score++;
 
-        if (_chainQuest != null && _chainQuest.questActive) _chainQuest.AddScore(Score);
+        if (_chainQuest != null && _chainQuest.questActive) _chainQuest.AddScore(Score, _txtScoreChain);
 
         _txtScore.text = "SCORE: " + Score.ToString();
         
@@ -206,10 +209,17 @@ public class MinijuegoTalaManager : MonoBehaviour
             _character.FreezePlayer();
             _radar.StatusRadar(false);
             _canvasScore.SetActive(true);
+
+            if (_chainQuest != null && _chainQuest.questActive)
+                _canvasChainScore.SetActive(true);
+
+            else _canvasChainScore.SetActive(false);
+            
             Timer = 0;
             Reset();
             CallCoder();
         }
+
         else
         {
             //_camPlayer.enabled = true;
@@ -234,6 +244,7 @@ public class MinijuegoTalaManager : MonoBehaviour
     {
         Gaming = false;
         _canvasScore.SetActive(false);
+        _canvasChainScore.SetActive(false);
         _fadeOut.DOColor(Color.black, 0.5f);
         yield return new WaitForSeconds(1f);
         _fadeOut.DOColor(Color.clear, 1f);

@@ -25,6 +25,7 @@ public class SimonManager : MonoBehaviour
     [SerializeField] GameObject _canvasScore;
     [SerializeField] PuestoSimonDice _puestoSimon;
     [SerializeField] TMP_Text _txtScore;
+    [SerializeField] TMP_Text _txtScoreChain;
     [SerializeField] int _score;
     public int _lives = 3;
     [SerializeField] Image[] _iconsLives;
@@ -144,7 +145,7 @@ public class SimonManager : MonoBehaviour
             Next();
 
             _score += 10;
-            if (_chainQuest != null && _chainQuest.enabled) _chainQuest.AddScore(_score);
+            if (_chainQuest != null && _chainQuest.enabled) _chainQuest.AddScore(_score, _txtScoreChain);
 
             _txtScore.text = "SCORE: " + _score.ToString();
             Debug.Log("next Lvl");

@@ -22,7 +22,7 @@ public class ChainParkQuest : MonoBehaviour
     [Header("QUEST")]
     [SerializeField] Image _fadeOut;
     [SerializeField] int _scoreRequired = 250;
-    [SerializeField] int _actualScore = 0;
+    public int actualScore = 0;
     [HideInInspector] public bool questActive = false;
     private bool _questCompleted = false;
 
@@ -95,8 +95,9 @@ public class ChainParkQuest : MonoBehaviour
         }
     }
 
-    public void AddScore(int addScore)
+    public void AddScore(int addScore, TMP_Text textScore)
     {
-        _actualScore += addScore;
+        actualScore += addScore;
+        textScore.text = "TOTAL SCORE: " + actualScore.ToString();
     }
 }
