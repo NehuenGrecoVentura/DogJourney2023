@@ -60,19 +60,13 @@ public class ChainZone3 : MonoBehaviour
     {
         if (_questActive)
         {
-            //if(_inventory.greenTrees >= _woodRequired && _inventory.nails >= _nailsRequired && _inventory.money >= _moneyRequired && _inventory.tickets >= _ticketsRequired)
-            //{
-            //    _myCol.enabled = true;
-            //    _questCompleted = true;
-            //    _questActive = false;
-            //}
-
-            //else
-            //{
-            //    _myCol.enabled = false;
-            //    _questActive = true;
-            //    _questCompleted = false;
-            //}
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.J))
+            {
+                _inventory.nails += 500;
+                _inventory.money += 500;
+                _inventory.tickets += 500;
+                _inventory.greenTrees += 500;
+            }
 
             bool full = (_inventory.greenTrees >= _woodRequired &&
                                 _inventory.nails >= _nailsRequired &&
@@ -82,6 +76,7 @@ public class ChainZone3 : MonoBehaviour
             if (full)
             {
                 // Se cumplen todos los requisitos
+                _iconQuest.SetActive(true);
                 _myCol.enabled = true;
                 _doTween.ShowLootCoroutine(_notification);
                 _questCompleted = true;
@@ -90,6 +85,7 @@ public class ChainZone3 : MonoBehaviour
             else
             {
                 // No se cumplen todos los requisitos
+                _iconQuest.SetActive(false);
                 _myCol.enabled = false;
                 _questCompleted = false;
             }
@@ -134,12 +130,12 @@ public class ChainZone3 : MonoBehaviour
         }
     }
 
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    var player = other.GetComponent<Character>();
-    //    if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract))
-    //        StartCoroutine(Ending(player));
-    //}
+    private void OnTriggerStay(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract))
+            StartCoroutine(Ending(player));
+    }
 
     private void OnTriggerExit(Collider other)
     {
@@ -151,48 +147,44 @@ public class ChainZone3 : MonoBehaviour
         }
     }
 
-    //private IEnumerator Ending(Character player)
-    //{
-    //    Destroy(_myCol);
-    //    Destroy(_iconInteract);
-    //    Destroy(_iconQuest);
-    //    _boxMessage.SetMessage(_nameNPC);
-    //    player.FreezePlayer();
-    //    _fadeOut.DOColor(Color.black, 1f);
+    private IEnumerator Ending(Character player)
+    {
+        Destroy(_myCol);
+        _iconInteract.transform.DOScale(0f, 0.5f);
+        _iconQuest.transform.DOScale(0f, 0.5f);
+        _boxMessage.SetMessage(_nameNPC);
+        player.FreezePlayer();
+        _fadeOut.DOColor(Color.black, 1f);
 
-    //    yield return new WaitForSeconds(1f);
-    //    _camPlayer.gameObject.SetActive(false);
-    //    _camEnd.gameObject.SetActive(true);
-    //    _fadeOut.DOColor(Color.clear, 1f);
+        yield return new WaitForSeconds(1f);
+        _camPlayer.gameObject.SetActive(false);
+        _camEnd.gameObject.SetActive(true);
+        _fadeOut.DOColor(Color.clear, 1f);
 
-    //    yield return new WaitForSeconds(1f);
-    //    _boxMessage.ShowMessage(_messages[0]);
+        yield return new WaitForSeconds(1f);
+        _boxMessage.ShowMessage(_messages[0]);
 
-    //    yield return new WaitForSeconds(3f);
-    //    _boxMessage.CloseMessage();
-    //    _fadeOut.DOColor(Color.black, 1f);
+        yield return new WaitForSeconds(3f);
+        _boxMessage.CloseMessage();
+    
+        yield return new WaitForSeconds(1f);
+        _boxMessage.ShowMessage(_messages[1]);
 
-    //    yield return new WaitForSeconds(1f);
-    //    _fadeOut.DOColor(Color.clear, 1f);
+        yield return new WaitForSeconds(3f);
+        _boxMessage.CloseMessage();
 
-    //    yield return new WaitForSeconds(1f);
-    //    _boxMessage.ShowMessage(_messages[1]);
+        yield return new WaitForSeconds(0.6f);
+        _boxMessage.ShowMessage(_messages[2]);
 
-    //    yield return new WaitForSeconds(3f);
-    //    _boxMessage.CloseMessage();
+        yield return new WaitForSeconds(3f);
+        Destroy(_camEnd.gameObject);
+        player.DeFreezePlayer();
+        _camPlayer.gameObject.SetActive(true);
+        _boxMessage.CloseMessage();
+        _gm.QuestCompleted();
 
-    //    yield return new WaitForSeconds(0.6f);
-    //    _boxMessage.ShowMessage(_messages[2]);
-
-    //    yield return new WaitForSeconds(3f);
-    //    Destroy(_camEnd.gameObject);
-    //    player.DeFreezePlayer();
-    //    _camPlayer.gameObject.SetActive(true);
-    //    _boxMessage.CloseMessage();
-    //    _gm.QuestCompleted();
-
-    //    yield return new WaitForSeconds(0.6f);
-    //    _boxMessage.DesactivateMessage();
-    //    Destroy(this);
-    //}
+        yield return new WaitForSeconds(0.6f);
+        _boxMessage.DesactivateMessage();
+        Destroy(this);
+    }
 }
