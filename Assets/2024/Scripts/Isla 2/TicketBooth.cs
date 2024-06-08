@@ -88,6 +88,9 @@ public class TicketBooth : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         _myCol.enabled = true;
+
+        ChainParkQuest chainQuest = FindObjectOfType<ChainParkQuest>();
+        
     }
 
     public void BuyCap()
@@ -194,6 +197,12 @@ public class TicketBooth : MonoBehaviour
         }
 
         else _myAudio.PlayOneShot(_soundError);
+    }
+
+    public void BuySkinNPC()
+    {
+        ChainParkQuest chainQuest = FindObjectOfType<ChainParkQuest>();
+        chainQuest.Completed(_myAudio, _soundBuy, _soundError);
     }
 
     #endregion

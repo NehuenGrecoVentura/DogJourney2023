@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -11,24 +10,33 @@ public class ChainParkQuest : MonoBehaviour
     [SerializeField] Collider _myCol;
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
     [SerializeField] GameObject _iconInteract;
+    [SerializeField] GameObject _iconQuest;
 
     [Header("DIALOGUE")]
     [SerializeField] Dialogue _dialogue;
-    [SerializeField, TextArea(4,6)] string[] _lines;
+    [SerializeField, TextArea(4, 6)] string[] _lines;
     [SerializeField] TMP_Text _txtName;
     [SerializeField] string _nameNPC;
     [SerializeField] Button _buttonConfirm;
 
     [Header("QUEST")]
+    [SerializeField] Manager _gm;
+    [SerializeField] CharacterInventory _inventory;
+    [SerializeField] GameObject _articleMarketSkin;
     [SerializeField] Image _fadeOut;
     [SerializeField] int _scoreRequired = 250;
     public int actualScore = 0;
     [HideInInspector] public bool questActive = false;
-    private bool _questCompleted = false;
+    [HideInInspector] public bool _questCompleted = false;
 
     [Header("MESSAGE")]
     [SerializeField] BoxMessages _boxMessage;
     [SerializeField, TextArea(4, 6)] string[] _messages;
+    
+
+    [Header("CAMERAS")]
+    [SerializeField] Camera _camEnd;
+    [SerializeField] CameraOrbit _camPlayer;
 
     [Header("AUDIO")]
     [SerializeField] AudioSource _myAudio;
@@ -37,6 +45,8 @@ public class ChainParkQuest : MonoBehaviour
     void Start()
     {
         _dialogue.gameObject.SetActive(false);
+        _articleMarketSkin.SetActive(false);
+        _camEnd.gameObject.SetActive(false);
         _iconInteract.transform.DOScale(0f, 0f);
         _fadeOut.DOColor(Color.clear, 0f);
     }
@@ -46,8 +56,10 @@ public class ChainParkQuest : MonoBehaviour
         _myCol.enabled = false;
         _dialogue.canTalk = false;
         _dialogue.Close();
-        _iconInteract.SetActive(false);
+        _iconInteract.transform.DOScale(0f, 0.5f);
         _myAudio.PlayOneShot(_soundConfirm);
+        _articleMarketSkin.SetActive(true);
+        _iconQuest.SetActive(false);
         questActive = true;
     }
 
@@ -74,15 +86,15 @@ public class ChainParkQuest : MonoBehaviour
         if (player != null)
         {
             if (_myCol.enabled && !questActive && !_questCompleted) SetDialogue();
-            else if (_questCompleted) _iconInteract.SetActive(true);
+            else if (_questCompleted) _iconInteract.transform.DOScale(0.01f, 0.5f);
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Character>();
-        //if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract))
-            //StartCoroutine(Ending());
+        if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract))
+            StartCoroutine(Ending(player));
     }
 
     private void OnTriggerExit(Collider other)
@@ -99,5 +111,73 @@ public class ChainParkQuest : MonoBehaviour
     {
         actualScore += addScore;
         textScore.text = "TOTAL SCORE: " + actualScore.ToString();
+
+        if (actualScore >= _scoreRequired)
+        {
+            _articleMarketSkin.SetActive(true);
+            questActive = false;
+        }
+    }
+
+    public void Completed(AudioSource audio, AudioClip soundBuy, AudioClip soundError)
+    {
+        if (actualScore >= _scoreRequired)
+        {
+            audio.PlayOneShot(soundBuy);
+            Destroy(_articleMarketSkin);
+            _iconQuest.SetActive(true);
+            _myCol.enabled = true;
+            _questCompleted = true;
+
+            _inventory.tickets -= _scoreRequired;
+            if (_inventory.tickets <= 0) _inventory.tickets = 0;
+        }
+
+        else audio.PlayOneShot(soundError);
+    }
+
+    private IEnumerator Ending(Character player)
+    {
+        Destroy(_myCol);
+        Destroy(_iconInteract);
+        Destroy(_iconQuest);
+        _boxMessage.SetMessage(_nameNPC);
+        player.FreezePlayer();
+        _fadeOut.DOColor(Color.black, 1f);
+       
+        yield return new WaitForSeconds(1f);
+        _camPlayer.gameObject.SetActive(false);
+        _camEnd.gameObject.SetActive(true);
+        _fadeOut.DOColor(Color.clear, 1f);
+
+        yield return new WaitForSeconds(1f);
+        _boxMessage.ShowMessage(_messages[0]);
+
+        yield return new WaitForSeconds(3f);
+        _boxMessage.CloseMessage();
+        _fadeOut.DOColor(Color.black, 1f);
+
+        yield return new WaitForSeconds(1f);
+        _fadeOut.DOColor(Color.clear, 1f);
+
+        yield return new WaitForSeconds(1f);
+        _boxMessage.ShowMessage(_messages[1]);
+
+        yield return new WaitForSeconds(3f);
+        _boxMessage.CloseMessage();
+
+        yield return new WaitForSeconds(0.6f);
+        _boxMessage.ShowMessage(_messages[2]);
+
+        yield return new WaitForSeconds(3f);
+        Destroy(_camEnd.gameObject);
+        player.DeFreezePlayer();
+        _camPlayer.gameObject.SetActive(true);
+        _boxMessage.CloseMessage();
+        _gm.QuestCompleted();
+
+        yield return new WaitForSeconds(0.6f);
+        _boxMessage.DesactivateMessage();
+        Destroy(this);
     }
 }
