@@ -36,6 +36,10 @@ public class CheatManager : MonoBehaviour
 
     private TreeRegenerative[] _allTrees;
 
+    [Header("ZONAS RESTRICTIONS")]
+    [SerializeField] GameObject[] _zones;
+    [SerializeField] GameObject _bridgeZone2;
+
     private void Awake()
     {
         _inventory = GetComponent<CharacterInventory>();
@@ -70,7 +74,17 @@ public class CheatManager : MonoBehaviour
         }
 
         if (Input.GetKeyDown(_keyTeletransport) && Input.GetKey(KeyCode.LeftControl))
+        {
             transform.position = _posTeletransport.position;
+
+            foreach (GameObject item in _zones)
+            {
+                Destroy(item);
+            }
+
+            _bridgeZone2.gameObject.SetActive(true);
+        }
+            
 
         if (!Input.GetKey(_keySkipQuest)) return;
 
