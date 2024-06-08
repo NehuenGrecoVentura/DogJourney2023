@@ -96,11 +96,12 @@ public class Manzana_Manager : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.M))
-        //{
-        //    //Gaming = !Gaming;
-        //    //Game();
-        //}
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            Gaming = !Gaming;
+            Game();
+        }
+
         if (Gaming)
         {
             if (MP.GameOver)
