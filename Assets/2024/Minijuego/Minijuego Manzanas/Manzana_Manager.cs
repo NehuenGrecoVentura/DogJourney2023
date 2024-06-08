@@ -30,7 +30,7 @@ public class Manzana_Manager : MonoBehaviour
     [Header("MESH BARRIL")]
     [SerializeField] Transform _barrilMesh;
     [SerializeField] float _speedRotBarril;
-
+ 
     [Header("UI SCORE")]
     [SerializeField] GameObject _canvasScore;
     [SerializeField] PuestoManzana _puestoManzana;
@@ -84,7 +84,6 @@ public class Manzana_Manager : MonoBehaviour
             rb.velocity = Vector3.right * speed;
             _barrilMesh.transform.Rotate(0, 0, -_speedRotBarril * Time.deltaTime);
         }
-
     }
 
     void Random()
