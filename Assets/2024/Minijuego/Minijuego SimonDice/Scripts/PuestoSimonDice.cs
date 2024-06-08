@@ -56,6 +56,7 @@ public class PuestoSimonDice : MonoBehaviour
         _firstContact = false;
         _myCol.enabled = false;
 
+        _simonManager.SetRot();
         _boxMessage.SetMessage("Mini Game");
         player.FreezePlayer();
         _iconInteract.DOScale(0f, 0.5f);
@@ -97,6 +98,7 @@ public class PuestoSimonDice : MonoBehaviour
         player.FreezePlayer();
         _iconInteract.DOScale(0f, 0.5f);
         _fadeOut.DOColor(Color.black, 1f);
+        _simonManager.SetRot();
 
         yield return new WaitForSeconds(2f);
         _camMiniGame.gameObject.SetActive(true);

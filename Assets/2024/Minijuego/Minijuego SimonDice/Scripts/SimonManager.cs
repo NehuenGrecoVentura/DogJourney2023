@@ -34,6 +34,11 @@ public class SimonManager : MonoBehaviour
     [SerializeField] Image _fadeOut;
     [SerializeField] Camera _camIntro;
 
+    [Header("ROT")]
+    [SerializeField] private float _speedRot;
+    [SerializeField] Transform _circle;
+    private Quaternion _initialRot;
+
     private void Start()
     {
         _myAudio = GetComponent<AudioSource>();
@@ -46,6 +51,7 @@ public class SimonManager : MonoBehaviour
         _camIntro.gameObject.SetActive(false);
         _camSimon.gameObject.SetActive(false);
         _colPuesto = _puestoSimon.GetComponent<Collider>();
+        _initialRot = _circle.rotation;
     }
 
 
@@ -54,6 +60,16 @@ public class SimonManager : MonoBehaviour
         if(_lives <= 0)
         {
             StartCoroutine(ExitGame());
+        }
+
+        if (_score >= 30)
+        {
+            float zRot = _speedRot * Time.deltaTime;
+            Vector3 currentRotation = _circle.transform.eulerAngles;
+            currentRotation.z += zRot;
+            _circle.transform.eulerAngles = currentRotation;
+
+            if (_score >= 70) _speedRot = 30f;
         }
     }
 
@@ -181,6 +197,9 @@ public class SimonManager : MonoBehaviour
     public void StartGame()
     {
         _lives = 3;
+        _score = 0;
+        _txtScore.text = _score.ToString();
+        SetRot();
 
         foreach (Image icon in _iconsLives)
         {
@@ -189,6 +208,16 @@ public class SimonManager : MonoBehaviour
 
         Gaming = !Gaming;
         Game();
+    }
+
+    public void ExitButton()
+    {
+        StartCoroutine(ExitGame());
+    }
+
+    public void SetRot()
+    {
+        _circle.transform.rotation = _initialRot;
     }
 
     private IEnumerator ExitGame()
@@ -202,5 +231,6 @@ public class SimonManager : MonoBehaviour
         Game();
         _colPuesto.enabled = true;
         _lives = 3;
+        _score = 0;
     }
 }
