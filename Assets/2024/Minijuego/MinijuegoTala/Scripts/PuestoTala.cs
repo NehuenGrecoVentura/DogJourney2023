@@ -66,7 +66,7 @@ public class PuestoTala : MonoBehaviour
         _camPlayer.gameObject.SetActive(false);
         _fadeOut.DOColor(Color.clear, 1f);
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         _boxMessage.ShowMessage(_message);
 
         yield return new WaitForSeconds(3f);
