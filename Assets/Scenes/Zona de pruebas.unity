@@ -289,6 +289,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 162494414}
   m_Mesh: {fileID: -1524248832846973078, guid: 378544a72d5d14a42ab9c48e9d32e5ab, type: 3}
+--- !u!95 &244351315 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 6a3a57f6a8c954a4585b47eb25f305c4,
+    type: 3}
+  m_PrefabInstance: {fileID: 632764953}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &348551146
 GameObject:
   m_ObjectHideFlags: 0
@@ -717,7 +723,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3bb2a86c4255454489d717445dec8a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _anim: {fileID: 0}
+  _anim: {fileID: 244351315}
   scared: 0
   _trolleyAudio: {fileID: 0}
   _scaredPoints:
