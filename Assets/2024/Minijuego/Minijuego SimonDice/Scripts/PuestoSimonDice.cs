@@ -21,7 +21,6 @@ public class PuestoSimonDice : MonoBehaviour
     [SerializeField] Camera _camMiniGame;
     private bool _firstContact = true;
 
-
     void Start()
     {
         _iconInteract.DOScale(0f, 0f);
@@ -68,7 +67,8 @@ public class PuestoSimonDice : MonoBehaviour
         _fadeOut.DOColor(Color.clear, 1f);
 
         yield return new WaitForSeconds(1f);
-        _camIntro.transform.DOMoveZ(_camMiniGame.transform.position.z, 3f);
+        //_camIntro.transform.DOMoveZ(_camMiniGame.transform.position.z, 3f);
+        _camIntro.transform.DOMove(_camMiniGame.transform.position, 3f);
 
         yield return new WaitForSeconds(3f);
         _boxMessage.ShowMessage(_message);
