@@ -19,6 +19,10 @@ public class ChainParkQuest : MonoBehaviour
     [SerializeField] string _nameNPC;
     [SerializeField] Button _buttonConfirm;
 
+    [Header("NOTIFICATION")]
+    [SerializeField] RectTransform _notification;
+    [SerializeField] DoTweenTest _doTween;
+
     [Header("QUEST")]
     [SerializeField] Manager _gm;
     [SerializeField] CharacterInventory _inventory;
@@ -131,6 +135,8 @@ public class ChainParkQuest : MonoBehaviour
 
             _inventory.tickets -= _scoreRequired;
             if (_inventory.tickets <= 0) _inventory.tickets = 0;
+
+            _doTween.ShowLootCoroutine(_notification);
         }
 
         else audio.PlayOneShot(soundError);

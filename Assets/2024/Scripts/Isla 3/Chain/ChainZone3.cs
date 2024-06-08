@@ -31,6 +31,10 @@ public class ChainZone3 : MonoBehaviour
     private bool _questActive = false;
     private bool _questCompleted = false;
 
+    [Header("NOTIFICATION")]
+    [SerializeField] RectTransform _notification;
+    [SerializeField] DoTweenTest _doTween;
+
     [Header("MESSAGE")]
     [SerializeField] BoxMessages _boxMessage;
     [SerializeField, TextArea(4, 6)] string[] _messages;
@@ -47,6 +51,7 @@ public class ChainZone3 : MonoBehaviour
     {
         _dialogue.gameObject.SetActive(false);
         _camEnd.gameObject.SetActive(false);
+        _notification.gameObject.SetActive(false);
         _iconInteract.transform.DOScale(0f, 0f);
         _fadeOut.DOColor(Color.clear, 0f);
     }
@@ -78,6 +83,7 @@ public class ChainZone3 : MonoBehaviour
             {
                 // Se cumplen todos los requisitos
                 _myCol.enabled = true;
+                _doTween.ShowLootCoroutine(_notification);
                 _questCompleted = true;
                 _questActive = false;
             }
