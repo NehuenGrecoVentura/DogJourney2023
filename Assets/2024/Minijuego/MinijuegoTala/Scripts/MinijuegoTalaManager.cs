@@ -74,8 +74,6 @@ public class MinijuegoTalaManager : MonoBehaviour
         Coder1.Reset();
         Coder2.Reset();
         SpawnCoder();
-
-        _wood.transform.DOMove(_posGameWood.position, 0.5f);
     }
 
     private void SpawnCoder()
@@ -218,6 +216,8 @@ public class MinijuegoTalaManager : MonoBehaviour
     {
         Gaming = !Gaming;
         Game();
+        _wood.transform.position = _posStartWood.position;
+        _wood.transform.DOMove(_posGameWood.position, 0.5f);
     }
 
     private IEnumerator ExitGame()
@@ -232,5 +232,18 @@ public class MinijuegoTalaManager : MonoBehaviour
         Timer = 0;
         Reset();
         CallCoder();
+    }
+
+    private IEnumerator ResetWoodCoroutine()
+    {
+        _wood.transform.DOMove(_posOutWood.position, 0.5f);
+        yield return new WaitForSeconds(0.5f);
+        _wood.transform.position = _posStartWood.position;
+        _wood.transform.DOMove(_posGameWood.position, 0.5f);
+    }
+
+    public void ResetWood()
+    {
+        StartCoroutine(ResetWoodCoroutine());
     }
 }

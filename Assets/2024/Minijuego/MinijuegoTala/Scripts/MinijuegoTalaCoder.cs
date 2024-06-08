@@ -91,21 +91,20 @@ public class MinijuegoTalaCoder : MonoBehaviour
             transform.position = GamePoint.position;
             ImActive = true;
 
-
             //transform.DOMove(GamePoint.position, 0.5f);
             //ImActive = true;
-
-
         }
+
         else if(Done)
         {
+            manager.ResetWood();
             transform.position = outPoint.position;
             ImActive = false;
-
+           
             //transform.DOMove(outPoint.position, 0.5f);
             //ImActive = false;
-
         }
+
         //ArrowA.transform.position = ASpawn.position;
         //ArrowB.transform.position = BSpawn.position;
         //ArrowC.transform.position = CSpawn.position;
