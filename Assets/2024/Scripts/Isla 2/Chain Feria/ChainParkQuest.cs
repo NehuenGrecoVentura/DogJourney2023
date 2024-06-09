@@ -29,14 +29,13 @@ public class ChainParkQuest : MonoBehaviour
     [SerializeField] GameObject _articleMarketSkin;
     [SerializeField] Image _fadeOut;
     [SerializeField] int _scoreRequired = 250;
-    public int actualScore = 0;
     [HideInInspector] public bool questActive = false;
     [HideInInspector] public bool _questCompleted = false;
 
     [Header("MESSAGE")]
     [SerializeField] BoxMessages _boxMessage;
     [SerializeField, TextArea(4, 6)] string[] _messages;
-    
+
 
     [Header("CAMERAS")]
     [SerializeField] Camera _camEnd;
@@ -53,6 +52,16 @@ public class ChainParkQuest : MonoBehaviour
         _camEnd.gameObject.SetActive(false);
         _iconInteract.transform.DOScale(0f, 0f);
         _fadeOut.DOColor(Color.clear, 0f);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.K))
+        {
+            _articleMarketSkin.SetActive(true);
+            _inventory.tickets += _scoreRequired;
+            questActive = false;
+        }
     }
 
     private void Confirm()
@@ -111,21 +120,21 @@ public class ChainParkQuest : MonoBehaviour
         }
     }
 
-    public void AddScore(int addScore, TMP_Text textScore)
-    {
-        actualScore += addScore;
-        textScore.text = "TOTAL SCORE: " + actualScore.ToString();
+    //public void AddScore(int addScore, TMP_Text textScore)
+    //{
+    //    actualScore += addScore;
+    //    textScore.text = "TOTAL SCORE: " + actualScore.ToString();
 
-        if (actualScore >= _scoreRequired)
-        {
-            _articleMarketSkin.SetActive(true);
-            questActive = false;
-        }
-    }
+    //    if (actualScore >= _scoreRequired)
+    //    {
+    //        _articleMarketSkin.SetActive(true);
+    //        questActive = false;
+    //    }
+    //}
 
     public void Completed(AudioSource audio, AudioClip soundBuy, AudioClip soundError)
     {
-        if (actualScore >= _scoreRequired)
+        if (_inventory.tickets >= _scoreRequired)
         {
             audio.PlayOneShot(soundBuy);
             Destroy(_articleMarketSkin);
@@ -150,7 +159,7 @@ public class ChainParkQuest : MonoBehaviour
         _boxMessage.SetMessage(_nameNPC);
         player.FreezePlayer();
         _fadeOut.DOColor(Color.black, 1f);
-       
+
         yield return new WaitForSeconds(1f);
         _camPlayer.gameObject.SetActive(false);
         _camEnd.gameObject.SetActive(true);
