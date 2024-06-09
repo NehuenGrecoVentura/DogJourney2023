@@ -19,7 +19,9 @@ public class TirosManager : MonoBehaviour
     [Header("UI SCORE")]
     [SerializeField] GameObject _canvasScore;
     [SerializeField] PuestoTiros _puestoTiros;
+    [SerializeField] TMP_Text _txtScoreChain;
     private Collider _colPuesto;
+    private ChainParkQuest _chainQuest;
 
     [Header("FADE OUT")]
     [SerializeField] Image _fadeOut;
@@ -27,6 +29,7 @@ public class TirosManager : MonoBehaviour
     private void Awake()
     {
         _colPuesto = _puestoTiros.GetComponent<Collider>();
+        _chainQuest = FindObjectOfType<ChainParkQuest>();
     }
 
     private void Start()
@@ -38,6 +41,7 @@ public class TirosManager : MonoBehaviour
         _canvasScore.SetActive(false);
         _fadeOut.DOColor(Color.clear, 0f);
         _camApple.gameObject.SetActive(false);
+        _txtScoreChain.gameObject.SetActive(false);
     }
     
     private void Reset()
@@ -97,6 +101,7 @@ public class TirosManager : MonoBehaviour
     {
         Gaming = false;
         _canvasScore.SetActive(false);
+        _txtScoreChain.gameObject.SetActive(false);
         _fadeOut.DOColor(Color.black, 0.5f);
         yield return new WaitForSeconds(1f);
         _fadeOut.DOColor(Color.clear, 1f);
@@ -108,5 +113,13 @@ public class TirosManager : MonoBehaviour
     {
         Gaming = !Gaming;
         Game();
+
+        if(_chainQuest != null && _chainQuest.questActive)
+        {
+            _txtScoreChain.gameObject.SetActive(true);
+            _txtScoreChain.text "TOTAL SCORE: " + _inventory.tickets.ToString();
+        }
+            
+        else _txtScoreChain.gameObject.SetActive(false);
     }
 }

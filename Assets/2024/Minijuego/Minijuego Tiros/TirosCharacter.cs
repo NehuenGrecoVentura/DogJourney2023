@@ -32,6 +32,7 @@ public class TirosCharacter : MonoBehaviour
     [SerializeField] TMP_Text _textScoreChain;
     [SerializeField] Image[] _spritesLifes;
     private ChainParkQuest _chainQuest;
+    private CharacterInventory _inventory;
 
     [Header("AUDIO")]
     [SerializeField] AudioSource _myAudio;
@@ -42,6 +43,7 @@ public class TirosCharacter : MonoBehaviour
     private void Awake()
     {
         _chainQuest = FindObjectOfType<ChainParkQuest>();
+        _inventory = FindObjectOfType<CharacterInventory>();
     }
 
     private void Start()
@@ -52,9 +54,13 @@ public class TirosCharacter : MonoBehaviour
     public void AddScore()
     {
         Score++;
-        if (_chainQuest != null && _chainQuest.questActive) _chainQuest.AddScore(Score, _textScoreChain);
-
         _textScore.text = "Score: " + Score.ToString();
+
+        _inventory.tickets++;
+
+        if (_chainQuest != null && _chainQuest.questActive)
+            _textScoreChain.text = "TOTAL SCORE: " + _inventory.tickets.ToString();
+       
         _myAudio.PlayOneShot(_soundGood);
     }
 
@@ -81,6 +87,7 @@ public class TirosCharacter : MonoBehaviour
         _rb.velocity = Vector3.zero;
         Score = 0;
         Lives = MaxLives;
+        _textScore.text = "Score: " + Score.ToString();
 
         foreach (Image icon in _spritesLifes)
         {
