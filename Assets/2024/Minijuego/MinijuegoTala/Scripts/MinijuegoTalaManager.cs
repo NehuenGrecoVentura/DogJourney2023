@@ -22,7 +22,6 @@ public class MinijuegoTalaManager : MonoBehaviour
     
     [Header("UI SCORE")]
     [SerializeField] GameObject _canvasScore;
-    [SerializeField] GameObject _canvasChainScore;
     [SerializeField] private int Score;
     [SerializeField] TMP_Text _txtScore;
     [SerializeField] TMP_Text _txtScoreChain;
@@ -66,15 +65,13 @@ public class MinijuegoTalaManager : MonoBehaviour
         Gaming = false;
         SpawnCoder();
         _canvasScore.SetActive(false);
-        _canvasChainScore.SetActive(false);
+        _txtScoreChain.gameObject.SetActive(false);
         _colPuesto = _puestoTala.GetComponent<Collider>();
 
         _sliderTimer.maxValue = MaxTimer;
         _sliderTimer.value = MaxTimer;
         _initialColor = _sliderColor.color;
         _initialColorBackground = _sliderColorBackgorund.color;
-
-
         _wood.transform.position = _posStartWood.position;
     }
     
@@ -128,10 +125,14 @@ public class MinijuegoTalaManager : MonoBehaviour
         Timer = Timer - 0.2f;
         
         Score++;
+        _inventory.tickets++;
 
-        if (_chainQuest != null && _chainQuest.questActive) _chainQuest.AddScore(Score, _txtScoreChain);
+        //if (_chainQuest != null && _chainQuest.questActive) _chainQuest.AddScore(Score, _txtScoreChain);
 
         _txtScore.text = "SCORE: " + Score.ToString();
+
+        if (_chainQuest != null && _chainQuest.questActive)
+            _txtScoreChain.text = "TOTAL SCORE: " + _inventory.tickets.ToString();
         
         StopCoroutine(MoveAxe());
         StartCoroutine(Feedback(Color.green));
@@ -157,11 +158,20 @@ public class MinijuegoTalaManager : MonoBehaviour
         _particleWood.enabled = false;
     }
 
-
     public void WrongClick()
     {
         Timer = Timer + 1f;
+
         Score--;
+        if (Score <= 0) Score = 0;
+        _txtScore.text = "SCORE: " + Score.ToString();
+
+        _inventory.tickets--;
+        if (_inventory.tickets <= 0) _inventory.tickets = 0;
+
+        if (_chainQuest != null && _chainQuest.questActive)
+            _txtScoreChain.text = "TOTAL SCORE: " + _inventory.tickets.ToString();
+        
         StartCoroutine(Feedback(Color.red));
         _myAudio.PlayOneShot(_soundWrong);
     }
@@ -211,10 +221,10 @@ public class MinijuegoTalaManager : MonoBehaviour
             _canvasScore.SetActive(true);
 
             if (_chainQuest != null && _chainQuest.questActive)
-                _canvasChainScore.SetActive(true);
+                _txtScoreChain.gameObject.SetActive(true);
 
-            else _canvasChainScore.SetActive(false);
-            
+            else _txtScoreChain.gameObject.SetActive(false);
+
             Timer = 0;
             Reset();
             CallCoder();
@@ -238,13 +248,18 @@ public class MinijuegoTalaManager : MonoBehaviour
         Game();
         _wood.transform.position = _posStartWood.position;
         _wood.transform.DOMove(_posGameWood.position, 0.5f);
+
+        if (_chainQuest != null && _chainQuest.questActive) 
+            _txtScoreChain.gameObject.SetActive(true);
+
+        else _txtScoreChain.gameObject.SetActive(false);
     }
 
     private IEnumerator ExitGame()
     {
         Gaming = false;
         _canvasScore.SetActive(false);
-        _canvasChainScore.SetActive(false);
+        _txtScoreChain.gameObject.SetActive(false);
         _fadeOut.DOColor(Color.black, 0.5f);
         yield return new WaitForSeconds(1f);
         _fadeOut.DOColor(Color.clear, 1f);
