@@ -39,6 +39,7 @@ public class CheatManager : MonoBehaviour
     [Header("ZONAS RESTRICTIONS")]
     [SerializeField] GameObject[] _zones;
     [SerializeField] GameObject _bridgeZone2;
+    private Bush[] _allBush;
 
     private void Awake()
     {
@@ -53,6 +54,7 @@ public class CheatManager : MonoBehaviour
         _questRepair = FindObjectOfType<QuestFence>();
         _fishingQuest2 = FindObjectOfType<FishingQuest2>();
         _allTrees = FindObjectsOfType<TreeRegenerative>();
+        _allBush = FindObjectsOfType<Bush>();
     }
 
     void Update()
@@ -80,6 +82,12 @@ public class CheatManager : MonoBehaviour
             foreach (GameObject item in _zones)
             {
                 Destroy(item);
+            }
+
+            foreach (Bush bush in _allBush)
+            {
+                bush.enabled = true;
+                bush.GetComponent<Collider>().enabled = true;
             }
 
             _bridgeZone2.gameObject.SetActive(true);

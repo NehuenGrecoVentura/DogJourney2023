@@ -64,6 +64,7 @@ public class Bush : MonoBehaviour
 
                 if (amountHit <= 0)
                 {
+                    player.MainAnim();
                     amountHit = 0;
                     _message.ShowUI("+1", _boxMessage, _textAmount);
                     _invetory.seeds++;
@@ -76,7 +77,13 @@ public class Bush : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null) _hitBar.gameObject.SetActive(false);
+        if (player != null)
+        {
+            _hitBar.gameObject.SetActive(false);
+            player.MainAnim();
+        }
+            
+            
     }
 
     private IEnumerator Respawn()
