@@ -36,7 +36,6 @@ public class ChainParkQuest : MonoBehaviour
     [SerializeField] BoxMessages _boxMessage;
     [SerializeField, TextArea(4, 6)] string[] _messages;
 
-
     [Header("CAMERAS")]
     [SerializeField] Camera _camEnd;
     [SerializeField] CameraOrbit _camPlayer;
@@ -44,6 +43,11 @@ public class ChainParkQuest : MonoBehaviour
     [Header("AUDIO")]
     [SerializeField] AudioSource _myAudio;
     [SerializeField] AudioClip _soundConfirm;
+
+    [Header("MESH")]
+    [SerializeField] SkinnedMeshRenderer _myMesh;
+    [SerializeField] Material _skinMaterial;
+    [SerializeField] Animator _myAnim;
 
     void Start()
     {
@@ -73,6 +77,7 @@ public class ChainParkQuest : MonoBehaviour
         _myAudio.PlayOneShot(_soundConfirm);
         _articleMarketSkin.SetActive(true);
         _iconQuest.SetActive(false);
+        _myAnim.SetBool("Quest", true);
         questActive = true;
     }
 
@@ -120,18 +125,6 @@ public class ChainParkQuest : MonoBehaviour
         }
     }
 
-    //public void AddScore(int addScore, TMP_Text textScore)
-    //{
-    //    actualScore += addScore;
-    //    textScore.text = "TOTAL SCORE: " + actualScore.ToString();
-
-    //    if (actualScore >= _scoreRequired)
-    //    {
-    //        _articleMarketSkin.SetActive(true);
-    //        questActive = false;
-    //    }
-    //}
-
     public void Completed(AudioSource audio, AudioClip soundBuy, AudioClip soundError)
     {
         if (_inventory.tickets >= _scoreRequired)
@@ -144,8 +137,9 @@ public class ChainParkQuest : MonoBehaviour
 
             _inventory.tickets -= _scoreRequired;
             if (_inventory.tickets <= 0) _inventory.tickets = 0;
-
+            _myAnim.SetBool("Quest", false);
             _doTween.ShowLootCoroutine(_notification);
+
         }
 
         else audio.PlayOneShot(soundError);
@@ -154,6 +148,7 @@ public class ChainParkQuest : MonoBehaviour
     private IEnumerator Ending(Character player)
     {
         _myCol.enabled = false;
+        _myAnim.SetBool("Quest", true);
         _iconInteract.transform.DOScale(0f, 0.5f);
         _iconQuest.transform.DOScale(0f, 0.5f);
         _boxMessage.SetMessage(_nameNPC);
@@ -172,7 +167,8 @@ public class ChainParkQuest : MonoBehaviour
         _boxMessage.CloseMessage();
         _fadeOut.DOColor(Color.black, 1f);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
+        _myMesh.material = _skinMaterial;
         _fadeOut.DOColor(Color.clear, 1f);
 
         yield return new WaitForSeconds(1f);
@@ -186,6 +182,8 @@ public class ChainParkQuest : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
         Destroy(_camEnd.gameObject);
+        Destroy(_iconInteract);
+        Destroy(_iconQuest);
         player.DeFreezePlayer();
         _camPlayer.gameObject.SetActive(true);
         _boxMessage.CloseMessage();
