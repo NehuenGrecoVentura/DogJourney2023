@@ -54,6 +54,7 @@ public class SimonManager : MonoBehaviour
         Gaming = false;
 
         _canvasScore.SetActive(false);
+        _txtScoreChain.gameObject.SetActive(false);
         _fadeOut.DOColor(Color.clear, 0f);
         _camIntro.gameObject.SetActive(false);
         _camSimon.gameObject.SetActive(false);
@@ -64,7 +65,7 @@ public class SimonManager : MonoBehaviour
 
     private void Update()
     {
-        if(_lives <= 0)
+        if (_lives <= 0)
         {
             StartCoroutine(ExitGame());
         }
@@ -133,10 +134,10 @@ public class SimonManager : MonoBehaviour
         if (userList[userList.Count - 1] != SimonList[userList.Count - 1])
         {
             audioSource.PlayOneShot(soundError);
-            _lives--; 
+            _lives--;
 
             if (_lives > 0) _iconsLives[_lives].gameObject.SetActive(false);
-            else StartCoroutine(ExitGame());  
+            else StartCoroutine(ExitGame());
         }
 
         else if (userList.Count == SimonList.Count && _lives > 0)
@@ -145,9 +146,13 @@ public class SimonManager : MonoBehaviour
             Next();
 
             _score += 10;
-            if (_chainQuest != null && _chainQuest.enabled) _chainQuest.AddScore(_score, _txtScoreChain);
-
             _txtScore.text = "SCORE: " + _score.ToString();
+
+            _inventory.tickets += 10;
+
+            if (_chainQuest != null && _chainQuest.questActive)
+                _txtScoreChain.text = "TOTAL SCORE: " + _inventory.tickets.ToString();
+
             Debug.Log("next Lvl");
         }
     }
@@ -206,10 +211,18 @@ public class SimonManager : MonoBehaviour
 
     public void StartGame()
     {
+        SetRot();
         _lives = 3;
         _score = 0;
-        _txtScore.text = _score.ToString();
-        SetRot();
+        _txtScore.text = "SCORE: " + _score.ToString();
+
+        if (_chainQuest != null && _chainQuest.questActive)
+        {
+            _txtScoreChain.gameObject.SetActive(true);
+            _txtScoreChain.text = "TOTAL SCORE: " + _inventory.tickets.ToString();
+        }  
+
+        else _txtScoreChain.gameObject.SetActive(false);
 
         foreach (Image icon in _iconsLives)
         {
@@ -235,6 +248,7 @@ public class SimonManager : MonoBehaviour
         Gaming = false;
         LockMouse();
         _canvasScore.SetActive(false);
+        _txtScoreChain.gameObject.SetActive(false);
         _fadeOut.DOColor(Color.black, 0.5f);
         yield return new WaitForSeconds(1f);
         _fadeOut.DOColor(Color.clear, 1f);
