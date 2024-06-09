@@ -31,22 +31,43 @@ public class Manzanas_Player : MonoBehaviour
     [SerializeField] int Score;
     [SerializeField] ChainParkQuest _chainQuest;
     [SerializeField] Manzana_Manager _manager;
+    private CharacterInventory _inventory;
 
     [Header("AUDIO")]
     [SerializeField] AudioSource _myAudio;
     [SerializeField] AudioClip _soundGood;
     [SerializeField] AudioClip _soundFail;
 
+    private void Awake()
+    {
+        _inventory = FindObjectOfType<CharacterInventory>();
+    }
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
     }
 
+    public void ShowGlobalScore()
+    {
+        if (_chainQuest != null && _chainQuest.questActive)
+            _textScoreChain.gameObject.SetActive(true);
+
+        else _textScoreChain.gameObject.SetActive(false);
+    }
+
+    public void ResetScore()
+    {
+        Score = 0;
+        _textScore.text = "Score: " + Score.ToString();
+    }
+
     public void AddScore()
     {
         Score++;
-        if (_chainQuest != null && _chainQuest.questActive) _chainQuest.AddScore(Score, _textScoreChain);
-
+        _inventory.tickets++;
+        //if (_chainQuest != null && _chainQuest.questActive) _chainQuest.AddScore(_inventory.tickets, _textScoreChain);
+        if (_chainQuest != null && _chainQuest.questActive) _textScoreChain.text = "TOTAL SCORE: " + _inventory.tickets.ToString();
         _textScore.text = "Score: " + Score.ToString();
         _myAudio.PlayOneShot(_soundGood);
 

@@ -191,6 +191,8 @@ public class Manzana_Manager : MonoBehaviour
         Gaming = !Gaming;
         Game();
         ResetSpeed();
+        MP.ResetScore();
+        MP.ShowGlobalScore();
     }
 
     public void ChangeSpeed()
