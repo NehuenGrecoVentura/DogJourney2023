@@ -249,6 +249,9 @@ public class MinijuegoTalaManager : MonoBehaviour
         _wood.transform.position = _posStartWood.position;
         _wood.transform.DOMove(_posGameWood.position, 0.5f);
 
+        Score = 0;
+        _txtScore.text = "SCORE: " + Score.ToString();
+
         if (_chainQuest != null && _chainQuest.questActive) 
             _txtScoreChain.gameObject.SetActive(true);
 

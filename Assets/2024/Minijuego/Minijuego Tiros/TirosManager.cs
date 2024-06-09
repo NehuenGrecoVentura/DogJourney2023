@@ -117,7 +117,7 @@ public class TirosManager : MonoBehaviour
         if(_chainQuest != null && _chainQuest.questActive)
         {
             _txtScoreChain.gameObject.SetActive(true);
-            _txtScoreChain.text "TOTAL SCORE: " + _inventory.tickets.ToString();
+            _txtScoreChain.text = "TOTAL SCORE: " + _inventory.tickets.ToString();
         }
             
         else _txtScoreChain.gameObject.SetActive(false);
