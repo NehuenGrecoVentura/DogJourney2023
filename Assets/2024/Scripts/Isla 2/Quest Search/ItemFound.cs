@@ -106,7 +106,8 @@ public class ItemFound : MonoBehaviour
         _player.enabled = false;
 
         ChangeCam(true, false);
-        Animator animDog = _dog.GetComponentInParent<Animator>();
+        //Animator animDog = _dog.GetComponentInParent<Animator>();
+        Animator animDog = _dog.GetComponent<Animator>();
 
         yield return new WaitForSeconds(3f);
         animDog.enabled = false;
