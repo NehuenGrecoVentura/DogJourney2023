@@ -11,6 +11,7 @@ public class ChainZone3 : MonoBehaviour
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
     [SerializeField] GameObject _iconInteract;
     [SerializeField] GameObject _iconQuest;
+    [SerializeField] Animator _myAnim;
 
     [Header("DIALOGUE")]
     [SerializeField] Dialogue _dialogue;
@@ -79,6 +80,7 @@ public class ChainZone3 : MonoBehaviour
             if (full)
             {
                 // Se cumplen todos los requisitos
+                _myAnim.SetBool("Quest", false);
                 _iconQuest.SetActive(true);
                 _myCol.enabled = true;
                 _doTween.ShowLootCoroutine(_notification);
@@ -88,6 +90,7 @@ public class ChainZone3 : MonoBehaviour
             else
             {
                 // No se cumplen todos los requisitos
+                _myAnim.SetBool("Quest", true);
                 _iconQuest.SetActive(false);
                 _myCol.enabled = false;
                 _questCompleted = false;
@@ -103,6 +106,7 @@ public class ChainZone3 : MonoBehaviour
         _iconInteract.transform.DOScale(0f, 0.5f);
         _myAudio.PlayOneShot(_soundConfirm);
         _iconQuest.SetActive(false);
+        _myAnim.SetBool("Quest", true);
         _questActive = true;
     }
 
@@ -153,6 +157,13 @@ public class ChainZone3 : MonoBehaviour
     private IEnumerator Ending(Character player)
     {
         _myCol.enabled = false;
+        _inventory.nails -= 500;
+        _inventory.money -= 500;
+        _inventory.tickets -= 500;
+        _inventory.greenTrees -= 500;
+
+
+        _myAnim.SetBool("Quest", true);
         _iconInteract.transform.DOScale(0f, 0.5f);
         _iconQuest.transform.DOScale(0f, 0.5f);
         _boxMessage.SetMessage(_nameNPC);
