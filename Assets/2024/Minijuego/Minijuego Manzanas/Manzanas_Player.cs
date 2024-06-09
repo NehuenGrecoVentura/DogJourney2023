@@ -30,6 +30,7 @@ public class Manzanas_Player : MonoBehaviour
     [SerializeField] TMP_Text _textScoreChain;
     [SerializeField] int Score;
     [SerializeField] ChainParkQuest _chainQuest;
+    [SerializeField] Manzana_Manager _manager;
 
     [Header("AUDIO")]
     [SerializeField] AudioSource _myAudio;
@@ -48,6 +49,22 @@ public class Manzanas_Player : MonoBehaviour
 
         _textScore.text = "Score: " + Score.ToString();
         _myAudio.PlayOneShot(_soundGood);
+
+
+        if (Score == 5) // Comprueba si Score es un múltiplo de 5
+        {
+            _manager.ChangeSpeed();
+        }
+
+        if (Score == 10) // Comprueba si Score es un múltiplo de 5
+        {
+            _manager.ChangeSpeed();
+        }
+
+        if (Score == 15) // Comprueba si Score es un múltiplo de 5
+        {
+            _manager.ChangeSpeed();
+        }
     }
 
     public void RemoveLive()

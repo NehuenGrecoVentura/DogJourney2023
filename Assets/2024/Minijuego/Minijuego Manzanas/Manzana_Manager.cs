@@ -30,7 +30,11 @@ public class Manzana_Manager : MonoBehaviour
     [Header("MESH BARRIL")]
     [SerializeField] Transform _barrilMesh;
     [SerializeField] float _speedRotBarril;
- 
+    private float _initialMaxSpeed;
+    private float _initialMinSpeed;
+    private float _initialSpawnMinSpeed;
+    private float _initialSpawnMaxSpeed;
+
     [Header("UI SCORE")]
     [SerializeField] GameObject _canvasScore;
     [SerializeField] PuestoManzana _puestoManzana;
@@ -57,6 +61,11 @@ public class Manzana_Manager : MonoBehaviour
         _fadeOut.DOColor(Color.clear, 0f);
         _camIntro.gameObject.SetActive(false);
         _camApple.gameObject.SetActive(false);
+
+        _initialMaxSpeed = Maxspeed;
+        _initialMinSpeed = Minspeed;
+        _initialSpawnMinSpeed = SpawnerTimerMin;
+        _initialSpawnMaxSpeed = SpawnerTimerMax;
     }
 
     void Spawn()
@@ -181,5 +190,22 @@ public class Manzana_Manager : MonoBehaviour
     {
         Gaming = !Gaming;
         Game();
+        ResetSpeed();
+    }
+
+    public void ChangeSpeed()
+    {
+        SpawnerTimerMax = 2;
+        SpawnerTimerMin = 1;
+        Maxspeed += 5;
+        Minspeed += 5;
+    }
+
+    private void  ResetSpeed()
+    {
+        SpawnerTimerMax = _initialSpawnMaxSpeed;
+        SpawnerTimerMin = _initialSpawnMinSpeed;
+        Maxspeed = _initialMaxSpeed;
+        Minspeed = _initialMinSpeed;
     }
 }
