@@ -18,8 +18,11 @@ public class CameraOrbit : MonoBehaviour
 
     public float suavidad = 10f;
     private bool _playerBlocked = false;
-    private bool _zoomBlocked = false;
-
+    [SerializeField] private bool _zoomBlocked = false;
+    private float zoomTargetDistance = 50.0f;
+    private float zoomSmoothness = 5.0f; // Suavidad del efecto de zoom
+    private float previousMaxDistance;
+    float t = 0.0f;
     //public float minY, maxY;
     //public float maxAllowed;
 
@@ -30,7 +33,7 @@ public class CameraOrbit : MonoBehaviour
         CalculateNearPlaneSize();
     }
 
-    private void CalculateNearPlaneSize() 
+    private void CalculateNearPlaneSize()
     {
         float height = Mathf.Tan(camera.fieldOfView * Mathf.Deg2Rad / 2) * camera.nearClipPlane;
         float width = height * camera.aspect;
@@ -38,7 +41,7 @@ public class CameraOrbit : MonoBehaviour
         nearPlaneSize = new Vector2(width, height);
     }
 
-    private Vector3[] GetCameraCollisionPoints(Vector3 direction) 
+    private Vector3[] GetCameraCollisionPoints(Vector3 direction)
     {
         Vector3 position = follow.position;
         Vector3 center = position + direction * (camera.nearClipPlane + 0.2f);
@@ -62,8 +65,6 @@ public class CameraOrbit : MonoBehaviour
         if (hor != 0)
         {
             angle.x += hor * Mathf.Deg2Rad * sensitivity.x;
-
-           
         }
 
         float ver = Input.GetAxis("Mouse Y");
@@ -74,43 +75,52 @@ public class CameraOrbit : MonoBehaviour
             angle.y = Mathf.Clamp(angle.y, -80 * Mathf.Deg2Rad, 80 * Mathf.Deg2Rad);
         }
 
-        // CLAMP
-        //if (ver != 0)
+        //if (Input.GetKeyDown(KeyCode.X))
         //{
-        //    angle.y += ver * Mathf.Deg2Rad * sensitivity.y;
-        //    angle.y = Mathf.Clamp(angle.y, minY * Mathf.Deg2Rad, maxY * Mathf.Deg2Rad);
+        //    if (!_zoomBlocked)
+        //    {
+        //        maxDistance = 20;
+        //        _zoomBlocked = true;
+        //    }
+
+        //    else
+        //    {
+        //        maxDistance = 50;
+        //        _zoomBlocked = false;
+        //    }
         //}
 
-
+        //if (Input.GetKeyDown(KeyCode.X))
+        //{
+        //    _zoomBlocked = !_zoomBlocked; // Invertir el estado de bloqueo del zoom
+        //    zoomTargetDistance = _zoomBlocked ? 20.0f : 50.0f; // Definir la distancia de zoom objetivo
+        //}
 
         if (Input.GetKeyDown(KeyCode.X))
         {
             if (!_zoomBlocked)
             {
-                maxDistance = 20;
+                zoomTargetDistance = 20.0f;
                 _zoomBlocked = true;
             }
 
             else
             {
-                maxDistance = 50;
+                zoomTargetDistance = 50.0f;
                 _zoomBlocked = false;
             }
         }
 
+        //float scroll = Input.GetAxis("Mouse ScrollWheel");
 
+        //if (scroll != 0 && !_zoomBlocked)
+        //{
+        //    float zoomAmount = scroll * zoomSensitivity; // Sensibilidad del zoom
+        //    maxDistance -= zoomAmount; // Ajusta la distancia máxima de la cámara
 
-
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-
-        if (scroll != 0 && !_zoomBlocked)
-        {
-            float zoomAmount = scroll * zoomSensitivity; // Sensibilidad del zoom
-            maxDistance -= zoomAmount; // Ajusta la distancia máxima de la cámara
-
-            // Limita la distancia máxima para evitar valores negativos o problemas con valores extremos
-            maxDistance = Mathf.Clamp(maxDistance, minZoomDistance, maxZoomDistance);
-        }
+        //    // Limita la distancia máxima para evitar valores negativos o problemas con valores extremos
+        //    maxDistance = Mathf.Clamp(maxDistance, minZoomDistance, maxZoomDistance);
+        //}
     }
 
     void LateUpdate()
@@ -149,5 +159,12 @@ public class CameraOrbit : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(follow.position - transform.position);
 
         _playerBlocked = false; // Restablece el estado de colisión
+
+        //if (_zoomBlocked)
+        //{
+        //    maxDistance = Mathf.Lerp(maxDistance, zoomTargetDistance, Time.deltaTime * zoomSmoothness);
+        //}
+
+        maxDistance = Mathf.Lerp(maxDistance, zoomTargetDistance, Time.deltaTime * zoomSmoothness);
     }
 }
