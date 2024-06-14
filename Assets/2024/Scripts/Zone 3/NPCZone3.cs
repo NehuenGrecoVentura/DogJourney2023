@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -25,6 +24,9 @@ public class NPCZone3 : MonoBehaviour
     [SerializeField] AudioClip _soundConfirm;
 
     [Header("QUEST")]
+    [SerializeField] QuestUI _questUI;
+    [SerializeField] int _woodRequired = 10;
+    [SerializeField] CharacterInventory _inventory;
     private bool _questActive = false;
     private bool _questCompleted = false;
 
@@ -32,6 +34,27 @@ public class NPCZone3 : MonoBehaviour
     {
         _dialogue.gameObject.SetActive(false);
         _iconInteract.transform.DOScale(0f, 0f);
+    }
+
+    private void Update()
+    {
+        if (_questActive)
+        {
+            if (_inventory.greenTrees >= _woodRequired)
+            {
+                _questUI.TaskCompleted(2);
+                _questUI.AddNewTask(3, "Go back to the mountain");
+                _questCompleted = true;
+                _questActive = false;
+            }
+
+            else
+            {
+                _questUI.AddNewTask(2, "Get wood to carry the mountain (" + _inventory.greenTrees.ToString() + "/" + _woodRequired.ToString() + ")");
+                _questCompleted = false;
+                _questActive = true;
+            }     
+        }
     }
 
     private void Confirm()
@@ -42,6 +65,7 @@ public class NPCZone3 : MonoBehaviour
         _iconInteract.transform.DOScale(0f, 0.5f);
         _myAudio.PlayOneShot(_soundConfirm);
         _myAnim.SetBool("Quest", true);
+        _questUI.ActiveUIQuest("A Little Fire", "Travel back to the chairlift", "Get wood to carry the mountain (" + _inventory.greenTrees.ToString() + "/" + _woodRequired.ToString() + ")", string.Empty);
         _questActive = true;
     }
 
