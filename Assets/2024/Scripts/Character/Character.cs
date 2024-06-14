@@ -140,6 +140,14 @@ public class Character : MonoBehaviour
         if (!_construct) _myAnim.runtimeAnimatorController = _animController[2];
     }
 
+    public void SitChair()
+    {
+        isConstruct = true;
+        _myRb.isKinematic = true;
+        speed = 0;
+        _myAnim.runtimeAnimatorController = _animController[4];
+    }
+
     public void DeFreezePlayer()
     {
         _myRb.isKinematic = false;
