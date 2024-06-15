@@ -31,9 +31,14 @@ public class NPCZone3 : MonoBehaviour
     [SerializeField] QuestUI _questUI;
     [SerializeField] int _woodRequired = 10;
     [SerializeField] CharacterInventory _inventory;
-    [SerializeField] Manager _gm;
     private bool _questActive = false;
     private bool _questCompleted = false;
+
+    [Header("NEXT QUEST")]
+    [SerializeField] Manager _gm;
+    [SerializeField] GameObject _npcsHouses;
+    [SerializeField] Camera _camNextQuest;
+    [SerializeField] Camera _camCinematic;
 
     [Header("MOVE")]
     [SerializeField] Rigidbody _rb;
@@ -45,6 +50,8 @@ public class NPCZone3 : MonoBehaviour
     {
         _dialogue.gameObject.SetActive(false);
         _iconInteract.transform.DOScale(0f, 0f);
+        _npcsHouses.SetActive(false);
+        _camNextQuest.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -173,7 +180,16 @@ public class NPCZone3 : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         _boxMessages.DesactivateMessage();
+        _camCinematic.gameObject.SetActive(false);
+        _camNextQuest.gameObject.SetActive(true);
+        _npcsHouses.SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+        _camNextQuest.gameObject.transform.DOMove(player.transform.position, 4f);
+
+        yield return new WaitForSeconds(5f);
         camPlayer.gameObject.SetActive(true);
+        Destroy(_camNextQuest.gameObject);
         Destroy(cinematic);
         Destroy(brazier);
         Destroy(this);

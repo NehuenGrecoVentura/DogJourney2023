@@ -20,6 +20,7 @@ public class Brazier : MonoBehaviour
     void Start()
     {
         _fadeOut.DOColor(Color.clear, 0f);
+        _canvasCinematic.SetActive(false);
     }
 
     private void FixedUpdate()
