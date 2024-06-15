@@ -148,6 +148,14 @@ public class Character : MonoBehaviour
         _myAnim.runtimeAnimatorController = _animController[4];
     }
 
+    public void Build()
+    {
+        isConstruct = true;
+        _myRb.isKinematic = true;
+        speed = 0;
+        _myAnim.runtimeAnimatorController = _animController[5];
+    }
+
     public void DeFreezePlayer()
     {
         _myRb.isKinematic = false;
