@@ -175,8 +175,6 @@ public class NPCHouses : MonoBehaviour
         {
             _questUI.TaskCompleted(1);
             _questUI.AddNewTask(3, "Go back to the npc and finish the task");
-        }
-            
-            
+        }  
     }
 }

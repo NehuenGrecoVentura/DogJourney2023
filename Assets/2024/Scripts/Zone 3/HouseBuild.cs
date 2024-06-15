@@ -18,6 +18,10 @@ public class HouseBuild : MonoBehaviour
     [Header("AUDIO")]
     [SerializeField] AudioSource _myAudio;
 
+    [Header("NOTIFICATION")]
+    [SerializeField] DoTweenTest _doTween;
+    [SerializeField] RectTransform _slideNotif;
+
     [SerializeField] Transform[] _iconsMaterials;
     private Transform _parentIconsMaterials;
     [SerializeField] GameObject _houseToBuild;
@@ -50,7 +54,7 @@ public class HouseBuild : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null && Input.GetKey(KeyCode.Space))
         {
-            if (_inventory.nails >= _nailRequired && _inventory.greenTrees >= _woodRequired)
+            if (_inventory.nails >= _nailRequired && _inventory.greenTrees >= _woodRequired && _npcQuest.itemsFound > 0)
             {
                 player.Build();
 
@@ -66,6 +70,7 @@ public class HouseBuild : MonoBehaviour
             {
                 if (_inventory.nails < _nailRequired) StartCoroutine(Feedback(0));
                 if (_inventory.greenTrees < _woodRequired) StartCoroutine(Feedback(1));
+                if (_npcQuest.itemsFound <= 0) _doTween.ShowLootCoroutine(_slideNotif);
             }
         }
     }
