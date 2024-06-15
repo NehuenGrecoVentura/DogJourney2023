@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using UnityEngine.AI;
 using UnityEngine.UI;
 using TMPro;
 
@@ -39,7 +41,13 @@ public class CheatManager : MonoBehaviour
     [Header("ZONAS RESTRICTIONS")]
     [SerializeField] GameObject[] _zones;
     [SerializeField] GameObject _bridgeZone2;
+
+
     private Bush[] _allBush;
+    [SerializeField] Dog _dog;
+    [SerializeField] TrolleyWood _trolley;
+    [SerializeField] Transform _posDogTele;
+    [SerializeField] DogBall _ball;
 
     private void Awake()
     {
@@ -90,9 +98,15 @@ public class CheatManager : MonoBehaviour
                 bush.GetComponent<Collider>().enabled = true;
             }
 
-            _bridgeZone2.gameObject.SetActive(true);
+            _ball.enabled = true;
+
+            _bridgeZone2.gameObject.SetActive(true);            
         }
-            
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            StartCoroutine(Tele());
+        }
 
         if (!Input.GetKey(_keySkipQuest)) return;
 
@@ -145,5 +159,23 @@ public class CheatManager : MonoBehaviour
                 _questFishing2Skiped = true;
                 break;
         }
+    }
+
+
+
+    private IEnumerator Tele()
+    {
+        _dog.GetComponent<NavMeshAgent>().enabled = false;
+        _trolley.GetComponent<NavMeshAgent>().enabled = false;
+
+        _ordersDogs.activeOrders = true;
+        _ball.enabled = true;
+
+        _ball.transform.position = _posDogTele.position;
+        _dog.transform.position = _ball.transform.position;
+
+        yield return new WaitForSeconds(1f);
+        _dog.GetComponent<NavMeshAgent>().enabled = true;
+        _trolley.GetComponent<NavMeshAgent>().enabled = true;
     }
 }
