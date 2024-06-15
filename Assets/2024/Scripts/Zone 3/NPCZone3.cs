@@ -19,6 +19,10 @@ public class NPCZone3 : MonoBehaviour
     [SerializeField] string _nameNPC;
     [SerializeField] Button _buttonConfirm;
 
+    [Header("MESSAGE")]
+    [SerializeField] BoxMessages _boxMessages;
+    [SerializeField, TextArea(4,6)] string[] _messages;
+
     [Header("AUDIO")]
     [SerializeField] AudioSource _myAudio;
     [SerializeField] AudioClip _soundConfirm;
@@ -27,8 +31,15 @@ public class NPCZone3 : MonoBehaviour
     [SerializeField] QuestUI _questUI;
     [SerializeField] int _woodRequired = 10;
     [SerializeField] CharacterInventory _inventory;
+    [SerializeField] Manager _gm;
     private bool _questActive = false;
     private bool _questCompleted = false;
+
+    [Header("MOVE")]
+    [SerializeField] Rigidbody _rb;
+    [SerializeField] float _speed = 5f;
+    [SerializeField] RuntimeAnimatorController _animMove;
+    [SerializeField] RuntimeAnimatorController _animIdle;
 
     void Start()
     {
@@ -97,12 +108,14 @@ public class NPCZone3 : MonoBehaviour
         }
     }
 
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    var player = other.GetComponent<Character>();
-    //    if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract))
-    //        StartCoroutine(Ending(player));
-    //}
+    private void OnTriggerStay(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract))
+        {
+            StartCoroutine(Message(player));
+        }
+    }
 
     private void OnTriggerExit(Collider other)
     {
@@ -112,5 +125,62 @@ public class NPCZone3 : MonoBehaviour
             _dialogue.playerInRange = false;
             _iconInteract.transform.DOScale(0f, 0.5f);
         }
+    }
+
+    private IEnumerator Message(Character player)
+    {
+        _myCol.enabled = false;
+        _iconInteract.transform.DOScale(0f, 0.5f);
+        player.FreezePlayer();
+        _boxMessages.SetMessage("SNOW NPC");
+
+        yield return new WaitForSeconds(1f);
+        _boxMessages.ShowMessage(_messages[0]);
+
+        yield return new WaitForSeconds(3f);
+        _boxMessages.CloseMessage();
+        player.DeFreezePlayer();
+
+        yield return new WaitForSeconds(1f);
+        _boxMessages.DesactivateMessage();
+    }
+
+    public void MoveToBrazier(Transform brazierPos)
+    {
+        if (brazierPos != null)
+        {
+            Vector3 moveDirection = (brazierPos.position - transform.position).normalized;
+            _rb.MovePosition(_rb.position + moveDirection * _speed * Time.fixedDeltaTime);
+            _myAnim.runtimeAnimatorController = _animMove;
+        }
+    }
+
+    public void SetIdle()
+    {
+        _myAnim.runtimeAnimatorController = _animIdle;
+        _myAnim.SetBool("Quest", true);
+    }
+
+    private IEnumerator FinalMessage(Brazier brazier, Character player, GameObject cinematic, CameraOrbit camPlayer)
+    {
+        _boxMessages.SetMessage("NPC Snow");
+        _boxMessages.ShowMessage(_messages[1]);
+        
+        yield return new WaitForSeconds(3f);
+        _boxMessages.CloseMessage();
+        player.DeFreezePlayer();
+        _gm.QuestCompleted();
+
+        yield return new WaitForSeconds(1f);
+        _boxMessages.DesactivateMessage();
+        camPlayer.gameObject.SetActive(true);
+        Destroy(cinematic);
+        Destroy(brazier);
+        Destroy(this);
+    }
+
+    public void ActiveFinal(Brazier brazier, Character player, GameObject cinematic, CameraOrbit camPlayer)
+    {
+        StartCoroutine(FinalMessage(brazier, player, cinematic, camPlayer));
     }
 }
