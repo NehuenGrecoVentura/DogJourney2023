@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
@@ -9,20 +8,19 @@ public class HouseBuild : MonoBehaviour
     [SerializeField] KeyCode _keyBuild = KeyCode.Space;
     [SerializeField] Collider _myCol;
     [SerializeField] MeshRenderer _myMesh;
+    [SerializeField] NPCHouses _npcQuest;
 
     [Header("AMOUNT")]
     [SerializeField] int _woodRequired = 10;
     [SerializeField] int _nailRequired = 10;
     [SerializeField] CharacterInventory _inventory;
 
-    [SerializeField] Transform[] _iconsMaterials;
-    private Transform _parentIconsMaterials;
-    [SerializeField] GameObject _houseToBuild;
-
     [Header("AUDIO")]
     [SerializeField] AudioSource _myAudio;
 
-
+    [SerializeField] Transform[] _iconsMaterials;
+    private Transform _parentIconsMaterials;
+    [SerializeField] GameObject _houseToBuild;
 
     void Start()
     {
@@ -66,8 +64,8 @@ public class HouseBuild : MonoBehaviour
 
             else
             {
-                if (_inventory.nails < _nailRequired) _iconsMaterials[0].GetComponent<SpriteRenderer>().color = Color.red;
-                if (_inventory.greenTrees < _woodRequired) _iconsMaterials[1].GetComponent<SpriteRenderer>().color = Color.red;
+                if (_inventory.nails < _nailRequired) StartCoroutine(Feedback(0));
+                if (_inventory.greenTrees < _woodRequired) StartCoroutine(Feedback(1));
             }
         }
     }
@@ -82,6 +80,13 @@ public class HouseBuild : MonoBehaviour
                 item.DOScale(0f, 0.5f);
             }
         }
+    }
+
+    private IEnumerator Feedback(int index)
+    {
+        _iconsMaterials[index].GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(1f);
+        _iconsMaterials[index].GetComponent<SpriteRenderer>().color = Color.white;
     }
 
     private IEnumerator Build(Character player)
@@ -115,7 +120,7 @@ public class HouseBuild : MonoBehaviour
         _inventory.nails -= _nailRequired;
         if (_inventory.greenTrees <= 0) _inventory.greenTrees = 0;
         if (_inventory.nails <= 0) _inventory.nails = 0;
-
+        _npcQuest.HouseBuilded();
         Destroy(gameObject);
     }
 }

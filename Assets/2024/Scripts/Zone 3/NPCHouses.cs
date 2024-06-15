@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -40,8 +39,13 @@ public class NPCHouses : MonoBehaviour
 
     [Header("QUEST")]
     [SerializeField] QuestUI _questUI;
-    [SerializeField] int _woodRequired = 10;
     [SerializeField] CharacterInventory _inventory;
+    [SerializeField] Manager _gm;
+    [SerializeField] int _houseBuilded = 0;
+    [SerializeField] int _houseTotal = 3;
+    [SerializeField] int _itemsTotal = 3;
+    public int itemsFound = 0;
+
     private bool _questActive = false;
     private bool _questCompleted = false;
 
@@ -62,9 +66,7 @@ public class NPCHouses : MonoBehaviour
         _iconInteract.transform.DOScale(0f, 0.5f);
         _myAudio.PlayOneShot(_soundConfirm);
         _myAnim.SetBool("Quest", true);
-        //_questUI.ActiveUIQuest("A Little Fire", "Travel back to the chairlift", "Get wood to carry the mountain (" + _inventory.greenTrees.ToString() + "/" + _woodRequired.ToString() + ")", string.Empty);
         StartCoroutine(IntroFocusZone());
-        _questActive = true;
     }
 
     private void SetDialogue()
@@ -91,6 +93,19 @@ public class NPCHouses : MonoBehaviour
         {
             if (_myCol.enabled && !_questActive && !_questCompleted) SetDialogue();
             else if (_questCompleted) _iconInteract.transform.DOScale(0.01f, 0.5f);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null)
+        {
+            if (_myCol.enabled && _questCompleted && Input.GetKeyDown(_keyInteract))
+            {
+                _gm.QuestCompleted();
+                Destroy(this);
+            }
         }
     }
 
@@ -134,5 +149,34 @@ public class NPCHouses : MonoBehaviour
         Destroy(_camHouses.gameObject);
         _camPlayer.gameObject.SetActive(true);
         _player.DeFreezePlayer();
+        _questActive = true;
+        _questUI.ActiveUIQuest("A Last Favor", "Search for lost items (" + itemsFound.ToString() + "/" + _itemsTotal.ToString() + ")", "Build the Houses (" + _houseBuilded.ToString() + "/" + _houseTotal.ToString() + ")", string.Empty);
+    }
+
+    public void HouseBuilded()
+    {
+        _houseBuilded++;
+        _questUI.AddNewTask(2, "Build the Houses (" + _houseBuilded.ToString() + "/" + _houseTotal.ToString() + ")");
+
+        if (_houseBuilded >= _houseTotal)
+        {
+            _myCol.enabled = true;
+            _questUI.TaskCompleted(2);
+            _questActive = false;
+            _questCompleted = true;
+        }
+    }
+
+    public void ItemFound()
+    {
+        itemsFound++;
+        _questUI.AddNewTask(1, "Search for lost items (" + itemsFound.ToString() + "/" + _itemsTotal.ToString() + ")");
+        if (itemsFound >= _itemsTotal)
+        {
+            _questUI.TaskCompleted(1);
+            _questUI.AddNewTask(3, "Go back to the npc and finish the task");
+        }
+            
+            
     }
 }
