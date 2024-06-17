@@ -20,6 +20,7 @@ public class Chairlift : MonoBehaviour
 
     [Header("MOVE")]
     [SerializeField] Transform[] _waypoints;
+    [SerializeField] Transform _posExit;
     [SerializeField] Transform _posSit;
     [SerializeField] Transform _parentPlayer;
     [SerializeField] float _speed = 5f;
