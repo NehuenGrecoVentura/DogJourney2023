@@ -64,7 +64,7 @@ public class TreeRegenerative : MonoBehaviour
 
         if (player != null && _myCol.enabled)
         {
-            FocusToTree();
+            //FocusToTree();
 
             if (!Input.GetKey(_inputInteractive))
             {
@@ -90,6 +90,7 @@ public class TreeRegenerative : MonoBehaviour
                     //if (!_myAudio.isPlaying) _myAudio.PlayOneShot(_soundHit);
                     //_hitBar.Bar();
 
+                    FocusToTree();
                     _doTween.Shake(gameObject.transform);
                     player.HitTree();
                     player.enabled = false;

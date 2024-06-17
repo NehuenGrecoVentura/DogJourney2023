@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TreeApple : MonoBehaviour
@@ -64,8 +62,6 @@ public class TreeApple : MonoBehaviour
 
         if (player != null && _myCol.enabled)
         {
-            FocusToTree();
-
             if (!Input.GetKey(_inputInteractive))
             {
                 _hitBar.gameObject.SetActive(true);
@@ -88,7 +84,7 @@ public class TreeApple : MonoBehaviour
                     //amountHit--;
                     //if (!_myAudio.isPlaying) _myAudio.PlayOneShot(_soundHit);
                     //_hitBar.Bar();
-
+                    FocusToTree();
                     _doTween.Shake(gameObject.transform);
                     player.HitTree();
                     player.enabled = false;
