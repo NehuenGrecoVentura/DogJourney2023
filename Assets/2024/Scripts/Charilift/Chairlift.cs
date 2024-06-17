@@ -20,6 +20,7 @@ public class Chairlift : MonoBehaviour
 
     [Header("MOVE")]
     [SerializeField] Transform[] _waypoints;
+    [SerializeField] Transform _posExit;
     [SerializeField] Transform _posSit;
     [SerializeField] Transform _parentPlayer;
     [SerializeField] float _speed = 5f;
@@ -101,7 +102,8 @@ public class Chairlift : MonoBehaviour
         _camCinematic.gameObject.SetActive(false);
         _cinematic.SetActive(false);
         player.transform.parent = _parentPlayer;
-        player.transform.position = posPlayer;
+        //player.transform.position = posPlayer;
+        player.transform.position = _posExit.position;
         player.isConstruct = false;
         player.DeFreezePlayer();
         _myCol.enabled = true;

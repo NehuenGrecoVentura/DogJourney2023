@@ -15,6 +15,7 @@ public class HitBar : MonoBehaviour
     private void Start()
     {
         _hitBar.maxValue = _tree.amountHit;
+        _hitBar.value = _hitBar.maxValue;
         _bar.color = Color.green;
     }
 

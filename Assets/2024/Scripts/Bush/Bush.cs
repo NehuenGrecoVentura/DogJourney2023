@@ -53,11 +53,10 @@ public class Bush : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
-            FocusToBrush(player);
-
             if (Input.GetKey(_inputInteractive) && !_invetory.shovelSelected)
             {
                 if (!_myAudio.isPlaying) _myAudio.Play();
+                FocusToBrush(player);
                 player.HitTree();
                 amountHit--;
                 _hitBar.Bar();
@@ -81,9 +80,7 @@ public class Bush : MonoBehaviour
         {
             _hitBar.gameObject.SetActive(false);
             player.MainAnim();
-        }
-            
-            
+        }            
     }
 
     private IEnumerator Respawn()
