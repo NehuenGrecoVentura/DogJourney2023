@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Transactions;
 using UnityEngine;
 using DG.Tweening;
+using Random = System.Random;
 
 public class MinijuegoTalaCoder : MonoBehaviour
 {
@@ -23,6 +24,21 @@ public class MinijuegoTalaCoder : MonoBehaviour
     [SerializeField] private GameObject ArrowC;
     private MinijuegoFlecha CodeArrowC;
     [SerializeField] private Transform CSpawn;
+    
+    [SerializeField] private int ID_Arrow_D;
+    [SerializeField] private GameObject ArrowD;
+    private MinijuegoFlecha CodeArrowD;
+    [SerializeField] private Transform DSpawn;
+    
+    [SerializeField] private int ID_Arrow_E;
+    [SerializeField] private GameObject ArrowE;
+    private MinijuegoFlecha CodeArrowE;
+    [SerializeField] private Transform ESpawn;
+    
+    [SerializeField] private int ID_Arrow_F;
+    [SerializeField] private GameObject ArrowF;
+    private MinijuegoFlecha CodeArrowF;
+    [SerializeField] private Transform FSpawn;
 
      public Transform GamePoint;
      public Transform outPoint;
@@ -34,6 +50,7 @@ public class MinijuegoTalaCoder : MonoBehaviour
     
     [SerializeField] private int ActiveInt;
     [SerializeField] private int PlayerInt;
+    [SerializeField] public int Rounds;
 
     [SerializeField] private MinijuegoTalaManager manager;
     
@@ -42,20 +59,31 @@ public class MinijuegoTalaCoder : MonoBehaviour
         ActiveInt = 0;
         PlayerInt = 8;
         WaitingForPlayer = true;
+        Rounds = -1;
     }
 
     public void Reset()
     {
+        Rounds++;
         transform.position = startPoint.position;
         Destroy(ArrowA);
         Destroy(ArrowB);
         Destroy(ArrowC);
+        Destroy(ArrowD);
+        Destroy(ArrowE);
+        Destroy(ArrowF);
         ArrowA = null;
         CodeArrowA = null;
         ArrowB = null;
         CodeArrowB = null;
         ArrowC = null;
         CodeArrowC = null;
+        ArrowD = null;
+        CodeArrowD = null;
+        ArrowE = null;
+        CodeArrowE = null;
+        ArrowF = null;
+        CodeArrowF = null;
         WaitingForPlayer = true;
         Done = false;
     }
@@ -82,10 +110,36 @@ public class MinijuegoTalaCoder : MonoBehaviour
         CodeArrowC = ArrowC.GetComponent<MinijuegoFlecha>();
         CodeArrowC.Queue();
         ArrowC.transform.position = CSpawn.position;
-    }
+
+        if (Rounds >= 3)
+        {
+            ID_Arrow_D = UnityEngine.Random.Range(0, 4);
+            ArrowD = Instantiate(Arrows[ID_Arrow_D]);
+            CodeArrowD = ArrowD.GetComponent<MinijuegoFlecha>();
+            CodeArrowD.Queue();
+            ArrowD.transform.position = DSpawn.position;
+        }
+        if (Rounds >= 6)
+        {
+            ID_Arrow_E = UnityEngine.Random.Range(0, 4);
+            ArrowE = Instantiate(Arrows[ID_Arrow_E]);
+            CodeArrowE = ArrowE.GetComponent<MinijuegoFlecha>();
+            CodeArrowE.Queue();
+            ArrowE.transform.position = ESpawn.position;
+        }
+        if (Rounds >= 9)
+        {
+            ID_Arrow_F = UnityEngine.Random.Range(0, 4);
+            ArrowF = Instantiate(Arrows[ID_Arrow_F]);
+            CodeArrowF = ArrowF.GetComponent<MinijuegoFlecha>();
+            CodeArrowF.Queue();
+            ArrowF.transform.position = FSpawn.position; 
+        }
+    } 
 
     public void GoTo()
     {
+        
         if (!Done)
         {
             transform.position = GamePoint.position;
@@ -113,10 +167,24 @@ public class MinijuegoTalaCoder : MonoBehaviour
         ArrowA.transform.DOMove(ASpawn.position, 0.5f);
         ArrowB.transform.DOMove(BSpawn.position, 0.5f);
         ArrowC.transform.DOMove(CSpawn.position, 0.5f);
+        if (Rounds >= 3)
+        {
+            ArrowD.transform.DOMove(DSpawn.position, 0.5f);
+        }
 
-    }
+        if (Rounds >= 6)
+        {
+            ArrowE.transform.DOMove(ESpawn.position, 0.5f);
+        }
+
+        if (Rounds >= 9)
+        {
+            ArrowF.transform.DOMove(FSpawn.position, 0.5f);
+        }
+
+    } 
     
-    private void updateArrows()
+    private void updateArrows() 
     {
         if (ActiveInt == 0)
         {
@@ -175,10 +243,94 @@ public class MinijuegoTalaCoder : MonoBehaviour
                     manager.WrongClick();
                 }
                 transform.position = outPoint.position;
-                Done = true;
-                ActiveInt = 0;
+                if (Rounds >= 3)
+                {
+                    ActiveInt++;
+                    WaitingForPlayer = true;
+                }
+                else
+                {
+                    ActiveInt = 0; 
+                    Done = true;
+                }
             }
         }
+        else if (ActiveInt == 3)
+        {
+            CodeArrowD.Active();
+            if (!WaitingForPlayer)
+            {
+                if (PlayerInt == ID_Arrow_D)
+                {
+                    CodeArrowD.Right();
+                    manager.GoodClick();
+                }
+                else
+                {
+                    CodeArrowD.Wrong();
+                    manager.WrongClick();
+                }
+                transform.position = outPoint.position;
+                if (Rounds >= 6)
+                {
+                    ActiveInt++;
+                    WaitingForPlayer = true;
+                }
+                else
+                {
+                    ActiveInt = 0; 
+                    Done = true;
+                }
+            }
+        }
+        else if (ActiveInt == 4)
+        {
+            CodeArrowE.Active();
+            if (!WaitingForPlayer)
+            {
+                if (PlayerInt == ID_Arrow_E)
+                {
+                    CodeArrowE.Right();
+                    manager.GoodClick();
+                }
+                else
+                {
+                    CodeArrowE.Wrong();
+                    manager.WrongClick();
+                }
+                transform.position = outPoint.position;
+                if (Rounds >= 9)
+                {
+                    ActiveInt++;
+                    WaitingForPlayer = true;
+                }
+                else
+                {
+                    ActiveInt = 0; 
+                    Done = true;
+                }
+            }
+        }
+        else if (ActiveInt == 5)
+        {
+            CodeArrowF.Active();
+            if (!WaitingForPlayer)
+            {
+                if (PlayerInt == ID_Arrow_F)
+                {
+                    CodeArrowF.Right();
+                    manager.GoodClick();
+                }
+                else
+                {
+                    CodeArrowF.Wrong();
+                    manager.WrongClick();
+                }
+                ActiveInt = 0;
+                Done = true;
+            }
+        }
+
     }
 
     // IDs: Up=0 Left=1 Right=2 Down=3

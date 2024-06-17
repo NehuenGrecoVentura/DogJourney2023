@@ -22,7 +22,7 @@ public class MinijuegoTalaManager : MonoBehaviour
     
     [Header("UI SCORE")]
     [SerializeField] GameObject _canvasScore;
-    [SerializeField] private int Score;
+    [SerializeField] public  int Score;
     [SerializeField] TMP_Text _txtScore;
     [SerializeField] TMP_Text _txtScoreChain;
     [SerializeField] PuestoTala _puestoTala;
@@ -201,11 +201,11 @@ public class MinijuegoTalaManager : MonoBehaviour
 
             CheckDones();
         }
-        //if (Input.GetKeyDown(KeyCode.T))
-        //{
-        //    Gaming = !Gaming;
-        //    Game();
-        //}
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Gaming = !Gaming;
+            Game();
+        }
     }
     private void Game()
     {
@@ -228,6 +228,8 @@ public class MinijuegoTalaManager : MonoBehaviour
             Timer = 0;
             Reset();
             CallCoder();
+            Coder1.Rounds = 0;
+            Coder2.Rounds = 0;
         }
 
         else
