@@ -1,28 +1,32 @@
 using UnityEngine;
 
 public class TreeRegenerative : MonoBehaviour
-{
-    private Character _player;
+{    
     //private HouseQuest4 _quest4;
-    private DoTweenManager _doTween;
+    
+    [Header("INTERACT")]
+    [SerializeField] KeyCode _inputInteractive = KeyCode.Mouse0;
+    [SerializeField] GameObject _decal;
+    private CharacterInventory _inventory;
+    private BoxCollider _myCol;
 
-    private AudioSource _myAudio;
-    [SerializeField] AudioClip _soundHit;
-
+    [Header("ATRIBUTES")]
     public float amountHit = 100f;
     [HideInInspector] public float initialAmount;
 
-    [SerializeField] KeyCode _inputInteractive = KeyCode.Mouse0;
+    [Header("HEALTHBAR")]
+    [SerializeField] HitBar _hitBar;
 
+    [Header("AUDIO")]
+    [SerializeField] AudioClip _soundHit;
+    private AudioSource _myAudio;
+
+    [Header("REFS")]
     [SerializeField] TreeFall _treeFall;
     [SerializeField] Trunks _trunks;
     [SerializeField] SaplingTree _sapling;
-
-    [SerializeField] GameObject _decal;
-    [SerializeField] HitBar _hitBar;
-
-    private CharacterInventory _inventory;
-    private BoxCollider _myCol;
+    private Character _player;
+    private DoTweenManager _doTween;
 
     private void Awake()
     {
@@ -51,11 +55,10 @@ public class TreeRegenerative : MonoBehaviour
         _player.transform.LookAt(pos);
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && _myCol.enabled) _hitBar.gameObject.SetActive(true);
+        if (player != null && _myCol.enabled) _hitBar.gameObject.SetActive(true);  
     }
 
     private void OnTriggerStay(Collider other)
