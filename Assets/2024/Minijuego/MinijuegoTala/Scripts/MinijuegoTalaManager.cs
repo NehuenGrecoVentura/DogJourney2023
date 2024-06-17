@@ -211,6 +211,14 @@ public class MinijuegoTalaManager : MonoBehaviour
     {
         if (Gaming)
         {
+            Timer = 0;
+            Coder1.Rounds = 0;
+
+            Coder2.Rounds = 0;
+            CoderActive = 0;
+            Reset();
+            CallCoder();
+
             //_camPlayer.enabled = false;
             _camPlayer.gameObject.SetActive(false);
             //_camTala.enabled = true;
@@ -224,12 +232,6 @@ public class MinijuegoTalaManager : MonoBehaviour
                 _txtScoreChain.gameObject.SetActive(true);
 
             else _txtScoreChain.gameObject.SetActive(false);
-
-            Timer = 0;
-            Reset();
-            CallCoder();
-            Coder1.Rounds = 0;
-            Coder2.Rounds = 0;
         }
 
         else

@@ -8366,7 +8366,7 @@ MonoBehaviour:
   _puestoTala: {fileID: 0}
   _fadeOut: {fileID: 0}
   Timer: 0
-  MaxTimer: 99
+  MaxTimer: 25
   _sliderTimer: {fileID: 7445096609897762075}
   _sliderColor: {fileID: 7445096609920583726}
   _sliderColorBackgorund: {fileID: 7445096610270131631}

@@ -59,12 +59,14 @@ public class MinijuegoTalaCoder : MonoBehaviour
         ActiveInt = 0;
         PlayerInt = 8;
         WaitingForPlayer = true;
-        Rounds = -1;
+        Rounds = 0;
     }
 
     public void Reset()
     {
         Rounds++;
+        ActiveInt = 0;
+        PlayerInt = 8;
         transform.position = startPoint.position;
         Destroy(ArrowA);
         Destroy(ArrowB);
@@ -367,6 +369,11 @@ public class MinijuegoTalaCoder : MonoBehaviour
                 getPlayerActions();
                 updateArrows();
             }
+        }
+        else if (manager.Gaming != true)
+        {
+            Reset();
+            ImActive = false;
         }
        
     }
