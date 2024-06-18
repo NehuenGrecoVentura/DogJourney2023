@@ -16,10 +16,16 @@ public class SimonBoton : MonoBehaviour
 
     [Header("SELECT")]
     [SerializeField] Outline _outlineSelect;
+    private Animator _myAnim;
+
+    private void Awake()
+    {
+        _myAnim = GetComponent<Animator>();
+        manager = FindObjectOfType<SimonManager>();
+    }
 
     private void Start()
     {
-        manager = FindObjectOfType<SimonManager>();
         _outlineSelect.enabled = false;
     }
 
@@ -35,11 +41,11 @@ public class SimonBoton : MonoBehaviour
         if (!manager.SimonDiciendo)
         {
             Click();
+            _myAnim.SetTrigger("Push");
             manager.PlayerClicking(this, _myAudio, _soundButton, _soundError);
             //_outlineSelect.enabled = false;
             Debug.Log("click " + ID);
         }
-
     }
 
     private void OnMouseEnter()

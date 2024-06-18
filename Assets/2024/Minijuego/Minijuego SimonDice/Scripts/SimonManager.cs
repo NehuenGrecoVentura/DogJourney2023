@@ -70,15 +70,15 @@ public class SimonManager : MonoBehaviour
             StartCoroutine(ExitGame());
         }
 
-        if (_score >= 30)
-        {
-            float zRot = _speedRot * Time.deltaTime;
-            Vector3 currentRotation = _circle.transform.eulerAngles;
-            currentRotation.z += zRot;
-            _circle.transform.eulerAngles = currentRotation;
+        //if (_score >= 30)
+        //{
+        //    float zRot = _speedRot * Time.deltaTime;
+        //    Vector3 currentRotation = _circle.transform.eulerAngles;
+        //    currentRotation.z += zRot;
+        //    _circle.transform.eulerAngles = currentRotation;
 
-            if (_score >= 70) _speedRot = 30f;
-        }
+        //    if (_score >= 70) _speedRot = 30f;
+        //}
     }
 
 
