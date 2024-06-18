@@ -17,10 +17,16 @@ public class Brazier : MonoBehaviour
     [SerializeField] GameObject _canvasCinematic;
     [SerializeField] CameraOrbit _camPlayer;
 
+    [Header("BONFIRE")]
+    [SerializeField] GameObject _woods;
+    [SerializeField] GameObject _fire;
+
     void Start()
     {
         _fadeOut.DOColor(Color.clear, 0f);
         _canvasCinematic.SetActive(false);
+        _woods.SetActive(false);
+        _fire.SetActive(false);
     }
 
     private void FixedUpdate()
@@ -45,6 +51,7 @@ public class Brazier : MonoBehaviour
             _activeNPC = false;
             print("TOCADO");
             StopCoroutine(PlayCinematic(_player));
+            _fire.SetActive(true);
             _npc.SetIdle();
             _npc.ActiveFinal(this, _player, _canvasCinematic, _camPlayer);
             _myCol.enabled = false;
@@ -60,6 +67,7 @@ public class Brazier : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
         _fadeOut.DOColor(Color.clear, 1.5f);
+        _woods.SetActive(true);
         _canvasCinematic.SetActive(true);
         _camPlayer.gameObject.SetActive(false);
         _npc.transform.LookAt(transform);
@@ -67,6 +75,7 @@ public class Brazier : MonoBehaviour
 
         yield return new WaitForSeconds(5f);
         _activeNPC = false;
+        _fire.SetActive(true);
         _npc.SetIdle();
         _npc.ActiveFinal(this, player, _canvasCinematic, _camPlayer);
     }
