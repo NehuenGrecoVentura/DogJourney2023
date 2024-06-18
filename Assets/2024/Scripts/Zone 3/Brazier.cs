@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -9,6 +8,7 @@ public class Brazier : MonoBehaviour
     [SerializeField] Image _fadeOut;
     [SerializeField] Collider _myCol;
 
+    [SerializeField] Character _player;
     [SerializeField] NPCZone3 _npc;
     [SerializeField] float _speedNPC;
     private bool _activeNPC = false;
@@ -37,10 +37,25 @@ public class Brazier : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        var npc = other.GetComponent<NPCZone3>();
+        if(npc != null)
+        {
+            _activeNPC = false;
+            print("TOCADO");
+            StopCoroutine(PlayCinematic(_player));
+            _npc.SetIdle();
+            _npc.ActiveFinal(this, _player, _canvasCinematic, _camPlayer);
+            _myCol.enabled = false;
+        }
+    }
+
     private IEnumerator PlayCinematic(Character player)
     {
-        _myCol.enabled = false;
+        //_myCol.enabled = false;
         player.FreezePlayer();
+        player.enabled = false;
         _fadeOut.DOColor(Color.black, 1.5f);
 
         yield return new WaitForSeconds(2f);

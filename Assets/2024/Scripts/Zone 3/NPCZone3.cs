@@ -176,6 +176,7 @@ public class NPCZone3 : MonoBehaviour
         yield return new WaitForSeconds(3f);
         _boxMessages.CloseMessage();
         player.DeFreezePlayer();
+        player.enabled = true;
         _gm.QuestCompleted();
 
         yield return new WaitForSeconds(1f);
