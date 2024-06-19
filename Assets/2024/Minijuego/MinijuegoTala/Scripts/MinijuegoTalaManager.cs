@@ -47,6 +47,7 @@ public class MinijuegoTalaManager : MonoBehaviour
     [Header("ASSETS")]
     [SerializeField] GameObject _axe;
     [SerializeField] GameObject _wood;
+    [SerializeField] TrunksCut _trunksCut;
     [SerializeField] ParticleSystemRenderer _particleWood;
     [SerializeField] Transform _posStartWood;
     [SerializeField] Transform _posOutWood;
@@ -66,6 +67,7 @@ public class MinijuegoTalaManager : MonoBehaviour
         SpawnCoder();
         _canvasScore.SetActive(false);
         _txtScoreChain.gameObject.SetActive(false);
+        _trunksCut.gameObject.SetActive(false);
         _colPuesto = _puestoTala.GetComponent<Collider>();
 
         _sliderTimer.maxValue = MaxTimer;
@@ -279,8 +281,10 @@ public class MinijuegoTalaManager : MonoBehaviour
 
     private IEnumerator ResetWoodCoroutine()
     {
+        _trunksCut.gameObject.SetActive(true);
         _wood.transform.DOMove(_posOutWood.position, 0.5f);
         yield return new WaitForSeconds(0.5f);
+        _trunksCut.gameObject.SetActive(false);
         _wood.transform.position = _posStartWood.position;
         _wood.transform.DOMove(_posGameWood.position, 0.5f);
     }
