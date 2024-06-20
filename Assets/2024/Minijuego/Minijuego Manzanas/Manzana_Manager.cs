@@ -44,6 +44,9 @@ public class Manzana_Manager : MonoBehaviour
     [SerializeField] Image _fadeOut;
     [SerializeField] Camera _camIntro;
 
+
+    public Transform posTest;
+
     private void Awake()
     {
         _colPuesto = _puestoManzana.GetComponent<Collider>();
@@ -71,8 +74,9 @@ public class Manzana_Manager : MonoBehaviour
     void Spawn()
     {
         var m = ManzanaFactory.Instance.pool.GetObject();
-        m.transform.position = transform.position + transform.forward;
-        m.transform.forward = transform.forward;
+        //m.transform.position = transform.position + transform.forward;
+        //m.transform.forward = transform.forward;
+        m.transform.position = posTest.position;
     }
 
     private void Reset()
@@ -104,11 +108,11 @@ public class Manzana_Manager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            Gaming = !Gaming;
-            Game();
-        }
+        if (Input.GetKeyDown(KeyCode.M)) StartGame();
+        //{
+        //    Gaming = !Gaming;
+        //    Game();
+        //}
 
         if (Gaming)
         {
