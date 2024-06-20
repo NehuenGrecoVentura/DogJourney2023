@@ -203,11 +203,11 @@ public class MinijuegoTalaManager : MonoBehaviour
 
             CheckDones();
         }
-        if (Input.GetKeyDown(KeyCode.T))
+      /*  if (Input.GetKeyDown(KeyCode.T))
         {
             Gaming = !Gaming;
             Game();
-        }
+        }*/
     }
     private void Game()
     {

@@ -18,6 +18,9 @@ public class TirosMovil : MonoBehaviour
     [SerializeField] private ParticleSystem PS;
     [SerializeField] private BoxCollider BC;
     [SerializeField] private GameObject Decal;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private bool Hit;
+    [SerializeField] private float AnimTimer;
     
 
     private void Start()
@@ -25,27 +28,32 @@ public class TirosMovil : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         Random();
         BC = GetComponent<BoxCollider>();
+        Hit = false;
+        PS.Stop();
     }
 
     private void Reset()
     {
+        PS.Stop();
+        AnimTimer = 0;
+        Hit = false;
         rb.velocity = Vector3.zero;
         BC.enabled = true;
         Random();
-        //PS.Stop();
     }
 
     private void Update()
     {
         move();
-        if (PS.isEmitting)
+        if (Hit)
         {
-            PS.transform.position = new Vector3(spawnPoint.transform.position.x,-1,spawnPoint.transform.position.z);
-            
-        }
-        else
-        {
-            PS.transform.position = new Vector3(transform.position.x,-1,transform.position.z);
+            speed = 0;
+            AnimTimer += Time.deltaTime;
+            if (AnimTimer >= 1f)
+            {
+                Hit = false;
+                Reset();
+            }
         }
     }
 
@@ -86,27 +94,21 @@ public class TirosMovil : MonoBehaviour
 
     public void gotHit()
     {
-        spawnPoint.position = transform.position;
+       Hit = true;
+       PS.Play();
+       _animator.SetTrigger("Hit");
+       BC.enabled = false;
         if (Target)
         {
-            PS.Play();
             _tirosCharacter.AddScore();
-            BC.enabled = false;
-            Reset();
-            Random();
-
         }
         else
         {
-            PS.Play();
             _tirosCharacter.RemoveLive();
-            BC.enabled = false;
-            Reset();
         }
     }
     void Random()
     {
-        PS.Play();
         RandomWay = UnityEngine.Random.Range(0, 10);
         if (RandomWay >= 5)
         {
@@ -116,7 +118,6 @@ public class TirosMovil : MonoBehaviour
         {
             transform.position = Derecha.position;
         }
-
         speed = UnityEngine.Random.Range(Minspeed, Maxspeed);
     }
     
