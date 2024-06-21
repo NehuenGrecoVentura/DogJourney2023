@@ -34,6 +34,9 @@ public class Manzana_Manager : MonoBehaviour
     private float _initialMinSpeed;
     private float _initialSpawnMinSpeed;
     private float _initialSpawnMaxSpeed;
+    [SerializeField] GameObject _applesContainer;
+    private GameObject[] _apples;
+    private int _indexApple = 0;
 
     [Header("UI SCORE")]
     [SerializeField] GameObject _canvasScore;
@@ -69,6 +72,15 @@ public class Manzana_Manager : MonoBehaviour
         _initialMinSpeed = Minspeed;
         _initialSpawnMinSpeed = SpawnerTimerMin;
         _initialSpawnMaxSpeed = SpawnerTimerMax;
+
+
+        // Agregado por Nehuen
+        _apples = new GameObject[_applesContainer.transform.childCount];
+        for (int i = 0; i < _applesContainer.transform.childCount; i++)
+        {
+            _apples[i] = _applesContainer.transform.GetChild(i).gameObject;
+            _apples[i].SetActive(false);
+        }
     }
 
     void Spawn()
@@ -76,7 +88,52 @@ public class Manzana_Manager : MonoBehaviour
         var m = ManzanaFactory.Instance.pool.GetObject();
         //m.transform.position = transform.position + transform.forward;
         //m.transform.forward = transform.forward;
+
+        // Agregado por Nehuen
         m.transform.position = posTest.position;
+
+        //if (_apples.Length > 0)
+        //{
+        //    int randomIndex = UnityEngine.Random.Range(0, _apples.Length);
+        //    GameObject appleRandom = _apples[randomIndex];
+        //    appleRandom.SetActive(false);
+        //}
+
+        if (_apples.Length > 0)
+        {
+            int numberOfApplesToDisable = 3; // Número de manzanas aleatorias a desactivar
+
+            // Asegurarse de no intentar desactivar más manzanas de las que existen en el array
+            numberOfApplesToDisable = Mathf.Min(numberOfApplesToDisable, _apples.Length);
+
+            // Lista para almacenar índices aleatorios únicos
+            List<int> randomIndices = new List<int>();
+
+            // Generar índices aleatorios únicos
+            while (randomIndices.Count < numberOfApplesToDisable)
+            {
+                int randomIndex = UnityEngine.Random.Range(0, _apples.Length);
+                if (!randomIndices.Contains(randomIndex))
+                {
+                    randomIndices.Add(randomIndex);
+                }
+            }
+
+            // Desactivar los objetos seleccionados
+            foreach (int index in randomIndices)
+            {
+                GameObject appleRandom = _apples[index];
+                appleRandom.SetActive(false);
+            }
+        }
+    }
+
+    public void RespawnApplesInBarriel()
+    {
+        foreach (GameObject item in _apples)
+        {
+            item.SetActive(true);
+        }
     }
 
     private void Reset()
@@ -193,6 +250,7 @@ public class Manzana_Manager : MonoBehaviour
         ResetSpeed();
         MP.ResetScore();
         MP.ShowGlobalScore();
+        RespawnApplesInBarriel();
     }
 
     public void ChangeSpeed()

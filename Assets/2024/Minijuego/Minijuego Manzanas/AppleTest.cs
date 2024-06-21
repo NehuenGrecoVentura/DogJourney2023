@@ -6,20 +6,26 @@ public class AppleTest : MonoBehaviour
     private Vector3 initialLocalPosition;  // Posición local inicial del hijo respecto al padre
     private Quaternion initialLocalRotation;  // Rotación local inicial del hijo respecto al padre
 
-    void Start()
-    {
-        // Obtener la referencia al transform del padre
-        parentTransform = transform.parent;
+    //void Start()
+    //{
+    //    // Obtener la referencia al transform del padre
+    //    parentTransform = transform.parent;
 
-        // Guardar la posición y rotación local inicial del hijo respecto al padre
-        initialLocalPosition = transform.localPosition;
-        initialLocalRotation = transform.localRotation;
-    }
+    //    // Guardar la posición y rotación local inicial del hijo respecto al padre
+    //    initialLocalPosition = transform.localPosition;
+    //    initialLocalRotation = transform.localRotation;
+    //}
 
-    void LateUpdate()
+    //void LateUpdate()
+    //{
+    //    // Mantener la posición y rotación del hijo fija respecto al padre
+    //    transform.localPosition = initialLocalPosition;
+    //    transform.localRotation = initialLocalRotation;
+    //}
+
+    private void Update()
     {
-        // Mantener la posición y rotación del hijo fija respecto al padre
-        transform.localPosition = initialLocalPosition;
-        transform.localRotation = initialLocalRotation;
+        //transform.position = transform.parent.position;
+        transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 }

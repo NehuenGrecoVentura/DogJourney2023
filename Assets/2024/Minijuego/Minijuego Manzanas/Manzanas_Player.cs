@@ -84,6 +84,7 @@ public class Manzanas_Player : MonoBehaviour
             _indexApple++;
         }
 
+        _manager.RespawnApplesInBarriel();
 
         //if (_chainQuest != null && _chainQuest.questActive) _chainQuest.AddScore(_inventory.tickets, _textScoreChain);
         if (_chainQuest != null && _chainQuest.questActive) _textScoreChain.text = "TOTAL SCORE: " + _inventory.tickets.ToString();
