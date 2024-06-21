@@ -109,10 +109,6 @@ public class Manzana_Manager : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.M)) StartGame();
-        //{
-        //    Gaming = !Gaming;
-        //    Game();
-        //}
 
         if (Gaming)
         {

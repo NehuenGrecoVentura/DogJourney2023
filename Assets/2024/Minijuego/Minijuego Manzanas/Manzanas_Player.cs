@@ -23,6 +23,9 @@ public class Manzanas_Player : MonoBehaviour
     [Header("PLAYER MESH")]
     [SerializeField] Animator _myAnim;
     [SerializeField] Collider _myCol;
+    [SerializeField] GameObject _applesContainer;
+    private GameObject[] _apples;
+    private int _indexApple = 0;
 
     [Header("UI SCORE")]
     [SerializeField] Image[] _spritesApples;
@@ -46,6 +49,14 @@ public class Manzanas_Player : MonoBehaviour
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
+
+        _apples = new GameObject[_applesContainer.transform.childCount];
+        for (int i = 0; i < _applesContainer.transform.childCount; i++)
+        {
+            _apples[i] = _applesContainer.transform.GetChild(i).gameObject;
+            _apples[i].SetActive(false);
+        }
+
     }
 
     public void ShowGlobalScore()
@@ -66,6 +77,14 @@ public class Manzanas_Player : MonoBehaviour
     {
         Score++;
         _inventory.tickets++;
+
+        if (_indexApple < _apples.Length)
+        {
+            _apples[_indexApple].SetActive(true);
+            _indexApple++;
+        }
+
+
         //if (_chainQuest != null && _chainQuest.questActive) _chainQuest.AddScore(_inventory.tickets, _textScoreChain);
         if (_chainQuest != null && _chainQuest.questActive) _textScoreChain.text = "TOTAL SCORE: " + _inventory.tickets.ToString();
         _textScore.text = "Score: " + Score.ToString();
