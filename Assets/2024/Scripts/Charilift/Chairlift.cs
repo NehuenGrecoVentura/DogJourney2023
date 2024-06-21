@@ -26,7 +26,7 @@ public class Chairlift : MonoBehaviour
     [SerializeField] float _speed = 5f;
     private int _index = 0;
     private bool _isActive = false;
-    private Vector3 _initialPos/*, _initialPlayerPos*/;
+    private Vector3 _initialPos;
 
     void Start()
     {
@@ -57,20 +57,20 @@ public class Chairlift : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null) _iconInteract.DOScale(0.1f, 0.5f);
+        if (player != null && _myCol.enabled) _iconInteract.DOScale(0.1f, 0.5f);
     }
 
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && Input.GetKeyDown(_keyInteract)) 
+        if (player != null && Input.GetKeyDown(_keyInteract) && _myCol.enabled)  
             StartCoroutine(ActiveChair(player));
     }
 
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null) _iconInteract.DOScale(0f, 0.5f);
+        if (player != null && _myCol.enabled) _iconInteract.DOScale(0f, 0.5f);
     }
 
     private IEnumerator ActiveChair(Character player)
@@ -102,7 +102,6 @@ public class Chairlift : MonoBehaviour
         _camCinematic.gameObject.SetActive(false);
         _cinematic.SetActive(false);
         player.transform.parent = _parentPlayer;
-        //player.transform.position = posPlayer;
         player.transform.position = _posExit.position;
         player.isConstruct = false;
         player.DeFreezePlayer();
