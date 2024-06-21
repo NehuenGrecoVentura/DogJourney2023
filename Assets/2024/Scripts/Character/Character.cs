@@ -118,9 +118,10 @@ public class Character : MonoBehaviour
 
     public void HitDig()
     {
-        _model.HitDig();
-        isConstruct = true;
-        FreezePlayer();
+        //_model.HitDig();
+        _myAnim.runtimeAnimatorController = _animController[6];
+        //isConstruct = true;
+        //FreezePlayer();
     }
 
     public void PlayAnim(string nameAnim)

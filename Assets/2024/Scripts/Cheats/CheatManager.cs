@@ -99,8 +99,9 @@ public class CheatManager : MonoBehaviour
             }
 
             _ball.enabled = true;
-
-            _bridgeZone2.gameObject.SetActive(true);            
+            _bridgeZone2.gameObject.SetActive(true);
+            _inventory.shovelUnlocked = true;
+            
         }
 
         if (Input.GetKeyDown(KeyCode.U))
