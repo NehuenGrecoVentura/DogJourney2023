@@ -36,6 +36,7 @@ public class NPCHouses : MonoBehaviour
     [SerializeField] Camera _camZone3;
     [SerializeField] Camera _camHouses;
     [SerializeField] CameraOrbit _camPlayer;
+    [SerializeField] Transform _posCamMove;
 
     [Header("QUEST")]
     [SerializeField] QuestUI _questUI;
@@ -140,9 +141,12 @@ public class NPCHouses : MonoBehaviour
         _boxMessages.ShowMessage(_messages[1]);
 
         yield return new WaitForSeconds(4f);
-        _fadeOut.DOColor(Color.black, 1.5f);
+        _camHouses.gameObject.transform.DOMove(_posCamMove.position, 3f);
         _boxMessages.CloseMessage();
 
+        yield return new WaitForSeconds(4f);
+        _fadeOut.DOColor(Color.black, 1.5f);
+        
         yield return new WaitForSeconds(2f);
         _boxMessages.DesactivateMessage();
         _fadeOut.DOColor(Color.clear, 1.5f);
