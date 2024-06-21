@@ -31,14 +31,15 @@ public class NPCZone3 : MonoBehaviour
     [SerializeField] QuestUI _questUI;
     [SerializeField] int _woodRequired = 10;
     [SerializeField] CharacterInventory _inventory;
-    private bool _questActive = false;
+    [SerializeField] Brazier _brazier;
+    [HideInInspector] public bool _questActive = false;
     private bool _questCompleted = false;
 
     [Header("NEXT QUEST")]
     [SerializeField] Manager _gm;
     [SerializeField] GameObject _npcsHouses;
-    [SerializeField] Camera _camNextQuest;
-    [SerializeField] Camera _camCinematic;
+    [SerializeField] Transform _camMovePos;
+    [SerializeField] Transform _posPlayerCinematic;
 
     [Header("MOVE")]
     [SerializeField] Rigidbody _rb;
@@ -46,12 +47,23 @@ public class NPCZone3 : MonoBehaviour
     [SerializeField] RuntimeAnimatorController _animMove;
     [SerializeField] RuntimeAnimatorController _animIdle;
 
+    [Header("RADAR")]
+    [SerializeField] LocationQuest _radar;
+    [SerializeField] ChirliftQuest _chairlift;
+
+    [Header("CAMERAS")]
+    [SerializeField] CameraOrbit _camPlayer;
+    [SerializeField] Camera _camEnding;
+    [SerializeField] Camera _camNextQuest;
+    [SerializeField] Camera _camCinematic;
+
     void Start()
     {
         _dialogue.gameObject.SetActive(false);
         _iconInteract.transform.DOScale(0f, 0f);
         _npcsHouses.SetActive(false);
         _camNextQuest.gameObject.SetActive(false);
+        _camEnding.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -60,6 +72,7 @@ public class NPCZone3 : MonoBehaviour
         {
             if (_inventory.greenTrees >= _woodRequired)
             {
+                _myCol.enabled = true;
                 _questUI.TaskCompleted(2);
                 _questUI.AddNewTask(3, "Go back to the mountain");
                 _questCompleted = true;
@@ -68,6 +81,7 @@ public class NPCZone3 : MonoBehaviour
 
             else
             {
+                _myCol.enabled = false;
                 _questUI.AddNewTask(2, "Get wood to carry the mountain (" + _inventory.greenTrees.ToString() + "/" + _woodRequired.ToString() + ")");
                 _questCompleted = false;
                 _questActive = true;
@@ -84,6 +98,8 @@ public class NPCZone3 : MonoBehaviour
         _myAudio.PlayOneShot(_soundConfirm);
         _myAnim.SetBool("Quest", true);
         _questUI.ActiveUIQuest("A Little Fire", "Travel back to the chairlift", "Get wood to carry the mountain (" + _inventory.greenTrees.ToString() + "/" + _woodRequired.ToString() + ")", string.Empty);
+        _radar.target = _chairlift.gameObject.transform;
+        _radar.StatusRadar(true);
         _questActive = true;
     }
 
@@ -140,12 +156,18 @@ public class NPCZone3 : MonoBehaviour
         _iconInteract.transform.DOScale(0f, 0.5f);
         player.FreezePlayer();
         _boxMessages.SetMessage("SNOW NPC");
+        _camEnding.gameObject.SetActive(true);
+        _camPlayer.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(1f);
         _boxMessages.ShowMessage(_messages[0]);
 
         yield return new WaitForSeconds(3f);
         _boxMessages.CloseMessage();
+        Destroy(_camEnding.gameObject);
+        _camPlayer.gameObject.SetActive(true);
+        _radar.target = _brazier.gameObject.transform;
+        _radar.StatusRadar(true);
         player.DeFreezePlayer();
 
         yield return new WaitForSeconds(1f);
@@ -175,21 +197,34 @@ public class NPCZone3 : MonoBehaviour
         
         yield return new WaitForSeconds(3f);
         _boxMessages.CloseMessage();
-        player.DeFreezePlayer();
-        player.enabled = true;
         _gm.QuestCompleted();
 
-        yield return new WaitForSeconds(1f);
-        _boxMessages.DesactivateMessage();
-        _camCinematic.gameObject.SetActive(false);
+        yield return new WaitForSeconds(1f);        
+        Destroy(_camCinematic.gameObject);
         _camNextQuest.gameObject.SetActive(true);
         _npcsHouses.SetActive(true);
+        transform.LookAt(_npcsHouses.gameObject.transform);
 
-        yield return new WaitForSeconds(2f);
-        _camNextQuest.gameObject.transform.DOMove(player.transform.position, 4f);
+        yield return new WaitForSeconds(1f);
+        _boxMessages.ShowMessage(_messages[2]);
 
+        yield return new WaitForSeconds(3f);
+        _boxMessages.CloseMessage();
+        _camNextQuest.gameObject.transform.DOMove(_camMovePos.transform.position, 4f);
+        
         yield return new WaitForSeconds(5f);
+        _boxMessages.ShowMessage(_messages[3]);
+        transform.LookAt(player.transform);
+        
+        yield return new WaitForSeconds(4f);
+        _boxMessages.CloseMessage();
+        player.DeFreezePlayer();
+        player.enabled = true;
         camPlayer.gameObject.SetActive(true);
+        _radar.target = _npcsHouses.gameObject.transform;
+        _radar.StatusRadar(true);
+        _boxMessages.DesactivateMessage();
+        Destroy(_camMovePos.gameObject);
         Destroy(_camNextQuest.gameObject);
         Destroy(cinematic);
         Destroy(brazier);

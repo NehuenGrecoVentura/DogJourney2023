@@ -11,6 +11,7 @@ public class Brazier : MonoBehaviour
     [SerializeField] Character _player;
     [SerializeField] NPCZone3 _npc;
     [SerializeField] float _speedNPC;
+    [SerializeField] Transform _playerPosCinematic;
     private bool _activeNPC = false;
 
     [Header("CAMS")]
@@ -20,6 +21,11 @@ public class Brazier : MonoBehaviour
     [Header("BONFIRE")]
     [SerializeField] GameObject _woods;
     [SerializeField] GameObject _fire;
+
+    [Header("RADAR")]
+    [SerializeField] NPCHouses _nextQuest;
+    [SerializeField] LocationQuest _radar;
+    [SerializeField] QuestUI _questUI;
 
     void Start()
     {
@@ -61,8 +67,12 @@ public class Brazier : MonoBehaviour
     private IEnumerator PlayCinematic(Character player)
     {
         //_myCol.enabled = false;
+        player.transform.position = _playerPosCinematic.position;
+        player.transform.rotation = Quaternion.Euler(0, 150, 0);
         player.FreezePlayer();
         player.enabled = false;
+        _questUI.UIStatus(false);
+        _radar.StatusRadar(false);
         _fadeOut.DOColor(Color.black, 1.5f);
 
         yield return new WaitForSeconds(2f);
@@ -72,6 +82,7 @@ public class Brazier : MonoBehaviour
         _camPlayer.gameObject.SetActive(false);
         _npc.transform.LookAt(transform);
         _activeNPC = true;
+        Destroy(_playerPosCinematic.gameObject);
 
         yield return new WaitForSeconds(5f);
         _activeNPC = false;
