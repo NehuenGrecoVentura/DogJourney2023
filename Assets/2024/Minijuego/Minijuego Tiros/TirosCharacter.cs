@@ -31,6 +31,7 @@ public class TirosCharacter : MonoBehaviour
     [SerializeField] TMP_Text _textScore;
     [SerializeField] TMP_Text _textScoreChain;
     [SerializeField] Image[] _spritesLifes;
+    [SerializeField] TirosManager _manager;
     private ChainParkQuest _chainQuest;
     private CharacterInventory _inventory;
 
@@ -54,7 +55,7 @@ public class TirosCharacter : MonoBehaviour
     public void AddScore()
     {
         Score++;
-        _textScore.text = "Score: " + Score.ToString();
+        _textScore.text = "Score: " + Score.ToString() + "/20";
 
         _inventory.tickets++;
 
@@ -62,6 +63,8 @@ public class TirosCharacter : MonoBehaviour
             _textScoreChain.text = "TOTAL SCORE: " + _inventory.tickets.ToString();
        
         _myAudio.PlayOneShot(_soundGood);
+
+        if (Score >= 20) _manager.Win();
     }
 
     public void RemoveLive()

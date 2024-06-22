@@ -70,7 +70,7 @@ public class Manzanas_Player : MonoBehaviour
     public void ResetScore()
     {
         Score = 0;
-        _textScore.text = "Score: " + Score.ToString();
+        _textScore.text = "Score: " + Score.ToString() + "/15";
     }
 
     public void AddScore()
@@ -88,7 +88,7 @@ public class Manzanas_Player : MonoBehaviour
 
         //if (_chainQuest != null && _chainQuest.questActive) _chainQuest.AddScore(_inventory.tickets, _textScoreChain);
         if (_chainQuest != null && _chainQuest.questActive) _textScoreChain.text = "TOTAL SCORE: " + _inventory.tickets.ToString();
-        _textScore.text = "Score: " + Score.ToString();
+        _textScore.text = "Score: " + Score.ToString() + "/15";
         _myAudio.PlayOneShot(_soundGood);
 
 

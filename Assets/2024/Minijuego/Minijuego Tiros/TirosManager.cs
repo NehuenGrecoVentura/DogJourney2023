@@ -20,6 +20,8 @@ public class TirosManager : MonoBehaviour
     [SerializeField] GameObject _canvasScore;
     [SerializeField] PuestoTiros _puestoTiros;
     [SerializeField] TMP_Text _txtScoreChain;
+    [SerializeField] BoxMessages _boxMessage;
+    [SerializeField, TextArea(4, 6)] string _messageWin; 
     private Collider _colPuesto;
     private ChainParkQuest _chainQuest;
 
@@ -107,6 +109,23 @@ public class TirosManager : MonoBehaviour
         _fadeOut.DOColor(Color.clear, 1f);
         Game();
         _colPuesto.enabled = true;
+    }
+
+    public void Win()
+    {
+        StartCoroutine(ExitGame());
+        StartCoroutine(WinMessage());
+        _inventory.tickets += 20;
+    }
+
+    private IEnumerator WinMessage()
+    {
+        _boxMessage.SetMessage("Reward");
+        _boxMessage.ShowMessage(_messageWin);
+        yield return new WaitForSeconds(2f);
+        _boxMessage.CloseMessage();
+        yield return new WaitForSeconds(1f);
+        _boxMessage.DesactivateMessage();
     }
 
     public void StartGame()
