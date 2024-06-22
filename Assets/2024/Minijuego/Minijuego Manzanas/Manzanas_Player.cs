@@ -104,7 +104,11 @@ public class Manzanas_Player : MonoBehaviour
 
         if (Score == 15) // Comprueba si Score es un múltiplo de 5
         {
-            _manager.ChangeSpeed();
+            //_manager.ChangeSpeed();
+
+            _manager.Win();
+
+
         }
     }
 

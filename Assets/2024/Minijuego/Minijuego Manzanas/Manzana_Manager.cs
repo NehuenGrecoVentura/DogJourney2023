@@ -28,6 +28,7 @@ public class Manzana_Manager : MonoBehaviour
     [SerializeField] private CharacterInventory _inventory;
 
     [Header("MESH BARRIL")]
+    [SerializeField] Collider _myCol;
     [SerializeField] Transform _barrilMesh;
     [SerializeField] float _speedRotBarril;
     private float _initialMaxSpeed;
@@ -193,13 +194,25 @@ public class Manzana_Manager : MonoBehaviour
     {
         if (other.gameObject.name == "OutBoxI")
         {
-            transform.position = Derecha.position;
+            RandomWay = 5;
+            StartCoroutine(FixCol());
+            //transform.position = Derecha.position;
         }
         if (other.gameObject.name == "OutBoxD")
         {
-            transform.position = Izquierda.position;
+            RandomWay = 2;
+            StartCoroutine(FixCol());
+            //transform.position = Izquierda.position;
         }
     }
+
+    private IEnumerator FixCol()
+    {
+        _myCol.enabled = false;
+        yield return new WaitForSeconds(0.5f);
+        _myCol.enabled = true;
+    }
+
 
     private void Game()
     {
@@ -260,6 +273,15 @@ public class Manzana_Manager : MonoBehaviour
         Maxspeed += 5;
         Minspeed += 5;
     }
+
+
+    public void Win()
+    {
+        StartCoroutine(ExitGame());
+        _inventory.tickets += 20;
+    }
+
+
 
     private void  ResetSpeed()
     {
