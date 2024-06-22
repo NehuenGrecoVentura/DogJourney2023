@@ -42,7 +42,10 @@ public class Manzana_Manager : MonoBehaviour
     [Header("UI SCORE")]
     [SerializeField] GameObject _canvasScore;
     [SerializeField] PuestoManzana _puestoManzana;
+    [SerializeField] BoxMessages _boxMessage;
+    [SerializeField, TextArea(4, 6)] string _messageWin;
     private Collider _colPuesto;
+
 
     [Header("INTRO")]
     [SerializeField] Image _fadeOut;
@@ -278,9 +281,19 @@ public class Manzana_Manager : MonoBehaviour
     public void Win()
     {
         StartCoroutine(ExitGame());
+        StartCoroutine(WinMessage());
         _inventory.tickets += 20;
     }
 
+    private IEnumerator WinMessage()
+    {
+        _boxMessage.SetMessage("Reward");
+        _boxMessage.ShowMessage(_messageWin);
+        yield return new WaitForSeconds(2f);
+        _boxMessage.CloseMessage();
+        yield return new WaitForSeconds(1f);
+        _boxMessage.DesactivateMessage();
+    }
 
 
     private void  ResetSpeed()
