@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 using DG.Tweening;
 
@@ -9,7 +10,12 @@ public class Chairlift : MonoBehaviour
     [SerializeField] Transform _iconInteract;
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
     [SerializeField] Collider _myCol;
-
+    
+    [Header("DOG")]
+    [SerializeField] NavMeshAgent _dog;
+    [SerializeField] NavMeshAgent _trolley;
+    [SerializeField] DogBall _dogBall;
+    
     [Header("CAMS")]
     [SerializeField] Camera _camCinematic;
     [SerializeField] CameraOrbit _camPlayer;
@@ -21,7 +27,9 @@ public class Chairlift : MonoBehaviour
     [Header("MOVE")]
     [SerializeField] Transform[] _waypoints;
     [SerializeField] Transform _posExit;
+    [SerializeField] Transform _posExitDog;
     [SerializeField] Transform _posSit;
+    [SerializeField] Transform _posSitDog;
     [SerializeField] Transform _parentPlayer;
     [SerializeField] float _speed = 5f;
     private int _index = 0;
@@ -78,17 +86,28 @@ public class Chairlift : MonoBehaviour
         _fadeOut.DOColor(Color.black, 1.5f);
         _iconInteract.DOScale(0, 0.5f);
         _myCol.enabled = false;
-        Vector3 posPlayer = player.transform.position;
+
+        _dog.enabled = false;
+        _trolley.enabled = false;
         
         yield return new WaitForSeconds(2f);
         _fadeOut.DOColor(Color.clear, 1.5f);
         _camPlayer.gameObject.SetActive(false);
         _camCinematic.gameObject.SetActive(true);
         _cinematic.SetActive(true);
+        
         player.transform.parent = _posSit.parent;
         player.transform.position = _posSit.position;
         player.transform.localRotation = Quaternion.Euler(90,0, 0);
         player.SitChair();
+
+        _dogBall.transform.parent = _posSitDog.parent;
+        _dogBall.transform.position = _posSitDog.position;
+        _dog.transform.parent = _posSitDog.parent;
+        _dog.gameObject.transform.position = _posSitDog.position;
+        _dog.transform.localRotation = Quaternion.Euler(90, 360, 0);
+        _trolley.gameObject.SetActive(false);
+
         _isActive = true;
 
         yield return new WaitForSeconds(5f);
@@ -101,10 +120,22 @@ public class Chairlift : MonoBehaviour
         _camPlayer.gameObject.SetActive(true);
         _camCinematic.gameObject.SetActive(false);
         _cinematic.SetActive(false);
+        
         player.transform.parent = _parentPlayer;
         player.transform.position = _posExit.position;
         player.isConstruct = false;
         player.DeFreezePlayer();
+
+        _dogBall.transform.parent = _parentPlayer;
+        _dogBall.transform.position = _posExitDog.position;
+        _dog.transform.parent = _parentPlayer;
+        _dog.gameObject.transform.position = _posExitDog.position;
+
+        _trolley.gameObject.SetActive(true);
+        _trolley.gameObject.transform.position = _posExitDog.position;
+        
+        _dog.enabled = true;
+        _trolley.enabled = true;
         _myCol.enabled = true;
     }
 }
