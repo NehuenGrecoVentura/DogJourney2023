@@ -35,6 +35,8 @@ public class BillboardCam : MonoBehaviour
 
             // Apunta hacia la cámara, pero invierte el eje Z para corregir la inversión
             transform.rotation = Quaternion.LookRotation(-directionToCamera, Vector3.up);
-        }    
+        }
+
+        else return;
     }
 }

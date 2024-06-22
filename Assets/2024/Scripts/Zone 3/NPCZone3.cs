@@ -199,8 +199,8 @@ public class NPCZone3 : MonoBehaviour
         _boxMessages.CloseMessage();
         _gm.QuestCompleted();
 
-        yield return new WaitForSeconds(1f);        
-        Destroy(_camCinematic.gameObject);
+        yield return new WaitForSeconds(1f);
+        _camCinematic.gameObject.SetActive(false);
         _camNextQuest.gameObject.SetActive(true);
         _npcsHouses.SetActive(true);
         transform.LookAt(_npcsHouses.gameObject.transform);

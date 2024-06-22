@@ -9,6 +9,7 @@ public class HouseBuild : MonoBehaviour
     [SerializeField] Collider _myCol;
     [SerializeField] MeshRenderer _myMesh;
     [SerializeField] NPCHouses _npcQuest;
+    [SerializeField] string _nameNPC;
 
     [Header("AMOUNT")]
     [SerializeField] int _woodRequired = 10;
@@ -26,6 +27,14 @@ public class HouseBuild : MonoBehaviour
     private Transform _parentIconsMaterials;
     [SerializeField] GameObject _houseToBuild;
 
+    [Header("CAMERAS")]
+    [SerializeField] CameraOrbit _camPlayer;
+    [SerializeField] Camera _camHouse;
+
+    [Header("MESSAGE")]
+    [SerializeField] BoxMessages _boxMessage;
+    [SerializeField, TextArea(4,6)] string _message;
+
     void Start()
     {
         foreach (Transform item in _iconsMaterials)
@@ -35,6 +44,7 @@ public class HouseBuild : MonoBehaviour
 
         _parentIconsMaterials = _iconsMaterials[0];
         _houseToBuild.SetActive(false);
+        _camHouse.gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -117,6 +127,17 @@ public class HouseBuild : MonoBehaviour
             yield return null;
         }
 
+        _boxMessage.SetMessage(_nameNPC);
+        _boxMessage.ShowMessage(_message);
+        _camPlayer.gameObject.SetActive(false);
+        _camHouse.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(4f);
+        _boxMessage.CloseMessage();
+        _boxMessage.DesactivateMessage();
+        _camPlayer.gameObject.SetActive(true);
+        Destroy(_camHouse.gameObject);
+
         player.isConstruct = false;
         player.DeFreezePlayer();
         _houseToBuild.SetActive(true);
@@ -125,7 +146,10 @@ public class HouseBuild : MonoBehaviour
         _inventory.nails -= _nailRequired;
         if (_inventory.greenTrees <= 0) _inventory.greenTrees = 0;
         if (_inventory.nails <= 0) _inventory.nails = 0;
+
         _npcQuest.HouseBuilded();
+
+
         Destroy(gameObject);
     }
 }

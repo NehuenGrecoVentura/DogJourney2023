@@ -39,7 +39,7 @@ public class NPCHouses : MonoBehaviour
     [SerializeField] Transform _posCamMove;
 
     [Header("QUEST")]
-    [SerializeField] Slider _sliderSearch;
+    [SerializeField] ItemsManager _items;
     [SerializeField] GameObject[] _houses;
     [SerializeField] QuestUI _questUI;
     [SerializeField] CharacterInventory _inventory;
@@ -161,7 +161,8 @@ public class NPCHouses : MonoBehaviour
         Destroy(_camHouses.gameObject);
         _camPlayer.gameObject.SetActive(true);
         _player.DeFreezePlayer();
-        _sliderSearch.gameObject.SetActive(true);
+        _items.gameObject.SetActive(true);
+
         _questActive = true;
         _questUI.ActiveUIQuest("A Last Favor", "Search for lost items (" + itemsFound.ToString() + "/" + _itemsTotal.ToString() + ")", "Build the Houses (" + _houseBuilded.ToString() + "/" + _houseTotal.ToString() + ")", string.Empty);
     }
