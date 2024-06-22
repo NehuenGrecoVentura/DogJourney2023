@@ -35,6 +35,7 @@ public class NPCHouses : MonoBehaviour
     [Header("CAMS")]
     [SerializeField] Camera _camZone3;
     [SerializeField] Camera _camHouses;
+    [SerializeField] Camera _camFinal;
     [SerializeField] CameraOrbit _camPlayer;
     [SerializeField] Transform _posCamMove;
 
@@ -47,6 +48,8 @@ public class NPCHouses : MonoBehaviour
     [SerializeField] int _houseBuilded = 0;
     [SerializeField] int _houseTotal = 3;
     [SerializeField] int _itemsTotal = 3;
+    [SerializeField] Transform _posNPCEnding;
+    [SerializeField] Transform _posPlayerEnding;
     public int itemsFound = 0;
 
     private bool _questActive = false;
@@ -57,6 +60,7 @@ public class NPCHouses : MonoBehaviour
         _dialogue.gameObject.SetActive(false);
         _camZone3.gameObject.SetActive(false);
         _camHouses.gameObject.SetActive(false);
+        _camFinal.gameObject.SetActive(false);
         _iconInteract.transform.DOScale(0f, 0f);
         _fadeOut.DOColor(Color.clear, 0f);
     }
@@ -162,7 +166,7 @@ public class NPCHouses : MonoBehaviour
         _camPlayer.gameObject.SetActive(true);
         _player.DeFreezePlayer();
         _items.gameObject.SetActive(true);
-
+        
         _questActive = true;
         _questUI.ActiveUIQuest("A Last Favor", "Search for lost items (" + itemsFound.ToString() + "/" + _itemsTotal.ToString() + ")", "Build the Houses (" + _houseBuilded.ToString() + "/" + _houseTotal.ToString() + ")", string.Empty);
     }
@@ -174,10 +178,11 @@ public class NPCHouses : MonoBehaviour
 
         if (_houseBuilded >= _houseTotal)
         {
-            _myCol.enabled = true;
+            //_myCol.enabled = true;
             _questUI.TaskCompleted(2);
             _questActive = false;
             _questCompleted = true;
+            StartCoroutine(Ending());
         }
     }
 
@@ -190,5 +195,39 @@ public class NPCHouses : MonoBehaviour
             _questUI.TaskCompleted(1);
             _questUI.AddNewTask(3, "Go back to the npc and finish the task");
         }  
+    }
+
+    private IEnumerator Ending()
+    {
+        transform.position = _posNPCEnding.position;
+        _player.transform.position = _posPlayerEnding.position;
+        transform.LookAt(_player.transform);
+        _player.transform.LookAt(transform);
+
+        _boxMessages.SetMessage(_nameNPC);
+        _player.FreezePlayer();
+        _player.enabled = false;
+        _questUI.UIStatus(false);
+
+        yield return new WaitForSeconds(3f);
+        _camFinal.gameObject.SetActive(true);
+        _camPlayer.gameObject.SetActive(false);
+        _fadeOut.DOColor(Color.black, 1.5f);
+
+        yield return new WaitForSeconds(2f);
+        _fadeOut.DOColor(Color.clear, 1.5f);
+        yield return new WaitForSeconds(2f);
+        _boxMessages.ShowMessage(_messages[2]);
+
+        yield return new WaitForSeconds(4f);
+        _boxMessages.CloseMessage();
+        Destroy(_camFinal.gameObject);
+        _camPlayer.gameObject.SetActive(true);
+        _player.enabled = true;
+        _player.DeFreezePlayer();
+        _gm.QuestCompleted();
+
+        yield return new WaitForSeconds(1f);
+        Destroy(this);
     }
 }
