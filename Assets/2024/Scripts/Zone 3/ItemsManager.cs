@@ -10,6 +10,11 @@ public class ItemsManager : MonoBehaviour
     public float maxDetectionDistance = 10f; // Distancia máxima de detección
     public GameObject[] gameObjects; // Array de gameobjects que quieres evaluar
 
+    private void Start()
+    {
+        slider.gameObject.SetActive(false);
+    }
+
     void Update()
     {
         // Encontrar el objeto más cercano al jugador dentro de la distancia máxima

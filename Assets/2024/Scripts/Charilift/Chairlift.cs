@@ -15,6 +15,7 @@ public class Chairlift : MonoBehaviour
     [SerializeField] NavMeshAgent _dog;
     [SerializeField] NavMeshAgent _trolley;
     [SerializeField] DogBall _dogBall;
+    [SerializeField] LineRenderer _lineDog;
     
     [Header("CAMS")]
     [SerializeField] Camera _camCinematic;
@@ -89,6 +90,7 @@ public class Chairlift : MonoBehaviour
 
         _dog.enabled = false;
         _trolley.enabled = false;
+        _lineDog.enabled = false;
         
         yield return new WaitForSeconds(2f);
         _fadeOut.DOColor(Color.clear, 1.5f);
@@ -133,7 +135,8 @@ public class Chairlift : MonoBehaviour
 
         _trolley.gameObject.SetActive(true);
         _trolley.gameObject.transform.position = _posExitDog.position;
-        
+
+        _lineDog.enabled = true;
         _dog.enabled = true;
         _trolley.enabled = true;
         _myCol.enabled = true;
