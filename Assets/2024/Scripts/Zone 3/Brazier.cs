@@ -43,7 +43,7 @@ public class Brazier : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && Input.GetKeyDown(KeyCode.F))
+        if (player != null && Input.GetKeyDown(KeyCode.F) && _myCol.enabled)
         {
             StartCoroutine(PlayCinematic(player));
         }

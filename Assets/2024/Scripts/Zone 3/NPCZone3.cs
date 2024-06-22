@@ -64,6 +64,8 @@ public class NPCZone3 : MonoBehaviour
         _npcsHouses.SetActive(false);
         _camNextQuest.gameObject.SetActive(false);
         _camEnding.gameObject.SetActive(false);
+        _brazier.enabled = false;
+        _brazier.GetComponent<Collider>().enabled = false;
     }
 
     private void Update()
@@ -153,6 +155,9 @@ public class NPCZone3 : MonoBehaviour
     private IEnumerator Message(Character player)
     {
         _myCol.enabled = false;
+        _brazier.enabled = true;
+        _brazier.GetComponent<Collider>().enabled = true;
+
         _iconInteract.transform.DOScale(0f, 0.5f);
         player.FreezePlayer();
         _boxMessages.SetMessage("SNOW NPC");
@@ -194,7 +199,9 @@ public class NPCZone3 : MonoBehaviour
     {
         _boxMessages.SetMessage("NPC Snow");
         _boxMessages.ShowMessage(_messages[1]);
-        
+        _inventory.greenTrees -= _woodRequired;
+        if (_inventory.greenTrees <= 0) _inventory.greenTrees = 0;
+
         yield return new WaitForSeconds(3f);
         _boxMessages.CloseMessage();
         _gm.QuestCompleted();
