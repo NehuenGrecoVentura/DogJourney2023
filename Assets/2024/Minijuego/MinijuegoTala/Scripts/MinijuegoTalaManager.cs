@@ -33,10 +33,9 @@ public class MinijuegoTalaManager : MonoBehaviour
     [Header("TIMER")]
     [SerializeField] private float Timer;
     [SerializeField] private float MaxTimer;
-    [SerializeField] Slider _sliderTimer;
-    [SerializeField] Image _sliderColor;
     [SerializeField] Image _sliderColorBackgorund;
     [SerializeField] TMP_Text _txtTimer;
+    [SerializeField] TMP_Text _txtPoint;
     private Color _initialColor;
     private Color _initialColorBackground;
 
@@ -70,13 +69,11 @@ public class MinijuegoTalaManager : MonoBehaviour
         _txtScoreChain.gameObject.SetActive(false);
         _trunksCut.gameObject.SetActive(false);
         _colPuesto = _puestoTala.GetComponent<Collider>();
-
-        _sliderTimer.maxValue = MaxTimer;
-        _sliderTimer.value = MaxTimer;
-        _initialColor = _sliderColor.color;
         _initialColorBackground = _sliderColorBackgorund.color;
         _wood.transform.position = _posStartWood.position;
         Timer = MaxTimer;
+        _initialColor = _txtTimer.color;
+        _txtPoint.text = string.Empty;
     }
     
     public void Reset()
@@ -140,20 +137,29 @@ public class MinijuegoTalaManager : MonoBehaviour
             _txtScoreChain.text = "TOTAL SCORE: " + _inventory.tickets.ToString();
         
         StopCoroutine(MoveAxe());
-        StartCoroutine(Feedback(Color.green));
+        StartCoroutine(Feedback(Color.green, "+ 0.2s"));
         _axe.GetComponent<Animator>().Play("Cortar");
         StartCoroutine(MoveAxe());
         _myAudio.PlayOneShot(_soundGood);
     }
 
-    private IEnumerator Feedback(Color color)
+    private IEnumerator Feedback(Color color, string point)
     {
-        _sliderColor.color = color;
+        _txtPoint.rectTransform.DOScale(1.2f, 0f);
+        _txtTimer.color = color;
+        _txtPoint.color = color;
+        _txtPoint.text = point;
+
+        _txtPoint.rectTransform.DOScale(1.65f, 0.4f);
+
         Color darkerColor = Color.Lerp(color, Color.black, 0.5f);
         _sliderColorBackgorund.color = darkerColor;
+
         yield return new WaitForSeconds(0.5f);
-        _sliderColor.color = _initialColor;
         _sliderColorBackgorund.color = _initialColorBackground;
+        _txtTimer.color = _initialColor;
+        _txtPoint.text = string.Empty;
+        _txtPoint.color = _initialColor;
     }
 
     private IEnumerator MoveAxe()
@@ -178,7 +184,7 @@ public class MinijuegoTalaManager : MonoBehaviour
         if (_chainQuest != null && _chainQuest.questActive)
             _txtScoreChain.text = "TOTAL SCORE: " + _inventory.tickets.ToString();
         
-        StartCoroutine(Feedback(Color.red));
+        StartCoroutine(Feedback(Color.red, "- 1s"));
         _myAudio.PlayOneShot(_soundWrong);
     }
 
@@ -188,7 +194,7 @@ public class MinijuegoTalaManager : MonoBehaviour
         {
             //Timer += Time.deltaTime;
             Timer -= Time.deltaTime;
-            _sliderTimer.value = Timer;
+            //_sliderTimer.value = Timer;
 
             int minutes = Mathf.FloorToInt(Timer / 60);  // Calcula los minutos
             int seconds = Mathf.FloorToInt(Timer % 60);  // Calcula los segundos
