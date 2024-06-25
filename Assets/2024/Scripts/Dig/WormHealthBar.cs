@@ -15,6 +15,7 @@ public class WormHealthBar : MonoBehaviour
     private void Start()
     {
         _hitBar.maxValue = _dig.amountHit;
+        _hitBar.value = _hitBar.maxValue;
         _bar.color = Color.green;
     }
 
@@ -22,6 +23,12 @@ public class WormHealthBar : MonoBehaviour
     {
         _hitBar.value = _dig.amountHit;
         CheckColor();
+    }
+
+    public void UpgradeBar()
+    {
+        _hitBar.value = _dig.amountHit;
+        _hitBar.maxValue = _dig.amountHit;
     }
 
     public void CheckColor()
