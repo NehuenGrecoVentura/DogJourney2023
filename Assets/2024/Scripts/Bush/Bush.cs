@@ -8,7 +8,7 @@ public class Bush : MonoBehaviour
     [SerializeField] KeyCode _inputInteractive = KeyCode.Mouse0;
     [SerializeField] RectTransform _boxMessage;
     [SerializeField] TMP_Text _textAmount;
-    [SerializeField] HealthBarBush _hitBar;
+    [SerializeField] HitBarBush _hitBar;
     [SerializeField] MeshRenderer[] _meshes;
 
     private DoTweenManager _message;
