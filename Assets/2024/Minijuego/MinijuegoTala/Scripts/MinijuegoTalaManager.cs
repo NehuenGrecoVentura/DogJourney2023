@@ -36,6 +36,7 @@ public class MinijuegoTalaManager : MonoBehaviour
     [SerializeField] Slider _sliderTimer;
     [SerializeField] Image _sliderColor;
     [SerializeField] Image _sliderColorBackgorund;
+    [SerializeField] TMP_Text _txtTimer;
     private Color _initialColor;
     private Color _initialColorBackground;
 
@@ -75,6 +76,7 @@ public class MinijuegoTalaManager : MonoBehaviour
         _initialColor = _sliderColor.color;
         _initialColorBackground = _sliderColorBackgorund.color;
         _wood.transform.position = _posStartWood.position;
+        Timer = MaxTimer;
     }
     
     public void Reset()
@@ -124,7 +126,8 @@ public class MinijuegoTalaManager : MonoBehaviour
 
     public void GoodClick()
     {
-        Timer = Timer - 0.2f;
+        //Timer = Timer - 0.2f;
+        Timer += 0.2f;
         
         Score++;
         _inventory.tickets++;
@@ -162,7 +165,8 @@ public class MinijuegoTalaManager : MonoBehaviour
 
     public void WrongClick()
     {
-        Timer = Timer + 1f;
+        //Timer = Timer + 1f;
+        Timer -= 1f;
 
         Score--;
         if (Score <= 0) Score = 0;
@@ -182,18 +186,25 @@ public class MinijuegoTalaManager : MonoBehaviour
     {
         if (Gaming)
         {
-            Timer += Time.deltaTime;
+            //Timer += Time.deltaTime;
+            Timer -= Time.deltaTime;
             _sliderTimer.value = Timer;
 
-            if (Timer >= MaxTimer)
-            {
-                //Gaming = false;
-                //Game();
-                //Debug.Log("Perdiste");
-                //Debug.Log("tu escore fue de " + Score);
+            int minutes = Mathf.FloorToInt(Timer / 60);  // Calcula los minutos
+            int seconds = Mathf.FloorToInt(Timer % 60);  // Calcula los segundos
+            _txtTimer.text = string.Format("{0:00}:{1:00}", minutes, seconds);  // Formatea el texto para mostrar minutos y segundos
 
-                StartCoroutine(ExitGame());
-            }
+            if (Timer <= 0) StartCoroutine(ExitGame());
+
+            //if (Timer >= MaxTimer)
+            //{
+            //    //Gaming = false;
+            //    //Game();
+            //    //Debug.Log("Perdiste");
+            //    //Debug.Log("tu escore fue de " + Score);
+
+            //    StartCoroutine(ExitGame());
+            //}
 
             if (Move1)
             {
@@ -203,17 +214,17 @@ public class MinijuegoTalaManager : MonoBehaviour
 
             CheckDones();
         }
-      /*  if (Input.GetKeyDown(KeyCode.T))
-        {
-            Gaming = !Gaming;
-            Game();
-        }*/
+        if (Input.GetKeyDown(KeyCode.T)) StartGame();
+        //{
+        //    Gaming = !Gaming;
+        //    Game();
+        //}
     }
     private void Game()
     {
         if (Gaming)
         {
-            Timer = 0;
+            //Timer = 0;
             Coder1.Rounds = 0;
 
             Coder2.Rounds = 0;
@@ -256,6 +267,7 @@ public class MinijuegoTalaManager : MonoBehaviour
         _wood.transform.DOMove(_posGameWood.position, 0.5f);
 
         Score = 0;
+        Timer = MaxTimer;
         _txtScore.text = "SCORE: " + Score.ToString();
 
         if (_chainQuest != null && _chainQuest.questActive) 
