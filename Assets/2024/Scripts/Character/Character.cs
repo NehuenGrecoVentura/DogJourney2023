@@ -19,6 +19,7 @@ public class Character : MonoBehaviour
     [SerializeField] float _gravity = 9.7f;
     [SerializeField] Transform _camPos;
 
+
     public bool isClimb = false;
     public bool rabbitPicked = false;
     public bool isConstruct = false;
@@ -41,12 +42,15 @@ public class Character : MonoBehaviour
     [SerializeField] GameObject _apples;
     [SerializeField] GameObject _basket;
 
+    [Header("MOVE PARTICLES")]
+    [SerializeField] Terrain _mainTerrain;
+    [SerializeField] Terrain _terrainZone3;
+    [SerializeField] ParticleSystem _moveParticle;
+    [SerializeField] Color _colorSnowParticle;
+    private Color _initialColorParticle;
+
     private void Awake()
     {
-        //_myRb = GetComponent<Rigidbody>();
-        //_myAnim = GetComponent<Animator>();
-        //_myAudio = GetComponent<AudioSource>();
-        //_orderDog = GetComponent<OrderDog>();
         _construct = FindObjectOfType<BuilderManager>();
 
         _model = new ModelCharacter(_myRb, speed, speedRun, _speedCrouch, speedAux, isClimb, transform, _camPos, _gravity, _orderDog, _test1, _test2, _rayDist, _rayPoint1, _rayPoint2);
@@ -69,6 +73,7 @@ public class Character : MonoBehaviour
     private void Start()
     {
         speedAux = speed;
+        _initialColorParticle = _moveParticle.startColor;
     }
 
     private void FixedUpdate()
@@ -188,5 +193,19 @@ public class Character : MonoBehaviour
     {
         var pick = other.GetComponent<IPick>();
         if (pick != null) pick.Pick();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        var zone = collision.gameObject.GetComponent<Terrain>();
+
+        if (zone != null)
+        {
+            if (zone == _terrainZone3)
+                _moveParticle.startColor = _colorSnowParticle;
+            
+            else if (zone == _mainTerrain)
+                _moveParticle.startColor = _initialColorParticle;
+        }
     }
 }
