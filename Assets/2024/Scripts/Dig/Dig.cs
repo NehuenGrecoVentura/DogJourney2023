@@ -4,7 +4,8 @@ using TMPro;
 
 public class Dig : MonoBehaviour
 {
-    [SerializeField] DigHealthBar _healthBar;
+    //[SerializeField] DigHealthBar _healthBar;
+    [SerializeField] HitBarFlower _hitBar;
     
     [SerializeField] KeyCode _inputInteractive = KeyCode.Mouse0;
     private AudioSource _myAudio;
@@ -38,7 +39,8 @@ public class Dig : MonoBehaviour
 
     private void Start()
     {
-        _healthBar.gameObject.SetActive(false);
+        //_healthBar.gameObject.SetActive(false);
+        _hitBar.gameObject.SetActive(false);
         _initialHit = amountHit;
     }
 
@@ -51,7 +53,7 @@ public class Dig : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null) _healthBar.gameObject.SetActive(true);
+        if (player != null) _hitBar.gameObject.SetActive(true);
     }
 
     private void OnTriggerStay(Collider other)
@@ -63,7 +65,7 @@ public class Dig : MonoBehaviour
             FocusToFlower(player);
             player.HitDig();
             amountHit--;
-            _healthBar.Bar();
+            _hitBar.Bar();
 
             if (amountHit <= 0)
             {
@@ -114,7 +116,7 @@ public class Dig : MonoBehaviour
         if (player != null)
         {
             _myAudio.Stop();
-            _healthBar.gameObject.SetActive(false);
+            _hitBar.gameObject.SetActive(false);
             player.isConstruct = false;
             player.DeFreezePlayer();
         }
@@ -122,7 +124,7 @@ public class Dig : MonoBehaviour
 
     private IEnumerator Respawn()
     {
-        _healthBar.gameObject.SetActive(false);
+        _hitBar.gameObject.SetActive(false);
 
         foreach (var item in _myMeshes)
         {
@@ -140,6 +142,6 @@ public class Dig : MonoBehaviour
 
         _myCol.enabled = true;
         amountHit = _initialHit;
-        _healthBar.Bar();
+        _hitBar.Bar();
     }
 }
