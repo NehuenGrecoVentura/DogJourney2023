@@ -16,7 +16,9 @@ public class DigTreasure : MonoBehaviour
 
     public float amountHit = 200f;
     [SerializeField] KeyCode _keyInteractive = KeyCode.Mouse0;
-    [SerializeField] HealthBarTreasure _healthBar;
+    //[SerializeField] HealthBarTreasure _healthBar;
+
+    [SerializeField] HitTreasure _healthBar;
     [SerializeField] float _timeToRespawn = 5f;
 
     private void Awake()
