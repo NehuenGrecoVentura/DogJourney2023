@@ -26,7 +26,6 @@ public class Chairlift : MonoBehaviour
     [SerializeField] Image _fadeOut;
 
     [Header("MOVE")]
-    [SerializeField] GameObject _line;
     [SerializeField] Transform[] _waypoints;
     [SerializeField] Transform _posExit;
     [SerializeField] Transform _posExitDog;
@@ -40,7 +39,6 @@ public class Chairlift : MonoBehaviour
 
     void Start()
     {
-        _line.gameObject.SetActive(false);
         _camCinematic.gameObject.SetActive(false);
         _cinematic.SetActive(false);
         _fadeOut.DOColor(Color.clear, 0f);
@@ -95,7 +93,6 @@ public class Chairlift : MonoBehaviour
         _lineDog.enabled = false;
         
         yield return new WaitForSeconds(2f);
-        _line.SetActive(true);
         _fadeOut.DOColor(Color.clear, 1.5f);
         _camPlayer.gameObject.SetActive(false);
         _camCinematic.gameObject.SetActive(true);
@@ -119,7 +116,6 @@ public class Chairlift : MonoBehaviour
         _fadeOut.DOColor(Color.black, 1.5f);
 
         yield return new WaitForSeconds(2f);
-        _line.SetActive(false);
         _isActive = false;
         transform.position = _initialPos;
         _fadeOut.DOColor(Color.clear, 1.5f);
