@@ -17,7 +17,7 @@ public class TirosMovil : MonoBehaviour
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private ParticleSystem PS;
     [SerializeField] private BoxCollider BC;
-    [SerializeField] private GameObject Decal;
+    [SerializeField] private SpriteRenderer Decal;
     [SerializeField] private Animator _animator;
     [SerializeField] private bool Hit;
     [SerializeField] private float AnimTimer;
@@ -59,15 +59,15 @@ public class TirosMovil : MonoBehaviour
 
     void move()
     {
-        if (RandomWay >= 5)
+       if(RandomWay >= 5f)
         {
             rb.velocity = Vector3.left * speed;
-            Decal.transform.rotation = new Quaternion(0f, 90f, 0f,0f);
+            Decal.flipX = false;
         }
-        else
+        else if (RandomWay < 5f)
         {
             rb.velocity = Vector3.right * speed;
-            Decal.transform.rotation = new Quaternion(0f, 0f, 0f,0f);
+            Decal.flipX = true;
         }
         
     }
@@ -75,10 +75,10 @@ public class TirosMovil : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         spawnPoint.position = transform.position;
-        if (!Target)
+       /* if (!Target)
         {
             Random();
-        }
+        }*/
         if(other.gameObject.name == "OutBoxI")
         {
             Random();

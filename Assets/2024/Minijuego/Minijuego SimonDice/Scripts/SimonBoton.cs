@@ -44,7 +44,6 @@ public class SimonBoton : MonoBehaviour
             _myAnim.SetTrigger("Push");
             manager.PlayerClicking(this, _myAudio, _soundButton, _soundError);
             //_outlineSelect.enabled = false;
-            Debug.Log("click " + ID);
         }
     }
 

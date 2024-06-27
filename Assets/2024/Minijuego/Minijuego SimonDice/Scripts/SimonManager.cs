@@ -18,11 +18,10 @@ public class SimonManager : MonoBehaviour
     private int SimMax;
     [SerializeField] private int SimStart;
     [SerializeField] private float StartSimTime;
-    public List<int> userList, SimonList;
+    [SerializeField] public List<int> userList, SimonList;
     public bool SimonDiciendo;
 
-    [Header("UI SCORE")]
-    [SerializeField] GameObject _canvasScore;
+    [Header("UI SCORE")] [SerializeField] GameObject _canvasScore;
     [SerializeField] PuestoSimonDice _puestoSimon;
     [SerializeField] TMP_Text _txtScore;
     [SerializeField] TMP_Text _txtScoreChain;
@@ -32,12 +31,10 @@ public class SimonManager : MonoBehaviour
     private Collider _colPuesto;
     private ChainParkQuest _chainQuest;
 
-    [Header("INTRO")]
-    [SerializeField] Image _fadeOut;
+    [Header("INTRO")] [SerializeField] Image _fadeOut;
     [SerializeField] Camera _camIntro;
 
-    [Header("ROT")]
-    [SerializeField] private float _speedRot;
+    [Header("ROT")] [SerializeField] private float _speedRot;
     [SerializeField] Transform _circle;
     private Quaternion _initialRot;
 
@@ -95,7 +92,6 @@ public class SimonManager : MonoBehaviour
 
     IEnumerator SimonDice()
     {
-        Debug.Log("Observe and prepare");
         LockMouse();
         yield return new WaitForSeconds(1);
         SimonDiciendo = true;
@@ -108,12 +104,31 @@ public class SimonManager : MonoBehaviour
             Botons[rng].Click();
             yield return new WaitForSeconds(StartSimTime);
         }
+
         SimMax++;
         UnlockMouse();
         SimonDiciendo = false;
     }
 
-    public void PlayerClicking(SimonBoton b, AudioSource audioSource, AudioClip soundButton, AudioClip soundError)
+    IEnumerator SimonDiceOtraVez()
+    {
+        
+        LockMouse();
+        yield return new WaitForSeconds(1);
+        SimonDiciendo = true;
+        userList = new List<int>();
+        for (int i = 0; i < SimonList.Count; i++)
+        {
+            var temp = SimonList[i];
+            Botons[temp].Click();
+            yield return new WaitForSeconds(StartSimTime);
+        }
+        UnlockMouse();
+        SimonDiciendo = false;
+    }
+
+
+public void PlayerClicking(SimonBoton b, AudioSource audioSource, AudioClip soundButton, AudioClip soundError)
     {
         //userList.Add(b.ID);
         //if (userList[userList.Count - 1] != SimonList[userList.Count - 1])
@@ -136,8 +151,16 @@ public class SimonManager : MonoBehaviour
             audioSource.PlayOneShot(soundError);
             _lives--;
 
-            if (_lives > 0) _iconsLives[_lives].gameObject.SetActive(false);
+            if (_lives > 0)
+            {
+                _iconsLives[_lives].gameObject.SetActive(false);
+                StartCoroutine(SimonDiceOtraVez());
+            }
             else StartCoroutine(ExitGame());
+            
+            
+
+
         }
 
         else if (userList.Count == SimonList.Count && _lives > 0)
@@ -152,8 +175,6 @@ public class SimonManager : MonoBehaviour
 
             if (_chainQuest != null && _chainQuest.questActive)
                 _txtScoreChain.text = "TOTAL SCORE: " + _inventory.tickets.ToString();
-
-            Debug.Log("next Lvl");
         }
     }
 
