@@ -9,10 +9,17 @@ public class QuestFence : MonoBehaviour
     [Header("INTERACT")]
     [SerializeField] GameObject _iconInteract;
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
+    [SerializeField] Collider _myCol;
 
     [Header("QUEST")]
     [SerializeField] int _woodsRequired = 5;
     [SerializeField] GameObject _iconBuild;
+    [SerializeField] QuestUI _questUI;
+    [SerializeField] CharacterInventory _inventory;
+    [SerializeField] Character _player;
+    private bool _activeQuest = false;
+    private bool _completedWoods = false;
+    private bool _completeSeeds = false; 
 
     [Header("DIALOG")]
     [SerializeField, TextArea(4, 6)] string[] _lines;
@@ -24,7 +31,7 @@ public class QuestFence : MonoBehaviour
     [SerializeField, TextArea(4, 6)] string[] _messages;
     [SerializeField] Image _fadeOut;
     [SerializeField] TMP_Text _taskWoods;
-    private Dialogue _dialogue;
+    [SerializeField] Dialogue _dialogue;
 
     [Header("CAMERAS")]
     [SerializeField] Camera _camNPC;
@@ -34,21 +41,12 @@ public class QuestFence : MonoBehaviour
     [Header("AUDIOS")]
     [SerializeField] AudioClip _messageSound;
     [SerializeField] AudioClip _confirmSound;
-    private AudioSource _myAudio;
+    [SerializeField] AudioSource _myAudio;
 
     [Header("ANIMS")]
     [SerializeField] RuntimeAnimatorController[] _animController;
     [SerializeField] GameObject _broom;
-    private Animator _myAnim;
-
-    private bool _activeQuest = false;
-    private bool _completedWoods = false;
-    private bool _completeSeeds = false;
-
-    private Collider _myCol;
-    private QuestUI _questUI;
-    private CharacterInventory _inventory;
-    private Character _player;
+    [SerializeField] Animator _myAnim;
 
     [Header("SEEDS")]
     private bool _seedsActive = false;
@@ -57,22 +55,14 @@ public class QuestFence : MonoBehaviour
 
     private void Awake()
     {
-        _myCol = GetComponent<Collider>();
-        _myAnim = GetComponent<Animator>();
-        _myAudio = GetComponent<AudioSource>();
-        _dialogue = FindObjectOfType<Dialogue>();
-        _questUI = FindObjectOfType<QuestUI>();
-        _inventory = FindObjectOfType<CharacterInventory>();
-        _player = FindObjectOfType<Character>();
         _allBush = FindObjectsOfType<Bush>();
     }
 
     void Start()
     {
-        _dialogue.canTalk = true;
-        _dialogue.gameObject.SetActive(true);
-        _buttonConfirm.onClick.AddListener(() => Confirm());
+        _dialogue.gameObject.SetActive(false);
         _myAnim.runtimeAnimatorController = _animController[1];
+        _iconInteract.transform.DOScale(0f, 0f);
         _broom.SetActive(false);
     }
 
@@ -100,11 +90,28 @@ public class QuestFence : MonoBehaviour
         }
     }
 
+    private void SetDialogue()
+    {
+        _iconInteract.transform.DOScale(0.01f, 0.5f);
+        _buttonConfirm.onClick.AddListener(() => Confirm());
+
+        if (!_activeQuest)
+        {
+            for (int i = 0; i < _dialogue._lines.Length; i++)
+                _dialogue._lines[i] = _lines[i];
+        }
+
+        _dialogue.gameObject.SetActive(true);
+        _dialogue.Set(_nameNPC);
+        _dialogue.playerInRange = true;
+        _dialogue.canTalk = true;
+    }
+
     private void Confirm()
     {
         _dialogue.canTalk = false;
         _myAudio.PlayOneShot(_confirmSound);
-        _iconInteract.SetActive(false);
+        _iconInteract.transform.DOScale(0f, 0.5f);
         _dialogue.Close();
         _myCol.enabled = false;
         _activeQuest = true;
@@ -115,17 +122,10 @@ public class QuestFence : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && (!_activeQuest || _completedWoods))
+        if (player != null)
         {
-            _iconInteract.SetActive(true);
-            _dialogue.playerInRange = true;
-            _dialogue.Set(_nameNPC);
-
-            for (int i = 0; i < _dialogue._lines.Length; i++)
-                _dialogue._lines[i] = _lines[i];
-
-            _message.gameObject.SetActive(false);
-            _message.DOAnchorPosY(-1000f, 0);
+            if (_myCol.enabled && !_activeQuest) SetDialogue();
+            if (_completedWoods && _completeSeeds) _iconInteract.transform.DOScale(0.01f, 0.5f);
         }
     }
 
@@ -144,7 +144,7 @@ public class QuestFence : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
-            _iconInteract.SetActive(false);
+            _iconInteract.transform.DOScale(0f, 0.5f);
             _dialogue.playerInRange = false;
         }
     }
@@ -158,7 +158,7 @@ public class QuestFence : MonoBehaviour
         _textName.text = _nameNPC;
         _textMessage.text = _messages[0];
         _fadeOut.DOColor(Color.clear, 0f);
-        _iconInteract.SetActive(false);
+        _iconInteract.transform.DOScale(0f, 0.5f);
         _player.speed = 0;
         _player.FreezePlayer();
         _message.gameObject.SetActive(true);
@@ -199,7 +199,6 @@ public class QuestFence : MonoBehaviour
         _player.DeFreezePlayer();
         _message.gameObject.SetActive(false);
 
-
         foreach (var item in _allBush)
         {
             item.enabled = true;
@@ -214,7 +213,7 @@ public class QuestFence : MonoBehaviour
         _textName.text = _nameNPC;
         _textMessage.text = _messages[3];
         _fadeOut.DOColor(Color.clear, 0f);
-        _iconInteract.SetActive(false);
+        _iconInteract.transform.DOScale(0f, 0.5f);
         _player.speed = 0;
         _player.FreezePlayer();
         _message.gameObject.SetActive(true);
