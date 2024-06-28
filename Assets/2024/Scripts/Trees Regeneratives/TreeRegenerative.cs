@@ -67,8 +67,6 @@ public class TreeRegenerative : MonoBehaviour
 
         if (player != null && _myCol.enabled)
         {
-            //FocusToTree();
-
             if (!Input.GetKey(_inputInteractive))
             {
                 _hitBar.gameObject.SetActive(true);
@@ -76,23 +74,10 @@ public class TreeRegenerative : MonoBehaviour
                 player.MainAnim();
             }
                 
-
-            //else if (Input.GetKey(_inputInteractive) && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
-            //{
-            //    if (!_inventory.shovelSelected)
-            //        player.HitTree();
-            //}
-
             else
             {
                 if (!_inventory.shovelSelected)
                 {
-                    //_doTween.Shake(gameObject.transform);
-                    //player.HitTree();
-                    //amountHit--;
-                    //if (!_myAudio.isPlaying) _myAudio.PlayOneShot(_soundHit);
-                    //_hitBar.Bar();
-
                     FocusToTree();
                     _doTween.Shake(gameObject.transform);
                     player.HitTree();
@@ -114,8 +99,6 @@ public class TreeRegenerative : MonoBehaviour
                 player.MainAnim();
                 gameObject.SetActive(false);
             }
-
-            //if (amountHit <= 0 && _quest4.quest4Active) _quest4.amount++;
         }
     }
 
