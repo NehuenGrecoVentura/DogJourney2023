@@ -24,7 +24,7 @@ public class BuilderManager : MonoBehaviour
     private MeshRenderer _myRender;
     private Collider _myCol;
     private Character _player;
-    private bool _playCinematic = false;
+    //private bool _playCinematic = false;
     public CharacterInventory _inventory;
 
     [Header("RADAR")]
@@ -54,30 +54,44 @@ public class BuilderManager : MonoBehaviour
         _item1.transform.localScale = Vector3.zero;
         _item2.transform.localScale = Vector3.zero;
     }
-    private void Update()
-    {
-        if (_playCinematic)
-        {
-            _player.PlayAnim("Build");
-            _player.gameObject.transform.LookAt(_objToBuild.transform.position);
-        } 
-    }
+
+    //private void Update()
+    //{
+    //    if (_playCinematic)
+    //    {
+    //        //_player.isConstruct = true;
+    //        //_player.PlayAnim("Build");
+    //        //_player.PlayAnim("Build");
+    //        _player.Build();
+    //        _player.gameObject.transform.LookAt(_objToBuild.transform.position);
+    //    } 
+    //}
+
     private IEnumerator Construct()
     {
         _questUI.UIStatus(false);
         _myAudio.PlayOneShot(_audioBuild);
         _radar.StatusRadar(false);
         _iconsMaterials.SetActive(false);
-        _playCinematic = true;
+        
+        //_playCinematic = true;
+
+
         Destroy(_myRender);
         Destroy(_myCol);
-        _player.FreezePlayer();       
-        _player.speed = 0;
-        _player.PlayAnim("Build");
+
+        _player.transform.LookAt(_objToBuild.transform);
+        _player.FreezePlayer();
+        _player.Build();
+        //_player.isConstruct = true;
+        //_player.PlayAnim("Build");
+        
         _camPlayer.gameObject.SetActive(false);
         _cinematic.SetActive(true);
         yield return new WaitForSeconds(3.5f);
         _objToBuild.SetActive(true);
+        _player.MainAnim();
+        _player.transform.LookAt(_objToBuild.transform);
 
         //foreach (var item in _objToDestroy)
         //{
@@ -92,7 +106,9 @@ public class BuilderManager : MonoBehaviour
             }
         }
 
-        _playCinematic = false;
+        //_playCinematic = false;
+        
+
         yield return new WaitForSeconds(_timeToBuild);
         _camPlayer.gameObject.SetActive(true);
         _radar.StatusRadar(true);
@@ -103,7 +119,7 @@ public class BuilderManager : MonoBehaviour
         _radar.target = _posRadar;
         //if (gameObject.name == "Build Stairs") //_canvasQuest.SetActive(true);
         _player.DeFreezePlayer();
-        _player.speed = _player.speedAux;
+        _player.MainAnim();
         Destroy(_iconsMaterials);
         Destroy(_cinematic);
         Destroy(gameObject);
