@@ -90,6 +90,4 @@ public class Brazier : MonoBehaviour
         _npc.OnFire();
         _npc.ActiveFinal(this, player, _canvasCinematic, _camPlayer);
     }
-
-    private IEnumerator 
 }
