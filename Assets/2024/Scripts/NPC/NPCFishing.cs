@@ -19,7 +19,6 @@ public class NPCFishing : MonoBehaviour
     [SerializeField] TMP_Text _textName;
     [SerializeField] Button _buttonConfirm;
     private Dialogue _dialogue;
-    private bool _questActive = false;
 
     [Header("FISHING")]
     [SerializeField] private FishingMinigame _fishing;
@@ -67,7 +66,6 @@ public class NPCFishing : MonoBehaviour
         _dialogue.canTalk = false;
         _fishing.start = true;
         _myAudio.PlayOneShot(_soundConfirm);
-        _questActive = true;
         _buttonConfirm.gameObject.SetActive(false);
         _dialogue.Close();
 
@@ -77,7 +75,6 @@ public class NPCFishing : MonoBehaviour
         _dialogue.playerInRange = false;
         Destroy(_myCol);
         Destroy(_iconInteract);
-        //Destroy(this);
     }
 
     public void SetPos()

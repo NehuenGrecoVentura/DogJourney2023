@@ -8,6 +8,11 @@ using TMPro;
 
 public class FishingMinigame : MonoBehaviour
 {
+    [Header("INVENTORY")]
+    [SerializeField] GameObject _axe;
+    [SerializeField] GameObject _shovel;
+    private CharacterInventory _inventory;
+
     //CameraControl
     [Header("CAMERA CONTROL")]
     //[SerializeField] private GameObject camer1; //Camara del juego
@@ -68,6 +73,8 @@ public class FishingMinigame : MonoBehaviour
     [Header("FISH MESH")]
     [SerializeField] GameObject _fishMesh;
 
+    
+
     // SPRITE PEZ COMUN
     public SpriteRenderer _spriteFish;
     public SpriteRenderer _spriteFishWin;
@@ -93,7 +100,7 @@ public class FishingMinigame : MonoBehaviour
     [Header("AUDIOS")]
     private AudioSource _myAudio;
 
-    private CharacterInventory _inventory;
+    
 
     private void Awake()
     {
@@ -286,6 +293,11 @@ public class FishingMinigame : MonoBehaviour
                 _character.speed = _character.speedAux;
                 _character.DeFreezePlayer();
                 _radar.StatusRadar(true);
+
+                if (_inventory.shovelUnlocked && _inventory.shovelSelected)
+                    _shovel.SetActive(true);
+
+                else _axe.SetActive(true);
             }
         }
     }

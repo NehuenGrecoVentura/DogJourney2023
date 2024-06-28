@@ -45,8 +45,6 @@ public class TutorialFishing : MonoBehaviour
     [SerializeField] NPCFishing _npc;
 
     public GameObject[] score;
-    //[SerializeField] Fishing[] _allFishings;
-
     [SerializeField] QuickFishing[] _allFishings;
 
     private void Awake()
@@ -97,9 +95,7 @@ public class TutorialFishing : MonoBehaviour
 
     private IEnumerator Ending()
     {
-        //_fishing.Quit();
         _questActive = false;
-
 
         _textName.text = "Alice";
         _message.text = _messageFinal;
@@ -109,7 +105,6 @@ public class TutorialFishing : MonoBehaviour
 
 
         _player.gameObject.transform.LookAt(transform);
-        _player.speed = 0;
         _player.FreezePlayer();
 
         _fadeOut.DOColor(Color.black, 1f).OnComplete(() => Destroy(_cinematic, 1f));
@@ -144,17 +139,10 @@ public class TutorialFishing : MonoBehaviour
         Destroy(score[0].gameObject);
         Destroy(score[1].gameObject);
 
-
-        //_allFishings[0].gameObject.SetActive(true);
-        //_allFishings[1].gameObject.SetActive(true);
-
-
-
         foreach (var item in _allFishings)
         {
             item.gameObject.SetActive(true);
         }
-
 
         _inventory.baits = 0;
         Destroy(this);
@@ -209,8 +197,6 @@ public class TutorialFishing : MonoBehaviour
         _myAudio.PlayOneShot(_messageSound);
 
         // TUTORIAL SLIDER
-
-
         yield return new WaitForSeconds(3f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
         yield return new WaitForSeconds(1f);
