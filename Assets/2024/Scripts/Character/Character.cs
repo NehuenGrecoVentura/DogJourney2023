@@ -10,6 +10,7 @@ public class Character : MonoBehaviour
     [SerializeField] Animator _myAnim;
     [SerializeField] AudioSource _myAudio;
     [SerializeField] OrderDog _orderDog;
+    [SerializeField] DogBall _dogBall;
     private BuilderManager _construct;
 
     public float speed = 10f;
@@ -202,10 +203,17 @@ public class Character : MonoBehaviour
         if (zone != null)
         {
             if (zone == _terrainZone3)
+            {
                 _moveParticle.startColor = _colorSnowParticle;
+                _dogBall.SetTerrain(_terrainZone3);
+            }
+                
             
             else if (zone == _mainTerrain)
+            {
                 _moveParticle.startColor = _initialColorParticle;
+                _dogBall.SetTerrain(_mainTerrain);
+            }
         }
     }
 }

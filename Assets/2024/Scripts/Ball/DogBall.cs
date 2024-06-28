@@ -19,4 +19,9 @@ public class DogBall : MonoBehaviour
         // Aplica la nueva posición al objeto.
         transform.position = currentPosition;
     }
+
+    public void SetTerrain(Terrain terrain)
+    {
+        _terrain = terrain;
+    }
 }
