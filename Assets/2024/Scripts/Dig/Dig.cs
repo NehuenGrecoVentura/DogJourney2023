@@ -4,13 +4,13 @@ using TMPro;
 
 public class Dig : MonoBehaviour
 {
-    //[SerializeField] DigHealthBar _healthBar;
-    [SerializeField] HitBarFlower _hitBar;
-    
+    [Header("INTERACT")]
     [SerializeField] KeyCode _inputInteractive = KeyCode.Mouse0;
     private AudioSource _myAudio;
+    private Collider _myCol;
 
     [Header("HIT")]
+    [SerializeField] HitBarFlower _hitBar;
     public float amountHit = 200f;
     private float _initialHit;
 
@@ -24,9 +24,7 @@ public class Dig : MonoBehaviour
     [SerializeField] float _timeToRespawn = 5f;
     [SerializeField] MeshRenderer[] _myMeshes;
     private SpawnRandom _random;
-    private Collider _myCol;
     
-
     private void Awake()
     {
         _myAudio = GetComponent<AudioSource>();
@@ -39,7 +37,6 @@ public class Dig : MonoBehaviour
 
     private void Start()
     {
-        //_healthBar.gameObject.SetActive(false);
         _hitBar.gameObject.SetActive(false);
         _initialHit = amountHit;
     }
@@ -59,66 +56,53 @@ public class Dig : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && Input.GetKey(_inputInteractive) && _invetory.shovelSelected)
+        if (player != null && _myCol.enabled)
         {
-            if (!_myAudio.isPlaying) _myAudio.Play();
-            FocusToFlower(player);
-            player.HitDig();
-            amountHit--;
-            _hitBar.Bar();
+            if (!Input.GetKey(_inputInteractive))
+            {
+                _hitBar.gameObject.SetActive(true);
+                player.enabled = true;
+                player.MainAnim();
+            }
+
+            else
+            {
+                if (_invetory.shovelSelected)
+                {
+                    FocusToFlower(player);
+                    player.HitDig();
+                    player.enabled = false;
+                    amountHit--;
+                    if (!_myAudio.isPlaying) _myAudio.Play();
+                    _hitBar.Bar();
+                }
+            }
 
             if (amountHit <= 0)
             {
                 amountHit = 0;
-                //_message.ShowUI("+1", _boxMessage, _textAmount);
-                //int randomIndex = Random.Range(0, 2);
-
-                //switch (randomIndex)
-                //{
-                //    case 0:
-                //        // Incrementa la variable seeds
-                //        _invetory.seeds++;
-                //        break;
-
-                //    case 1:
-                //        // Incrementa la variable flowers
-                //        _invetory.flowers++;
-                //        break;
-
-                //    default:
-                //        Debug.LogError("Index fuera de rango.");
-                //        break;
-                //}
-
                 _myAudio.Stop();
-                player.isConstruct = false;
-                player.DeFreezePlayer();
                 _invetory.flowers++;
-                if (_invetory.flowers < 4) _message.ShowUI("+1", _boxSlide, _textAmount); // CAMBIAR CUANDO EXPANDAMOS A LA ISLA 2 ESTA LINEA.
+                //if (_invetory.flowers < 4) _message.ShowUI("+1", _boxSlide, _textAmount); // CAMBIAR CUANDO EXPANDAMOS A LA ISLA 2 ESTA LINEA.
+                _message.ShowUI("+1", _boxSlide, _textAmount);
+                _hitBar.gameObject.SetActive(false);
                 StartCoroutine(Respawn());
+                player.DeFreezePlayer();
+                player.enabled = true;
+                player.MainAnim();
             }
         }
-
-        else if (player != null && !Input.GetKey(_inputInteractive))
-        {
-            _myAudio.Stop();
-            player.isConstruct = false;
-            player.DeFreezePlayer();
-        }
-            
-            
-            
     }
 
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null)
+        if (player != null && _myCol.enabled)
         {
             _myAudio.Stop();
             _hitBar.gameObject.SetActive(false);
-            player.isConstruct = false;
-            player.DeFreezePlayer();
+            player.enabled = true;
+            player.MainAnim();
         }
     }
 

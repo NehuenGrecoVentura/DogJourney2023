@@ -51,39 +51,6 @@ public class DigBait : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        //var player = other.GetComponent<Character>();
-        //if (player != null && _myCol.enabled)
-        //{
-        //    FocusToDig(player);
-        //    if (Input.GetKey(_keyInteractive) && _inventory.shovelSelected)
-        //    {
-        //        if (!_myAudio.isPlaying) _myAudio.Play();
-
-        //        player.HitDig();
-        //        amountHit--;
-        //        _healthBar.Bar();
-
-        //        if (amountHit <= 0)
-        //        {
-        //            amountHit = 0;
-        //            _myAudio.Stop();
-        //            _quest.baitPicked++;
-        //            _inventory.baits++;
-        //            _doTween.ShowLootCoroutine(_rectLoot);
-        //            player.isConstruct = false;
-        //            player.DeFreezePlayer();
-        //            StartCoroutine(Respawn());
-        //        }
-        //    }
-        //}
-
-        //else if (player != null && !Input.GetKey(_keyInteractive))
-        //{
-        //    _myAudio.Stop();
-        //    player.isConstruct = false;
-        //    player.DeFreezePlayer();
-        //}
-
         var player = other.GetComponent<Character>();
         if (player != null && _myCol.enabled)
         {
@@ -119,22 +86,13 @@ public class DigBait : MonoBehaviour
                 player.DeFreezePlayer();
                 player.enabled = true;
                 player.MainAnim();
-                gameObject.SetActive(false);
+                //gameObject.SetActive(false);
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        //var player = other.GetComponent<Character>();
-        //if (player != null)
-        //{
-        //    _myAudio.Stop();
-        //    _healthBar.gameObject.SetActive(false);
-        //    player.isConstruct = false;
-        //    player.DeFreezePlayer();
-        //}
-
         var player = other.GetComponent<Character>();
         if (player != null && _myCol.enabled)
         {
