@@ -4,22 +4,26 @@ using UnityEngine;
 
 public class DigTreasure : MonoBehaviour
 {
-    private List<DigTreasure> _allTreasures = new List<DigTreasure>();
+    [Header("INTERACT")]
+    [SerializeField] KeyCode _keyInteractive = KeyCode.Mouse0;
+    private Collider _myCol;
+
+    [Header("HIT")]
+    [SerializeField] HitTreasure _healthBar;
+    public float amountHit = 200f;
+    private float _initialHit;
+    private bool _isLast = false;
+    
+    [Header("RESPAWN")]
+    [SerializeField] float _timeToRespawn = 5f;
     private SpawnRandom _random;
+    private List<DigTreasure> _allTreasures = new List<DigTreasure>();
+
+    [Header("REFS")]
     private CharacterInventory _inventory;
     private ArchaeologistQuest1 _npc;
     private AudioSource _myAudio;
-    private Collider _myCol;
     private MeshRenderer _myMesh;
-    private float _initialHit;
-    private bool _isLast = false;
-
-    public float amountHit = 200f;
-    [SerializeField] KeyCode _keyInteractive = KeyCode.Mouse0;
-    //[SerializeField] HealthBarTreasure _healthBar;
-
-    [SerializeField] HitTreasure _healthBar;
-    [SerializeField] float _timeToRespawn = 5f;
 
     private void Awake()
     {
@@ -111,6 +115,12 @@ public class DigTreasure : MonoBehaviour
         }
     }
 
+    private void FocusToDig(Character player)
+    {
+        Vector3 pos = new Vector3(transform.position.x, player.transform.position.y, transform.position.z);
+        player.gameObject.transform.LookAt(pos);
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -120,46 +130,92 @@ public class DigTreasure : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        var player = other.GetComponent<Character>();
-        if (player != null && Input.GetKey(_keyInteractive) && _inventory.shovelSelected)
-        {
-            if (!_myAudio.isPlaying) _myAudio.Play();
+        //var player = other.GetComponent<Character>();
+        //if (player != null && Input.GetKey(_keyInteractive) && _inventory.shovelSelected)
+        //{
+        //    if (!_myAudio.isPlaying) _myAudio.Play();
 
-            Vector3 pos = new Vector3(transform.position.x, player.transform.position.y, transform.position.z);
-            player.gameObject.transform.LookAt(pos);
-            player.HitDig();
-            amountHit--;
-            _healthBar.Bar();
+        //    Vector3 pos = new Vector3(transform.position.x, player.transform.position.y, transform.position.z);
+        //    player.gameObject.transform.LookAt(pos);
+        //    player.HitDig();
+        //    amountHit--;
+        //    _healthBar.Bar();
+
+        //    if (amountHit <= 0)
+        //    {
+        //        amountHit = 0;
+        //        _myAudio.Stop();
+        //        player.isConstruct = false;
+        //        player.DeFreezePlayer();
+        //        if (_isLast) TreasureLoot();
+        //        else RandomLoot();
+        //        StartCoroutine(Respawn());
+        //    }
+        //}
+
+        //else if (player != null && !Input.GetKey(_keyInteractive))
+        //{
+        //    _myAudio.Stop();
+        //    player.isConstruct = false;
+        //    player.DeFreezePlayer();
+        //} 
+
+        var player = other.GetComponent<Character>();
+        if (player != null && _myCol.enabled)
+        {
+            if (!Input.GetKey(_keyInteractive))
+            {
+                _healthBar.gameObject.SetActive(true);
+                player.enabled = true;
+                player.MainAnim();
+            }
+
+            else
+            {
+                if (_inventory.shovelSelected)
+                {
+                    FocusToDig(player);
+                    player.HitDig();
+                    player.enabled = false;
+                    amountHit--;
+                    if (!_myAudio.isPlaying) _myAudio.Play();
+                    _healthBar.Bar();
+                }
+            }
 
             if (amountHit <= 0)
             {
                 amountHit = 0;
                 _myAudio.Stop();
-                player.isConstruct = false;
-                player.DeFreezePlayer();
+                _healthBar.gameObject.SetActive(false);
                 if (_isLast) TreasureLoot();
                 else RandomLoot();
                 StartCoroutine(Respawn());
+                player.DeFreezePlayer();
+                player.enabled = true;
+                player.MainAnim();
             }
         }
-
-        else if (player != null && !Input.GetKey(_keyInteractive))
-        {
-            _myAudio.Stop();
-            player.isConstruct = false;
-            player.DeFreezePlayer();
-        } 
     }
 
     private void OnTriggerExit(Collider other)
     {
+        //var player = other.GetComponent<Character>();
+        //if (player != null)
+        //{
+        //    _myAudio.Stop();
+        //    _healthBar.gameObject.SetActive(false);
+        //    player.isConstruct = false;
+        //    player.DeFreezePlayer();
+        //}
+
         var player = other.GetComponent<Character>();
-        if (player != null)
+        if (player != null && _myCol.enabled)
         {
             _myAudio.Stop();
             _healthBar.gameObject.SetActive(false);
-            player.isConstruct = false;
-            player.DeFreezePlayer();
+            player.enabled = true;
+            player.MainAnim();
         }
     }
 
