@@ -143,16 +143,21 @@ public class DogEnter : MonoBehaviour
     public void ActiveNextQuest()
     {
         _dog.canTeletransport = true;
+
         _camDog.gameObject.SetActive(false);
         _camPlayer.gameObject.SetActive(true);
+
         _dog.quickEnd = false;
         _mainCam.gameObject.SetActive(true);
-        _player.speed = _player.speedAux;
+        
+        _player.enabled = true;
         _player.DeFreezePlayer();
+
         _colTableQuest.enabled = true;
         _nextQuest.enabled = true;
         _radar.target = _nextQuest.gameObject.transform;
         _gm.QuestCompleted();
+
         Destroy(_broomPrefab);
         Destroy(_maryNPC);
         Destroy(_endingQuestPos.transform.parent.gameObject);
@@ -161,8 +166,6 @@ public class DogEnter : MonoBehaviour
 
     private IEnumerator Message()
     {
-        //_myAudio.Play();
-
         _myAudio.PlayOneShot(_messageSound);
         _message.anchoredPosition = new Vector2(0f, 125f);
         _textMessage.rectTransform.anchoredPosition = new Vector2(0.2341f, _textMessage.rectTransform.anchoredPosition.y);
@@ -182,19 +185,17 @@ public class DogEnter : MonoBehaviour
         _questUI.UIStatus(false);
         _cinematic.SetActive(true);
         _mainCam.gameObject.SetActive(false);
-        _player.speed = 0;
         _player.FreezePlayer();
 
         yield return new WaitForSeconds(5f);
         _message.DOAnchorPosY(-1000f, 0f);
         _message.gameObject.SetActive(false);
-
         _questUI.UIStatus(true);
+        
         _cinematic.SetActive(false);
         _mainCam.gameObject.SetActive(true);
-        _player.speed = _player.speedAux;
-        _player.DeFreezePlayer();
 
+        _player.DeFreezePlayer();
         _iconInterct.SetActive(true);
     }
 
@@ -203,7 +204,6 @@ public class DogEnter : MonoBehaviour
         _questUI.UIStatus(false);
         _dogBroomCinematic.SetActive(true);
         _mainCam.gameObject.SetActive(false);
-        _player.speed = 0;
         _player.DeFreezePlayer();
         Destroy(_myCol);
         _dogBall.gameObject.transform.position = _enterPos.position;
@@ -227,7 +227,6 @@ public class DogEnter : MonoBehaviour
         _message.DOAnchorPosY(70f, 0.5f);
 
         _textMessage.text = _messageBroomFind;
-        //_dog.gameObject.SetActive(true);
         _broomPrefab.SetActive(true);
         _dog._target.transform.position = _exitPos.position;
         _dog.OrderGo();
@@ -258,10 +257,12 @@ public class DogEnter : MonoBehaviour
         _camPlayer.gameObject.SetActive(false);
         _dog.quickEnd = true;
         _dog.OrderGoQuick(_maryNPC.gameObject.transform);
+        Destroy(_maryNPC.gameObject.GetComponent<BoxCollider>());
+
         yield return new WaitForSeconds(2f);
         _fadeOut.DOColor(Color.black, 1f);
-        _player.speed = 0;
         _player.FreezePlayer();
+        
         yield return new WaitForSeconds(1f);
         _fadeOut.DOColor(new Color(0,0,0,0), 1f);
         _maryNPC.ChangeController();
@@ -269,13 +270,14 @@ public class DogEnter : MonoBehaviour
         _camEnding.gameObject.SetActive(true);
         _player.gameObject.transform.position = _endingQuestPos.position;
         _player.gameObject.transform.LookAt(_maryNPC.gameObject.transform);
+        
+
         yield return new WaitForSeconds(1f);
         _textMessage.text = _messageWin;
         _maryNPC.SetName();
         _myAudio.PlayOneShot(_messageSound);
         _message.gameObject.SetActive(true);
         _message.DOAnchorPosY(70f, 0.5f);
-
 
         yield return new WaitForSeconds(4f);
         _message.DOAnchorPosY(-1000f, 0f);
@@ -296,8 +298,10 @@ public class DogEnter : MonoBehaviour
         _canQuick = false;
         _dog.OrderGoQuick(_maryNPC.gameObject.transform);
         _fadeOut.DOColor(Color.black, 1f);
-        _player.speed = 0;
+
         _player.FreezePlayer();
+        _player.enabled = false;
+
         yield return new WaitForSeconds(1f);
         _fadeOut.DOColor(new Color(0, 0, 0, 0), 1f);
         _maryNPC.ChangeController();
