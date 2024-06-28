@@ -84,7 +84,7 @@ public class BoxWoods : MonoBehaviour
         _animTruck.enabled = false;
         _cinematic.SetActive(false);
         _camCinematic.gameObject.SetActive(false);
-        
+
 
         foreach (var anim in _animGates)
             anim.enabled = false;
@@ -98,6 +98,9 @@ public class BoxWoods : MonoBehaviour
             {
                 rueda.transform.Rotate(Vector3.forward * _speedWheels * Time.deltaTime);
             }
+
+            if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) 
+                FinishQuest();
         }
 
         if (_inventory.greenTrees >= 5)
@@ -105,7 +108,7 @@ public class BoxWoods : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) && canQuick) StartCoroutine(QuickEndCoroutine());
             else
             {
-                
+
                 if (!_tutorialQuick)
                 {
                     StartCoroutine(TutorialQuick());
@@ -226,7 +229,7 @@ public class BoxWoods : MonoBehaviour
         Destroy(_camCinematic.gameObject);
         _camPlayer.gameObject.SetActive(true);
         _player.DeFreezePlayer();
-        _player.speed = _player.speedAux;  
+        _player.speed = _player.speedAux;
 
         foreach (var item in _canvasQuests)
             item.gameObject.SetActive(false);
