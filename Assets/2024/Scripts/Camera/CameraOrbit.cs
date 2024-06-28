@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraOrbit : MonoBehaviour
@@ -21,10 +19,6 @@ public class CameraOrbit : MonoBehaviour
     [SerializeField] private bool _zoomBlocked = false;
     private float zoomTargetDistance = 50.0f;
     private float zoomSmoothness = 5.0f; // Suavidad del efecto de zoom
-    private float previousMaxDistance;
-    float t = 0.0f;
-    //public float minY, maxY;
-    //public float maxAllowed;
 
     void Start()
     {
@@ -75,28 +69,7 @@ public class CameraOrbit : MonoBehaviour
             angle.y = Mathf.Clamp(angle.y, -80 * Mathf.Deg2Rad, 80 * Mathf.Deg2Rad);
         }
 
-        //if (Input.GetKeyDown(KeyCode.X))
-        //{
-        //    if (!_zoomBlocked)
-        //    {
-        //        maxDistance = 20;
-        //        _zoomBlocked = true;
-        //    }
-
-        //    else
-        //    {
-        //        maxDistance = 50;
-        //        _zoomBlocked = false;
-        //    }
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.X))
-        //{
-        //    _zoomBlocked = !_zoomBlocked; // Invertir el estado de bloqueo del zoom
-        //    zoomTargetDistance = _zoomBlocked ? 20.0f : 50.0f; // Definir la distancia de zoom objetivo
-        //}
-
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.V))
         {
             if (!_zoomBlocked)
             {
@@ -159,12 +132,6 @@ public class CameraOrbit : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(follow.position - transform.position);
 
         _playerBlocked = false; // Restablece el estado de colisión
-
-        //if (_zoomBlocked)
-        //{
-        //    maxDistance = Mathf.Lerp(maxDistance, zoomTargetDistance, Time.deltaTime * zoomSmoothness);
-        //}
-
         maxDistance = Mathf.Lerp(maxDistance, zoomTargetDistance, Time.deltaTime * zoomSmoothness);
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using DG.Tweening;
 
 public class QuestApple : MonoBehaviour
 {
@@ -63,7 +64,7 @@ public class QuestApple : MonoBehaviour
     private void Start()
     {
         _dialogue.gameObject.SetActive(false);
-        _iconInteract.SetActive(false);
+        _iconInteract.transform.DOScale(0f, 0f);
         _camEnding.gameObject.SetActive(false);
 
         foreach (var thief in _thiefs)
@@ -128,7 +129,7 @@ public class QuestApple : MonoBehaviour
     private void Confirm()
     {
         _myCol.enabled = false;
-        _iconInteract.SetActive(false);
+        _iconInteract.transform.DOScale(0f, 0.5f);
         _dialogue.canTalk = false;
         _dialogue.Close();
         _questUI.ActiveUIQuest("The Great Harvest", "Collect apples from the trees", string.Empty, string.Empty);
@@ -148,9 +149,8 @@ public class QuestApple : MonoBehaviour
     private void SetDialogue()
     {
         _textName.text = _nameNPC;
-        _iconInteract.SetActive(true);
+        _iconInteract.transform.DOScale(0.01f, 0.5f);
         _buttonConfirm.onClick.AddListener(() => Confirm());
-
 
         if (!_questActive)
         {
@@ -169,7 +169,7 @@ public class QuestApple : MonoBehaviour
         if (player != null)
         {
             if (_myCol.enabled && !_questActive && !_questCompleted) SetDialogue();
-            else if (_questCompleted) _iconInteract.SetActive(true);
+            else if (_questCompleted) _iconInteract.transform.DOScale(0.01f, 0.5f);
         }
     }
 
@@ -186,7 +186,7 @@ public class QuestApple : MonoBehaviour
         if (player != null)
         {
             _dialogue.playerInRange = false;
-            _iconInteract.SetActive(false);
+            _iconInteract.transform.DOScale(0f, 0.5f);
         }
     }
 
@@ -231,7 +231,7 @@ public class QuestApple : MonoBehaviour
         _camPlayer.gameObject.SetActive(false);
         _camEnding.gameObject.SetActive(true);
         Destroy(_myCol);
-        _iconInteract.SetActive(false);
+        _iconInteract.transform.DOScale(0f, 0.5f);
         _boxMessage.SetMessage(_nameNPC);
         _myAnim.SetBool("Quest", true);
 
