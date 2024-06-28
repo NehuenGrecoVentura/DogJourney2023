@@ -19,6 +19,7 @@ public class CinematicBoxWolf : MonoBehaviour
     [Header("CINEMATIC")]
     [SerializeField] GameObject _cinematic;
     private CameraOrbit _camPlayer;
+    private bool _canSkip = false;
 
     private Character _player;
     private LocationQuest _radar;
@@ -37,12 +38,13 @@ public class CinematicBoxWolf : MonoBehaviour
         _cinematic.SetActive(false);
     }
 
-
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) ||
-        Input.GetKeyDown(KeyCode.Space) ||
-        Input.GetKeyDown(KeyCode.Return)) SkipCinematic();
+        if (_canSkip)
+        {
+            if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) 
+                SkipCinematic();
+        } 
     }
 
     private void SkipCinematic()
@@ -62,6 +64,7 @@ public class CinematicBoxWolf : MonoBehaviour
 
     public IEnumerator StarCinematic()
     {
+        _canSkip = true;
         _boxMessage.DOAnchorPosY(-1000f, 0);
         _boxMessage.localScale = new Vector3(1, 1, 1);
 

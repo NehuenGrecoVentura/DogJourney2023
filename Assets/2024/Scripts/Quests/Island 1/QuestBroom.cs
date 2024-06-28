@@ -44,7 +44,6 @@ public class QuestBroom : MonoBehaviour
 
     private void Start()
     {
-        //StartCoroutine(LookToPlayer());
         _myAudio.Stop();
         _dialogue.canTalk = true;
         _iconInteract.SetActive(false);
@@ -96,11 +95,12 @@ public class QuestBroom : MonoBehaviour
                 SetName();
                 StopCoroutine(LookToPlayer());
                 _dogEnter.EndingNormal();
-                Destroy(_myCol, 6f);
+                //Destroy(_myCol, 6f);
+                Destroy(_myCol);
                 Destroy(this, 6f);
             }
 
-            if(!_activeQuest && !_dogEnter.broomPicked && !Input.GetKeyDown(KeyCode.F) && !_ending || _activeQuest && _dogEnter.broomPicked && !_ending) 
+            if (!_activeQuest && !_dogEnter.broomPicked && !Input.GetKeyDown(KeyCode.F) && !_ending || _activeQuest && _dogEnter.broomPicked && !_ending)
                 _iconInteract.SetActive(true);
         }
     }
@@ -136,8 +136,8 @@ public class QuestBroom : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
-            if(_activeQuest || !_activeQuest) _iconInteract.SetActive(false);
+            if (_activeQuest || !_activeQuest) _iconInteract.SetActive(false);
             _dialogue.playerInRange = false;
-        }    
+        }
     }
 }
