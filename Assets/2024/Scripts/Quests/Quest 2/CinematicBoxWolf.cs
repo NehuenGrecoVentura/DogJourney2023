@@ -6,7 +6,7 @@ using DG.Tweening;
 public class CinematicBoxWolf : MonoBehaviour
 {
     [Header("TASKS")]
-    [SerializeField] Collider _col;    
+    [SerializeField] Collider _col;
     [SerializeField] string _newTask;
     [SerializeField] TMP_Text _textPhase2;
 
@@ -37,6 +37,29 @@ public class CinematicBoxWolf : MonoBehaviour
         _cinematic.SetActive(false);
     }
 
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F) ||
+        Input.GetKeyDown(KeyCode.Space) ||
+        Input.GetKeyDown(KeyCode.Return)) SkipCinematic();
+    }
+
+    private void SkipCinematic()
+    {
+        StopCoroutine(StarCinematic());
+        Destroy(_cinematic);
+        _camPlayer.gameObject.SetActive(true);
+        _boxMessage.gameObject.SetActive(false);
+        _boxMessage.DOAnchorPosY(-1000f, 0f);
+        _player.DeFreezePlayer();
+        _questUI.UIStatus(true);
+        _questUI.AddNewTask(2, _newTask);
+        _questUI.ActiveUIQuest("The Box", "Recover the box", _newTask, "");
+        _radar.StatusRadar(true);
+        Destroy(this);
+    }
+
     public IEnumerator StarCinematic()
     {
         _boxMessage.DOAnchorPosY(-1000f, 0);
@@ -50,23 +73,17 @@ public class CinematicBoxWolf : MonoBehaviour
         _radar.StatusRadar(false);
         Destroy(_col);
         _player.FreezePlayer();
-        _player.speed = 0;
 
         yield return new WaitForSeconds(8f);
         _boxMessage.gameObject.SetActive(true);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
-        //_boxMessage.transform.DOScale(1f, 0.5f);
 
         yield return new WaitForSeconds(6f);
         Destroy(_cinematic);
         _camPlayer.gameObject.SetActive(true);
-        //_boxMessage.transform.DOScale(0f, 0f);
         _boxMessage.gameObject.SetActive(false);
         _boxMessage.DOAnchorPosY(-1000f, 0f);
-
-
         _player.DeFreezePlayer();
-        _player.speed = _player.speedAux;
         _questUI.UIStatus(true);
         _questUI.AddNewTask(2, _newTask);
         _questUI.ActiveUIQuest("The Box", "Recover the box", _newTask, "");
@@ -77,6 +94,6 @@ public class CinematicBoxWolf : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null) StartCoroutine(StarCinematic());          
+        if (player != null) StartCoroutine(StarCinematic());
     }
 }
