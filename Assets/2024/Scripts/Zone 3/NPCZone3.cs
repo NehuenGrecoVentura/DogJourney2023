@@ -44,8 +44,6 @@ public class NPCZone3 : MonoBehaviour
     [Header("MOVE")]
     [SerializeField] Rigidbody _rb;
     [SerializeField] float _speed = 5f;
-    [SerializeField] RuntimeAnimatorController _animMove;
-    [SerializeField] RuntimeAnimatorController _animIdle;
 
     [Header("RADAR")]
     [SerializeField] LocationQuest _radar;
@@ -185,14 +183,13 @@ public class NPCZone3 : MonoBehaviour
         {
             Vector3 moveDirection = (brazierPos.position - transform.position).normalized;
             _rb.MovePosition(_rb.position + moveDirection * _speed * Time.fixedDeltaTime);
-            _myAnim.runtimeAnimatorController = _animMove;
+            _myAnim.SetBool("Move", true);
         }
     }
 
-    public void SetIdle()
+    public void OnFire()
     {
-        _myAnim.runtimeAnimatorController = _animIdle;
-        _myAnim.SetBool("Quest", true);
+        _myAnim.SetTrigger("Fire");
     }
 
     private IEnumerator FinalMessage(Brazier brazier, Character player, GameObject cinematic, CameraOrbit camPlayer)
