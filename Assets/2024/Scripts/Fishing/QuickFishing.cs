@@ -89,7 +89,7 @@ public class QuickFishing : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F) && !_isActive)
             {
-                if (_inventory.baits >= 3) StartCoroutine(StartMiniGame());
+                if (_inventory.baits >= 3) StartCoroutine(StartMiniGame(player));
                 else StartCoroutine(Error());
             }              
         }
@@ -111,7 +111,7 @@ public class QuickFishing : MonoBehaviour
         _boxMessage.DesactivateMessage();
     }
 
-    private IEnumerator StartMiniGame()
+    private IEnumerator StartMiniGame(Character player)
     {
         _completed = false;
 
@@ -141,7 +141,9 @@ public class QuickFishing : MonoBehaviour
         _fishing.fishedPicked = 0;
         _fishing._textAmount = _score;
         _fadeOut.DOColor(Color.black, 1f);
+
         yield return new WaitForSeconds(1f);
+        player.transform.rotation = Quaternion.Euler(0, 0, 0);
         _fadeOut.DOColor(Color.clear, 1f);
 
         foreach (var item in _score)
