@@ -34,7 +34,6 @@ public class TreeRegenerative : MonoBehaviour
         _myCol = GetComponent<BoxCollider>();
 
         _player = FindObjectOfType<Character>();
-        //_quest4 = FindObjectOfType<HouseQuest4>();
         _doTween = FindObjectOfType<DoTweenManager>();
         _inventory = FindObjectOfType<CharacterInventory>();
     }
