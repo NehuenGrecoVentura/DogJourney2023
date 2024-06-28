@@ -30,7 +30,8 @@ public class DigZone3 : MonoBehaviour
     private void Stop(Character player)
     {
         _myAudio.Stop();
-        player.isConstruct = false;
+        //player.isConstruct = false;
+        player.enabled = true;
         player.DeFreezePlayer();
         player.MainAnim();
     }
@@ -69,6 +70,7 @@ public class DigZone3 : MonoBehaviour
             if (!_myAudio.isPlaying) _myAudio.Play();
             FocusToDig(player);
             player.HitDig();
+            player.enabled = false;
             _hp--;
             HealthBar(player);
         }
