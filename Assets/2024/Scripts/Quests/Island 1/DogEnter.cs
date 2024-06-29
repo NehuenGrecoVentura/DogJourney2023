@@ -158,7 +158,6 @@ public class DogEnter : MonoBehaviour
         _radar.target = _nextQuest.gameObject.transform;
         _gm.QuestCompleted();
 
-        Destroy(_broomPrefab);
         Destroy(_maryNPC);
         Destroy(_endingQuestPos.transform.parent.gameObject);
         Destroy(gameObject);
@@ -197,6 +196,7 @@ public class DogEnter : MonoBehaviour
 
         _player.DeFreezePlayer();
         _iconInterct.SetActive(true);
+        _dog.canTeletransport = false;
     }
 
     private IEnumerator Search()
@@ -265,6 +265,7 @@ public class DogEnter : MonoBehaviour
         
         yield return new WaitForSeconds(1f);
         _fadeOut.DOColor(new Color(0,0,0,0), 1f);
+        Destroy(_broomPrefab);
         _maryNPC.ChangeController();
         _mainCam.gameObject.SetActive(false);
         _camEnding.gameObject.SetActive(true);
@@ -304,6 +305,7 @@ public class DogEnter : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         _fadeOut.DOColor(new Color(0, 0, 0, 0), 1f);
+        Destroy(_broomPrefab);
         _maryNPC.ChangeController();
         _mainCam.gameObject.SetActive(false);
         _camEnding.gameObject.SetActive(true);
