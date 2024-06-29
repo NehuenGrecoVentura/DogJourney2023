@@ -192,12 +192,18 @@ public class NPCZone3 : MonoBehaviour
         _myAnim.SetTrigger("Fire");
     }
 
+    public void Idle()
+    {
+        _myAnim.SetBool("Move", false);
+    }
+
     private IEnumerator FinalMessage(Brazier brazier, Character player, GameObject cinematic, CameraOrbit camPlayer)
     {
         _boxMessages.SetMessage("NPC Snow");
         _boxMessages.ShowMessage(_messages[1]);
         _inventory.greenTrees -= _woodRequired;
         if (_inventory.greenTrees <= 0) _inventory.greenTrees = 0;
+        Idle();
 
         yield return new WaitForSeconds(3f);
         _boxMessages.CloseMessage();

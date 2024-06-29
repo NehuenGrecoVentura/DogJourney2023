@@ -57,12 +57,21 @@ public class Brazier : MonoBehaviour
             _activeNPC = false;
             print("TOCADO");
             StopCoroutine(PlayCinematic(_player));
-            _fire.SetActive(true);
+            
             _npc.OnFire();
-            _npc.ActiveFinal(this, _player, _canvasCinematic, _camPlayer);
+            StartCoroutine(On());
             _myCol.enabled = false;
         }
     }
+
+
+    private IEnumerator On()
+    {
+        yield return new WaitForSeconds(1.5f);
+        _fire.SetActive(true);
+        _npc.ActiveFinal(this, _player, _canvasCinematic, _camPlayer);
+    }
+
 
     private IEnumerator PlayCinematic(Character player)
     {
@@ -84,10 +93,10 @@ public class Brazier : MonoBehaviour
         _activeNPC = true;
         Destroy(_playerPosCinematic.gameObject);
 
-        yield return new WaitForSeconds(5f);
-        _activeNPC = false;
-        _fire.SetActive(true);
-        _npc.OnFire();
-        _npc.ActiveFinal(this, player, _canvasCinematic, _camPlayer);
+        //yield return new WaitForSeconds(5f);
+        //_activeNPC = false;
+        //_fire.SetActive(true);
+        //_npc.OnFire();
+        //_npc.ActiveFinal(this, player, _canvasCinematic, _camPlayer);
     }
 }
