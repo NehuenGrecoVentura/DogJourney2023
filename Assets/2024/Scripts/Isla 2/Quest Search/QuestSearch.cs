@@ -60,6 +60,7 @@ public class QuestSearch : MonoBehaviour
     [SerializeField] LocationQuest _radar;
 
     [Header("FINISH")]
+    [SerializeField] Chairlift _chairlift;
     [SerializeField] GameObject _myBroom;
     [SerializeField] Camera _camFocus;
     [SerializeField] Manager _gm;
@@ -228,6 +229,9 @@ public class QuestSearch : MonoBehaviour
         _camPlayer.gameObject.SetActive(true);
         player.DeFreezePlayer();
         _gm.QuestCompleted();
+
+        _radar.target = _chairlift.transform;
+        _radar.StatusRadar(true);
 
         yield return new WaitForSeconds(0.5f);
         _boxMessage.DesactivateMessage();

@@ -40,8 +40,9 @@ public class ItemFound : MonoBehaviour
     {
         _iconInteract.transform.DOScale(0f, 0f);
         _sensor.gameObject.SetActive(false);
-        _textTooFar.gameObject.SetActive(false);
+        _textTooFar.gameObject.SetActive(true);
         _smoke.enabled = false;
+        _textTooFar.text = string.Empty;
     }
 
     private void Update()
@@ -50,32 +51,19 @@ public class ItemFound : MonoBehaviour
         float invertedDist = 1 - (dist / _maxDist);
         _sensor.value = invertedDist;
 
-        //if (_isSearching && dist <= 1f)
-        //{
-
-        //    StartCoroutine(DogSearch());
-        //}
-
         if (_isSearching && dist <= 3f)
         {
             _iconInteract.transform.DOScale(1f, 0.5f);
         }
 
-
-        
-
         float distPlayer = Vector3.Distance(transform.position, _player.transform.position);
         if (Input.GetKeyDown(KeyCode.Q) && _quest._found > 0)
         {
-            if (distPlayer >= 100) _textTooFar.gameObject.SetActive(true);
-            else _textTooFar.gameObject.SetActive(false);
-
+            if (distPlayer >= 100) _textTooFar.text = "TOO FAR";
+            else _textTooFar.text = string.Empty;
         }
 
         else return;
-
-
-
     }
 
     public void Repos()
@@ -106,10 +94,12 @@ public class ItemFound : MonoBehaviour
         _player.enabled = false;
 
         ChangeCam(true, false);
-        //Animator animDog = _dog.GetComponentInParent<Animator>();
         Animator animDog = _dog.GetComponent<Animator>();
 
+        _textTooFar.text = "ITEM FOUND";
+
         yield return new WaitForSeconds(3f);
+        _textTooFar.text = string.Empty;
         animDog.enabled = false;
         _smoke.enabled = false;
 
