@@ -95,8 +95,8 @@ public class QuestBroom : MonoBehaviour
                 SetName();
                 StopCoroutine(LookToPlayer());
                 _dogEnter.EndingNormal();
-                //Destroy(_myCol, 6f);
-                Destroy(_myCol);
+                _myCol.enabled = false;
+                player.FreezePlayer();
                 Destroy(this, 6f);
             }
 
@@ -134,7 +134,7 @@ public class QuestBroom : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null)
+        if (player != null && _myCol.enabled)
         {
             if (_activeQuest || !_activeQuest) _iconInteract.SetActive(false);
             _dialogue.playerInRange = false;

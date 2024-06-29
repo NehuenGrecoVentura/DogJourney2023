@@ -311,11 +311,13 @@ public class DogEnter : MonoBehaviour
         _camEnding.gameObject.SetActive(true);
         _player.gameObject.transform.position = _endingQuestPos.position;
         _player.gameObject.transform.LookAt(_maryNPC.gameObject.transform);
+
         yield return new WaitForSeconds(1f);
         _maryNPC.SetName();
         _textMessage.text = _messageWin;
         _message.gameObject.SetActive(true);
         _message.DOAnchorPosY(70f, 0.5f);
+
         yield return new WaitForSeconds(4f);
         _message.DOAnchorPosY(-1000f, 0f);
         _message.gameObject.SetActive(false);
