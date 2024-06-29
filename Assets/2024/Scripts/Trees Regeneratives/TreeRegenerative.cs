@@ -57,7 +57,11 @@ public class TreeRegenerative : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && _myCol.enabled) _hitBar.gameObject.SetActive(true);  
+        if (player != null && _myCol.enabled)
+        {
+            _hitBar.gameObject.SetActive(true);
+            _decal.SetActive(true);
+        }     
     }
 
     private void OnTriggerStay(Collider other)
