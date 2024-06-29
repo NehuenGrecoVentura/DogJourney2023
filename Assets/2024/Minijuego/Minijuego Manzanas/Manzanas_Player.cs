@@ -71,6 +71,14 @@ public class Manzanas_Player : MonoBehaviour
     {
         Score = 0;
         _textScore.text = "Score: " + Score.ToString() + "/15";
+
+        _apples = new GameObject[_applesContainer.transform.childCount];
+        for (int i = 0; i < _applesContainer.transform.childCount; i++)
+        {
+            _apples[i] = _applesContainer.transform.GetChild(i).gameObject;
+            _apples[i].SetActive(false);
+            _indexApple = 0;
+        }
     }
 
     public void AddScore()
