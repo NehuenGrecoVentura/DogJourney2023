@@ -83,7 +83,7 @@ public class Manzana_Manager : MonoBehaviour
         for (int i = 0; i < _applesContainer.transform.childCount; i++)
         {
             _apples[i] = _applesContainer.transform.GetChild(i).gameObject;
-            _apples[i].SetActive(false);
+            //_apples[i].SetActive(false);
         }
     }
 

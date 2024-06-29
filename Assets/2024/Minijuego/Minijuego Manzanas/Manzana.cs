@@ -23,6 +23,8 @@ public class Manzana : MonoBehaviour
         if (LifeTime <= 0)
             ManzanaFactory.Instance.ReturnManzana(this);
         //Move();
+
+
     }
 
     private void Move()
@@ -49,7 +51,7 @@ public class Manzana : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.name == "CatchBox")
+        if (other.gameObject.name == "CatchBox")
         {
             Debug.Log("Atrapado");
             ManzanaFactory.Instance.ReturnManzana(this);
@@ -61,10 +63,12 @@ public class Manzana : MonoBehaviour
             Player.RemoveLive();
             ManzanaFactory.Instance.ReturnManzana(this);
         }
-        
-        
+
+
+        if (other.gameObject.name == "Side")
+        {
+            ManzanaFactory.Instance.ReturnManzana(this);
+        }
 
     }
 }
-
-
