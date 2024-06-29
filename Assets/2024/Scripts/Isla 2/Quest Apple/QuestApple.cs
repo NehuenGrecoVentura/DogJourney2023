@@ -244,7 +244,11 @@ public class QuestApple : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
         _camPlayer.gameObject.SetActive(true);
+
         _radar.target = _nextQuest.transform;
+        _nextQuest.enabled = true;
+        _nextQuest.GetComponent<BoxCollider>().enabled = true;
+
         Destroy(_camEnding.gameObject);
         _boxMessage.DesactivateMessage();
         player.DeFreezePlayer();
