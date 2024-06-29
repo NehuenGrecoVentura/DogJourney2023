@@ -22,16 +22,9 @@ public class ChainZone3 : MonoBehaviour
 
     [Header("QUEST")]
     [SerializeField] Manager _gm;
-    [SerializeField] CharacterInventory _inventory;
     [SerializeField] Image _fadeOut;
-    [SerializeField] int _woodRequired = 50;
-    [SerializeField] int _nailsRequired = 100;
-    [SerializeField] int _moneyRequired = 300;
-    [SerializeField] int _ticketsRequired = 200;
-    [SerializeField] GameObject _iconBuildBridge;
     private bool _questActive = false;
-    private bool _questCompleted = false;
-    [SerializeField]private bool _batteryObtained = false;
+    [SerializeField] private bool _batteryObtained = false;
 
     [Header("NOTIFICATION")]
     [SerializeField] RectTransform _notification;
@@ -43,8 +36,8 @@ public class ChainZone3 : MonoBehaviour
 
     [Header("CAMERAS")]
     [SerializeField] Camera _camEnd;
+    [SerializeField] Camera _camEndingActive;
     [SerializeField] CameraOrbit _camPlayer;
-    [SerializeField] Camera _camFocusIconBuild;
 
     [Header("AUDIO")]
     [SerializeField] AudioSource _myAudio;
@@ -54,50 +47,10 @@ public class ChainZone3 : MonoBehaviour
     {
         _dialogue.gameObject.SetActive(false);
         _camEnd.gameObject.SetActive(false);
-        _camFocusIconBuild.gameObject.SetActive(false);
         _notification.gameObject.SetActive(false);
-        _iconBuildBridge.gameObject.SetActive(false);
         _iconInteract.transform.DOScale(0f, 0f);
         _fadeOut.DOColor(Color.clear, 0f);
     }
-
-    //private void Update()
-    //{
-    //    //if (_questActive)
-    //    //{
-    //    //    if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.J))
-    //    //    {
-    //    //        _inventory.nails += 500;
-    //    //        _inventory.money += 500;
-    //    //        _inventory.tickets += 500;
-    //    //        _inventory.greenTrees += 500;
-    //    //    }
-
-    //    //    bool full = (_inventory.greenTrees >= _woodRequired &&
-    //    //                        _inventory.nails >= _nailsRequired &&
-    //    //                        _inventory.money >= _moneyRequired &&
-    //    //                        _inventory.tickets >= _ticketsRequired);
-
-    //    //    if (full)
-    //    //    {
-    //    //        // Se cumplen todos los requisitos
-    //    //        _myAnim.SetBool("Quest", false);
-    //    //        _iconQuest.SetActive(true);
-    //    //        _myCol.enabled = true;
-    //    //        _doTween.ShowLootCoroutine(_notification);
-    //    //        _questCompleted = true;
-    //    //        _questActive = false;
-    //    //    }
-    //    //    else
-    //    //    {
-    //    //        // No se cumplen todos los requisitos
-    //    //        _myAnim.SetBool("Quest", true);
-    //    //        _iconQuest.SetActive(false);
-    //    //        _myCol.enabled = false;
-    //    //        _questCompleted = false;
-    //    //    }
-    //    //}
-    //}
 
     private void Confirm()
     {
@@ -133,8 +86,8 @@ public class ChainZone3 : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
-            if (_myCol.enabled && !_questActive && !_questCompleted) SetDialogue();
-            else if (_questCompleted || _questActive) _iconInteract.transform.DOScale(0.01f, 0.5f);
+            if (_myCol.enabled && !_questActive) SetDialogue();
+            else if (_questActive) _iconInteract.transform.DOScale(0.01f, 0.5f);
         }
     }
 
@@ -158,58 +111,38 @@ public class ChainZone3 : MonoBehaviour
         }
     }
 
+    public void EndingCoroutine(Character player)
+    {
+        StartCoroutine(Ending(player));
+    }
+
     private IEnumerator Ending(Character player)
     {
-        _myCol.enabled = false;
-        _inventory.nails -= 500;
-        _inventory.money -= 500;
-        _inventory.tickets -= 500;
-        _inventory.greenTrees -= 500;
-
-
+        _camEndingActive.gameObject.SetActive(true);
         _myAnim.SetBool("Quest", true);
-        _iconInteract.transform.DOScale(0f, 0.5f);
-        _iconQuest.transform.DOScale(0f, 0.5f);
+
+        Destroy(_myCol);
+        Destroy(_iconInteract.gameObject);
+        Destroy(_iconQuest.gameObject);
+
         _boxMessage.SetMessage(_nameNPC);
-        player.FreezePlayer();
-        _fadeOut.DOColor(Color.black, 1f);
 
         yield return new WaitForSeconds(1f);
-        _camPlayer.gameObject.SetActive(false);
-        _camEnd.gameObject.SetActive(true);
-        _fadeOut.DOColor(Color.clear, 1f);
-
-        yield return new WaitForSeconds(1f);
-        _boxMessage.ShowMessage(_messages[0]);
-
-        yield return new WaitForSeconds(3f);
-        _boxMessage.CloseMessage();
-    
-        yield return new WaitForSeconds(1f);
-        _boxMessage.ShowMessage(_messages[1]);
-
-        yield return new WaitForSeconds(3f);
-        _boxMessage.CloseMessage();
-
-        yield return new WaitForSeconds(0.6f);
         _boxMessage.ShowMessage(_messages[2]);
 
         yield return new WaitForSeconds(3f);
-        Destroy(_camEnd.gameObject);
-        _camFocusIconBuild.gameObject.SetActive(true);
-        
-        yield return new WaitForSeconds(1f);
-        _iconBuildBridge.gameObject.SetActive(true);
-
-        yield return new WaitForSeconds(2f);
-        Destroy(_camFocusIconBuild.gameObject);
+        _boxMessage.CloseMessage();
         player.DeFreezePlayer();
         _camPlayer.gameObject.SetActive(true);
+        Destroy(_camEnd.gameObject);
+        Destroy(_camEndingActive.gameObject);
         _boxMessage.CloseMessage();
         _gm.QuestCompleted();
 
         yield return new WaitForSeconds(0.6f);
         _boxMessage.DesactivateMessage();
+        MachineChairlift machine = FindObjectOfType<MachineChairlift>();
+        Destroy(machine);
         Destroy(this);
     }
 
