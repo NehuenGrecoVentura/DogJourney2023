@@ -11,6 +11,11 @@ public class QuestSearch : MonoBehaviour
     [SerializeField] KeyCode _keyInteract;
     [SerializeField] Collider _myCol;
 
+    [Header("ANIMS")]
+    [SerializeField] Animator _myAnim;
+    [SerializeField] RuntimeAnimatorController _animQuest;
+    private RuntimeAnimatorController _mainAnim;
+
     [Header("DIALOGUE")]
     [SerializeField] Dialogue _dialogue;
     [SerializeField, TextArea(4, 6)] string[] _linesDialogues;
@@ -55,6 +60,7 @@ public class QuestSearch : MonoBehaviour
     [SerializeField] LocationQuest _radar;
 
     [Header("FINISH")]
+    [SerializeField] GameObject _myBroom;
     [SerializeField] Camera _camFocus;
     [SerializeField] Manager _gm;
 
@@ -66,7 +72,10 @@ public class QuestSearch : MonoBehaviour
         _focusDog.gameObject.SetActive(false);
         _camFocus.gameObject.SetActive(false);
         _sensor.gameObject.SetActive(false);
+        _myBroom.SetActive(false);
         _system.enabled = false;
+        _mainAnim = _myAnim.runtimeAnimatorController;
+        _myAnim.runtimeAnimatorController = _animQuest;
     }
 
     private void Confirm()
@@ -77,6 +86,7 @@ public class QuestSearch : MonoBehaviour
         _iconInteract.SetActive(false);
         _myAudio.PlayOneShot(_soundConfirm);
         _radar.StatusRadar(false);
+        _myAnim.SetBool("Quest", true);
         _questUI.ActiveUIQuest("Hunting Treasures", "Find buried objects", string.Empty, string.Empty);
         _questUI.AddNewTask(1, "Find buried objects (" + _found.ToString() + "/" + _total.ToString() + ")");
         StartCoroutine(StartQuest());
@@ -106,7 +116,7 @@ public class QuestSearch : MonoBehaviour
         if (player != null)
         {
             if (_myCol.enabled && !_questActive && !_questCompleted) SetDialogue();
-            else if (_questCompleted) _iconInteract.transform.DOScale(0.01f, 0.5f);  //_iconInteract.SetActive(true);
+            else if (_questCompleted) _iconInteract.transform.DOScale(0.01f, 0.5f);
         }
     }
 
@@ -140,13 +150,11 @@ public class QuestSearch : MonoBehaviour
 
         NavMeshAgent agentDog = _dog.GetComponent<NavMeshAgent>();
         NavMeshAgent agentTrolley = _dog.GetComponent<NavMeshAgent>();
-        //Animator animDog = _dog.GetComponentInParent<Animator>();
         Animator animDog = _dog.GetComponent<Animator>();
 
         agentDog.enabled = false;
         agentTrolley.enabled = false;
         _dog.canTeletransport = false;
-        //_dog.transform.parent.transform.position = _introPosDog.position;
         _dog.transform.position = _introPosDog.position;
         _trolley.transform.position = _dog.transform.position;
         _myAudio.PlayOneShot(_soundSearch);
@@ -155,7 +163,6 @@ public class QuestSearch : MonoBehaviour
         _cinematic.SetActive(true);
         Destroy(_focusDog.gameObject);
         _dogBall.transform.position = _posDogBall.position;
-        //_dog.transform.parent.transform.position = _posDogBall.position;
         _dog.transform.position = _posDogBall.position;
         _dog.Search();
         _myAudio.PlayOneShot(_soundDogSearch);
@@ -169,7 +176,6 @@ public class QuestSearch : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
         animDog.enabled = true;
-        //_dog.transform.parent.LookAt(_player.transform);
         _dog.transform.LookAt(_player.transform);
         _myAudio.PlayOneShot(_soundDog);
 
@@ -203,6 +209,7 @@ public class QuestSearch : MonoBehaviour
     {
         _myCol.enabled = false;
         _iconInteract.SetActive(false);
+        _myAnim.SetBool("Quest", true);
 
         _boxMessage.SetMessage(_nameNPC);
         player.FreezePlayer();
@@ -214,6 +221,8 @@ public class QuestSearch : MonoBehaviour
         _boxMessage.ShowMessage(_messages[3]);
 
         yield return new WaitForSeconds(3f);
+        _myAnim.runtimeAnimatorController = _mainAnim;
+        _myBroom.SetActive(true);
         _boxMessage.CloseMessage();
         Destroy(_camFocus.gameObject);
         _camPlayer.gameObject.SetActive(true);
@@ -235,6 +244,7 @@ public class QuestSearch : MonoBehaviour
              
         else
         {
+            _myAnim.SetBool("Quest", false);
             Destroy(_item.transform.parent.gameObject);
             _questUI.TaskCompleted(1);
             _questUI.AddNewTask(2, "Go back and show him all the items found");
