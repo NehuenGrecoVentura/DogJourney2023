@@ -31,6 +31,7 @@ public class BoxQuest : MonoBehaviour
     [SerializeField] CameraOrbit _camPlayer;
 
     [Header("QUEST")]
+    [SerializeField] Animator[] _animsDoor;
     [SerializeField] QuestUI _questUI;
     [SerializeField] CharacterInventory _inventory;
     [SerializeField] Dog _dog;
@@ -59,6 +60,12 @@ public class BoxQuest : MonoBehaviour
         _camFocus.gameObject.SetActive(false);
         _dogCam.gameObject.SetActive(false);
         _fadeOut.color = new Color(0, 0, 0, 0);
+
+        foreach (var item in _animsDoor)
+        {
+            item.enabled = false;
+        }
+
     }
 
     private void Update()
@@ -78,7 +85,12 @@ public class BoxQuest : MonoBehaviour
         _myAudio.PlayOneShot(_soundConfirm);
         _radar.StatusRadar(true);
         _radar.target = _boxQuestPos.transform;
-        _questUI.ActiveUIQuest("The Box", "Pick up the box", string.Empty, string.Empty);   
+        _questUI.ActiveUIQuest("The Box", "Pick up the box", string.Empty, string.Empty);
+
+        foreach (var item in _animsDoor)
+        {
+            item.enabled = true;
+        }
         _questActive = true;
     }
 
