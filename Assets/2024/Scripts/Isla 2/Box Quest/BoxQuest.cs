@@ -83,6 +83,7 @@ public class BoxQuest : MonoBehaviour
         _dialogue.Close();
         _iconInteract.SetActive(false);
         _myAudio.PlayOneShot(_soundConfirm);
+        _myAnim.SetBool("Quest", true);
         _radar.StatusRadar(true);
         _radar.target = _boxQuestPos.transform;
         _questUI.ActiveUIQuest("The Box", "Pick up the box", string.Empty, string.Empty);
@@ -157,6 +158,7 @@ public class BoxQuest : MonoBehaviour
         Destroy(_myCol);
         Destroy(_iconInteract);
         _boxMessage.SetMessage(_nameNPC);
+        _myAnim.SetBool("Quest", true);
  
         _camPlayer.gameObject.SetActive(false);
         _dogCam.gameObject.SetActive(true);
@@ -200,6 +202,7 @@ public class BoxQuest : MonoBehaviour
         Destroy(_myCol);
         Destroy(_iconInteract);
         _boxMessage.SetMessage(_nameNPC);
+        _myAnim.SetBool("Quest", true);
 
         _camPlayer.gameObject.SetActive(false);
         _camFocus.gameObject.SetActive(true);
