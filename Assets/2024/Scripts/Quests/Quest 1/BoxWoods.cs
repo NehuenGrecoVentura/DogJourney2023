@@ -9,9 +9,7 @@ public class BoxWoods : MonoBehaviour
     [Header("INTERACTIVE CONFIG")]
     [SerializeField] GameObject _iconInteractive;
     [SerializeField] KeyCode _keyInteractive = KeyCode.F;
-    [SerializeField] Sprite _iconTAB;
-    [SerializeField] string _messageSlideText;
-    private MessageSlide _messageSlide;
+    [SerializeField] Collider _myCol;
 
     [Header("CINEMATIC")]
     [SerializeField] float _timeCinematic = 3f;
@@ -26,6 +24,7 @@ public class BoxWoods : MonoBehaviour
     [SerializeField] float _speedWheels = 500f;
     private Barriel _barriel;
     [SerializeField] private bool _play = false;
+    private bool _canSkip = false;
 
     [Header("NEXT QUEST")]
     [SerializeField] int _rewardMoney = 100;
@@ -68,7 +67,6 @@ public class BoxWoods : MonoBehaviour
 
         _questUI = FindObjectOfType<QuestUI>();
         _inventory = FindObjectOfType<CharacterInventory>();
-        _messageSlide = FindObjectOfType<MessageSlide>();
         _gameManager = FindObjectOfType<Manager>();
         _radar = FindObjectOfType<LocationQuest>();
         _player = FindObjectOfType<Character>();
@@ -99,8 +97,8 @@ public class BoxWoods : MonoBehaviour
                 rueda.transform.Rotate(Vector3.forward * _speedWheels * Time.deltaTime);
             }
 
-            if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) 
-                FinishQuest();
+            //if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) 
+            //    FinishQuest();
         }
 
         if (_inventory.greenTrees >= 5)
@@ -115,6 +113,12 @@ public class BoxWoods : MonoBehaviour
                     _tutorialQuick = true;
                 }
             }
+        }
+
+        if (_canSkip)
+        {
+            if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+                FinishQuest();
         }
     }
 
@@ -162,6 +166,13 @@ public class BoxWoods : MonoBehaviour
         StartCoroutine(NextQuest());
     }
 
+
+    private IEnumerator ActiveSkip()
+    {
+        yield return new WaitForSeconds(1.5f);
+        _canSkip = true;
+    }
+
     private void PlayCinematic()
     {
         _questUI.UIStatus(false);
@@ -183,8 +194,7 @@ public class BoxWoods : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Character>();
-
-        if (player != null)
+        if (player != null && _myCol.enabled)
         {
             if (_inventory.greenTrees >= 5)
             {
@@ -208,6 +218,8 @@ public class BoxWoods : MonoBehaviour
 
     private IEnumerator RunTruck()
     {
+        _myCol.enabled = false;
+        StartCoroutine(ActiveSkip());
         _dogCam.gameObject.SetActive(false);
         _play = true;
         _truckSource.Play();
