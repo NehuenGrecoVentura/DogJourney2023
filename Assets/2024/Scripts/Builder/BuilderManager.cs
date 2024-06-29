@@ -24,7 +24,6 @@ public class BuilderManager : MonoBehaviour
     private MeshRenderer _myRender;
     private Collider _myCol;
     private Character _player;
-    //private bool _playCinematic = false;
     public CharacterInventory _inventory;
 
     [Header("RADAR")]
@@ -55,27 +54,12 @@ public class BuilderManager : MonoBehaviour
         _item2.transform.localScale = Vector3.zero;
     }
 
-    //private void Update()
-    //{
-    //    if (_playCinematic)
-    //    {
-    //        //_player.isConstruct = true;
-    //        //_player.PlayAnim("Build");
-    //        //_player.PlayAnim("Build");
-    //        _player.Build();
-    //        _player.gameObject.transform.LookAt(_objToBuild.transform.position);
-    //    } 
-    //}
-
     private IEnumerator Construct()
     {
         _questUI.UIStatus(false);
         _myAudio.PlayOneShot(_audioBuild);
         _radar.StatusRadar(false);
         _iconsMaterials.SetActive(false);
-        
-        //_playCinematic = true;
-
 
         Destroy(_myRender);
         Destroy(_myCol);
@@ -83,20 +67,13 @@ public class BuilderManager : MonoBehaviour
         _player.transform.LookAt(_objToBuild.transform);
         _player.FreezePlayer();
         _player.Build();
-        //_player.isConstruct = true;
-        //_player.PlayAnim("Build");
-        
+
         _camPlayer.gameObject.SetActive(false);
         _cinematic.SetActive(true);
         yield return new WaitForSeconds(3.5f);
         _objToBuild.SetActive(true);
         _player.MainAnim();
         _player.transform.LookAt(_objToBuild.transform);
-
-        //foreach (var item in _objToDestroy)
-        //{
-        //    Destroy(item);
-        //}
 
         if (_objToDestroy != null && _objToDestroy.Length > 0)
         {
@@ -106,9 +83,6 @@ public class BuilderManager : MonoBehaviour
             }
         }
 
-        //_playCinematic = false;
-        
-
         yield return new WaitForSeconds(_timeToBuild);
         _camPlayer.gameObject.SetActive(true);
         _radar.StatusRadar(true);
@@ -117,7 +91,6 @@ public class BuilderManager : MonoBehaviour
         else _questUI.UIStatus(false);
 
         _radar.target = _posRadar;
-        //if (gameObject.name == "Build Stairs") //_canvasQuest.SetActive(true);
         _player.DeFreezePlayer();
         _player.MainAnim();
         Destroy(_iconsMaterials);
@@ -146,7 +119,7 @@ public class BuilderManager : MonoBehaviour
             if (item1 < _amountItem1) _item1.color = Color.red;
             if (item2 < _amountItem2) _item2.color = Color.red;
 
-            else if (item1 >= _amountItem1 && item2 >= _amountItem2 && !_player.isConstruct)
+            else if (item1 >= _amountItem1 && item2 >= _amountItem2 && !_player.isConstruct && !_inventory.shovelSelected)
             {
                 if (gameObject.name == "Icon Bridge 1" || gameObject.name == "Build Stairs") RemoveItemsBridge1();
                 if (gameObject.name == "Icon Bridge 2") RemoveItemsBridge2();
