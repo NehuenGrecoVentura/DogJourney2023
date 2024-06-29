@@ -141,8 +141,8 @@ public class ChainZone3 : MonoBehaviour
 
         yield return new WaitForSeconds(0.6f);
         _boxMessage.DesactivateMessage();
-        MachineChairlift machine = FindObjectOfType<MachineChairlift>();
-        Destroy(machine);
+        //MachineChairlift machine = FindObjectOfType<MachineChairlift>();
+        //Destroy(machine);
         Destroy(this);
     }
 

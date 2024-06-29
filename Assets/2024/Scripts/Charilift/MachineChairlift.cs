@@ -18,6 +18,7 @@ public class MachineChairlift : MonoBehaviour
 
     [Header("BATTERY")]
     [SerializeField] GameObject _battery;
+    [SerializeField] WheelRot _rot;
 
     [Header("FADE OUT")]
     [SerializeField] Image _fadeOut;
@@ -31,6 +32,7 @@ public class MachineChairlift : MonoBehaviour
         _iconInteract.DOScale(0f, 0f);
         _battery.SetActive(false);
         _camActive.gameObject.SetActive(false);
+        _rot.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -59,7 +61,6 @@ public class MachineChairlift : MonoBehaviour
         _iconInteract.DOScale(0f, 0.5f);
         Destroy(_indicator);
         _fadeOut.DOColor(Color.black, 2f);
-
         yield return new WaitForSeconds(1f);
         _camPlayer.gameObject.SetActive(false);
         _camActive.gameObject.SetActive(true);
@@ -67,12 +68,13 @@ public class MachineChairlift : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
         _battery.SetActive(true);
+        _rot.enabled = true;
 
         yield return new WaitForSeconds(1f);
         _camActive.gameObject.transform.DOMove(_pointMove.position, 1f);
 
         yield return new WaitForSeconds(2f);
         Destroy(_camActive.gameObject);
-        _npc.EndingCoroutine(player);     
+        _npc.EndingCoroutine(player);
     }
 }
