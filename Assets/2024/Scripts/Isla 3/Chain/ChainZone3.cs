@@ -31,7 +31,7 @@ public class ChainZone3 : MonoBehaviour
     [SerializeField] GameObject _iconBuildBridge;
     private bool _questActive = false;
     private bool _questCompleted = false;
-    private bool _batteryObtained = false;
+    [SerializeField]private bool _batteryObtained = false;
 
     [Header("NOTIFICATION")]
     [SerializeField] RectTransform _notification;
@@ -61,47 +61,47 @@ public class ChainZone3 : MonoBehaviour
         _fadeOut.DOColor(Color.clear, 0f);
     }
 
-    private void Update()
-    {
-        if (_questActive)
-        {
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.J))
-            {
-                _inventory.nails += 500;
-                _inventory.money += 500;
-                _inventory.tickets += 500;
-                _inventory.greenTrees += 500;
-            }
+    //private void Update()
+    //{
+    //    //if (_questActive)
+    //    //{
+    //    //    if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.J))
+    //    //    {
+    //    //        _inventory.nails += 500;
+    //    //        _inventory.money += 500;
+    //    //        _inventory.tickets += 500;
+    //    //        _inventory.greenTrees += 500;
+    //    //    }
 
-            bool full = (_inventory.greenTrees >= _woodRequired &&
-                                _inventory.nails >= _nailsRequired &&
-                                _inventory.money >= _moneyRequired &&
-                                _inventory.tickets >= _ticketsRequired);
+    //    //    bool full = (_inventory.greenTrees >= _woodRequired &&
+    //    //                        _inventory.nails >= _nailsRequired &&
+    //    //                        _inventory.money >= _moneyRequired &&
+    //    //                        _inventory.tickets >= _ticketsRequired);
 
-            if (full)
-            {
-                // Se cumplen todos los requisitos
-                _myAnim.SetBool("Quest", false);
-                _iconQuest.SetActive(true);
-                _myCol.enabled = true;
-                _doTween.ShowLootCoroutine(_notification);
-                _questCompleted = true;
-                _questActive = false;
-            }
-            else
-            {
-                // No se cumplen todos los requisitos
-                _myAnim.SetBool("Quest", true);
-                _iconQuest.SetActive(false);
-                _myCol.enabled = false;
-                _questCompleted = false;
-            }
-        }
-    }
+    //    //    if (full)
+    //    //    {
+    //    //        // Se cumplen todos los requisitos
+    //    //        _myAnim.SetBool("Quest", false);
+    //    //        _iconQuest.SetActive(true);
+    //    //        _myCol.enabled = true;
+    //    //        _doTween.ShowLootCoroutine(_notification);
+    //    //        _questCompleted = true;
+    //    //        _questActive = false;
+    //    //    }
+    //    //    else
+    //    //    {
+    //    //        // No se cumplen todos los requisitos
+    //    //        _myAnim.SetBool("Quest", true);
+    //    //        _iconQuest.SetActive(false);
+    //    //        _myCol.enabled = false;
+    //    //        _questCompleted = false;
+    //    //    }
+    //    //}
+    //}
 
     private void Confirm()
     {
-        _myCol.enabled = false;
+        _myCol.enabled = true;
         _dialogue.canTalk = false;
         _dialogue.Close();
         _iconInteract.transform.DOScale(0f, 0.5f);
@@ -134,15 +134,18 @@ public class ChainZone3 : MonoBehaviour
         if (player != null)
         {
             if (_myCol.enabled && !_questActive && !_questCompleted) SetDialogue();
-            else if (_questCompleted) _iconInteract.transform.DOScale(0.01f, 0.5f);
+            else if (_questCompleted || _questActive) _iconInteract.transform.DOScale(0.01f, 0.5f);
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract))
-            StartCoroutine(Ending(player));
+        if (player != null && _myCol.enabled && _questActive && Input.GetKeyDown(_keyInteract))
+        {
+            if (_batteryObtained) StartCoroutine(MessageBatteryObtained(player));
+            else StartCoroutine(MessageInfoBattery(player));
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -210,8 +213,56 @@ public class ChainZone3 : MonoBehaviour
         Destroy(this);
     }
 
+
+    private IEnumerator MessageInfoBattery(Character player)
+    {
+        _myCol.enabled = false;
+        _boxMessage.SetMessage(_nameNPC);
+        player.FreezePlayer();
+
+        _camEnd.gameObject.SetActive(true);
+        _camPlayer.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(1f);
+        _boxMessage.ShowMessage(_messages[0]);
+
+        yield return new WaitForSeconds(3f);
+        _camEnd.gameObject.SetActive(false);
+        _camPlayer.gameObject.SetActive(true);
+        player.DeFreezePlayer();
+        _myCol.enabled = true;
+
+        yield return new WaitForSeconds(1f);
+        _boxMessage.DesactivateMessage();
+    }
+
+    private IEnumerator MessageBatteryObtained(Character player)
+    {
+        _myCol.enabled = false;
+        _boxMessage.SetMessage(_nameNPC);
+        player.FreezePlayer();
+
+        _camEnd.gameObject.SetActive(true);
+        _camPlayer.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(1f);
+        _boxMessage.ShowMessage(_messages[1]);
+
+        yield return new WaitForSeconds(3f);
+        _boxMessage.CloseMessage();
+        _camEnd.gameObject.SetActive(false);
+        _camPlayer.gameObject.SetActive(true);
+        player.DeFreezePlayer();
+        _myCol.enabled = true;
+
+        yield return new WaitForSeconds(1f);
+        _boxMessage.DesactivateMessage();
+    }
+
+
     public void BatteryObtained()
     {
         _batteryObtained = true;
+        _myCol.enabled = true;
     }
 }
