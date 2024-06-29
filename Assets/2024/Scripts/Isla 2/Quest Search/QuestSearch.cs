@@ -11,6 +11,9 @@ public class QuestSearch : MonoBehaviour
     [SerializeField] KeyCode _keyInteract;
     [SerializeField] Collider _myCol;
 
+    [Header("FADE OUT")]
+    [SerializeField] Image _fadeOut;
+
     [Header("ANIMS")]
     [SerializeField] Animator _myAnim;
     [SerializeField] RuntimeAnimatorController _animQuest;
@@ -60,6 +63,7 @@ public class QuestSearch : MonoBehaviour
     [SerializeField] LocationQuest _radar;
 
     [Header("FINISH")]
+    [SerializeField] GameObject _battery;
     [SerializeField] Chairlift _chairlift;
     [SerializeField] GameObject _myBroom;
     [SerializeField] Camera _camFocus;
@@ -74,7 +78,10 @@ public class QuestSearch : MonoBehaviour
         _camFocus.gameObject.SetActive(false);
         _sensor.gameObject.SetActive(false);
         _myBroom.SetActive(false);
+        _battery.SetActive(false);
         _system.enabled = false;
+
+        _fadeOut.DOColor(Color.clear, 0f);
         _mainAnim = _myAnim.runtimeAnimatorController;
         _myAnim.runtimeAnimatorController = _animQuest;
     }
@@ -222,6 +229,17 @@ public class QuestSearch : MonoBehaviour
         _boxMessage.ShowMessage(_messages[3]);
 
         yield return new WaitForSeconds(3f);
+        _fadeOut.DOColor(Color.black, 1.5f);
+        _boxMessage.CloseMessage();
+
+        yield return new WaitForSeconds(2f);
+        _fadeOut.DOColor(Color.clear, 1.5f);
+        _battery.SetActive(true);
+
+        yield return new WaitForSeconds(1f);
+        _boxMessage.ShowMessage(_messages[4]);
+
+        yield return new WaitForSeconds(4f);
         _myAnim.runtimeAnimatorController = _mainAnim;
         _myBroom.SetActive(true);
         _boxMessage.CloseMessage();
