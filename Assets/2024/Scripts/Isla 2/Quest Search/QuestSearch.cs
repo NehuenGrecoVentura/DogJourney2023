@@ -63,6 +63,9 @@ public class QuestSearch : MonoBehaviour
     [SerializeField] LocationQuest _radar;
 
     [Header("FINISH")]
+    [SerializeField] ChainZone3 _npcNextQuest;
+    [SerializeField] DoTweenTest _notification;
+    [SerializeField] RectTransform _notRect;
     [SerializeField] GameObject _battery;
     [SerializeField] Chairlift _chairlift;
     [SerializeField] GameObject _myBroom;
@@ -247,6 +250,8 @@ public class QuestSearch : MonoBehaviour
         _camPlayer.gameObject.SetActive(true);
         player.DeFreezePlayer();
         _gm.QuestCompleted();
+        _notification.ShowLootCoroutine(_notRect);
+        _npcNextQuest.BatteryObtained();
 
         _radar.target = _chairlift.transform;
         _radar.StatusRadar(true);

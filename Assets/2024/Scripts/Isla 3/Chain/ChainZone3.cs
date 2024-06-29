@@ -31,6 +31,7 @@ public class ChainZone3 : MonoBehaviour
     [SerializeField] GameObject _iconBuildBridge;
     private bool _questActive = false;
     private bool _questCompleted = false;
+    private bool _batteryObtained = false;
 
     [Header("NOTIFICATION")]
     [SerializeField] RectTransform _notification;
@@ -207,5 +208,10 @@ public class ChainZone3 : MonoBehaviour
         yield return new WaitForSeconds(0.6f);
         _boxMessage.DesactivateMessage();
         Destroy(this);
+    }
+
+    public void BatteryObtained()
+    {
+        _batteryObtained = true;
     }
 }
