@@ -40,6 +40,7 @@ public class NPCHouses : MonoBehaviour
     [SerializeField] Transform _posCamMove;
 
     [Header("QUEST")]
+    [SerializeField] LocationQuest _radar;
     [SerializeField] GameObject _canvasBuildFinished;
     [SerializeField] GameObject _canvasSlider;
     [SerializeField] ItemsManager _items;
@@ -132,6 +133,7 @@ public class NPCHouses : MonoBehaviour
     private IEnumerator IntroFocusZone()
     {
         _player.FreezePlayer();
+        _radar.StatusRadar(false);
         _boxMessages.SetMessage("Tip");
         _fadeOut.DOColor(Color.black, 1.5f);
 
