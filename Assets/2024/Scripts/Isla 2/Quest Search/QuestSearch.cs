@@ -288,4 +288,17 @@ public class QuestSearch : MonoBehaviour
             _questCompleted = true;
         }
     }
+
+    public void CheatSkip()
+    {
+        _myAnim.runtimeAnimatorController = _mainAnim;
+        _myBroom.SetActive(true);
+        _gm.QuestCompleted();
+        _notification.ShowLootCoroutine(_notRect);
+        _npcNextQuest.BatteryObtained();
+        _radar.target = _chairlift.transform;
+        _radar.StatusRadar(true);
+        Destroy(_cinematic.gameObject);
+        Destroy(this);
+    }
 }

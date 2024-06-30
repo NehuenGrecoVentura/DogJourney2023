@@ -27,7 +27,8 @@ public class CheatManager : MonoBehaviour
     private FishingQuest2 _fishingQuest2;
     private BoxQuest _boxQuest;
     private QuestApple _questApple;
-    private bool _quest1Skiped, _quest2Skiped, _quest3Skiped, _quest4Skiped, _quest5Skiped, _questFishing2Skiped, _questBoxSkip, _questAppleSkip = false;
+    private QuestSearch _questSearch;
+    private bool _quest1Skiped, _quest2Skiped, _quest3Skiped, _quest4Skiped, _quest5Skiped, _questFishing2Skiped, _questBoxSkip, _questAppleSkip, _questSearchSkip = false;
 
 
     [Header("TELETRANSOPORT")]
@@ -68,6 +69,7 @@ public class CheatManager : MonoBehaviour
         _allBush = FindObjectsOfType<Bush>();
         _boxQuest = FindObjectOfType<BoxQuest>();
         _questApple = FindObjectOfType<QuestApple>();
+        _questSearch = FindObjectOfType<QuestSearch>();
     }
 
     void Update()
@@ -185,6 +187,11 @@ public class CheatManager : MonoBehaviour
             case "8" when _questBoxSkip && !_questAppleSkip:
                 _questApple.CheatSkip();
                 _questAppleSkip = true;
+                break;
+
+            case "9" when _questAppleSkip && !_questSearchSkip:
+                _questSearch.CheatSkip();
+                _questSearchSkip = true;
                 break;
         }
     }
