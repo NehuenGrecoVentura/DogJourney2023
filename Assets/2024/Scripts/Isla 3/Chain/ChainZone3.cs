@@ -12,6 +12,7 @@ public class ChainZone3 : MonoBehaviour
     [SerializeField] GameObject _iconInteract;
     [SerializeField] GameObject _iconQuest;
     [SerializeField] Animator _myAnim;
+    [SerializeField] GameObject _indicator;
 
     [Header("DIALOGUE")]
     [SerializeField] Dialogue _dialogue;
@@ -48,6 +49,7 @@ public class ChainZone3 : MonoBehaviour
         _dialogue.gameObject.SetActive(false);
         _camEnd.gameObject.SetActive(false);
         _notification.gameObject.SetActive(false);
+        _indicator.gameObject.SetActive(false);
         _iconInteract.transform.DOScale(0f, 0f);
         _fadeOut.DOColor(Color.clear, 0f);
     }
@@ -138,11 +140,9 @@ public class ChainZone3 : MonoBehaviour
         Destroy(_camEndingActive.gameObject);
         _boxMessage.CloseMessage();
         _gm.QuestCompleted();
-
+        _indicator.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.6f);
         _boxMessage.DesactivateMessage();
-        //MachineChairlift machine = FindObjectOfType<MachineChairlift>();
-        //Destroy(machine);
         Destroy(this);
     }
 
@@ -187,6 +187,7 @@ public class ChainZone3 : MonoBehaviour
         _camPlayer.gameObject.SetActive(true);
         player.DeFreezePlayer();
         _myCol.enabled = true;
+        
 
         yield return new WaitForSeconds(1f);
         _boxMessage.DesactivateMessage();
