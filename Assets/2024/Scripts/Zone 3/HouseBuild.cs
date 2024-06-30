@@ -9,8 +9,7 @@ public class HouseBuild : MonoBehaviour
     [SerializeField] Collider _myCol;
     [SerializeField] MeshRenderer _myMesh;
     [SerializeField] NPCHouses _npcQuest;
-    [SerializeField] string _nameNPC;
-
+    
     [Header("AMOUNT")]
     [SerializeField] int _woodRequired = 10;
     [SerializeField] int _nailRequired = 10;
@@ -34,6 +33,7 @@ public class HouseBuild : MonoBehaviour
     [Header("MESSAGE")]
     [SerializeField] BoxMessages _boxMessage;
     [SerializeField, TextArea(4,6)] string _message;
+    [SerializeField] string _nameNPC;
 
     void Start()
     {
@@ -147,8 +147,6 @@ public class HouseBuild : MonoBehaviour
         if (_inventory.nails <= 0) _inventory.nails = 0;
 
         _npcQuest.HouseBuilded();
-
-
         Destroy(gameObject);
     }
 }
