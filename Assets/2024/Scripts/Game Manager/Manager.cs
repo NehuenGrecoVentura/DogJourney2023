@@ -184,7 +184,6 @@ public class Manager : MonoBehaviour
         }
 
         _cam.gameObject.SetActive(true);
-        //_player.speed = _player.speedAux;
         _player.DeFreezePlayer();
         cinematicGameOver.SetActive(false);
         _gameOver.SetActive(false);
@@ -229,8 +228,6 @@ public class Manager : MonoBehaviour
     private IEnumerator TutorialChain()
     {
         chainsActive = true;
-
-        _player.speed = 0;
         _player.FreezePlayer();
 
         _cam.gameObject.SetActive(false);
@@ -267,8 +264,6 @@ public class Manager : MonoBehaviour
 
         _cam.gameObject.SetActive(true);
         Destroy(_camScenario.gameObject);
-
-        _player.speed = _player.speedAux;
         _player.DeFreezePlayer();
 
         yield return new WaitForSeconds(0.6f);

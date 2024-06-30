@@ -99,7 +99,6 @@ public class Dialogue : MonoBehaviour
 
     public void Close()
     {
-        _player.speed = _player.speedAux;
         _player.DeFreezePlayer();
         _cam.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;

@@ -74,15 +74,15 @@ public class ArchaeologistQuest1 : MonoBehaviour
     public void Confirm()
     {
         _dialogue.canTalk = false;
-        _buttonConfirm.gameObject.SetActive(false);
-        _dialogue.playerInRange = false;
+        //_buttonConfirm.gameObject.SetActive(false);
+        //_dialogue.playerInRange = false;
         _myCol.enabled = false;
         _dialogue.Close();
         _iconInteract.SetActive(false);
         _gm.ActiveTutorialChain();
         _canvasIconsChainsQuests.SetActive(true);
         _iconTreasure.SetActive(true);
-        _message.AddIconInventory(_boxMessage, _textSlide, "Added to inventory");
+        //_message.AddIconInventory(_boxMessage, _textSlide, "Added to inventory");
         _myAudio.PlayOneShot(_sounds[0]);
 
         foreach (var item in _allTreasures)

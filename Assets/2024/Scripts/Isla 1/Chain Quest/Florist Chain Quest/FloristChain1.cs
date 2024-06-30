@@ -102,8 +102,8 @@ public class FloristChain1 : MonoBehaviour
     public void Confirm()
     {
         _dialogue.canTalk = false;
-        _buttonConfirm.gameObject.SetActive(false);
-        _dialogue.playerInRange = false;
+        //_buttonConfirm.gameObject.SetActive(false);
+        //_dialogue.playerInRange = false;
         _myCol.enabled = false;
         _dialogue.Close();
         _iconInteract.SetActive(false);
@@ -111,7 +111,7 @@ public class FloristChain1 : MonoBehaviour
         _gm.ActiveTutorialChain();
         _canvasIconsChainsQuests.SetActive(true);
         _iconFlowers.SetActive(true);
-        _doTween.ShowLootCoroutine(_sliderActivation);
+        //_doTween.ShowLootCoroutine(_sliderActivation);
         _sliderTreasure.SetActive(false);
 
         foreach (var item in _allDigs)
