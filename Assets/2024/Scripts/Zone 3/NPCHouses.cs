@@ -40,6 +40,7 @@ public class NPCHouses : MonoBehaviour
     [SerializeField] Transform _posCamMove;
 
     [Header("QUEST")]
+    [SerializeField] GameObject _canvasBuildFinished;
     [SerializeField] GameObject _canvasSlider;
     [SerializeField] ItemsManager _items;
     [SerializeField] GameObject[] _houses;
@@ -62,6 +63,7 @@ public class NPCHouses : MonoBehaviour
         _camZone3.gameObject.SetActive(false);
         _camHouses.gameObject.SetActive(false);
         _camFinal.gameObject.SetActive(false);
+        _canvasBuildFinished.SetActive(false);
         _iconInteract.transform.DOScale(0f, 0f);
         _fadeOut.DOColor(Color.clear, 0f);
     }
@@ -244,7 +246,7 @@ public class NPCHouses : MonoBehaviour
         _player.enabled = true;
         _player.DeFreezePlayer();
         _gm.QuestCompleted();
-
+        _canvasBuildFinished.SetActive(true);
         yield return new WaitForSeconds(1f);
         Destroy(this);
     }
