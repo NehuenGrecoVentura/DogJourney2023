@@ -25,7 +25,9 @@ public class CheatManager : MonoBehaviour
     private Mail2 _quest2;
     private TableQuest _tableQuest;
     private FishingQuest2 _fishingQuest2;
-    private bool _quest1Skiped, _quest2Skiped, _quest3Skiped, _quest4Skiped, _quest5Skiped, _questFishing2Skiped = false;
+    private BoxQuest _boxQuest;
+    private bool _quest1Skiped, _quest2Skiped, _quest3Skiped, _quest4Skiped, _quest5Skiped, _questFishing2Skiped, _questBoxSkip = false;
+
 
     [Header("TELETRANSOPORT")]
     [SerializeField] Transform _posTeletransport;
@@ -63,6 +65,7 @@ public class CheatManager : MonoBehaviour
         _fishingQuest2 = FindObjectOfType<FishingQuest2>();
         _allTrees = FindObjectsOfType<TreeRegenerative>();
         _allBush = FindObjectsOfType<Bush>();
+        _boxQuest = FindObjectOfType<BoxQuest>();
     }
 
     void Update()
@@ -157,7 +160,24 @@ public class CheatManager : MonoBehaviour
 
             case "6" when _quest5Skiped && !_questFishing2Skiped:
                 _fishingQuest2.CheatSkip();
+                foreach (Bush bush in _allBush)
+                {
+                    bush.enabled = true;
+                    bush.GetComponent<Collider>().enabled = true;
+                }
                 _questFishing2Skiped = true;
+                break;
+
+            case "7" when _questFishing2Skiped && !_questBoxSkip:
+                foreach (GameObject item in _zones)
+                {
+                    Destroy(item);
+                }
+
+                _bridgeZone2.gameObject.SetActive(true);
+                _inventory.shovelUnlocked = true;
+                _boxQuest.CheatSkip();
+                _questBoxSkip = true;
                 break;
         }
     }

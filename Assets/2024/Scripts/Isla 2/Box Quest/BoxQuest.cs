@@ -226,4 +226,20 @@ public class BoxQuest : MonoBehaviour
         _boxMessage.DesactivateMessage();
         Destroy(this);
     }
+
+    public void CheatSkip()
+    {
+        _inventory.upgradeLoot = true;
+        _gm.QuestCompleted();
+        _radar.target = _nextQuest.transform;
+        _nextQuest.enabled = true;
+        _nextQuest.GetComponent<Collider>().enabled = true;
+        
+        foreach (var item in _animsDoor)
+        {
+            item.enabled = true;
+        }
+
+        Destroy(this);
+    }
 }
