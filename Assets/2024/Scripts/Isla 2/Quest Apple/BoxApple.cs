@@ -16,6 +16,7 @@ public class BoxApple : MonoBehaviour
     [Header("INTERACT")]
     [SerializeField] GameObject _iconInteract;
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
+    [SerializeField] OrderDog _order;
 
     [Header("NAVMESH")]
     [SerializeField] NavMeshAgent _dog;
@@ -89,6 +90,7 @@ public class BoxApple : MonoBehaviour
             _amount10.gameObject.SetActive(true);
             _dog.enabled = true;
             _trolley.enabled = true;
+            _order.activeOrders = true;
         }
     }
 
@@ -117,7 +119,7 @@ public class BoxApple : MonoBehaviour
         {
             player.rabbitPicked = true;
             player.ItemsPicked(false, false, false, true);
-            Destroy(gameObject);
+            Destroy(gameObject, 0.1f);
         }
     }
 

@@ -79,14 +79,18 @@ public class CinematicThieft : MonoBehaviour
         NavMeshAgent agentTrolley = _trolley.GetComponent<NavMeshAgent>();
 
         _targetDog.transform.position = _posDog.position;
+        _dog.transform.position = _posDog.position;
+        _trolley.transform.position = _dog.transform.position;
+        _dog.Stop();
+
         agentDog.enabled = false;
         agentTrolley.enabled = false;
         _dog.canTeletransport = false;
         //_dog.transform.parent.transform.position = _posDog.position;
-        _dog.transform.position = _posDog.position;
-        _trolley.transform.position = _dog.transform.position;
+        
         //_dog.transform.parent.LookAt(_thieft.transform);
         _dog.transform.LookAt(_thieft.transform);
+        _order.activeOrders = false;
 
         yield return new WaitForSeconds(3f);
         _boxMessage.ShowMessage(_message[0]);

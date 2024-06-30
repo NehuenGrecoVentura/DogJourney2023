@@ -253,6 +253,15 @@ public class QuestApple : MonoBehaviour
         _boxMessage.DesactivateMessage();
         player.DeFreezePlayer();
         _gm.QuestCompleted();
+
+        foreach (var item in _agents)
+        {
+            item.enabled = true;
+        }
+
+        _dog.canTeletransport = true;
+
+
         foreach (var tree in _trees)
         {
             tree.enabled = false;
