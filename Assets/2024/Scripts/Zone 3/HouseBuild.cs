@@ -64,7 +64,7 @@ public class HouseBuild : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null && Input.GetKey(KeyCode.Space))
         {
-            if (_inventory.nails >= _nailRequired && _inventory.greenTrees >= _woodRequired && _npcQuest.itemsFound > 0 && !_inventory.shovelSelected)
+            if (_inventory.nails >= _nailRequired && _inventory.greenTrees >= _woodRequired && _npcQuest.itemsFound >= 3 && !_inventory.shovelSelected)
             {
                 player.Build();
 

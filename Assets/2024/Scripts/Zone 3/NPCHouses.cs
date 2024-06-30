@@ -180,7 +180,6 @@ public class NPCHouses : MonoBehaviour
     {
         _houseBuilded++;
         _questUI.AddNewTask(2, "Build the Houses (" + _houseBuilded.ToString() + "/" + _houseTotal.ToString() + ")");
-        itemsFound--;
 
         if (_houseBuilded >= _houseTotal)
         {
@@ -199,7 +198,7 @@ public class NPCHouses : MonoBehaviour
         if (itemsFound >= _itemsTotal)
         {
             _questUI.TaskCompleted(1);
-            _questUI.AddNewTask(3, "Go back to the npc and finish the task");
+            //_questUI.AddNewTask(3, "Go back to the npc and finish the task");
 
             DigZone3[] digs = FindObjectsOfType<DigZone3>();
 
