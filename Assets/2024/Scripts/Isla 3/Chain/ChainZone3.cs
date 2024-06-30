@@ -31,9 +31,8 @@ public class ChainZone3 : MonoBehaviour
     [SerializeField] Chairlift _chairlift;
 
     [Header("NOTIFICATION")]
-    [SerializeField] RectTransform _notification1;
-    [SerializeField] RectTransform _notification2;
-    [SerializeField] DoTweenTest _doTween;
+    [SerializeField] GameObject[] _iconInventory;
+    [SerializeField] TMP_Text _txtInventory;
 
     [Header("MESSAGE")]
     [SerializeField] BoxMessages _boxMessage;
@@ -52,8 +51,6 @@ public class ChainZone3 : MonoBehaviour
     {
         _dialogue.gameObject.SetActive(false);
         _camEnd.gameObject.SetActive(false);
-        _notification1.gameObject.SetActive(false);
-        _notification2.gameObject.SetActive(false);
         _indicator.gameObject.SetActive(false);
         
         _iconInteract.transform.DOScale(0f, 0f);
@@ -75,8 +72,12 @@ public class ChainZone3 : MonoBehaviour
         _myAudio.PlayOneShot(_soundConfirm);
         _iconQuest.SetActive(false);
         _myAnim.SetBool("Quest", true);
-        _doTween.ShowLootCoroutine(_notification1);
         _questActive = true;
+
+        foreach (var item in _iconInventory)
+        {
+            item.SetActive(true);
+        }
     }
 
     private void SetDialogue()
@@ -159,6 +160,8 @@ public class ChainZone3 : MonoBehaviour
         _chairlift.enabled = true;
         _chairlift.gameObject.GetComponent<BoxCollider>().enabled = true;
 
+        Destroy(_iconInventory[1].gameObject);
+
         yield return new WaitForSeconds(0.6f);
         _boxMessage.DesactivateMessage();
         Destroy(this);
@@ -216,13 +219,14 @@ public class ChainZone3 : MonoBehaviour
         yield return new WaitForSeconds(1f);
         _boxMessage.DesactivateMessage();
     }
-
-
     public void BatteryObtained()
     {
+        _txtInventory.text = "FOUND";
+
+        
+
         _radar.StatusRadar(true);
         _radar.target = transform;
-        _doTween.ShowLootCoroutine(_notification2);
         _batteryObtained = true;
         _myCol.enabled = true;
     }
