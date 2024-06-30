@@ -17,6 +17,7 @@ public class QuestSearch : MonoBehaviour
     [Header("ANIMS")]
     [SerializeField] Animator _myAnim;
     [SerializeField] RuntimeAnimatorController _animQuest;
+    [SerializeField] RuntimeAnimatorController _animReward;
     private RuntimeAnimatorController _mainAnim;
 
     [Header("DIALOGUE")]
@@ -241,6 +242,7 @@ public class QuestSearch : MonoBehaviour
         yield return new WaitForSeconds(2f);
         _fadeOut.DOColor(Color.clear, 1.5f);
         _battery.SetActive(true);
+        _myAnim.runtimeAnimatorController = _animReward;
 
         yield return new WaitForSeconds(1f);
         _boxMessage.ShowMessage(_messages[4]);
@@ -250,6 +252,7 @@ public class QuestSearch : MonoBehaviour
         _myBroom.SetActive(true);
         _boxMessage.CloseMessage();
         Destroy(_camFocus.gameObject);
+        Destroy(_battery);
         _camPlayer.gameObject.SetActive(true);
         player.DeFreezePlayer();
         _gm.QuestCompleted();
@@ -281,6 +284,7 @@ public class QuestSearch : MonoBehaviour
             _radar.target = transform;
             _radar.StatusRadar(true);
             Destroy(item);
+            _myCol.enabled = true;
             _questCompleted = true;
         }
     }
