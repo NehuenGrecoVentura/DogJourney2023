@@ -26,9 +26,13 @@ public class ChainZone3 : MonoBehaviour
     [SerializeField] Image _fadeOut;
     private bool _questActive = false;
     [SerializeField] private bool _batteryObtained = false;
+    [SerializeField] LocationQuest _radar;
+    [SerializeField] MachineChairlift _machine;
+    [SerializeField] Chairlift _chairlift;
 
     [Header("NOTIFICATION")]
-    [SerializeField] RectTransform _notification;
+    [SerializeField] RectTransform _notification1;
+    [SerializeField] RectTransform _notification2;
     [SerializeField] DoTweenTest _doTween;
 
     [Header("MESSAGE")]
@@ -48,7 +52,8 @@ public class ChainZone3 : MonoBehaviour
     {
         _dialogue.gameObject.SetActive(false);
         _camEnd.gameObject.SetActive(false);
-        _notification.gameObject.SetActive(false);
+        _notification1.gameObject.SetActive(false);
+        _notification2.gameObject.SetActive(false);
         _indicator.gameObject.SetActive(false);
         _iconInteract.transform.DOScale(0f, 0f);
         _fadeOut.DOColor(Color.clear, 0f);
@@ -63,6 +68,7 @@ public class ChainZone3 : MonoBehaviour
         _myAudio.PlayOneShot(_soundConfirm);
         _iconQuest.SetActive(false);
         _myAnim.SetBool("Quest", true);
+        _doTween.ShowLootCoroutine(_notification1);
         _questActive = true;
     }
 
@@ -140,7 +146,10 @@ public class ChainZone3 : MonoBehaviour
         Destroy(_camEndingActive.gameObject);
         _boxMessage.CloseMessage();
         _gm.QuestCompleted();
-        _indicator.gameObject.SetActive(true);
+
+        _radar.StatusRadar(true);
+        _radar.target = _chairlift.transform;
+
         yield return new WaitForSeconds(0.6f);
         _boxMessage.DesactivateMessage();
         Destroy(this);
@@ -174,6 +183,7 @@ public class ChainZone3 : MonoBehaviour
         _myCol.enabled = false;
         _boxMessage.SetMessage(_nameNPC);
         player.FreezePlayer();
+        _radar.StatusRadar(false);
 
         _camEnd.gameObject.SetActive(true);
         _camPlayer.gameObject.SetActive(false);
@@ -187,7 +197,10 @@ public class ChainZone3 : MonoBehaviour
         _camPlayer.gameObject.SetActive(true);
         player.DeFreezePlayer();
         _myCol.enabled = true;
-        
+        _indicator.gameObject.SetActive(true);
+
+        _radar.StatusRadar(true);
+        _radar.target = _machine.transform;
 
         yield return new WaitForSeconds(1f);
         _boxMessage.DesactivateMessage();
@@ -196,6 +209,9 @@ public class ChainZone3 : MonoBehaviour
 
     public void BatteryObtained()
     {
+        _radar.StatusRadar(true);
+        _radar.target = transform;
+        _doTween.ShowLootCoroutine(_notification2);
         _batteryObtained = true;
         _myCol.enabled = true;
     }
