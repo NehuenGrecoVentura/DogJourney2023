@@ -220,7 +220,7 @@ public class MinijuegoTalaManager : MonoBehaviour
 
             CheckDones();
         }
-        if (Input.GetKeyDown(KeyCode.T)) StartGame();
+        //if (Input.GetKeyDown(KeyCode.T)) StartGame();
         //{
         //    Gaming = !Gaming;
         //    Game();

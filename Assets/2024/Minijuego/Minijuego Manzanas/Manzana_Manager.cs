@@ -169,7 +169,7 @@ public class Manzana_Manager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M)) StartGame();
+        //if (Input.GetKeyDown(KeyCode.M)) StartGame();
 
         if (Gaming)
         {

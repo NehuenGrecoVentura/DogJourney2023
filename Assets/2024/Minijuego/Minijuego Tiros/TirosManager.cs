@@ -52,11 +52,11 @@ public class TirosManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            Gaming = !Gaming;
-            Game();
-        }
+        //if (Input.GetKeyDown(KeyCode.B))
+        //{
+        //    Gaming = !Gaming;
+        //    Game();
+        //}
         if (Gaming)
         {
             if (TP.GameOver)
