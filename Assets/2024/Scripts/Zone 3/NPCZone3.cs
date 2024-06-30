@@ -73,6 +73,7 @@ public class NPCZone3 : MonoBehaviour
             if (_inventory.greenTrees >= _woodRequired)
             {
                 _myCol.enabled = true;
+                _questUI.TaskCompleted(1);
                 _questUI.TaskCompleted(2);
                 _questUI.AddNewTask(3, "Go back to the mountain");
                 _questCompleted = true;
@@ -127,14 +128,14 @@ public class NPCZone3 : MonoBehaviour
         if (player != null)
         {
             if (_myCol.enabled && !_questActive && !_questCompleted) SetDialogue();
-            else if (_questCompleted) _iconInteract.transform.DOScale(0.01f, 0.5f);
+            else if (_questCompleted && _myCol.enabled) _iconInteract.transform.DOScale(0.01f, 0.5f);
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract))
+        if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract) && _myCol.enabled)
         {
             StartCoroutine(Message(player));
         }
@@ -158,7 +159,7 @@ public class NPCZone3 : MonoBehaviour
 
         _iconInteract.transform.DOScale(0f, 0.5f);
         player.FreezePlayer();
-        _boxMessages.SetMessage("SNOW NPC");
+        _boxMessages.SetMessage(_nameNPC);
         _camEnding.gameObject.SetActive(true);
         _camPlayer.gameObject.SetActive(false);
 
@@ -199,7 +200,7 @@ public class NPCZone3 : MonoBehaviour
 
     private IEnumerator FinalMessage(Brazier brazier, Character player, GameObject cinematic, CameraOrbit camPlayer)
     {
-        _boxMessages.SetMessage("NPC Snow");
+        _boxMessages.SetMessage(_nameNPC);
         _boxMessages.ShowMessage(_messages[1]);
         _inventory.greenTrees -= _woodRequired;
         if (_inventory.greenTrees <= 0) _inventory.greenTrees = 0;
@@ -216,6 +217,7 @@ public class NPCZone3 : MonoBehaviour
         transform.LookAt(_npcsHouses.gameObject.transform);
 
         yield return new WaitForSeconds(1f);
+        _boxMessages.SetMessage("Max");
         _boxMessages.ShowMessage(_messages[2]);
 
         yield return new WaitForSeconds(3f);
@@ -223,6 +225,7 @@ public class NPCZone3 : MonoBehaviour
         _camNextQuest.gameObject.transform.DOMove(_camMovePos.transform.position, 4f);
         
         yield return new WaitForSeconds(5f);
+        _boxMessages.SetMessage(_nameNPC);
         _boxMessages.ShowMessage(_messages[3]);
         transform.LookAt(player.transform);
         
