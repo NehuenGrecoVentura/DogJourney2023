@@ -108,7 +108,6 @@ public class HouseBuild : MonoBehaviour
     {
         _myAudio.Play();
         _myMesh.enabled = false;
-        //Destroy(_myCol);
         _myCol.enabled = false;
         Destroy(_parentIconsMaterials.gameObject);
 

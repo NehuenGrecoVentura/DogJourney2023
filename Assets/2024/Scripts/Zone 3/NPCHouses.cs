@@ -40,6 +40,7 @@ public class NPCHouses : MonoBehaviour
     [SerializeField] Transform _posCamMove;
 
     [Header("QUEST")]
+    [SerializeField] GameObject _canvasSlider;
     [SerializeField] ItemsManager _items;
     [SerializeField] GameObject[] _houses;
     [SerializeField] QuestUI _questUI;
@@ -108,7 +109,7 @@ public class NPCHouses : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
-            if (_myCol.enabled && _questCompleted && Input.GetKeyDown(_keyInteract))
+            if (_myCol.enabled && _questCompleted && Input.GetKeyDown(_keyInteract) && _myCol.enabled)
             {
                 _gm.QuestCompleted();
                 Destroy(this);
@@ -194,6 +195,23 @@ public class NPCHouses : MonoBehaviour
         {
             _questUI.TaskCompleted(1);
             _questUI.AddNewTask(3, "Go back to the npc and finish the task");
+
+            DigZone3[] digs = FindObjectsOfType<DigZone3>();
+
+            if (digs != null)
+            {
+                foreach (DigZone3 dig in digs)
+                {
+                    Destroy(dig.gameObject);
+                }
+            }
+
+            else return;
+
+            if (_items != null) Destroy(_items.gameObject);
+            else return;
+
+            Destroy(_canvasSlider);
         }  
     }
 
