@@ -38,6 +38,7 @@ public class Chairlift : MonoBehaviour
     private int _index = 0;
     private bool _isActive = false;
     private Vector3 _initialPos;
+    private bool _firstContact =  true;
 
     void Start()
     {
@@ -88,6 +89,17 @@ public class Chairlift : MonoBehaviour
 
     private IEnumerator ActiveChair(Character player)
     {
+        NPCZone3 npcZone3 = FindObjectOfType<NPCZone3>();
+        LocationQuest radar = FindObjectOfType<LocationQuest>();
+        FirstCharilift first = FindObjectOfType<FirstCharilift>();
+        if(gameObject.name == "Chairlift Zone 1" && _firstContact)
+        {
+            radar.StatusRadar(true);
+            radar.target = npcZone3.gameObject.transform;
+            Destroy(first);
+            _firstContact = false;
+        }
+
         _fadeOut.DOColor(Color.black, 1.5f);
         _iconInteract.DOScale(0, 0.5f);
         _myCol.enabled = false;
