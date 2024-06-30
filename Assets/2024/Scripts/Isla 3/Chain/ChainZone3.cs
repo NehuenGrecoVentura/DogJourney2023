@@ -55,8 +55,15 @@ public class ChainZone3 : MonoBehaviour
         _notification1.gameObject.SetActive(false);
         _notification2.gameObject.SetActive(false);
         _indicator.gameObject.SetActive(false);
+        
         _iconInteract.transform.DOScale(0f, 0f);
         _fadeOut.DOColor(Color.clear, 0f);
+
+        _machine.gameObject.GetComponent<BoxCollider>().enabled = false;
+        _machine.enabled = false;
+
+        _chairlift.enabled = false;
+        _chairlift.gameObject.GetComponent<BoxCollider>().enabled = false;
     }
 
     private void Confirm()
@@ -149,6 +156,8 @@ public class ChainZone3 : MonoBehaviour
 
         _radar.StatusRadar(true);
         _radar.target = _chairlift.transform;
+        _chairlift.enabled = true;
+        _chairlift.gameObject.GetComponent<BoxCollider>().enabled = true;
 
         yield return new WaitForSeconds(0.6f);
         _boxMessage.DesactivateMessage();
@@ -201,6 +210,8 @@ public class ChainZone3 : MonoBehaviour
 
         _radar.StatusRadar(true);
         _radar.target = _machine.transform;
+        _machine.gameObject.GetComponent<BoxCollider>().enabled = true;
+        _machine.enabled = true;
 
         yield return new WaitForSeconds(1f);
         _boxMessage.DesactivateMessage();
