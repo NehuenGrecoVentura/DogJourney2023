@@ -255,4 +255,24 @@ public class QuestApple : MonoBehaviour
         _gm.QuestCompleted();
         Destroy(this);
     }
+
+    public void CheatSkip()
+    {
+        _radar.StatusRadar(true);
+        _radar.target = _nextQuest.transform;
+        
+        _nextQuest.enabled = true;
+        _nextQuest.GetComponent<BoxCollider>().enabled = true;
+
+        foreach (var item in _thiefs)
+        {
+            Destroy(item.gameObject);
+        }
+
+        Destroy(_cinematic.gameObject);
+        Destroy(_camEnding.gameObject);
+        Destroy(_myCol);
+        Destroy(_iconInteract.gameObject);
+        Destroy(this);
+    }
 }

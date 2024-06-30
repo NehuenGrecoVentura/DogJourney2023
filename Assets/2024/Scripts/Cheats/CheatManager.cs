@@ -26,7 +26,8 @@ public class CheatManager : MonoBehaviour
     private TableQuest _tableQuest;
     private FishingQuest2 _fishingQuest2;
     private BoxQuest _boxQuest;
-    private bool _quest1Skiped, _quest2Skiped, _quest3Skiped, _quest4Skiped, _quest5Skiped, _questFishing2Skiped, _questBoxSkip = false;
+    private QuestApple _questApple;
+    private bool _quest1Skiped, _quest2Skiped, _quest3Skiped, _quest4Skiped, _quest5Skiped, _questFishing2Skiped, _questBoxSkip, _questAppleSkip = false;
 
 
     [Header("TELETRANSOPORT")]
@@ -66,6 +67,7 @@ public class CheatManager : MonoBehaviour
         _allTrees = FindObjectsOfType<TreeRegenerative>();
         _allBush = FindObjectsOfType<Bush>();
         _boxQuest = FindObjectOfType<BoxQuest>();
+        _questApple = FindObjectOfType<QuestApple>();
     }
 
     void Update()
@@ -178,6 +180,11 @@ public class CheatManager : MonoBehaviour
                 _inventory.shovelUnlocked = true;
                 _boxQuest.CheatSkip();
                 _questBoxSkip = true;
+                break;
+
+            case "8" when _questBoxSkip && !_questAppleSkip:
+                _questApple.CheatSkip();
+                _questAppleSkip = true;
                 break;
         }
     }
