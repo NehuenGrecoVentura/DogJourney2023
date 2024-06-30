@@ -126,7 +126,7 @@ public class FloristChain1 : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && _myCol.enabled && !_questActive && this.enabled && !_questCompleted)
+        if (player != null && _myCol.enabled && !_questActive && !_questCompleted)
             SetDialogue();
     }
 
