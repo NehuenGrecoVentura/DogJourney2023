@@ -104,6 +104,7 @@ public class Chairlift : MonoBehaviour
         _iconInteract.DOScale(0, 0.5f);
         _myCol.enabled = false;
 
+        _dog.GetComponent<Dog>().Stop();
         _dog.enabled = false;
         _trolley.enabled = false;
         _lineDog.enabled = false;
