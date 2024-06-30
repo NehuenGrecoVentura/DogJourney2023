@@ -91,7 +91,7 @@ public class ItemFound : MonoBehaviour
         _dog.Search();
         _smoke.enabled = true;
         _myAudio.PlayOneShot(_soundSearch);
-        _player.enabled = false;
+        _player.FreezePlayer();
 
         ChangeCam(true, false);
         Animator animDog = _dog.GetComponent<Animator>();
@@ -106,14 +106,14 @@ public class ItemFound : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         animDog.enabled = true;
         _myAudio.Stop();
-        _player.enabled = true;
+        _player.DeFreezePlayer();
 
         Repos();
     }
 
     public void ChangeCam(bool camFocus, bool camPlayer)
     {
-        if(_quest._found >= 1)
+        if(_quest._found >= 0)
         {
             _camFocus.gameObject.SetActive(camFocus);
             _camPlayer.gameObject.SetActive(camPlayer);
@@ -126,10 +126,12 @@ public class ItemFound : MonoBehaviour
         if (player != null) _iconInteract.transform.DOScale(1f, 0.5f);
 
         var dog = other.GetComponent<Dog>();
-        if(dog != null && _isSearching)
-        {
-            StartCoroutine(DogSearch());
-        }
+        //if(dog != null && _isSearching)
+        //{
+        //    StartCoroutine(DogSearch());
+        //}
+
+        if (dog != null) StartCoroutine(DogSearch());
     }
 
     private void OnTriggerStay(Collider other)
@@ -141,15 +143,11 @@ public class ItemFound : MonoBehaviour
             _dog.OrderGo();
             _isSearching = true;
         }
-        //Repos();
     }
 
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null)
-        {
-            _iconInteract.transform.DOScale(0f, 0.5f);
-        }
+        if (player != null) _iconInteract.transform.DOScale(0f, 0.5f);
     }
 }

@@ -99,7 +99,7 @@ public class QuestSearch : MonoBehaviour
         _radar.StatusRadar(false);
         _myAnim.SetBool("Quest", true);
         _questUI.ActiveUIQuest("Hunting Treasures", "Find buried objects", string.Empty, string.Empty);
-        _questUI.AddNewTask(1, "Find buried objects (" + _found.ToString() + "/" + _total.ToString() + ")");
+        _questUI.AddNewTask(1, "Find buried objects (" + _found.ToString() + "/5)");
         StartCoroutine(StartQuest());
         _questActive = true;
     }
@@ -151,9 +151,10 @@ public class QuestSearch : MonoBehaviour
     private IEnumerator StartQuest()
     {
         _questActive = true;
+        _player.FreezePlayer();
 
         _questUI.UIStatus(false);
-        _boxMessage.SetMessage(name);
+        _boxMessage.SetMessage(_nameNPC);
         _dogBall.transform.position = _introPosDog.position;
 
         _camPlayer.gameObject.SetActive(false);
@@ -172,6 +173,7 @@ public class QuestSearch : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
         _cinematic.SetActive(true);
+        
         Destroy(_focusDog.gameObject);
         _dogBall.transform.position = _posDogBall.position;
         _dog.transform.position = _posDogBall.position;
@@ -205,12 +207,13 @@ public class QuestSearch : MonoBehaviour
         _questUI.UIStatus(true);
         _dog.canTeletransport = true;
         _item.Repos();
-        _found = 1;
+        _found = 0;
         agentDog.enabled = true;
         agentTrolley.enabled = true;
         _sensor.gameObject.SetActive(true);
-        _questUI.AddNewTask(1, "Find buried objects (" + "1" + "/" + _total.ToString() + ")");
+        _questUI.AddNewTask(1, "Find buried objects (" + "0" + "/5)");
         _doTween.StopAnim(_sensor.transform);
+        _player.DeFreezePlayer();
 
         yield return new WaitForSeconds(1f);
         _boxMessage.DesactivateMessage();
@@ -263,10 +266,10 @@ public class QuestSearch : MonoBehaviour
 
     public void AddFound(GameObject item)
     {
-        if (_found < _total)
+        if (_found != _total)
         {
             _found++;
-            _questUI.AddNewTask(1, "Find buried objects (" + _found.ToString() + "/" + _total.ToString() + ")");
+            _questUI.AddNewTask(1, "Find buried objects (" + _found.ToString() + "/5)");
         }
              
         else
@@ -279,7 +282,6 @@ public class QuestSearch : MonoBehaviour
             _radar.StatusRadar(true);
             Destroy(item);
             _questCompleted = true;
-
         }
     }
 }
