@@ -253,6 +253,11 @@ public class QuestApple : MonoBehaviour
         _boxMessage.DesactivateMessage();
         player.DeFreezePlayer();
         _gm.QuestCompleted();
+        foreach (var tree in _trees)
+        {
+            tree.enabled = false;
+            tree.GetComponent<BoxCollider>().enabled = false;
+        }
         Destroy(this);
     }
 
