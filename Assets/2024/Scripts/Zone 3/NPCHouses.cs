@@ -179,7 +179,6 @@ public class NPCHouses : MonoBehaviour
         _houseBuilded++;
         _questUI.AddNewTask(2, "Build the Houses (" + _houseBuilded.ToString() + "/" + _houseTotal.ToString() + ")");
         itemsFound--;
-        _questUI.AddNewTask(1, "Search for lost items (" + itemsFound.ToString() + "/" + _itemsTotal.ToString() + ")");
 
         if (_houseBuilded >= _houseTotal)
         {

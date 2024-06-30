@@ -73,6 +73,8 @@ public class NPCZone3 : MonoBehaviour
             if (_inventory.greenTrees >= _woodRequired)
             {
                 _myCol.enabled = true;
+                _radar.StatusRadar(true);
+                _radar.target = transform;
                 _questUI.TaskCompleted(1);
                 _questUI.TaskCompleted(2);
                 _questUI.AddNewTask(3, "Go back to the mountain");
