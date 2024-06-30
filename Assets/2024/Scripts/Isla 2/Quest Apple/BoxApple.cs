@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using DG.Tweening;
 
 public class BoxApple : MonoBehaviour
@@ -15,6 +16,11 @@ public class BoxApple : MonoBehaviour
     [Header("INTERACT")]
     [SerializeField] GameObject _iconInteract;
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
+
+    [Header("NAVMESH")]
+    [SerializeField] NavMeshAgent _dog;
+    [SerializeField] NavMeshAgent _trolley;
+
 
     private void Start()
     {
@@ -81,6 +87,8 @@ public class BoxApple : MonoBehaviour
             _amount5.gameObject.SetActive(true);
             _amount8.gameObject.SetActive(true);
             _amount10.gameObject.SetActive(true);
+            _dog.enabled = true;
+            _trolley.enabled = true;
         }
     }
 
