@@ -68,11 +68,7 @@ public class QuickFishing : MonoBehaviour
         if (_isActive && _fishing.fishedPicked == _totalAmount)
             StartCoroutine(FinishMiniGame());
 
-        else if (_isActive && !_completed)
-        {
-            _player.speed = 0;
-            _player.FreezePlayer();
-        }
+        else if (_isActive && !_completed) _player.FreezePlayer();
     }
 
 
