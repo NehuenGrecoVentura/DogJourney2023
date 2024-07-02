@@ -38,4 +38,9 @@ public class HitBar : MonoBehaviour
         else if (sliderValue >= 30f) _bar.color = Color.yellow;
         else _bar.color = Color.red;
     }
+
+    private void OnEnable()
+    {
+        Bar();
+    }
 }

@@ -120,6 +120,6 @@ public class TreeRegenerative : MonoBehaviour
     public void RestartAmount()
     {
         amountHit = initialAmount;
-        _hitBar.Bar();
+        //_hitBar.Bar();
     }
 }
