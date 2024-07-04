@@ -108,7 +108,8 @@ public class Chairlift : MonoBehaviour
         _dog.enabled = false;
         _trolley.enabled = false;
         _lineDog.enabled = false;
-        
+        _dog.GetComponent<Animator>().enabled = false;
+
         yield return new WaitForSeconds(2f);
         _fadeOut.DOColor(Color.clear, 1.5f);
         _myLine.SetActive(true);
@@ -153,6 +154,7 @@ public class Chairlift : MonoBehaviour
         _dogBall.transform.position = _posExitDog.position;
         _dog.transform.parent = _parentPlayer;
         _dog.gameObject.transform.position = _posExitDog.position;
+        _dog.GetComponent<Animator>().enabled = true;
 
         _trolley.gameObject.SetActive(true);
         _trolley.gameObject.transform.position = _posExitDog.position;

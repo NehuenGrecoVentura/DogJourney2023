@@ -92,7 +92,7 @@ public class ModelDog
 
             while (true)
             {
-                if (_target != null)
+                if (_target != null && _agent.enabled)
                 {
                      //_agent.speed = _speedNormal;
                     _agent.destination = _target.transform.position;
