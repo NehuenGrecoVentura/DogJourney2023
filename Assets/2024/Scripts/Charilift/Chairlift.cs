@@ -24,6 +24,7 @@ public class Chairlift : MonoBehaviour
     [Header("CINEMATIC")]
     [SerializeField] GameObject _cinematic;
     [SerializeField] Image _fadeOut;
+    [SerializeField] ChairliftFinish _finish;
 
     [Header("MOVE")]
     [SerializeField] GameObject _myLine;
@@ -84,7 +85,7 @@ public class Chairlift : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && _myCol.enabled) _iconInteract.DOScale(0f, 0.5f);
+        if (player != null) _iconInteract.DOScale(0f, 0.5f);
     }
 
     private IEnumerator ActiveChair(Character player)
@@ -110,7 +111,7 @@ public class Chairlift : MonoBehaviour
         _lineDog.enabled = false;
         _dog.GetComponent<Animator>().enabled = false;
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         _fadeOut.DOColor(Color.clear, 1.5f);
         _myLine.SetActive(true);
         _lineMachine.SetActive(false);
@@ -135,6 +136,27 @@ public class Chairlift : MonoBehaviour
         yield return new WaitForSeconds(5f);
         _fadeOut.DOColor(Color.black, 1.5f);
 
+
+
+
+
+        ////////////////////////////////////////////
+
+
+        yield return new WaitForSeconds(2f);
+        transform.position = _initialPos;
+        _fadeOut.DOColor(Color.clear, 1.5f);
+        _cinematic.SetActive(false);
+        _finish.gameObject.SetActive(true);
+        yield return new WaitForSeconds(4f);
+        _fadeOut.DOColor(Color.black, 1.5f);
+
+
+        ////////////////////////////////////////////
+
+
+
+
         yield return new WaitForSeconds(2f);
         _isActive = false;
         _myLine.SetActive(false);
@@ -144,6 +166,7 @@ public class Chairlift : MonoBehaviour
         _camPlayer.gameObject.SetActive(true);
         _camCinematic.gameObject.SetActive(false);
         _cinematic.SetActive(false);
+        _finish.Off();
         
         player.transform.parent = _parentPlayer;
         player.transform.position = _posExit.position;
@@ -158,10 +181,12 @@ public class Chairlift : MonoBehaviour
 
         _trolley.gameObject.SetActive(true);
         _trolley.gameObject.transform.position = _posExitDog.position;
+        _iconInteract.DOScale(0f, 0f);
 
         _lineDog.enabled = true;
         _dog.enabled = true;
         _trolley.enabled = true;
         _myCol.enabled = true;
+        
     }
 }
