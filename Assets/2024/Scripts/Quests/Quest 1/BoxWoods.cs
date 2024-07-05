@@ -96,12 +96,9 @@ public class BoxWoods : MonoBehaviour
             {
                 rueda.transform.Rotate(Vector3.forward * _speedWheels * Time.deltaTime);
             }
-
-            //if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) 
-            //    FinishQuest();
         }
 
-        if (_inventory.greenTrees >= 5)
+        if (_inventory.greenTrees >= 3)
         {
             if (Input.GetKeyDown(KeyCode.Space) && canQuick) StartCoroutine(QuickEndCoroutine());
             else
@@ -196,7 +193,7 @@ public class BoxWoods : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null && _myCol.enabled)
         {
-            if (_inventory.greenTrees >= 5)
+            if (_inventory.greenTrees >= 3)
             {
                 if (Input.GetKeyDown(_keyInteractive))
                     StartCoroutine(RunTruck());
@@ -223,7 +220,7 @@ public class BoxWoods : MonoBehaviour
         _dogCam.gameObject.SetActive(false);
         _play = true;
         _truckSource.Play();
-        _inventory.greenTrees -= 5;
+        _inventory.greenTrees -= 3;
         if (_inventory.greenTrees < 0) _inventory.greenTrees = 0;
         _iconInteractive.SetActive(false);
         PlayCinematic();

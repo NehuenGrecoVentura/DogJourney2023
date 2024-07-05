@@ -36,9 +36,9 @@ public class ManagerQuest1 : MonoBehaviour
 
     private void CheckWoods()
     {
-        _txtTask.text = "Collect the woods " + "(" + _inventory.greenTrees.ToString() + "/5)";
+        _txtTask.text = "Collect the woods " + "(" + _inventory.greenTrees.ToString() + "/3)";
 
-        if (_inventory.greenTrees >= 5)
+        if (_inventory.greenTrees >= 3)
         {
             _questUI.TaskCompleted(2);
             _questUI.AddNewTask(3, _thirdTextQuest);
