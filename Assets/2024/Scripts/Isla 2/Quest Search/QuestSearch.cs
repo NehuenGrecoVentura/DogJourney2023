@@ -100,7 +100,7 @@ public class QuestSearch : MonoBehaviour
         _radar.StatusRadar(false);
         _myAnim.SetBool("Quest", true);
         _questUI.ActiveUIQuest("Hunting Treasures", "Find buried objects", string.Empty, string.Empty);
-        _questUI.AddNewTask(1, "Find buried objects (" + _found.ToString() + "/5)");
+        _questUI.AddNewTask(1, "Find buried objects (" + _found.ToString() + "/3)");
         StartCoroutine(StartQuest());
         _questActive = true;
     }
@@ -174,7 +174,6 @@ public class QuestSearch : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
         _cinematic.SetActive(true);
-        
         Destroy(_focusDog.gameObject);
         _dogBall.transform.position = _posDogBall.position;
         _dog.transform.position = _posDogBall.position;
@@ -212,7 +211,7 @@ public class QuestSearch : MonoBehaviour
         agentDog.enabled = true;
         agentTrolley.enabled = true;
         _sensor.gameObject.SetActive(true);
-        _questUI.AddNewTask(1, "Find buried objects (" + "0" + "/5)");
+        _questUI.AddNewTask(1, "Find buried objects (" + "0" + "/3)");
         _doTween.StopAnim(_sensor.transform);
         _player.DeFreezePlayer();
 
@@ -272,7 +271,7 @@ public class QuestSearch : MonoBehaviour
         if (_found != _total)
         {
             _found++;
-            _questUI.AddNewTask(1, "Find buried objects (" + _found.ToString() + "/5)");
+            _questUI.AddNewTask(1, "Find buried objects (" + _found.ToString() + "/3)");
         }
              
         else

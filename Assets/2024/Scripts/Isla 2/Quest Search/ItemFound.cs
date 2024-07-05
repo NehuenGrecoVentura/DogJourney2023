@@ -113,7 +113,7 @@ public class ItemFound : MonoBehaviour
 
     public void ChangeCam(bool camFocus, bool camPlayer)
     {
-        if(_quest._found >= 0)
+        if(_quest._found != 0)
         {
             _camFocus.gameObject.SetActive(camFocus);
             _camPlayer.gameObject.SetActive(camPlayer);
@@ -126,11 +126,6 @@ public class ItemFound : MonoBehaviour
         if (player != null) _iconInteract.transform.DOScale(1f, 0.5f);
 
         var dog = other.GetComponent<Dog>();
-        //if(dog != null && _isSearching)
-        //{
-        //    StartCoroutine(DogSearch());
-        //}
-
         if (dog != null) StartCoroutine(DogSearch());
     }
 
