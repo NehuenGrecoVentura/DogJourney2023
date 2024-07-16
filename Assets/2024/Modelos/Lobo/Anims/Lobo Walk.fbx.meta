@@ -5,7 +5,7 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: -6877751558034246562
-    second: Esqueleto|EsqueletoAction
+    second: Walk
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -36,7 +36,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Esqueleto|EsqueletoAction
+      name: Walk
       takeName: Esqueleto|EsqueletoAction
       internalID: 0
       firstFrame: 0
@@ -125,7 +125,8 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 90ff56d61cd689a4e8aabd64ebb23f71, type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 90ff56d61cd689a4e8aabd64ebb23f71,
+    type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
