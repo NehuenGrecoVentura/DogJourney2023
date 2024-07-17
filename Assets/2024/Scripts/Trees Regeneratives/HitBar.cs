@@ -35,6 +35,8 @@ public class HitBar : MonoBehaviour
     private void Awake()
     {
         _hitBar = GetComponent<Slider>();
+        ExtraDamage = 50;
+        AddZone = 40;
     }
 
     private void Start()
