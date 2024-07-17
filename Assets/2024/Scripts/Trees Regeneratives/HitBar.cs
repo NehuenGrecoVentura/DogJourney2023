@@ -6,7 +6,6 @@ public class HitBar : MonoBehaviour
     [SerializeField] TreeRegenerative _tree;
     [SerializeField] Image _bar;
     [SerializeField] Image PointA;
-    [SerializeField] Image PointB;
     private Slider _hitBar;
     [SerializeField] private float HitPointA;
     [SerializeField] private float MinA;
@@ -47,27 +46,43 @@ public class HitBar : MonoBehaviour
 
     public void RandomPoints() 
     {
-        MinRange = _tree.initialAmount / 10;
-        MaxRange = _tree.initialAmount - MinRange;
-        HitPointA = Random.Range(MinRange, MaxRange); //punto mas a la izquierda de la barra
-        MinA = HitPointA - AddZone;
-        MaxA = HitPointA + AddZone;
-        var TESTA = (HitPointA * 100 / _tree.initialAmount);
-        Debug.Log(TESTA);
-        PointA.transform.localPosition = new Vector3(NormalizeValue(TESTA), 1, 1);
+        if (PointA == null)
+        {
+            return;
+        }
+        else
+        {
+            MinRange = _tree.initialAmount / 10;
+            MaxRange = _tree.initialAmount - MinRange;
+            HitPointA = Random.Range(MinRange, MaxRange); //punto mas a la izquierda de la barra
+            MinA = HitPointA - AddZone;
+            MaxA = HitPointA + AddZone;
+            var TESTA = (HitPointA * 100 / _tree.initialAmount);
+            Debug.Log(TESTA);
+            PointA.transform.localPosition = new Vector3(NormalizeValue(TESTA), 1, 1); 
+        }
+        
     }
 
     public void CheckRandom()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (PointA == null)
         {
-            if (_tree.amountHit > MinA && _tree.amountHit <= MaxA)
+            return;
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                Debug.Log("TasAdentro");
-                _tree.amountHit =  _tree.amountHit - ExtraDamage;
-                Bar();
+                if (_tree.amountHit > MinA && _tree.amountHit <= MaxA)
+                {
+                    Debug.Log("TasAdentro");
+                    _tree.amountHit =  _tree.amountHit - ExtraDamage;
+                    Bar();
+                }
             }
         }
+
     }
 
     public void Bar()

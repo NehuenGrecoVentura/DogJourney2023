@@ -428,7 +428,6 @@ MonoBehaviour:
   _tree: {fileID: 6431173342023135208}
   _bar: {fileID: 4933774584283990297}
   PointA: {fileID: 4397963691023426523}
-  PointB: {fileID: 0}
   HitPointA: 0
   MinA: 0
   MaxA: 0
@@ -11055,7 +11054,6 @@ MonoBehaviour:
   _tree: {fileID: 6431173342023135208}
   _bar: {fileID: 4191244522019042645}
   PointA: {fileID: 0}
-  PointB: {fileID: 0}
   HitPointA: 0
   MinA: 0
   MaxA: 0

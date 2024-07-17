@@ -1386,6 +1386,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tree: {fileID: 7951711606449430393}
   _bar: {fileID: 929235528246521595}
+  PointA: {fileID: 1297382809490693198}
+  HitPointA: 0
+  MinA: 0
+  MaxA: 0
+  MinRange: 0
+  MaxRange: 0
+  ExtraDamage: 0
+  AddZone: 0
+  originalMin: 0
+  originalMax: 100
+  newMin: -67
+  newMax: 83
 --- !u!1 &2651835572291699616
 GameObject:
   m_ObjectHideFlags: 0
@@ -6311,6 +6323,7 @@ RectTransform:
   m_Children:
   - {fileID: 3152649042834379662}
   - {fileID: 755486430399240421}
+  - {fileID: 1292004300410235550}
   m_Father: {fileID: 7378288700333588662}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7858,6 +7871,82 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6157081836320327530
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1292004300410235550}
+  - component: {fileID: 1820897079085935915}
+  - component: {fileID: 1297382809490693198}
+  m_Layer: 5
+  m_Name: PointA
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1292004300410235550
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6157081836320327530}
+  m_LocalRotation: {x: -7.1054265e-15, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.42902943}
+  m_LocalScale: {x: 0.059996992, y: 0.16999611, z: 0.100004256}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4567562025647312242}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 11.361363, y: 1.5}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1820897079085935915
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6157081836320327530}
+  m_CullTransparentMesh: 1
+--- !u!114 &1297382809490693198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6157081836320327530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.58611584, g: 0, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &6489849027979326643
 GameObject:
   m_ObjectHideFlags: 0
@@ -13207,6 +13296,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tree: {fileID: 7951711606449430393}
   _bar: {fileID: 7987597897265023765}
+  PointA: {fileID: 0}
+  HitPointA: 0
+  MinA: 0
+  MaxA: 0
+  MinRange: 0
+  MaxRange: 0
+  ExtraDamage: 0
+  AddZone: 0
+  originalMin: 0
+  originalMax: 100
+  newMin: -67
+  newMax: 83
 --- !u!1 &8045463318309896117
 GameObject:
   m_ObjectHideFlags: 0
