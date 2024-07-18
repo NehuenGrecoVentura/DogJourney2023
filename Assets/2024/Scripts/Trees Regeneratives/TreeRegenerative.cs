@@ -61,6 +61,7 @@ public class TreeRegenerative : MonoBehaviour
         {
             _hitBar.gameObject.SetActive(true);
             _decal.SetActive(true);
+            _hitBar.RandomPoints();
         }     
     }
 
@@ -70,6 +71,7 @@ public class TreeRegenerative : MonoBehaviour
 
         if (player != null && _myCol.enabled)
         {
+            _hitBar.CheckRandom();
             if (!Input.GetKey(_inputInteractive))
             {
                 _hitBar.gameObject.SetActive(true);
