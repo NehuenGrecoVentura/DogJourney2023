@@ -258,11 +258,13 @@ public class BoxWoods : MonoBehaviour
         mary.enabled = true;
         _camPlayer.gameObject.SetActive(false);
         _maryCam.gameObject.SetActive(true);
+        _player.FreezePlayer();
 
         yield return new WaitForSeconds(2f);
         _camPlayer.gameObject.SetActive(true);
         _maryCam.gameObject.SetActive(false);
         mary.gameObject.GetComponent<Collider>().enabled = true;
+        _player.DeFreezePlayer();
         Destroy(_dogTutorial.gameObject);
         Destroy(gameObject);
     }
