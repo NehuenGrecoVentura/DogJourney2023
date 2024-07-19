@@ -19,6 +19,7 @@ public class ItemFound : MonoBehaviour
     [Header("REPOS")]
     [SerializeField] Transform[] _repos;
     private int _index = 0;
+    private bool _firstContact = true;
 
     [Header("SENSOR")]
     [SerializeField] Dog _dog;
@@ -113,11 +114,17 @@ public class ItemFound : MonoBehaviour
 
     public void ChangeCam(bool camFocus, bool camPlayer)
     {
-        if(_quest._found != 0)
+        //if(_quest._found != 0)
+        if(!_firstContact)
         {
             _camFocus.gameObject.SetActive(camFocus);
             _camPlayer.gameObject.SetActive(camPlayer);
         } 
+    }
+
+    public void FirstContact()
+    {
+        _firstContact = false;
     }
 
     private void OnTriggerEnter(Collider other)

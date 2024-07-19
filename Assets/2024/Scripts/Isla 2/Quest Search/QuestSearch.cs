@@ -151,6 +151,74 @@ public class QuestSearch : MonoBehaviour
 
     private IEnumerator StartQuest()
     {
+        //_questActive = true;
+        //_player.FreezePlayer();
+
+        //_questUI.UIStatus(false);
+        //_boxMessage.SetMessage(_nameNPC);
+        //_dogBall.transform.position = _introPosDog.position;
+
+        //_camPlayer.gameObject.SetActive(false);
+        //_focusDog.gameObject.SetActive(true);
+
+        //NavMeshAgent agentDog = _dog.GetComponent<NavMeshAgent>();
+        //NavMeshAgent agentTrolley = _dog.GetComponent<NavMeshAgent>();
+        //Animator animDog = _dog.GetComponent<Animator>();
+
+        //agentDog.enabled = false;
+        //agentTrolley.enabled = false;
+        //_dog.canTeletransport = false;
+        //_dog.transform.position = _introPosDog.position;
+        //_trolley.transform.position = _dog.transform.position;
+        //_myAudio.PlayOneShot(_soundSearch);
+
+        //yield return new WaitForSeconds(2f);
+        //_cinematic.SetActive(true);
+        //Destroy(_focusDog.gameObject);
+        //_dogBall.transform.position = _posDogBall.position;
+        //_dog.transform.position = _posDogBall.position;
+        //_dog.Search();
+        //_myAudio.PlayOneShot(_soundDogSearch);
+        //_system.enabled = true;
+
+        //yield return new WaitForSeconds(3f);
+        //_boxMessage.ShowMessage(_messages[0]);
+        //animDog.enabled = false;
+        //_system.enabled = false;
+        //_myAudio.Stop();
+
+        //yield return new WaitForSeconds(0.1f);
+        //animDog.enabled = true;
+        //_dog.transform.LookAt(_player.transform);
+        //_myAudio.PlayOneShot(_soundDog);
+
+        //yield return new WaitForSeconds(2f);
+        //_boxMessage.CloseMessage();
+
+        //yield return new WaitForSeconds(1f);
+        //_boxMessage.ShowMessage(_messages[2]);
+        //_sensor.gameObject.SetActive(true);
+        //_doTween.EffectScaleLoop(_sensor.transform, 2.5f);
+
+        //yield return new WaitForSeconds(4f);
+        //Destroy(_cinematic);
+        //_camPlayer.gameObject.SetActive(true);
+        //_boxMessage.CloseMessage();
+        //_questUI.UIStatus(true);
+        //_dog.canTeletransport = true;
+        //_item.Repos();
+        //_found = 0;
+        //agentDog.enabled = true;
+        //agentTrolley.enabled = true;
+        //_sensor.gameObject.SetActive(true);
+        //_questUI.AddNewTask(1, "Find buried objects (" + "0" + "/3)");
+        //_doTween.StopAnim(_sensor.transform);
+        //_player.DeFreezePlayer();
+
+        //yield return new WaitForSeconds(1f);
+        //_boxMessage.DesactivateMessage();
+
+
         _questActive = true;
         _player.FreezePlayer();
 
@@ -171,6 +239,8 @@ public class QuestSearch : MonoBehaviour
         _dog.transform.position = _introPosDog.position;
         _trolley.transform.position = _dog.transform.position;
         _myAudio.PlayOneShot(_soundSearch);
+
+        _posDogBall.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(2f);
         _cinematic.SetActive(true);
@@ -206,8 +276,10 @@ public class QuestSearch : MonoBehaviour
         _boxMessage.CloseMessage();
         _questUI.UIStatus(true);
         _dog.canTeletransport = true;
+        _posDogBall.gameObject.SetActive(true);
         _item.Repos();
         _found = 0;
+        _item.FirstContact();
         agentDog.enabled = true;
         agentTrolley.enabled = true;
         _sensor.gameObject.SetActive(true);
