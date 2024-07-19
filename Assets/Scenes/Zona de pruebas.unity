@@ -428,12 +428,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 137432944}
-  m_LocalRotation: {x: -0.67699194, y: -0.00015656369, z: 0.000021117734, w: 0.73599046}
-  m_LocalPosition: {x: -3.0963485, y: 1.0877124, z: -0.23382445}
-  m_LocalScale: {x: 10.618739, y: 6.960202, z: 9.174142}
+  m_LocalRotation: {x: -0.676992, y: -0.00015647238, z: 0.000021091655, w: 0.73599046}
+  m_LocalPosition: {x: 0.0019993316, y: 1.0980004, z: -0.24100049}
+  m_LocalScale: {x: 10.61874, y: 6.9602017, z: 9.174141}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 570913035}
+  m_Father: {fileID: 654866654}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: -85.218, y: -360.178, z: 0.167}
 --- !u!23 &137432946
@@ -2638,7 +2638,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 570913035}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: -85.476, y: -360.183, z: 0.172}
 --- !u!23 &487892162
 MeshRenderer:
@@ -10532,12 +10532,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 812157479}
-  m_LocalRotation: {x: -0.67864484, y: -0.00015297528, z: 0.000020337286, w: 0.73446655}
-  m_LocalPosition: {x: -3.0963483, y: 1.1487123, z: -0.26882464}
-  m_LocalScale: {x: 8.506945, y: 8.72381, z: 7.2028847}
+  m_LocalRotation: {x: -0.67864484, y: -0.00015291754, z: 0.000020336354, w: 0.73446655}
+  m_LocalPosition: {x: 0.0019993298, y: 1.1589999, z: -0.2760006}
+  m_LocalScale: {x: 8.506945, y: 8.72381, z: 7.2028837}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 570913035}
+  m_Father: {fileID: 654866654}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: -85.476, y: -360.183, z: 0.172}
 --- !u!23 &812157481
@@ -42604,7 +42604,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 570913035}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: -85.218, y: -360.178, z: 0.167}
 --- !u!23 &1993535670
 MeshRenderer:
