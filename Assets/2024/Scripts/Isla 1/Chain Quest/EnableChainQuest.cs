@@ -12,7 +12,6 @@ public class EnableChainQuest : MonoBehaviour
     [SerializeField] FloristChain1 _npcChainFlorist;
     [SerializeField] GameObject _npcFlorist;
     [SerializeField] ArchaeologistQuest1 _archaeologist;
-    //[SerializeField] FishingChain1 _fishingChain;
 
     [Header("CAMERAS")]
     [SerializeField] Camera _cam1;
@@ -30,6 +29,7 @@ public class EnableChainQuest : MonoBehaviour
     [SerializeField] AudioSource _myAudio;
 
     [SerializeField] BillboardCam[] _bubbleIcons;
+    private bool _isPlay = false;
 
     private void Start()
     {
@@ -38,18 +38,39 @@ public class EnableChainQuest : MonoBehaviour
         _iconChain.SetActive(false);
         _myAudio.Stop();
 
-
         foreach (var item in _bubbleIcons)
         {
             item.enabled = false;
         }
-
-
-
-
-
-
     }
+
+    private void Update()
+    {
+        if (_isPlay && Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+            SkipCinematic();
+    }
+
+    private void SkipCinematic()
+    {
+        StopCoroutine(ActiveChainQuests());
+        _npcChainFlorist.gameObject.SetActive(true);
+        _iconChain.SetActive(true);
+        if (_cam1 != null) Destroy(_cam1.gameObject);
+        if (_cam2 != null) Destroy(_cam2.gameObject);
+        _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+        _camPlayer.gameObject.SetActive(true);
+        _player.DeFreezePlayer();
+        _archaeologist.enabled = true;
+        _archaeologist.GetComponent<BoxCollider>().enabled = true;
+
+        foreach (var item in _bubbleIcons)
+        {
+            item.enabled = true;
+        }
+
+        Destroy(gameObject);
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -61,6 +82,7 @@ public class EnableChainQuest : MonoBehaviour
     {
         Destroy(_myCol);
         Destroy(_npcFlorist);
+        _isPlay = true;
         _npcChainFlorist.gameObject.SetActive(true);
         _camPlayer.gameObject.SetActive(false);
         _cam1.gameObject.SetActive(true);
@@ -88,16 +110,13 @@ public class EnableChainQuest : MonoBehaviour
 
         _archaeologist.enabled = true;
         _archaeologist.GetComponent<BoxCollider>().enabled = true;
-        //_fishingChain.gameObject.SetActive(true);
-
+        
         yield return new WaitForSeconds(1f);
-
 
         foreach (var item in _bubbleIcons)
         {
             item.enabled = true;
         }
-
 
         Destroy(gameObject);
     }
