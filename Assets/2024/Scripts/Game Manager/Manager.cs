@@ -8,7 +8,7 @@ public class Manager : MonoBehaviour
 {
     private ManagerQuest1 _quest1;
     private AudioSource _myAudio;
-    private Character _player;
+    [SerializeField] private Character _player;
     private GameObject[] _allDecals;
 
     [Header("WIN")]
@@ -18,7 +18,6 @@ public class Manager : MonoBehaviour
     [SerializeField] Animator[] _doorsGatesAnims;
     [SerializeField] GameObject[] _objsToHide;
     [SerializeField] BoxCollider _firstTree;
-    //[SerializeField] Button _buttonRope;
     private QuestUI _questUI;
 
     [Header("GAME OVER")]
@@ -65,7 +64,6 @@ public class Manager : MonoBehaviour
         _myAudio = GetComponent<AudioSource>();
 
         _allTrees = FindObjectsOfType<TreeRegenerative>();
-        _player = FindObjectOfType<Character>();
         _cam = FindObjectOfType<CameraOrbit>();
         _questUI = FindObjectOfType<QuestUI>();
         _allWolfs = FindObjectsOfType<WolfSleeping>();
@@ -92,7 +90,6 @@ public class Manager : MonoBehaviour
     private void BeginGame()
     {
         _quest1.enabled = false;
-        //_buttonRope.enabled = false;
         _firstTree.enabled = false;
         _winText.gameObject.SetActive(false);
         _gameOver.SetActive(false);

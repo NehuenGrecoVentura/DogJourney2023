@@ -11,7 +11,7 @@ public class Dog : MonoBehaviour
 
     private NavMeshAgent _myAgent;
     private Vector3 _targetDist;
-    private Character _player;
+    [SerializeField] private Character _player;
     private OrderDog _order;
 
     [SerializeField] Animator _anim;
@@ -51,7 +51,6 @@ public class Dog : MonoBehaviour
         _myAgent = GetComponent<NavMeshAgent>();
         _myAudio = GetComponent<AudioSource>();
 
-        _player = FindObjectOfType<Character>();
         _order = FindObjectOfType<OrderDog>();
 
         _model = new ModelDog(_myAgent, _targetDist, scared, _scaredPoints, speedNormal, speedRun, offSpeed, _distToPlayer, _targetRadius, _target, transform, _player, _order, _posTeletransport, _camPlayer);
