@@ -10,11 +10,18 @@ public class MessageStealth : MonoBehaviour
     [SerializeField] BoxMessages _boxMessage;
     [SerializeField, TextArea(4, 6)] string[] _messages;
     [SerializeField] Character _player;
+    private bool _playCinematic = false;
 
     private void Start()
     {
         _cinematic.SetActive(false);
     }
+
+    //private void Update()
+    //{
+    //    if (_playCinematic && Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+    //        SkipCinematic();
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
@@ -24,8 +31,7 @@ public class MessageStealth : MonoBehaviour
 
     private IEnumerator Display(Character player)
     {
-
-        //Destroy(_myCol);
+        _playCinematic = true;
         _myCol.enabled = false;
 
         _boxMessage.SetMessage("Stealth");
@@ -49,6 +55,18 @@ public class MessageStealth : MonoBehaviour
         _boxMessage.CloseMessage();
 
         yield return new WaitForSeconds(0.5f);
+        _boxMessage.DesactivateMessage();
+        Destroy(_myCol);
+        Destroy(this);
+    }
+
+    private void SkipCinematic()
+    {
+        StopCoroutine(Display(_player));
+        Destroy(_cinematic);
+        _camPlayer.gameObject.SetActive(true);
+        _player.DeFreezePlayer();
+        _boxMessage.CloseMessage();
         _boxMessage.DesactivateMessage();
         Destroy(_myCol);
         Destroy(this);

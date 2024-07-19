@@ -41,7 +41,9 @@ public class WolfSleeping : MonoBehaviour
 
     public void WakeUpWolf()
     { 
-        _myAnim.SetTrigger("Stand");
+        //_myAnim.SetTrigger("Stand");
+        _myAnim.SetBool("Stand", true);
+        _myAnim.SetBool("Sleep", false);
         transform.LookAt(_player.transform.position);
         _zzz.gameObject.SetActive(false);
     }
@@ -50,7 +52,9 @@ public class WolfSleeping : MonoBehaviour
     {
         _colArea.enabled = true;
         _zzz.gameObject.SetActive(true);
-        _myAnim.SetTrigger("Sleep");
+        //_myAnim.SetTrigger("Sleep");
+        _myAnim.SetBool("Stand", false);
+        _myAnim.SetBool("Sleep", true);
     }
 
     public void PlayerDetected(string messageGameOver)
