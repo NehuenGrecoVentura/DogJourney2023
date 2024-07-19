@@ -204,7 +204,7 @@ public class DogEnter : MonoBehaviour
         _questUI.UIStatus(false);
         _dogBroomCinematic.SetActive(true);
         _mainCam.gameObject.SetActive(false);
-        _player.DeFreezePlayer();
+        _player.FreezePlayer();
         Destroy(_myCol);
         _dogBall.gameObject.transform.position = _enterPos.position;
 
