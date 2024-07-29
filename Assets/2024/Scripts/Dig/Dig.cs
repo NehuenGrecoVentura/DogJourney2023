@@ -24,6 +24,7 @@ public class Dig : MonoBehaviour
     [SerializeField] float _timeToRespawn = 5f;
     [SerializeField] MeshRenderer[] _myMeshes;
     private SpawnRandom _random;
+    private bool _questChainActive = false;
     
     private void Awake()
     {
@@ -86,10 +87,12 @@ public class Dig : MonoBehaviour
                 //if (_invetory.flowers < 4) _message.ShowUI("+1", _boxSlide, _textAmount); // CAMBIAR CUANDO EXPANDAMOS A LA ISLA 2 ESTA LINEA.
                 _message.ShowUI("+1", _boxSlide, _textAmount);
                 _hitBar.gameObject.SetActive(false);
-                StartCoroutine(Respawn());
                 player.DeFreezePlayer();
                 player.enabled = true;
                 player.MainAnim();
+
+                if (!_questChainActive) StartCoroutine(Respawn());
+                else gameObject.SetActive(false);
             }
         }
     }
@@ -127,5 +130,15 @@ public class Dig : MonoBehaviour
         _myCol.enabled = true;
         amountHit = _initialHit;
         _hitBar.Bar();
+    }
+
+    public void RespawnAllFlowers()
+    {
+        StartCoroutine(Respawn());
+    }
+
+    public void ActiveChainQuest()
+    {
+        _questChainActive = true;
     }
 }

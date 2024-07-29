@@ -78,6 +78,13 @@ public class FloristChain1 : MonoBehaviour
             _myCol.enabled = true;
             _messageBack.text = "Back to the florist";
             _doTween.ShowLootCoroutine(_sliderActivation);
+
+            foreach (var item in _allDigs)
+            {
+                item.gameObject.SetActive(true);
+                item.RespawnAllFlowers();
+            }
+
             _questCompleted = true;
         }     
         
@@ -117,8 +124,8 @@ public class FloristChain1 : MonoBehaviour
         foreach (var item in _allDigs)
         {
             item.gameObject.SetActive(true);
+            item.ActiveChainQuest();
         }
-
 
         _questActive = true;
     }
