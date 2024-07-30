@@ -90,6 +90,7 @@ public class FloristChain1 : MonoBehaviour
         
         else if (_questActive)
             _textInventoryFlowers.text = "x " + _inventory.flowers.ToString() + "/" + _flowersRequired.ToString();
+
     }
 
     private void SetDialogue()
@@ -115,7 +116,8 @@ public class FloristChain1 : MonoBehaviour
         _dialogue.Close();
         _iconInteract.SetActive(false);
         Destroy(_iconQuest);
-        _gm.ActiveTutorialChain();
+
+        //_gm.ActiveTutorialChain();
         _canvasIconsChainsQuests.SetActive(true);
         _iconFlowers.SetActive(true);
         //_doTween.ShowLootCoroutine(_sliderActivation);
@@ -125,6 +127,12 @@ public class FloristChain1 : MonoBehaviour
         {
             item.gameObject.SetActive(true);
             item.ActiveChainQuest();
+        }
+
+        if (!_gm.chainsActive)
+        {
+            _gm.chainsActive = true;
+            _gm.ActiveTutorialChain();
         }
 
         _questActive = true;

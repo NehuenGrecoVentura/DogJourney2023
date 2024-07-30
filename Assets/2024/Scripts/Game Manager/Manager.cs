@@ -87,6 +87,11 @@ public class Manager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (_camScenario != null && _camScenario.gameObject.activeSelf) _player.FreezePlayer(); // Fix para que el player quede bloqueado en la cinematica del tutorial de chain quests.
+    }
+
     private void BeginGame()
     {
         _quest1.enabled = false;
@@ -218,8 +223,10 @@ public class Manager : MonoBehaviour
 
     public void ActiveTutorialChain()
     {
-        if (!chainsActive) StartCoroutine(TutorialChain());
-        else return;
+        //if (!chainsActive) StartCoroutine(TutorialChain());
+        //else return;
+
+        StartCoroutine(TutorialChain());
     }
 
     private IEnumerator TutorialChain()
@@ -265,5 +272,7 @@ public class Manager : MonoBehaviour
 
         yield return new WaitForSeconds(0.6f);
         _boxMessage.gameObject.SetActive(false);
+
+        
     }
 }

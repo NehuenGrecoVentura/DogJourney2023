@@ -79,7 +79,15 @@ public class ArchaeologistQuest1 : MonoBehaviour
         _myCol.enabled = false;
         _dialogue.Close();
         _iconInteract.SetActive(false);
-        _gm.ActiveTutorialChain();
+
+        if (!_gm.chainsActive)
+        {
+            _player.FreezePlayer();
+            _gm.chainsActive = true;
+            _gm.ActiveTutorialChain();
+        }
+
+        //_gm.ActiveTutorialChain();
         _canvasIconsChainsQuests.SetActive(true);
         _iconTreasure.SetActive(true);
         //_message.AddIconInventory(_boxMessage, _textSlide, "Added to inventory");
