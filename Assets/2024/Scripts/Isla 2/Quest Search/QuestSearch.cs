@@ -99,7 +99,7 @@ public class QuestSearch : MonoBehaviour
         _iconInteract.SetActive(false);
         _myAudio.PlayOneShot(_soundConfirm);
         _radar.StatusRadar(false);
-        _chainPark.DesactivateNPC();
+        //_chainPark.DesactivateNPC();
         _gm.BlockMinigames();
         _myAnim.SetBool("Quest", true);
         _questUI.ActiveUIQuest("Hunting Treasures", "Find buried objects", string.Empty, string.Empty);
