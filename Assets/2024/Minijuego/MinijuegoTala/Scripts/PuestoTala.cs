@@ -12,6 +12,7 @@ public class PuestoTala : MonoBehaviour
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
     [SerializeField] Collider _myCol;
     [SerializeField] MinijuegoTalaManager _manager;
+    [SerializeField] GameObject _myDecal;
 
     [Header("INTRO")]
     [SerializeField] Image _fadeOut;
@@ -106,5 +107,17 @@ public class PuestoTala : MonoBehaviour
         }
 
         _manager.StartGame();
+    }
+
+    public void CanPlay()
+    {
+        _myCol.enabled = true;
+        _myDecal.SetActive(true);
+    }
+
+    public void BlockMinigame()
+    {
+        _myCol.enabled = false;
+        _myDecal.SetActive(false);
     }
 }

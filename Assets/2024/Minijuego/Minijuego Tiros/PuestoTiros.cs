@@ -11,6 +11,7 @@ public class PuestoTiros : MonoBehaviour
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
     [SerializeField] Collider _myCol;
     [SerializeField] TirosManager _tirosManager;
+    [SerializeField] GameObject _myDecal;
     
     [Header("INTRO")]
     [SerializeField] Image _fadeOut;
@@ -111,5 +112,17 @@ public class PuestoTiros : MonoBehaviour
         }
 
         _tirosManager.StartGame();
+    }
+
+    public void CanPlay()
+    {
+        _myCol.enabled = true;
+        _myDecal.SetActive(true);
+    }
+
+    public void BlockMinigame()
+    {
+        _myCol.enabled = false;
+        _myDecal.SetActive(false);
     }
 }

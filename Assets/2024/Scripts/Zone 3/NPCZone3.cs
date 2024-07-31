@@ -102,6 +102,7 @@ public class NPCZone3 : MonoBehaviour
         _questUI.ActiveUIQuest("A Little Fire", "Travel back to the chairlift", "Get wood to carry the mountain (" + _inventory.greenTrees.ToString() + "/" + _woodRequired.ToString() + ")", string.Empty);
         _radar.target = _chairlift.gameObject.transform;
         _radar.StatusRadar(true);
+        _gm.BlockMinigames();
         _questActive = true;
     }
 

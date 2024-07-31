@@ -143,6 +143,7 @@ public class QuestApple : MonoBehaviour
         _myAnim.SetBool("Quest", true);
         _myAudio.PlayOneShot(_soundConfirm);
         _radar.StatusRadar(false);
+        _gm.BlockMinigames();
         _questActive = true;
     }
 

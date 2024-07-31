@@ -92,6 +92,8 @@ public class BoxQuest : MonoBehaviour
         {
             item.enabled = true;
         }
+
+        _gm.BlockMinigames();
         _questActive = true;
     }
 

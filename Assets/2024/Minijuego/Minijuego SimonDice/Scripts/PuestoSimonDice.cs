@@ -10,6 +10,7 @@ public class PuestoSimonDice : MonoBehaviour
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
     [SerializeField] Collider _myCol;
     [SerializeField] SimonManager _simonManager;
+    [SerializeField] GameObject _myDecal;
 
     [Header("INTRO")]
     [SerializeField] Image _fadeOut;
@@ -114,5 +115,17 @@ public class PuestoSimonDice : MonoBehaviour
         }
 
         _simonManager.StartGame();
+    }
+
+    public void CanPlay()
+    {
+        _myCol.enabled = true;
+        _myDecal.SetActive(true);
+    }
+
+    public void BlockMinigame()
+    {
+        _myCol.enabled = false;
+        _myDecal.SetActive(false);
     }
 }

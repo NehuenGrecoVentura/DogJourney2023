@@ -10,6 +10,7 @@ public class PuestoManzana : MonoBehaviour
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
     [SerializeField] Collider _myCol;
     [SerializeField] Manzana_Manager _manzanaManager;
+    [SerializeField] GameObject _myDecal;
 
     [Header("INTRO")]
     [SerializeField] Image _fadeOut;
@@ -109,5 +110,17 @@ public class PuestoManzana : MonoBehaviour
         }
 
         _manzanaManager.StartGame();
+    }
+
+    public void CanPlay()
+    {
+        _myCol.enabled = true;
+        _myDecal.SetActive(true);
+    }
+
+    public void BlockMinigame()
+    {
+        _myCol.enabled = false;
+        _myDecal.SetActive(false);
     }
 }

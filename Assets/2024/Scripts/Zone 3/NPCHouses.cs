@@ -77,6 +77,7 @@ public class NPCHouses : MonoBehaviour
         _iconInteract.transform.DOScale(0f, 0.5f);
         _myAudio.PlayOneShot(_soundConfirm);
         _myAnim.SetBool("Quest", true);
+        _gm.BlockMinigames();
         StartCoroutine(IntroFocusZone());
     }
 

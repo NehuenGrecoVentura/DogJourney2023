@@ -58,6 +58,12 @@ public class Manager : MonoBehaviour
     [SerializeField] Camera _camScenario;
     [SerializeField] AudioClip _soundMessage;
 
+    [Header("MINIGAMES")]
+    [SerializeField] PuestoTala _tala;
+    [SerializeField] PuestoSimonDice _simon;
+    [SerializeField] PuestoTiros _tiros;
+    [SerializeField] PuestoManzana _manzanas;
+
     private void Awake()
     {
         _quest1 = GetComponent<ManagerQuest1>();
@@ -119,7 +125,19 @@ public class Manager : MonoBehaviour
         _player.PlayAnim("Win");
         _myAudio.PlayOneShot(_soundWin);
         _winText.gameObject.SetActive(true);
+        _tala.CanPlay();
+        _simon.CanPlay();
+        _tiros.CanPlay();
+        _manzanas.CanPlay();
         StartCoroutine(WinTimeInScreen());
+    }
+
+    public void BlockMinigames()
+    {
+        _tala.BlockMinigame();
+        _simon.BlockMinigame();
+        _tiros.BlockMinigame();
+        _manzanas.BlockMinigame();
     }
 
     public void GreenTreesShader()
