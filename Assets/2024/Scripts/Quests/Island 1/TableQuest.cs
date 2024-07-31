@@ -14,6 +14,7 @@ public class TableQuest : MonoBehaviour
     private CharacterInventory _inventory;
     private LocationQuest _radar;
     private bool _questCurrent = false;
+    private bool _questCompleted = false;
 
     [SerializeField, TextArea(4, 6)] string[] _lines;
 
@@ -66,15 +67,15 @@ public class TableQuest : MonoBehaviour
         StartCoroutine(LookToPlayer());
 
         _myAudio.Stop();
-        _dialogue.canTalk = true;
-        _textName.text = _nameNPC;
+        //_dialogue.canTalk = true;
+        //_textName.text = _nameNPC;
         _initialPos = transform.position;
         transform.position = new Vector3(transform.position.x - 1f, transform.position.y, transform.position.z);
         _myAnim.runtimeAnimatorController = _animController[1];
-        _buttonConfirm.onClick.AddListener(() => Confirm());
+        //_buttonConfirm.onClick.AddListener(() => Confirm());
 
-        for (int i = 0; i < _dialogue._lines.Length; i++)
-            _dialogue._lines[i] = _lines[i];
+        //for (int i = 0; i < _dialogue._lines.Length; i++)
+        //    _dialogue._lines[i] = _lines[i];
 
         _dialogue.gameObject.SetActive(false);
         _iconInteract.SetActive(false);
@@ -98,10 +99,15 @@ public class TableQuest : MonoBehaviour
                 _questUI.TaskCompleted(1);
                 _questUI.AddNewTask(2, _taskBackToBuild);
                 _myCol.enabled = true;
+                _questCompleted = true;
                 _questCurrent = false;
             }
 
-            else _myCol.enabled = false;
+            else
+            {
+                _myCol.enabled = false;
+                _questCompleted = false;
+            }
         }
     }
 
@@ -110,7 +116,6 @@ public class TableQuest : MonoBehaviour
         _myAudio.PlayOneShot(_soundConfirm);
         _myCol.enabled = false;
         _iconInteract.SetActive(false);
-        _questCurrent = true;
         _dialogue.Close();
         
         _questUI.ActiveUIQuest("Making the table", "Get wood (" + _inventory.greenTrees.ToString() + "/" + _totalWoods.ToString() + ")",
@@ -119,6 +124,25 @@ public class TableQuest : MonoBehaviour
 
         _buttonConfirm.gameObject.SetActive(false);
         _myAnim.SetBool("Quest", true);
+        _questCurrent = true;
+    }
+
+    private void SetDialogue()
+    {
+        _iconInteract.SetActive(true);
+        _buttonConfirm.onClick.AddListener(() => Confirm());
+
+
+        if (!_questCurrent)
+        {
+            for (int i = 0; i < _dialogue._lines.Length; i++)
+                _dialogue._lines[i] = _lines[i];
+        }
+
+        _dialogue.gameObject.SetActive(true);
+        _dialogue.Set(_nameNPC);
+        _dialogue.playerInRange = true;
+        _dialogue.canTalk = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -126,9 +150,12 @@ public class TableQuest : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null && _myCol.enabled)
         {
-            _dialogue.gameObject.SetActive(true);
-            _dialogue.playerInRange = true;
-            _dialogue.Set(_nameNPC);
+            //_dialogue.gameObject.SetActive(true);
+            //_dialogue.playerInRange = true;
+            //_dialogue.Set(_nameNPC);
+
+            if (!_questCurrent && !_questCompleted) SetDialogue();
+            else if (_questCompleted) _iconInteract.SetActive(true);
         }
     }
 
@@ -137,9 +164,10 @@ public class TableQuest : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null && _myCol.enabled)
         {
-            if (!_questCurrent && _inventory.greenTrees >= _totalWoods)
+            //if (!_questCurrent && _inventory.greenTrees >= _totalWoods)
+            if (_questCompleted)
             {
-                _dialogue.playerInRange = false;
+                //_dialogue.playerInRange = false;
                 if (Input.GetKeyDown(_keyInteract))
                 {
                     StopCoroutine(LookToPlayer());
@@ -147,7 +175,7 @@ public class TableQuest : MonoBehaviour
                 }
             }
 
-            if (!Input.GetKeyDown(_keyInteract)) _iconInteract.SetActive(true);
+            //if (!Input.GetKeyDown(_keyInteract)) _iconInteract.SetActive(true);
         }
     }
 

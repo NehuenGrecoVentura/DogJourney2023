@@ -58,15 +58,15 @@ public class ChainParkQuest : MonoBehaviour
         _fadeOut.DOColor(Color.clear, 0f);
     }
 
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.K))
-        {
-            _articleMarketSkin.SetActive(true);
-            _inventory.tickets += _scoreRequired;
-            questActive = false;
-        }
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.K))
+    //    {
+    //        _articleMarketSkin.SetActive(true);
+    //        _inventory.tickets += _scoreRequired;
+    //        questActive = false;
+    //    }
+    //}
 
     private void Confirm()
     {
@@ -143,6 +143,22 @@ public class ChainParkQuest : MonoBehaviour
         }
 
         else audio.PlayOneShot(soundError);
+    }
+
+    public void DesactivateNPC()
+    {
+        _myCol.enabled = false;
+        _myAnim.SetBool("Quest", true);
+        _iconQuest.SetActive(false);
+        _iconInteract.SetActive(false);
+    }
+
+    public void ActivateNPC()
+    {
+        _myCol.enabled = true;
+        _myAnim.SetBool("Quest", false);
+        _iconQuest.SetActive(true);
+        _iconInteract.SetActive(false);
     }
 
     private IEnumerator Ending(Character player)

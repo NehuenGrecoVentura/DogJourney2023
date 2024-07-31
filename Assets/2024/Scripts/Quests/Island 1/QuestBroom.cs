@@ -45,17 +45,17 @@ public class QuestBroom : MonoBehaviour
     private void Start()
     {
         _myAudio.Stop();
-        _dialogue.canTalk = true;
+        //_dialogue.canTalk = true;
         _iconInteract.SetActive(false);
         _myAnim.runtimeAnimatorController = _animController[1];
         _broomPrefab.SetActive(false);
         _col.enabled = false;
-        _buttonConfirm.onClick.AddListener(() => Confirm());
+        //_buttonConfirm.onClick.AddListener(() => Confirm());
         _nextQuest.enabled = false;
         _dogEnter.GetComponent<Collider>().enabled = false;
 
-        for (int i = 0; i < _dialogue._lines.Length; i++)
-            _dialogue._lines[i] = _lines[i];
+        //for (int i = 0; i < _dialogue._lines.Length; i++)
+        //    _dialogue._lines[i] = _lines[i];
     }
 
     public IEnumerator LookToPlayer()
@@ -83,6 +83,24 @@ public class QuestBroom : MonoBehaviour
         _buttonConfirm.gameObject.SetActive(false);
         _myAnim.SetBool("Quest", true);
         StopCoroutine(LookToPlayer());
+    }
+
+    private void SetDialogue()
+    {
+        _iconInteract.SetActive(true);
+        _buttonConfirm.onClick.AddListener(() => Confirm());
+
+
+        if (!_activeQuest)
+        {
+            for (int i = 0; i < _dialogue._lines.Length; i++)
+                _dialogue._lines[i] = _lines[i];
+        }
+
+        _dialogue.gameObject.SetActive(true);
+        _dialogue.Set(_nameNPC);
+        _dialogue.playerInRange = true;
+        _dialogue.canTalk = true;
     }
 
     private void OnTriggerStay(Collider other)
@@ -125,9 +143,11 @@ public class QuestBroom : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null && _myCol.enabled)
         {
-            _dialogue.gameObject.SetActive(true);
-            _dialogue.playerInRange = true;
-            _dialogue.Set(_nameNPC);
+            //_dialogue.gameObject.SetActive(true);
+            //_dialogue.playerInRange = true;
+            //_dialogue.Set(_nameNPC);
+
+            if (!_activeQuest) SetDialogue();
         }
     }
 
@@ -136,7 +156,8 @@ public class QuestBroom : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null && _myCol.enabled)
         {
-            if (_activeQuest || !_activeQuest) _iconInteract.SetActive(false);
+            //if (_activeQuest || !_activeQuest) _iconInteract.SetActive(false);
+            _iconInteract.SetActive(false);
             _dialogue.playerInRange = false;
         }
     }

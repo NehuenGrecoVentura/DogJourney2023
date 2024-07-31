@@ -45,6 +45,7 @@ public class QuestSearch : MonoBehaviour
     [SerializeField] Character _player;
     [SerializeField] ItemFound _item;
     [SerializeField] Slider _sensor;
+    [SerializeField] ChainParkQuest _chainPark;
     private bool _questActive = false;
     private bool _questCompleted = false;
 
@@ -98,6 +99,7 @@ public class QuestSearch : MonoBehaviour
         _iconInteract.SetActive(false);
         _myAudio.PlayOneShot(_soundConfirm);
         _radar.StatusRadar(false);
+        _chainPark.DesactivateNPC();
         _myAnim.SetBool("Quest", true);
         _questUI.ActiveUIQuest("Hunting Treasures", "Find buried objects", string.Empty, string.Empty);
         _questUI.AddNewTask(1, "Find buried objects (" + _found.ToString() + "/3)");
@@ -332,6 +334,7 @@ public class QuestSearch : MonoBehaviour
 
         _radar.target = _chairlift.transform;
         _radar.StatusRadar(true);
+        _chainPark.ActivateNPC();
 
         yield return new WaitForSeconds(0.5f);
         _boxMessage.DesactivateMessage();
@@ -369,6 +372,7 @@ public class QuestSearch : MonoBehaviour
         _npcNextQuest.BatteryObtained();
         _radar.target = _chairlift.transform;
         _radar.StatusRadar(true);
+        _chainPark.ActivateNPC();
         Destroy(_cinematic.gameObject);
         Destroy(this);
     }
