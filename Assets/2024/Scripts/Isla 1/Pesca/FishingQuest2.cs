@@ -166,21 +166,17 @@ public class FishingQuest2 : MonoBehaviour
         Destroy(_myCol);
         Destroy(_iconInteract);
         _myRod.SetActive(false);
+        _radar.StatusRadar(false);
 
         Quaternion initialRot = transform.rotation;
         Vector3 initialPos = transform.position;
 
         _player.gameObject.transform.position = _posPlayerEnding.position;
         _player.transform.LookAt(transform);
-
         transform.LookAt(_player.gameObject.transform);
-
-        _player.speed = 0;
         _player.FreezePlayer();
-
         _camEnding.gameObject.SetActive(true);
         _camPlayer.gameObject.SetActive(false);
-
         _textNPCMessage.text = "Fisherman";
         _textMessage.text = _messages[2];
         _boxMessage.localScale = new Vector3(1, 1, 1);
@@ -190,65 +186,64 @@ public class FishingQuest2 : MonoBehaviour
         yield return new WaitForSeconds(1f);
         _myAudio.PlayOneShot(_sounds[1]);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
+
         yield return new WaitForSeconds(4f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
-        yield return new WaitForSeconds(1f);
 
+        yield return new WaitForSeconds(1f);
         _textMessage.text = _messages[3];
         _myAudio.PlayOneShot(_sounds[1]);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
+
         yield return new WaitForSeconds(4f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
-        yield return new WaitForSeconds(1f);
 
+        yield return new WaitForSeconds(1f);
         _doTween.ShowLootCoroutine(_slideMoney);
         _textMessage.text = _messages[4];
         _myAudio.PlayOneShot(_sounds[1]);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
+
         yield return new WaitForSeconds(1.5f);
         _myAudio.PlayOneShot(_sounds[2]);
+
         yield return new WaitForSeconds(4f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
-        yield return new WaitForSeconds(1f);
 
+        yield return new WaitForSeconds(1f);
         _textMessage.text = _messages[5];
         _myAudio.PlayOneShot(_sounds[1]);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
+
         yield return new WaitForSeconds(4f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
-        yield return new WaitForSeconds(1f);
 
+        yield return new WaitForSeconds(1f);
         _textMessage.text = _messages[6];
         _myAudio.PlayOneShot(_sounds[1]);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
+
         yield return new WaitForSeconds(4f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
 
         yield return new WaitForSeconds(1f);
         _boxMessage.gameObject.SetActive(false);
-
         Destroy(_camEnding.gameObject);
         _camPlayer.gameObject.SetActive(true);
-
-        _player.speed = _player.speedAux;
         _player.DeFreezePlayer();
-
         _gm.QuestCompleted();
         _chainQuest.gameObject.SetActive(true);
-
         transform.position = initialPos;
         transform.rotation = initialRot;
-
         _myAnim.runtimeAnimatorController = _animControl;
         _myAnim.SetBool("Quest", true);
         _radar.target = _market.gameObject.transform;
-
+        _radar.StatusRadar(true);
 
         foreach (var item in _doors)
         {
             item.enabled = true;
         }
-
 
         Destroy(this);
     }
@@ -263,10 +258,7 @@ public class FishingQuest2 : MonoBehaviour
 
         _camDig.gameObject.SetActive(true);
         _camPlayer.gameObject.SetActive(false);
-
-        _player.speed = 0;
         _player.FreezePlayer();
-
         _textNPCMessage.text = "Digs";
         _textMessage.text = _messages[0];
         _boxMessage.localScale = new Vector3(1, 1, 1);
@@ -287,11 +279,8 @@ public class FishingQuest2 : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
-
         Destroy(_camDig.gameObject);
         _camPlayer.gameObject.SetActive(true);
-
-        _player.speed = _player.speedAux;
         _player.DeFreezePlayer();
 
         yield return new WaitForSeconds(0.6f);
@@ -314,6 +303,7 @@ public class FishingQuest2 : MonoBehaviour
         }
 
         _radar.target = _market.gameObject.transform;
+        _radar.StatusRadar(true);
         Destroy(_iconInteract);
         Destroy(this);
     }
