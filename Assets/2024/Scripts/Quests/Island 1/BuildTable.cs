@@ -61,6 +61,7 @@ public class BuildTable : MonoBehaviour
         _gm.QuestCompleted();
         _npcFish.SetActive(true);
         _radar.target = _npcFish.transform;
+        _radar.StatusRadar(true);
         Destroy(_boxTAB.transform.parent.gameObject);
         Destroy(this);
     }
@@ -110,6 +111,7 @@ public class BuildTable : MonoBehaviour
         _boxTAB.gameObject.SetActive(true);
         _npcFish.SetActive(true);
         _radar.target = _npcFish.gameObject.transform;
+        _radar.StatusRadar(true);
         yield return new WaitForSeconds(3f);
         Destroy(_boxTAB.transform.parent.gameObject);
         Destroy(this);
