@@ -468,6 +468,7 @@ MonoBehaviour:
   _sapling: {fileID: 6292513738346830836}
   _decal: {fileID: 4363762319186085542}
   _isFall: 0
+  _sounds: []
 --- !u!1 &1143384017444455477
 GameObject:
   m_ObjectHideFlags: 0
@@ -10346,6 +10347,7 @@ GameObject:
   - component: {fileID: 3344822249406306164}
   - component: {fileID: 5888088420606886648}
   - component: {fileID: 3157437532204256909}
+  - component: {fileID: 2478884040842355250}
   m_Layer: 0
   m_Name: HitBar
   m_TagString: Untagged
@@ -10452,6 +10454,115 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tree: {fileID: 6431173342023135208}
   _bar: {fileID: 4191244522019042645}
+  PointA: {fileID: 0}
+  HitPointA: 0
+  MinA: 0
+  MaxA: 0
+  MinRange: 0
+  MaxRange: 0
+  ExtraDamage: 50
+  AddZone: 40
+  Audio: {fileID: 2478884040842355250}
+  originalMin: 0
+  originalMax: 100
+  newMin: -67
+  newMax: 83
+--- !u!82 &2478884040842355250
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985764372892411602}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: b59fdc40fac9180499587479164f489c, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2084774159967037073
 GameObject:
   m_ObjectHideFlags: 0
@@ -19646,15 +19757,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4e5e72af20a29047b3f427ca1befaab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _soundHit: {fileID: 8300000, guid: 127b36b03f3e868479d1bd656a98eb91, type: 3}
+  _inputInteractive: 323
+  _decal: {fileID: 4363762319186085542}
   amountHit: 500
   initialAmount: 0
-  _inputInteractive: 323
+  _hitBar: {fileID: 3157437532204256909}
+  _soundHit: {fileID: 8300000, guid: 127b36b03f3e868479d1bd656a98eb91, type: 3}
   _treeFall: {fileID: 8268665152803587942}
   _trunks: {fileID: 6292513738262893303}
   _sapling: {fileID: 6292513738346830836}
-  _decal: {fileID: 4363762319186085542}
-  _hitBar: {fileID: 3157437532204256909}
 --- !u!1001 &1584783665047367260
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20556,6 +20667,7 @@ MonoBehaviour:
   _sapling: {fileID: 6292513738346830836}
   _decal: {fileID: 0}
   _isFall: 0
+  _sounds: []
 --- !u!4 &6731289490677928125 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8359318341670182236, guid: 82db62be31f27834dba466897d3ccf2c,
@@ -21378,15 +21490,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4e5e72af20a29047b3f427ca1befaab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _soundHit: {fileID: 8300000, guid: 127b36b03f3e868479d1bd656a98eb91, type: 3}
+  _inputInteractive: 323
+  _decal: {fileID: 4363762319186085542}
   amountHit: 500
   initialAmount: 0
-  _inputInteractive: 323
+  _hitBar: {fileID: 0}
+  _soundHit: {fileID: 8300000, guid: 127b36b03f3e868479d1bd656a98eb91, type: 3}
   _treeFall: {fileID: 6292513738648634472}
   _trunks: {fileID: 6292513738262893303}
   _sapling: {fileID: 6292513738346830836}
-  _decal: {fileID: 4363762319186085542}
-  _hitBar: {fileID: 0}
 --- !u!4 &5517650893405468181 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8359318341670182236, guid: 82db62be31f27834dba466897d3ccf2c,

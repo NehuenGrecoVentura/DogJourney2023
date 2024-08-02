@@ -14,6 +14,7 @@ public class HitBar : MonoBehaviour
     [SerializeField] private float MaxRange;
     [SerializeField] private float ExtraDamage;
     [SerializeField] private float AddZone;
+    [SerializeField] private AudioSource Audio;
     
     
     
@@ -78,6 +79,7 @@ public class HitBar : MonoBehaviour
             {
                 if (_tree.amountHit > MinA && _tree.amountHit <= MaxA)
                 {
+                    Audio.Play();
                     Debug.Log("TasAdentro");
                     _tree.amountHit =  _tree.amountHit - ExtraDamage;
                     Bar();
