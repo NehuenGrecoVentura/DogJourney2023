@@ -59,7 +59,6 @@ public class SeedQuest : MonoBehaviour
     {
         Destroy(_myCol);
         _myMesh.enabled = false;
-
         _player.FreezePlayer();
         _player.isConstruct = true;
         _radar.StatusRadar(false);
@@ -98,6 +97,7 @@ public class SeedQuest : MonoBehaviour
         _myAudio.Play();
         _message.DOAnchorPosY(70f, 0.5f);
         _player.gameObject.transform.LookAt(_npc.transform);
+
         yield return new WaitForSeconds(5f);
         _message.gameObject.SetActive(false);
         _message.DOAnchorPosY(-1000f, 0f);
@@ -116,13 +116,12 @@ public class SeedQuest : MonoBehaviour
         _npc.transform.LookAt(_player.gameObject.transform);
         _npc.GetComponent<Animator>().runtimeAnimatorController = _animReward;
         _fadeOut.DOColor(Color.clear, 2f);
+
         yield return new WaitForSeconds(2);
         _text.text = _messsages[1];
         _message.gameObject.SetActive(true);
         _myAudio.Play();
         _message.DOAnchorPosY(70f, 0.5f);
-
-
 
         yield return new WaitForSeconds(4f);
         _message.DOAnchorPosY(-1000f, 0.5f);
@@ -134,14 +133,16 @@ public class SeedQuest : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
         _fadeOut.DOColor(Color.clear, 2f);
-        yield return new WaitForSeconds(2f);
 
+        yield return new WaitForSeconds(2f);
         _text.text = _messsages[2];
         _message.gameObject.SetActive(true);
         _myAudio.Play();
         _message.DOAnchorPosY(70f, 0.5f);
+
         yield return new WaitForSeconds(5f);
         _fadeOut.DOColor(Color.black, 2f);
+
         yield return new WaitForSeconds(2f);
         Destroy(_camTree.gameObject);
         _fadeOut.DOColor(Color.clear, 2f);
