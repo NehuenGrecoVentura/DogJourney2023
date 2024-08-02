@@ -54,6 +54,7 @@ public class BoxQuest : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(LookToPlayer());
         _dialogue.gameObject.SetActive(false);
         _iconInteract.SetActive(false);
         _myBroom.SetActive(false);
@@ -65,15 +66,21 @@ public class BoxQuest : MonoBehaviour
         {
             item.enabled = false;
         }
-
     }
 
     private void Update()
     {
         if (_canQuick && Input.GetKeyDown(KeyCode.Space))
             StartCoroutine(EndingQuick());
+    }
 
-        transform.LookAt(_player.gameObject.transform.position);
+    private IEnumerator LookToPlayer()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.01f);
+            transform.LookAt(_player.gameObject.transform.position);
+        }
     }
 
     private void Confirm()
@@ -240,7 +247,8 @@ public class BoxQuest : MonoBehaviour
         _radar.StatusRadar(true);
         _nextQuest.enabled = true;
         _nextQuest.GetComponent<Collider>().enabled = true;
-        
+        _myAnim.SetBool("Quest", true);
+
         foreach (var item in _animsDoor)
         {
             item.enabled = true;

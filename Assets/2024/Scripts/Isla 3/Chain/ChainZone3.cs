@@ -6,6 +6,7 @@ using TMPro;
 
 public class ChainZone3 : MonoBehaviour
 {
+    #region INTERACT
     [Header("INTERACT")]
     [SerializeField] Collider _myCol;
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
@@ -13,14 +14,19 @@ public class ChainZone3 : MonoBehaviour
     [SerializeField] GameObject _iconQuest;
     [SerializeField] Animator _myAnim;
     [SerializeField] GameObject _indicator;
+    [SerializeField] Character _player;
+    #endregion
 
+    #region DIALOGUE
     [Header("DIALOGUE")]
     [SerializeField] Dialogue _dialogue;
     [SerializeField, TextArea(4, 6)] string[] _lines;
     [SerializeField] TMP_Text _txtName;
     [SerializeField] string _nameNPC;
     [SerializeField] Button _buttonConfirm;
+    #endregion
 
+    #region QUEST
     [Header("QUEST")]
     [SerializeField] Manager _gm;
     [SerializeField] Image _fadeOut;
@@ -29,26 +35,36 @@ public class ChainZone3 : MonoBehaviour
     [SerializeField] LocationQuest _radar;
     [SerializeField] MachineChairlift _machine;
     [SerializeField] Chairlift _chairlift;
+    #endregion
 
+    #region NOTIFICATION
     [Header("NOTIFICATION")]
     [SerializeField] GameObject[] _iconInventory;
     [SerializeField] TMP_Text _txtInventory;
+    #endregion
 
+    #region MESSAGE
     [Header("MESSAGE")]
     [SerializeField] BoxMessages _boxMessage;
     [SerializeField, TextArea(4, 6)] string[] _messages;
+    #endregion
 
+    #region CAMERAS
     [Header("CAMERAS")]
     [SerializeField] Camera _camEnd;
     [SerializeField] Camera _camEndingActive;
     [SerializeField] CameraOrbit _camPlayer;
+    #endregion
 
+    #region AUDIO
     [Header("AUDIO")]
     [SerializeField] AudioSource _myAudio;
     [SerializeField] AudioClip _soundConfirm;
+    #endregion
 
     void Start()
     {
+        StartCoroutine(LookToPlayer());
         _dialogue.gameObject.SetActive(false);
         _camEnd.gameObject.SetActive(false);
         _indicator.gameObject.SetActive(false);
@@ -77,6 +93,15 @@ public class ChainZone3 : MonoBehaviour
         foreach (var item in _iconInventory)
         {
             item.SetActive(true);
+        }
+    }
+
+    private IEnumerator LookToPlayer()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.01f);
+            transform.LookAt(_player.gameObject.transform.position);
         }
     }
 
@@ -136,11 +161,10 @@ public class ChainZone3 : MonoBehaviour
     {
         _camEndingActive.gameObject.SetActive(true);
         _myAnim.SetBool("Quest", true);
-
+        _radar.StatusRadar(false);
         Destroy(_myCol);
         Destroy(_iconInteract.gameObject);
         Destroy(_iconQuest.gameObject);
-
         _boxMessage.SetMessage(_nameNPC);
 
         yield return new WaitForSeconds(1f);
@@ -154,12 +178,10 @@ public class ChainZone3 : MonoBehaviour
         Destroy(_camEndingActive.gameObject);
         _boxMessage.CloseMessage();
         _gm.QuestCompleted();
-
         _radar.StatusRadar(true);
         _radar.target = _chairlift.transform;
         _chairlift.enabled = true;
         _chairlift.gameObject.GetComponent<BoxCollider>().enabled = true;
-
         Destroy(_iconInventory[1].gameObject);
 
         yield return new WaitForSeconds(0.6f);
@@ -173,7 +195,8 @@ public class ChainZone3 : MonoBehaviour
         _myCol.enabled = false;
         _boxMessage.SetMessage(_nameNPC);
         player.FreezePlayer();
-
+        _iconInteract.SetActive(false);
+        _radar.StatusRadar(false);
         _camEnd.gameObject.SetActive(true);
         _camPlayer.gameObject.SetActive(false);
 
@@ -185,6 +208,7 @@ public class ChainZone3 : MonoBehaviour
         _camPlayer.gameObject.SetActive(true);
         player.DeFreezePlayer();
         _myCol.enabled = true;
+        _radar.StatusRadar(true);
 
         yield return new WaitForSeconds(1f);
         _boxMessage.DesactivateMessage();
@@ -196,6 +220,7 @@ public class ChainZone3 : MonoBehaviour
         _boxMessage.SetMessage(_nameNPC);
         player.FreezePlayer();
         _radar.StatusRadar(false);
+        _iconInteract.SetActive(false);
 
         _camEnd.gameObject.SetActive(true);
         _camPlayer.gameObject.SetActive(false);
@@ -222,9 +247,6 @@ public class ChainZone3 : MonoBehaviour
     public void BatteryObtained()
     {
         _txtInventory.text = "FOUND";
-
-        
-
         _radar.StatusRadar(true);
         _radar.target = transform;
         _batteryObtained = true;
