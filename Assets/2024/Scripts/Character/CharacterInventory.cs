@@ -23,6 +23,7 @@ public class CharacterInventory : MonoBehaviour
     [Header("MY TOOLS")]
     [SerializeField] GameObject _myShovel;
     [SerializeField] GameObject _myAxe;
+    [SerializeField] Character _player;
     public bool shovelSelected = false;
     public bool shovelUnlocked = false;
     
@@ -80,7 +81,7 @@ public class CharacterInventory : MonoBehaviour
         AmountItem(7, specialFishes);
 
 
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.X) && !_player.isConstruct)
         {
             if (shovelUnlocked)
             {
@@ -96,7 +97,6 @@ public class CharacterInventory : MonoBehaviour
                     _myShovel.gameObject.SetActive(false);
                     _myAxe.gameObject.SetActive(true);
                     shovelSelected = false;
-
                 }
             }
         }
