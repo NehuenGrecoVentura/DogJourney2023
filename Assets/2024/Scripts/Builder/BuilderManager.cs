@@ -21,6 +21,8 @@ public class BuilderManager : MonoBehaviour
     [Header("CINEMATIC")]
     [SerializeField] GameObject _cinematic;
     [SerializeField] Camera _camPlayer;
+    [SerializeField] ParticleSystemRenderer _smoke;
+    [SerializeField] ParticleSystem _smokeParticle;
     private MeshRenderer _myRender;
     private Collider _myCol;
     private Character _player;
@@ -49,6 +51,7 @@ public class BuilderManager : MonoBehaviour
         _iconsMaterials.SetActive(false);
         _objToBuild.SetActive(false);
         _cinematic.SetActive(false);
+        if (gameObject.name == "Icon Bridge 1") _smoke.enabled = false;
 
         _item1.transform.localScale = Vector3.zero;
         _item2.transform.localScale = Vector3.zero;
@@ -61,6 +64,57 @@ public class BuilderManager : MonoBehaviour
         _radar.StatusRadar(false);
         _iconsMaterials.SetActive(false);
 
+
+        
+
+
+
+
+
+
+
+
+
+
+
+        if (gameObject.name == "Icon Bridge 1")
+        {
+            _smoke.enabled = true;
+
+            if (_smokeParticle != null)
+            {
+
+                Color startColor = Color.white;
+                Color midColor = Color.white;
+                Color endColor = Color.clear;
+                float duration = 0.5f;
+
+                // Obtén el módulo Main del Particle System
+                var main = _smokeParticle.main;
+
+                // Configura el color inicial del Particle System
+                main.startColor = startColor;
+
+                // Crea una secuencia DOtween
+                Sequence sequence = DOTween.Sequence();
+
+                // Anima el color desde startColor a midColor
+                sequence.Append(DOTween.To(() => main.startColor.color, x => main.startColor = x, midColor, duration / 2));
+
+                // Anima el color desde midColor a endColor
+                sequence.Append(DOTween.To(() => main.startColor.color, x => main.startColor = x, endColor, duration / 2));
+
+                // Configura el loop si quieres que la animación se repita
+                //sequence.SetLoops(-1, LoopType.Restart); // Opcional: Repetir indefinidamente
+            }
+
+
+
+        }
+            
+            
+            
+
         Destroy(_myRender);
         Destroy(_myCol);
 
@@ -72,6 +126,10 @@ public class BuilderManager : MonoBehaviour
         _cinematic.SetActive(true);
         yield return new WaitForSeconds(3.5f);
         _objToBuild.SetActive(true);
+
+        //if (gameObject.name == "Icon Bridge 1") _smoke.enabled = false;
+
+
         _player.MainAnim();
         _player.transform.LookAt(_objToBuild.transform);
 
@@ -148,7 +206,7 @@ public class BuilderManager : MonoBehaviour
             _item2.material.color = Color.white;
             StartCoroutine(ExitCoroutine());
             _player.isConstruct = false;
-        }   
+        }
     }
 
     private IEnumerator ExitCoroutine()
