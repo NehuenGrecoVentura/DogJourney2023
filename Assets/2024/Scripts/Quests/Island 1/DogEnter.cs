@@ -165,6 +165,7 @@ public class DogEnter : MonoBehaviour
 
     private IEnumerator Message()
     {
+        _radar.StatusRadar(false);
         _myAudio.PlayOneShot(_messageSound);
         _message.anchoredPosition = new Vector2(0f, 125f);
         _textMessage.rectTransform.anchoredPosition = new Vector2(0.2341f, _textMessage.rectTransform.anchoredPosition.y);
@@ -196,12 +197,14 @@ public class DogEnter : MonoBehaviour
 
         _player.DeFreezePlayer();
         _iconInterct.SetActive(true);
+        _radar.StatusRadar(true);
         _dog.canTeletransport = false;
     }
 
     private IEnumerator Search()
     {
         _questUI.UIStatus(false);
+        _radar.StatusRadar(false);
         _dogBroomCinematic.SetActive(true);
         _mainCam.gameObject.SetActive(false);
         _player.FreezePlayer();
@@ -241,6 +244,7 @@ public class DogEnter : MonoBehaviour
         _player.DeFreezePlayer();
 
         Destroy(_cinematic);
+        _radar.StatusRadar(true);
         _radar.target = _maryNPC.gameObject.transform;
         _questUI.TaskCompleted(1);
         _questUI.AddNewTask(2, "Returns the broom to its owner");
