@@ -235,6 +235,7 @@ public class QuestApple : MonoBehaviour
         _iconInteract.transform.DOScale(0f, 0.5f);
         _boxMessage.SetMessage(_nameNPC);
         _myAnim.SetBool("Quest", true);
+        _radar.StatusRadar(false);
 
         yield return new WaitForSeconds(1f);
         _boxMessage.ShowMessage(_messageEnd);
@@ -247,6 +248,7 @@ public class QuestApple : MonoBehaviour
         _camPlayer.gameObject.SetActive(true);
 
         _radar.target = _nextQuest.transform;
+        _radar.StatusRadar(true);
         _nextQuest.enabled = true;
         _nextQuest.GetComponent<BoxCollider>().enabled = true;
 
@@ -262,12 +264,12 @@ public class QuestApple : MonoBehaviour
 
         _dog.canTeletransport = true;
 
-
         foreach (var tree in _trees)
         {
             tree.enabled = false;
             tree.GetComponent<BoxCollider>().enabled = false;
         }
+
         Destroy(this);
     }
 
