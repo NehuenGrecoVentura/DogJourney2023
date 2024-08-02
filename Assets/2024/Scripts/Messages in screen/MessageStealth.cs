@@ -10,6 +10,8 @@ public class MessageStealth : MonoBehaviour
     [SerializeField] BoxMessages _boxMessage;
     [SerializeField, TextArea(4, 6)] string[] _messages;
     [SerializeField] Character _player;
+    [SerializeField] QuestUI _questUI;
+    [SerializeField] LocationQuest _radar;
     private bool _playCinematic = false;
 
     private void Start()
@@ -33,6 +35,8 @@ public class MessageStealth : MonoBehaviour
     {
         _playCinematic = true;
         _myCol.enabled = false;
+        _radar.StatusRadar(false);
+        _questUI.UIStatus(false);
 
         _boxMessage.SetMessage("Stealth");
         player.FreezePlayer();
@@ -53,6 +57,8 @@ public class MessageStealth : MonoBehaviour
         _camPlayer.gameObject.SetActive(true);
         player.DeFreezePlayer();
         _boxMessage.CloseMessage();
+        _questUI.UIStatus(true);
+        _radar.StatusRadar(true);
 
         yield return new WaitForSeconds(0.5f);
         _boxMessage.DesactivateMessage();
@@ -68,6 +74,8 @@ public class MessageStealth : MonoBehaviour
         _player.DeFreezePlayer();
         _boxMessage.CloseMessage();
         _boxMessage.DesactivateMessage();
+        _questUI.UIStatus(true);
+        _radar.StatusRadar(true);
         Destroy(_myCol);
         Destroy(this);
     }
