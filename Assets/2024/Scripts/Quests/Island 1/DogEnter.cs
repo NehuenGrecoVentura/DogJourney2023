@@ -156,6 +156,7 @@ public class DogEnter : MonoBehaviour
         _colTableQuest.enabled = true;
         _nextQuest.enabled = true;
         _radar.target = _nextQuest.gameObject.transform;
+        _radar.StatusRadar(true);
         _gm.QuestCompleted();
 
         Destroy(_maryNPC);
@@ -262,6 +263,7 @@ public class DogEnter : MonoBehaviour
         _dog.quickEnd = true;
         _dog.OrderGoQuick(_maryNPC.gameObject.transform);
         Destroy(_maryNPC.gameObject.GetComponent<BoxCollider>());
+        _radar.StatusRadar(false);
 
         yield return new WaitForSeconds(2f);
         _fadeOut.DOColor(Color.black, 1f);
@@ -303,7 +305,7 @@ public class DogEnter : MonoBehaviour
         _canQuick = false;
         _dog.OrderGoQuick(_maryNPC.gameObject.transform);
         _fadeOut.DOColor(Color.black, 1f);
-
+        _radar.StatusRadar(false);
         _player.FreezePlayer();
         _player.enabled = false;
 

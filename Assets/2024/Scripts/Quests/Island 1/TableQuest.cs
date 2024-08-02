@@ -15,6 +15,7 @@ public class TableQuest : MonoBehaviour
     private LocationQuest _radar;
     private bool _questCurrent = false;
     private bool _questCompleted = false;
+    private bool _cinPlay = false;
 
     [SerializeField, TextArea(4, 6)] string[] _lines;
 
@@ -96,6 +97,7 @@ public class TableQuest : MonoBehaviour
 
             if (_inventory.greenTrees >= _totalWoods)
             {
+                _radar.StatusRadar(true);
                 _questUI.TaskCompleted(1);
                 _questUI.AddNewTask(2, _taskBackToBuild);
                 _myCol.enabled = true;
@@ -105,9 +107,16 @@ public class TableQuest : MonoBehaviour
 
             else
             {
+                _radar.StatusRadar(false);
                 _myCol.enabled = false;
                 _questCompleted = false;
             }
+        }
+
+        if (_cinPlay)
+        {
+            if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+                SkipTutorial();
         }
     }
 
@@ -124,6 +133,7 @@ public class TableQuest : MonoBehaviour
 
         _buttonConfirm.gameObject.SetActive(false);
         _myAnim.SetBool("Quest", true);
+        _radar.StatusRadar(false);
         _questCurrent = true;
     }
 
@@ -198,25 +208,39 @@ public class TableQuest : MonoBehaviour
         }
     }
 
+    private void SkipTutorial()
+    {
+        StopCoroutine(TutorialBuild());
+        _radar.StatusRadar(false);
+        _message.localScale = new Vector3(1, 1, 1);
+        _message.gameObject.SetActive(false);
+        _message.DOAnchorPosY(-1000f, 0f);
+        _inventory.nails = 10;
+        _camPlayer.gameObject.SetActive(true);
+        _player.DeFreezePlayer();
+        _colTable.enabled = true;
+        Destroy(_camCinematic.gameObject);
+        Destroy(this);
+    }
+
     private IEnumerator TutorialBuild()
     {
+        
+        _radar.StatusRadar(false);
         _inventory.nails = 10;
-        _player.speed = 0;
         _player.FreezePlayer();
         Destroy(_myCol);
         Destroy(_iconInteract);
         _myAudio.PlayOneShot(_soundMessage);
 
-
         yield return new WaitForSeconds(0.1f);
-
         _message.gameObject.SetActive(true);
         _message.localScale = new Vector3(1, 1, 1);
         _message.DOAnchorPosY(70f, 0.5f);
-        
-
         _textMessage.text = _messages[0];
+
         yield return new WaitForSeconds(3f);
+        _cinPlay = true;
         transform.position = _initialPos;
         _myAnim.runtimeAnimatorController = _animController[0];
         _iconTable.SetActive(true);
@@ -224,19 +248,23 @@ public class TableQuest : MonoBehaviour
         _camCinematic.gameObject.SetActive(true);
         _message.gameObject.SetActive(false);
         _message.DOAnchorPosY(-1000f, 0f);
+
         yield return new WaitForSeconds(3f);
         _myAudio.PlayOneShot(_soundMessage);
         _message.gameObject.SetActive(true);
         _message.DOAnchorPosY(70f, 0.5f);
         _textMessage.text = _messages[1];
+
         yield return new WaitForSeconds(6f);
         _message.gameObject.SetActive(false);
         _message.DOAnchorPosY(-1000f, 0f);
+
         yield return new WaitForSeconds(0.1f);
         _myAudio.PlayOneShot(_soundMessage);
         _message.gameObject.SetActive(true);
         _message.DOAnchorPosY(70f, 0.5f);
         _textMessage.text = _messages[2];
+
         yield return new WaitForSeconds(4f);
         _message.DOAnchorPosY(-1000f, 0.5f);
         _camPlayer.gameObject.SetActive(true);
