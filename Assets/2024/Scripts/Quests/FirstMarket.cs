@@ -12,6 +12,7 @@ public class FirstMarket : MonoBehaviour
     [SerializeField] TMP_Text _textName;
     [SerializeField, TextArea(4,6)] string _message;
     [SerializeField] GameObject _messageBuildFinished;
+    [SerializeField] LocationQuest _radar;
     private CameraOrbit _camPlayer;
     private Collider _myCol;
     private bool _firstContact = false;
@@ -38,30 +39,30 @@ public class FirstMarket : MonoBehaviour
     {
         _firstContact = true;
         _myCol.enabled = false;
+        _radar.StatusRadar(false);
         _textMessage.text = _message;
         _textName.text = "Tip";
 
         _boxMessage.gameObject.SetActive(true);
         _boxMessage.DOAnchorPosY(70f, 0.5f);
         _boxMessage.localScale = new Vector3(1, 1, 1);
+
         Character player = FindObjectOfType<Character>();
         _camPlayer.gameObject.SetActive(false);
         _camFocusMarket.gameObject.SetActive(true);
         player.gameObject.transform.LookAt(_market.gameObject.transform);
-        player.speed = 0;
         player.FreezePlayer();
-        yield return new WaitForSeconds(6f);
         
+        yield return new WaitForSeconds(6f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+
         yield return new WaitForSeconds(0.5f);
         _boxMessage.gameObject.SetActive(false);
         _camPlayer.gameObject.SetActive(true);
         _camFocusMarket.gameObject.SetActive(false);
-        player.speed = player.speedAux;
         player.DeFreezePlayer();
         _myCol.enabled = true;
-        //_messageBuildFinished.SetActive(true);
-        //Destroy(gameObject);
+        _radar.StatusRadar(true);
         Destroy(this);
     }
 }
