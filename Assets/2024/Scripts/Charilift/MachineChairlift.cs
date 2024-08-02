@@ -10,6 +10,7 @@ public class MachineChairlift : MonoBehaviour
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
     [SerializeField] Collider _myCol;
     [SerializeField] GameObject _indicator;
+    [SerializeField] LocationQuest _radar;
 
     [Header("CAMS")]
     [SerializeField] Camera _camActive;
@@ -19,6 +20,7 @@ public class MachineChairlift : MonoBehaviour
     [Header("BATTERY")]
     [SerializeField] GameObject _battery;
     [SerializeField] WheelRot _rot;
+    
 
     [Header("FADE OUT")]
     [SerializeField] Image _fadeOut;
@@ -57,6 +59,7 @@ public class MachineChairlift : MonoBehaviour
     private IEnumerator ActiveChairlift(Character player)
     {
         _myCol.enabled = false;
+        _radar.StatusRadar(false);
         player.FreezePlayer();
         _iconInteract.DOScale(0f, 0.5f);
         Destroy(_indicator);
