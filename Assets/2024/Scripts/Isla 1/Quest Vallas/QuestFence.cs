@@ -20,7 +20,7 @@ public class QuestFence : MonoBehaviour
     [SerializeField] LocationQuest _radar;
     private bool _activeQuest = false;
     private bool _completedWoods = false;
-    private bool _completeSeeds = false; 
+    private bool _completeSeeds = false;
 
     [Header("DIALOG")]
     [SerializeField, TextArea(4, 6)] string[] _lines;
@@ -73,30 +73,64 @@ public class QuestFence : MonoBehaviour
 
     private void Update()
     {
-        if(_activeQuest) _taskWoods.text = "Get some wood (" + _inventory.greenTrees.ToString() + "/" + _woodsRequired.ToString() + ")";
+        //if(_activeQuest) _taskWoods.text = "Get some wood (" + _inventory.greenTrees.ToString() + "/" + _woodsRequired.ToString() + ")";
 
-        if (_activeQuest && _inventory.greenTrees >= _woodsRequired && !_completedWoods && !_seedsActive)
+        //if (_activeQuest && _inventory.greenTrees >= _woodsRequired && !_completedWoods && !_seedsActive)
+        //{
+        //    _myCol.enabled = true;
+        //    _radar.StatusRadar(true);
+        //    _questUI.TaskCompleted(1);
+        //    _questUI.AddNewTask(2, "Go back to the florist");
+        //    _completedWoods = true;
+        //}
+
+        //if (_seedsActive)
+        //    _questUI.AddNewTask(2, "Get seeds from the bushes (" + _inventory.seeds.ToString() + "/" + _totalSeeds.ToString() + ")");
+
+        //if (_seedsActive && _inventory.seeds >= _totalSeeds && !_completeSeeds)
+        //{
+        //    _myCol.enabled = true;
+        //    _radar.StatusRadar(true);
+        //    _questUI.TaskCompleted(2);
+        //    _questUI.AddNewTask(3, "Go back to the florist");
+        //    _completeSeeds = true;
+        //}
+
+
+        if (_activeQuest)
         {
-            _myCol.enabled = true;
-            _radar.StatusRadar(true);
-            _questUI.TaskCompleted(1);
-            _questUI.AddNewTask(2, "Go back to the florist");
-            _completedWoods = true;
+
+            if (_inventory.greenTrees >= _woodsRequired && !_completedWoods)
+            {
+                _myCol.enabled = true;
+                _radar.StatusRadar(true);
+                _questUI.TaskCompleted(1);
+                _questUI.AddNewTask(2, "Go back to the florist");
+                _completedWoods = true;
+            }
+
+            else _taskWoods.text = "Get some wood (" + _inventory.greenTrees.ToString() + "/" + _woodsRequired.ToString() + ")";
+
+            if (_seedsActive)
+            {
+                if(_inventory.seeds >= _totalSeeds && !_completeSeeds)
+                {
+                    _myCol.enabled = true;
+                    _radar.StatusRadar(true);
+                    _questUI.AddNewTask(2, "Get seeds from the bushes (" + _inventory.seeds.ToString() + "/" + _totalSeeds.ToString() + ")");
+                    _questUI.TaskCompleted(2);
+                    _questUI.AddNewTask(3, "Go back to the florist");
+                    _completeSeeds = true;
+                }
+
+
+                if(!_completeSeeds) _questUI.AddNewTask(2, "Get seeds from the bushes (" + _inventory.seeds.ToString() + "/" + _totalSeeds.ToString() + ")");
+            }
         }
 
-        if (_seedsActive)
-            _questUI.AddNewTask(2, "Get seeds from the bushes (" + _inventory.seeds.ToString() + "/" + _totalSeeds.ToString() + ")");
-
-        if (_seedsActive && _inventory.seeds >= _totalSeeds && !_completeSeeds)
-        {
-            _myCol.enabled = true;
-            _radar.StatusRadar(true);
-            _questUI.TaskCompleted(2);
-            _questUI.AddNewTask(3, "Go back to the florist");
-            _completeSeeds = true;
-        }
-
-        //SkipTutorial();
+        //if (_activeQuest) UpdateQuestText();
+        //HandleWoodQuest();
+        //HandleSeedsQuest();
     }
 
     private IEnumerator LookToPlayer()
@@ -198,7 +232,7 @@ public class QuestFence : MonoBehaviour
     private IEnumerator ShowMessage()
     {
         _myCol.enabled = false;
-        _seedsActive = true;
+        
         _dialogue.playerInRange = false;
         _textName.text = _nameNPC;
         _textMessage.text = _messages[0];
@@ -259,6 +293,7 @@ public class QuestFence : MonoBehaviour
             item.GetComponent<Collider>().enabled = true;
         }
 
+        _seedsActive = true;
         _cinematicBush = false;
     }
 

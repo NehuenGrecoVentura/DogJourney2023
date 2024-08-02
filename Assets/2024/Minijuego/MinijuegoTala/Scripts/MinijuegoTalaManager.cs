@@ -61,7 +61,6 @@ public class MinijuegoTalaManager : MonoBehaviour
     private void Start()
     {
         _myAudio = GetComponent<AudioSource>();
-        _radar = FindObjectOfType<LocationQuest>();
         _inventory = FindObjectOfType<CharacterInventory>();
         Gaming = false;
         SpawnCoder();
