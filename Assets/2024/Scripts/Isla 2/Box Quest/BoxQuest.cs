@@ -161,6 +161,7 @@ public class BoxQuest : MonoBehaviour
         Destroy(_iconInteract);
         _boxMessage.SetMessage(_nameNPC);
         _myAnim.SetBool("Quest", true);
+        _radar.StatusRadar(false);
  
         _camPlayer.gameObject.SetActive(false);
         _dogCam.gameObject.SetActive(true);
@@ -189,6 +190,7 @@ public class BoxQuest : MonoBehaviour
         _gm.QuestCompleted();
         _dog.quickEnd = false;
         _radar.target = _nextQuest.transform;
+        _radar.StatusRadar(true);
         _nextQuest.enabled = true;
         _nextQuest.GetComponent<Collider>().enabled = true;
 
@@ -205,7 +207,7 @@ public class BoxQuest : MonoBehaviour
         Destroy(_iconInteract);
         _boxMessage.SetMessage(_nameNPC);
         _myAnim.SetBool("Quest", true);
-
+        _radar.StatusRadar(false);
         _camPlayer.gameObject.SetActive(false);
         _camFocus.gameObject.SetActive(true);
 
@@ -221,6 +223,7 @@ public class BoxQuest : MonoBehaviour
         _boxMessage.CloseMessage();
         _gm.QuestCompleted();
         _radar.target = _nextQuest.transform;
+        _radar.StatusRadar(true);
         _nextQuest.enabled = true;
         _nextQuest.GetComponent<Collider>().enabled = true;
 
@@ -234,6 +237,7 @@ public class BoxQuest : MonoBehaviour
         _inventory.upgradeLoot = true;
         _gm.QuestCompleted();
         _radar.target = _nextQuest.transform;
+        _radar.StatusRadar(true);
         _nextQuest.enabled = true;
         _nextQuest.GetComponent<Collider>().enabled = true;
         

@@ -19,11 +19,14 @@ public class MessageStealth : MonoBehaviour
         _cinematic.SetActive(false);
     }
 
-    //private void Update()
-    //{
-    //    if (_playCinematic && Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
-    //        SkipCinematic();
-    //}
+    private void Update()
+    {
+        if (_playCinematic)
+        {
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+                SkipCinematic();
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
