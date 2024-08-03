@@ -25,7 +25,6 @@ public class HitBar : MonoBehaviour
     public float newMin = -67f;  // Nuevo rango mínimo
     public float newMax = 83f;  // Nuevo rango máximo
     [SerializeField] Color _colorHit;
-    private Color _initialColor;
     private Vector3 _initialScale;
     public bool hitGood = false;
 
@@ -52,9 +51,12 @@ public class HitBar : MonoBehaviour
         _hitBar.value = _hitBar.maxValue;
         _bar.color = Color.green;
 
-        _initialColor = PointA.color;
         _initialScale = PointA.rectTransform.localScale;
+
+        /*if (!hitGood) */
+        StartCoroutine(SpecialHitAnim());
     }
+
 
     //public void RandomPoints()
     //{
@@ -79,7 +81,7 @@ public class HitBar : MonoBehaviour
 
     public void RandomPoints()
     {
-        
+
         if (_hitBar.value >= _hitBar.maxValue || _tree.hasContact) // PONGO ESTO PARA EVITAR QUE SE GENERE OTRO NUEVO GOLPE ESPECIAL EN LA BARRA SI YA INTERACTUASTE CON ANTERIORIDAD AL ARBOL - NEHUEN
         {
             if (PointA == null) return;
@@ -95,12 +97,10 @@ public class HitBar : MonoBehaviour
                 Debug.Log(TESTA);
                 PointA.transform.localPosition = new Vector3(NormalizeValue(TESTA), 1, 1);
 
-                PointA.color = _initialColor; // EMPIEZA CON EL COLOR DEFAULT - NEHUEN
+                hitGood = false; // TODAVIA NO DI EL GOLPE PERFECTO - NEHUEN
             }
         }
     }
-
-
 
     public void CheckRandom()
     {
@@ -110,7 +110,7 @@ public class HitBar : MonoBehaviour
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && !hitGood) // SI TOCO Y TODAVÍA NO DI EL GOLPE PERFECTO...
             {
                 if (_tree.amountHit > MinA && _tree.amountHit <= MaxA)
                 {
@@ -119,12 +119,11 @@ public class HitBar : MonoBehaviour
                     _tree.amountHit = _tree.amountHit - ExtraDamage;
                     Bar();
 
-                    hitGood = true;
-                    PointA.color = _colorHit; // CAMBIA DE COLOR CUANDO LE ENGANCHAS - NEHUEN
+                    hitGood = true; // DI EL GOLPE PERFECTO - NEHUEN
+                    PointA.enabled = false; // ESCONDO LA RAYA - NEHUEN
                 }
             }
         }
-
     }
 
     public void Bar()
@@ -147,15 +146,13 @@ public class HitBar : MonoBehaviour
         else _bar.color = Color.red;
     }
 
-
     private IEnumerator SpecialHitAnim()
     {
         float minYScale = 0.17f;
         float maxYScale = 0.27f;
         float duration = 0.5f;
-        Vector3 initialScale = PointA.rectTransform.localScale;
-        initialScale.y = minYScale;
-        PointA.rectTransform.localScale = initialScale;
+        _initialScale.y = minYScale;
+        PointA.rectTransform.localScale = _initialScale;
 
         Sequence scaleSequence = DOTween.Sequence();
         scaleSequence.Append(PointA.rectTransform.DOScaleY(maxYScale, duration / 2f).SetEase(Ease.InOutSine))
@@ -171,5 +168,11 @@ public class HitBar : MonoBehaviour
     private void OnEnable()
     {
         Bar();
+    }
+
+    public void ResetSpecialHit()
+    {
+        hitGood = false;
+        PointA.enabled = true;
     }
 }

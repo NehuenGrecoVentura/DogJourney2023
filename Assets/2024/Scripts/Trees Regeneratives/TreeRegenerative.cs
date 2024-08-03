@@ -130,6 +130,7 @@ public class TreeRegenerative : MonoBehaviour
     {
         amountHit = initialAmount; 
         hasContact = false; // REINICIO LA INTERACCIÓN DEL ÁRBOL - NEHUEN
+        _hitBar.ResetSpecialHit();
         //_hitBar.Bar();
     }
 }
