@@ -60,17 +60,14 @@ public class TreeRegenerative : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null && _myCol.enabled)
         {
-            
             _hitBar.gameObject.SetActive(true);
             _decal.SetActive(true);
-            if (!hasContact)
-            {
-                _hitBar.RandomPoints();
-                hasContact = true;
-            }
-                
-                
 
+            if (!hasContact) // SI NO TUVE CONTACTO CON EL ARBOL ANTES... - NEHUEN
+            {
+                _hitBar.RandomPoints(); // GENERO EL PUNTO DE GOLPE ESPECIAL - NEHUEN
+                hasContact = true; // DEJO MARCADO DE QUE YA INTERACTUE CON ESTE ARBOL - NEHUEN
+            }
         }
     }
 
@@ -105,7 +102,7 @@ public class TreeRegenerative : MonoBehaviour
             if (amountHit <= 0)
             {
                 amountHit = 0;
-                hasContact = false;
+                hasContact = false; // REINICIO LA INTERACCIÓN DEL ÁRBOL - NEHUEN
                 _hitBar.gameObject.SetActive(false);
                 _decal.SetActive(false);
                 _treeFall.gameObject.SetActive(true);
@@ -131,8 +128,8 @@ public class TreeRegenerative : MonoBehaviour
 
     public void RestartAmount()
     {
-        amountHit = initialAmount;
-        hasContact = false;
+        amountHit = initialAmount; 
+        hasContact = false; // REINICIO LA INTERACCIÓN DEL ÁRBOL - NEHUEN
         //_hitBar.Bar();
     }
 }
