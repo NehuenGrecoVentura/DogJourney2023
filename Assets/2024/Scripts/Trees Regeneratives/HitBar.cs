@@ -95,7 +95,7 @@ public class HitBar : MonoBehaviour
                 Debug.Log(TESTA);
                 PointA.transform.localPosition = new Vector3(NormalizeValue(TESTA), 1, 1);
 
-                PointA.color = _initialColor;
+                PointA.color = _initialColor; // EMPIEZA CON EL COLOR DEFAULT - NEHUEN
             }
         }
     }
