@@ -142,12 +142,12 @@ public class BoxWoods : MonoBehaviour
     {
         canQuick = false;
         _dogAudio.PlayOneShot(_quickSound);
-        _player.speed = 0;
         _player.FreezePlayer();
         _fadeOut.color = new Color(0, 0, 0, 0);
         _dog.quickEnd = true;
         _dog.OrderGoQuick(_posEndQuick);
         _camPlayer.gameObject.SetActive(false);
+        _radar.StatusRadar(false);
         StopCoroutine(TutorialQuick());
         _dogTutorial.gameObject.SetActive(false);
         _dogCam.gameObject.SetActive(true);
@@ -184,7 +184,6 @@ public class BoxWoods : MonoBehaviour
         _arrow.SetActive(false);
         _iconInteractive.SetActive(false);
         _player.FreezePlayer();
-        _player.speed = 0;
         _barriel.UpBarriel(_timeCinematic);
     }
 
@@ -215,7 +214,9 @@ public class BoxWoods : MonoBehaviour
 
     private IEnumerator RunTruck()
     {
+        canQuick = false;
         _myCol.enabled = false;
+        _radar.StatusRadar(false);
         StartCoroutine(ActiveSkip());
         _dogCam.gameObject.SetActive(false);
         _play = true;
@@ -230,15 +231,15 @@ public class BoxWoods : MonoBehaviour
 
     private IEnumerator NextQuest()
     {
+        _canSkip = false;
         _dog.quickEnd = false;
         _play = false;
-        _radar.StatusRadar(true);
+        _radar.StatusRadar(false);
         _radar.target = _nextPos;
         Destroy(_animTruck.gameObject);
         Destroy(_camCinematic.gameObject);
         _camPlayer.gameObject.SetActive(true);
         _player.DeFreezePlayer();
-        _player.speed = _player.speedAux;
 
         foreach (var item in _canvasQuests)
             item.gameObject.SetActive(false);
@@ -265,6 +266,7 @@ public class BoxWoods : MonoBehaviour
         _maryCam.gameObject.SetActive(false);
         mary.gameObject.GetComponent<Collider>().enabled = true;
         _player.DeFreezePlayer();
+        _radar.StatusRadar(true);
         Destroy(_dogTutorial.gameObject);
         Destroy(gameObject);
     }
