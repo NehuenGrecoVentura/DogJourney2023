@@ -45,23 +45,67 @@ public class LocationQuest : MonoBehaviour
         //_iconLocation.transform.position = pos;
         //_distNumber.text = ((int)Vector3.Distance(target.position, transform.position)).ToString() + "m";
 
-        if (target == null) return;
+
+
+
+
+        // METODO 2
+
+
+
+
+        //if (target == null) return;
+
+        //Vector3 playerPos = _player.transform.position;
+        //float distance = Vector3.Distance(playerPos, target.position);
+        //_distNumber.text = ((int)distance).ToString() + "m";
+
+        //Vector2 pos = Camera.main.WorldToScreenPoint(target.position + _offset);
+
+        //if (Vector3.Dot((target.position - playerPos), _player.transform.forward) < 0)
+        //{
+        //    pos.x = (pos.x < Screen.width / 2) ? Screen.width - pos.x : pos.x;
+        //}
+
+        //pos.x = Mathf.Clamp(pos.x, 0, Screen.width);
+        //pos.y = Mathf.Clamp(pos.y, 0, Screen.height);
+
+        //_iconLocation.rectTransform.position = pos;
+
+
+
+
+
+
+
+
+        if (target == null || _player == null) return;
 
         Vector3 playerPos = _player.transform.position;
         float distance = Vector3.Distance(playerPos, target.position);
         _distNumber.text = ((int)distance).ToString() + "m";
 
-        Vector2 pos = Camera.main.WorldToScreenPoint(target.position + _offset);
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(target.position + _offset);
 
-        if (Vector3.Dot((target.position - playerPos), _player.transform.forward) < 0)
+        // Si el objetivo está detrás de la cámara
+        if (screenPos.z < 0)
         {
-            pos.x = (pos.x < Screen.width / 2) ? Screen.width - pos.x : pos.x;
+            // Ignorar la posición de la pantalla ya que el objetivo está detrás de la cámara
+            // No hacemos nada aquí porque el indicador no debería ser visible en este caso
+            return;
         }
 
-        pos.x = Mathf.Clamp(pos.x, 0, Screen.width);
-        pos.y = Mathf.Clamp(pos.y, 0, Screen.height);
+        // Asegurarse de que el indicador se mantenga dentro de la pantalla
+        float minX = _iconLocation.rectTransform.rect.width / 2;
+        float maxX = Screen.width - minX;
+        float minY = _iconLocation.rectTransform.rect.height / 2;
+        float maxY = Screen.height - minY;
 
-        _iconLocation.rectTransform.position = pos;
+        // Clamping para evitar que el indicador se salga de la pantalla
+        screenPos.x = Mathf.Clamp(screenPos.x, minX, maxX);
+        screenPos.y = Mathf.Clamp(screenPos.y, minY, maxY);
+
+        _iconLocation.rectTransform.position = screenPos;
     }
 
     public void StatusRadar(bool active)

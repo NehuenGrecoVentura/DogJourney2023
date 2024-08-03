@@ -1401,6 +1401,7 @@ MonoBehaviour:
   originalMax: 100
   newMin: -67
   newMax: 83
+  _colorHit: {r: 0, g: 1, b: 0.94509804, a: 1}
 --- !u!82 &4171127943442962622
 AudioSource:
   m_ObjectHideFlags: 0
@@ -13504,6 +13505,7 @@ MonoBehaviour:
   originalMax: 100
   newMin: -67
   newMax: 83
+  _colorHit: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &8045463318309896117
 GameObject:
   m_ObjectHideFlags: 0

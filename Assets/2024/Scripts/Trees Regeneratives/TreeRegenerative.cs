@@ -96,6 +96,7 @@ public class TreeRegenerative : MonoBehaviour
             if (amountHit <= 0)
             {
                 amountHit = 0;
+                _hitBar.hitGood = false;
                 _hitBar.gameObject.SetActive(false);
                 _decal.SetActive(false);
                 _treeFall.gameObject.SetActive(true);
