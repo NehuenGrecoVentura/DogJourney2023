@@ -80,7 +80,7 @@ public class HitBar : MonoBehaviour
     public void RandomPoints()
     {
         
-        if (_hitBar.value >= _hitBar.maxValue) // PONGO ESTO PARA EVITAR QUE SE GENERE OTRO NUEVO GOLPE ESPECIAL EN LA BARRA SI YA LE PEGASTE CON ANTERIORIDAD AL ARBOL - NEHUEN
+        if (_hitBar.value >= _hitBar.maxValue || _tree.hasContact) // PONGO ESTO PARA EVITAR QUE SE GENERE OTRO NUEVO GOLPE ESPECIAL EN LA BARRA SI YA INTERACTUASTE CON ANTERIORIDAD AL ARBOL - NEHUEN
         {
             if (PointA == null) return;
 
@@ -94,9 +94,13 @@ public class HitBar : MonoBehaviour
                 var TESTA = (HitPointA * 100 / _tree.initialAmount);
                 Debug.Log(TESTA);
                 PointA.transform.localPosition = new Vector3(NormalizeValue(TESTA), 1, 1);
+
+                PointA.color = _initialColor;
             }
         }
     }
+
+
 
     public void CheckRandom()
     {

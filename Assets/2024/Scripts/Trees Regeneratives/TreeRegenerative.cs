@@ -1,14 +1,15 @@
 using UnityEngine;
 
 public class TreeRegenerative : MonoBehaviour
-{    
+{
     //private HouseQuest4 _quest4;
-    
+
     [Header("INTERACT")]
     [SerializeField] KeyCode _inputInteractive = KeyCode.Mouse0;
     [SerializeField] GameObject _decal;
     private CharacterInventory _inventory;
     private BoxCollider _myCol;
+    public bool hasContact = false;
 
     [Header("ATRIBUTES")]
     public float amountHit = 100f;
@@ -59,10 +60,18 @@ public class TreeRegenerative : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null && _myCol.enabled)
         {
+            
             _hitBar.gameObject.SetActive(true);
             _decal.SetActive(true);
-            _hitBar.RandomPoints();
-        }     
+            if (!hasContact)
+            {
+                _hitBar.RandomPoints();
+                hasContact = true;
+            }
+                
+                
+
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -78,7 +87,7 @@ public class TreeRegenerative : MonoBehaviour
                 player.enabled = true;
                 player.MainAnim();
             }
-                
+
             else
             {
                 if (!_inventory.shovelSelected)
@@ -96,7 +105,7 @@ public class TreeRegenerative : MonoBehaviour
             if (amountHit <= 0)
             {
                 amountHit = 0;
-                _hitBar.hitGood = false;
+                hasContact = false;
                 _hitBar.gameObject.SetActive(false);
                 _decal.SetActive(false);
                 _treeFall.gameObject.SetActive(true);
@@ -123,6 +132,7 @@ public class TreeRegenerative : MonoBehaviour
     public void RestartAmount()
     {
         amountHit = initialAmount;
+        hasContact = false;
         //_hitBar.Bar();
     }
 }
