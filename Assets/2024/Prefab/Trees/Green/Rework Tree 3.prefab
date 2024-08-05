@@ -259,7 +259,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8653233096903444643
 Transform:
   m_ObjectHideFlags: 0
@@ -876,6 +876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputInteractive: 323
   _decal: {fileID: 5124409019978613453}
+  hasContact: 0
   amountHit: 500
   initialAmount: 0
   _hitBar: {fileID: 5631363131736984072}
@@ -2004,6 +2005,7 @@ MonoBehaviour:
   newMin: -67
   newMax: 83
   _colorHit: {r: 0, g: 1, b: 0.94509804, a: 1}
+  hitGood: 0
 --- !u!82 &1376976406608226771
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4079,6 +4081,7 @@ MonoBehaviour:
   newMin: -67
   newMax: 83
   _colorHit: {r: 0, g: 0, b: 0, a: 0}
+  hitGood: 0
 --- !u!1 &6000029138863795682
 GameObject:
   m_ObjectHideFlags: 0
@@ -9652,7 +9655,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5657095949146841114
 Transform:
   m_ObjectHideFlags: 0
@@ -14840,7 +14843,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7503321542125730950
 Transform:
   m_ObjectHideFlags: 0
