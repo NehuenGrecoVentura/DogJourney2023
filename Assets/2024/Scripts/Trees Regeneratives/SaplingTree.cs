@@ -3,7 +3,8 @@ using System.Linq;
 
 public class SaplingTree : MonoBehaviour
 {
-    [SerializeField] Camera _camPlayer;
+    //[SerializeField] Camera _camPlayer;
+    [SerializeField] CameraOrbit _camPlayer;
     [SerializeField] TreeRegenerative _tree;
 
     public float growTime;
@@ -26,7 +27,9 @@ public class SaplingTree : MonoBehaviour
 
     private void Awake()
     {
-        _camPlayer = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+        //_camPlayer = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+
+        _camPlayer = FindObjectOfType<CameraOrbit>();
     }
 
 

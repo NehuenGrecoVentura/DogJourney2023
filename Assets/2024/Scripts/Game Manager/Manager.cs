@@ -130,6 +130,10 @@ public class Manager : MonoBehaviour
         _tiros.CanPlay();
         _manzanas.CanPlay();
         StartCoroutine(WinTimeInScreen());
+
+        var npcPark = FindObjectOfType<ChainParkQuest>();
+        if (npcPark != null) npcPark.ActivateNPC();
+        else return;
     }
 
     public void BlockMinigames()
@@ -138,6 +142,10 @@ public class Manager : MonoBehaviour
         _simon.BlockMinigame();
         _tiros.BlockMinigame();
         _manzanas.BlockMinigame();
+
+        var npcPark = FindObjectOfType<ChainParkQuest>();
+        if (npcPark != null) npcPark.DesactivateNPC();
+        else return;
     }
 
     public void GreenTreesShader()
