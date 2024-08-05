@@ -33,6 +33,7 @@ public class QuestApple : MonoBehaviour
     [SerializeField] QuestUI _questUI;
     [SerializeField] BoxApple _boxApple;
     [SerializeField] Character _player;
+    [SerializeField] ChainParkQuest _chainPark;
     private TreeApple[] _trees;
     private bool _questActive = false;
     private bool _questCompleted = false;
@@ -144,6 +145,7 @@ public class QuestApple : MonoBehaviour
         _myAudio.PlayOneShot(_soundConfirm);
         _radar.StatusRadar(false);
         _gm.BlockMinigames();
+        _chainPark.DesactivateNPC();
         _questActive = true;
     }
 
@@ -256,6 +258,7 @@ public class QuestApple : MonoBehaviour
         _boxMessage.DesactivateMessage();
         player.DeFreezePlayer();
         _gm.QuestCompleted();
+        if(_chainPark != null) _chainPark.ActivateNPC();
 
         foreach (var item in _agents)
         {
@@ -286,6 +289,7 @@ public class QuestApple : MonoBehaviour
             Destroy(item.gameObject);
         }
 
+        if (_chainPark != null) _chainPark.ActivateNPC();
         Destroy(_cinematic.gameObject);
         Destroy(_camEnding.gameObject);
         Destroy(_myCol);
