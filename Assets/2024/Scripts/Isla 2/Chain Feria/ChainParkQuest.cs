@@ -101,9 +101,9 @@ public class ChainParkQuest : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null)
+        if (player != null && _myCol.enabled)
         {
-            if (_myCol.enabled && !questActive && !_questCompleted) SetDialogue();
+            if (!questActive && !_questCompleted) SetDialogue();
             else if (_questCompleted) _iconInteract.transform.DOScale(0.01f, 0.5f);
         }
     }

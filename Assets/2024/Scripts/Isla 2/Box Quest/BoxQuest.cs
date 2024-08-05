@@ -36,7 +36,7 @@ public class BoxQuest : MonoBehaviour
     [SerializeField] CharacterInventory _inventory;
     [SerializeField] Dog _dog;
     [SerializeField] Character _player;
-    [SerializeField] ChainParkQuest _chainPark;
+    //[SerializeField] ChainParkQuest _chainPark;
     private bool _questActive = false;
     private bool _questCompleted = false;
     private bool _canQuick = false;
@@ -101,7 +101,7 @@ public class BoxQuest : MonoBehaviour
             item.enabled = true;
         }
 
-        _chainPark.DesactivateNPC();
+        //_chainPark.DesactivateNPC();
         _gm.BlockMinigames();
         _questActive = true;
     }
@@ -202,7 +202,7 @@ public class BoxQuest : MonoBehaviour
         _radar.StatusRadar(true);
         _nextQuest.enabled = true;
         _nextQuest.GetComponent<Collider>().enabled = true;
-        _chainPark.ActivateNPC();
+        //_chainPark.ActivateNPC();
         yield return new WaitForSeconds(1f);
         _boxMessage.DesactivateMessage();
         Destroy(this);
@@ -235,7 +235,7 @@ public class BoxQuest : MonoBehaviour
         _radar.StatusRadar(true);
         _nextQuest.enabled = true;
         _nextQuest.GetComponent<Collider>().enabled = true;
-        _chainPark.ActivateNPC();
+        //_chainPark.ActivateNPC();
         yield return new WaitForSeconds(1f);
         _boxMessage.DesactivateMessage();
         Destroy(this);
@@ -256,7 +256,7 @@ public class BoxQuest : MonoBehaviour
             item.enabled = true;
         }
 
-        _chainPark.ActivateNPC();
+        //_chainPark.ActivateNPC();
         Destroy(this);
     }
 }
