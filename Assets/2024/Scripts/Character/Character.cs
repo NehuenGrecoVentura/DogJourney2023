@@ -120,6 +120,7 @@ public class Character : MonoBehaviour
     public void MainAnim()
     {
         _myAnim.runtimeAnimatorController = _animController[0];
+        //isConstruct = false;
     }
 
     public void HitDig()
@@ -177,6 +178,8 @@ public class Character : MonoBehaviour
         _myRb.useGravity = false;
         _myRb.MovePosition(transform.position + Vector3.up * speedClimb * Time.fixedDeltaTime);
         transform.rotation = Quaternion.Euler(0, 90, 0);
+
+        isConstruct = true;
     }
 
     public void SetFishingMode(bool rodActive)

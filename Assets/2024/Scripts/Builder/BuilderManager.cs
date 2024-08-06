@@ -59,23 +59,12 @@ public class BuilderManager : MonoBehaviour
 
     private IEnumerator Construct()
     {
+        _player.isConstruct = true;
+
         _questUI.UIStatus(false);
         _myAudio.PlayOneShot(_audioBuild);
         _radar.StatusRadar(false);
         _iconsMaterials.SetActive(false);
-
-
-        
-
-
-
-
-
-
-
-
-
-
 
         if (gameObject.name == "Icon Bridge 1")
         {
@@ -83,7 +72,6 @@ public class BuilderManager : MonoBehaviour
 
             if (_smokeParticle != null)
             {
-
                 Color startColor = Color.white;
                 Color midColor = Color.white;
                 Color endColor = Color.clear;
@@ -107,14 +95,8 @@ public class BuilderManager : MonoBehaviour
                 // Configura el loop si quieres que la animación se repita
                 //sequence.SetLoops(-1, LoopType.Restart); // Opcional: Repetir indefinidamente
             }
-
-
-
         }
-            
-            
-            
-
+                    
         Destroy(_myRender);
         Destroy(_myCol);
 
@@ -131,6 +113,7 @@ public class BuilderManager : MonoBehaviour
 
 
         _player.MainAnim();
+        
         _player.transform.LookAt(_objToBuild.transform);
 
         if (_objToDestroy != null && _objToDestroy.Length > 0)
@@ -144,7 +127,7 @@ public class BuilderManager : MonoBehaviour
         yield return new WaitForSeconds(_timeToBuild);
         _camPlayer.gameObject.SetActive(true);
         _radar.StatusRadar(true);
-
+        _player.isConstruct = false;
         if (gameObject.name == "Build Stairs") _questUI.UIStatus(true);
         else _questUI.UIStatus(false);
 
@@ -177,13 +160,14 @@ public class BuilderManager : MonoBehaviour
             if (item1 < _amountItem1) _item1.color = Color.red;
             if (item2 < _amountItem2) _item2.color = Color.red;
 
-            else if (item1 >= _amountItem1 && item2 >= _amountItem2 && !_player.isConstruct && !_inventory.shovelSelected)
+            //else if (item1 >= _amountItem1 && item2 >= _amountItem2 && !_player.isConstruct && !_inventory.shovelSelected)
+            else if (item1 >= _amountItem1 && item2 >= _amountItem2 && !_inventory.shovelSelected)
             {
                 if (gameObject.name == "Icon Bridge 1" || gameObject.name == "Build Stairs") RemoveItemsBridge1();
                 if (gameObject.name == "Icon Bridge 2") RemoveItemsBridge2();
 
                 StartCoroutine(Construct());
-                _player.isConstruct = true;
+                //_player.isConstruct = true;
             }
         }
 
