@@ -27,7 +27,7 @@ public class ChainParkQuest : MonoBehaviour
     [SerializeField] LocationQuest _radar;
     [SerializeField] Manager _gm;
     [SerializeField] CharacterInventory _inventory;
-    [SerializeField] GameObject _articleMarketSkin;
+    [SerializeField] GameObject[] _articleMarketSkin;
     [SerializeField] Image _fadeOut;
     [SerializeField] int _scoreRequired = 250;
     [HideInInspector] public bool questActive = false;
@@ -53,7 +53,13 @@ public class ChainParkQuest : MonoBehaviour
     void Start()
     {
         _dialogue.gameObject.SetActive(false);
-        _articleMarketSkin.SetActive(false);
+        //_articleMarketSkin.SetActive(false);
+
+        foreach (var item in _articleMarketSkin)
+        {
+            item.SetActive(false);
+        }
+
         _camEnd.gameObject.SetActive(false);
         _iconQuest.SetActive(true);
         _iconInteract.SetActive(true);
@@ -78,7 +84,13 @@ public class ChainParkQuest : MonoBehaviour
         _dialogue.Close();
         _iconInteract.transform.DOScale(0f, 0.5f);
         _myAudio.PlayOneShot(_soundConfirm);
-        _articleMarketSkin.SetActive(true);
+        //_articleMarketSkin.SetActive(true);
+
+        foreach (var item in _articleMarketSkin)
+        {
+            item.SetActive(true);
+        }
+
         _iconQuest.SetActive(false);
         _myAnim.SetBool("Quest", true);
 
@@ -152,7 +164,13 @@ public class ChainParkQuest : MonoBehaviour
         if (_inventory.tickets >= _scoreRequired)
         {
             audio.PlayOneShot(soundBuy);
-            Destroy(_articleMarketSkin);
+            //Destroy(_articleMarketSkin);
+
+            foreach (var item in _articleMarketSkin)
+            {
+                Destroy(item);
+            }
+
             _iconQuest.SetActive(true);
             _myCol.enabled = true;
             _questCompleted = true;
@@ -177,12 +195,14 @@ public class ChainParkQuest : MonoBehaviour
 
     public void ActivateNPC()
     {
-        _myCol.enabled = true;
-        _myAnim.SetBool("Quest", false);
-        _iconQuest.SetActive(true);
-        _iconInteract.SetActive(false);
+        if (!questActive)
+        {
+            _myCol.enabled = true;
+            _myAnim.SetBool("Quest", false);
+            _iconQuest.SetActive(true);
+            _iconInteract.SetActive(false);
+        }
     }
-
 
     private IEnumerator MessageTickets(Character player)
     {
@@ -208,7 +228,6 @@ public class ChainParkQuest : MonoBehaviour
         yield return new WaitForSeconds(1f);
         _boxMessage.DesactivateMessage();
     }
-
 
     private IEnumerator Ending(Character player)
     {
