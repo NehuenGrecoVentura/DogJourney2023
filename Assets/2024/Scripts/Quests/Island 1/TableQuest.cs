@@ -122,6 +122,7 @@ public class TableQuest : MonoBehaviour
 
     public void Confirm()
     {
+        //_buttonConfirm.onClick.RemoveAllListeners();
         _myAudio.PlayOneShot(_soundConfirm);
         _myCol.enabled = false;
         _iconInteract.SetActive(false);
@@ -192,8 +193,10 @@ public class TableQuest : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && _myCol.enabled)
+        //if (player != null && _myCol.enabled)
+        if (player != null)
         {
+            
             _iconInteract.SetActive(false);
             _dialogue.playerInRange = false;
         }

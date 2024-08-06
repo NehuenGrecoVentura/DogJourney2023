@@ -63,6 +63,7 @@ public class NPCFishing : MonoBehaviour
 
     private void Confirm()
     {
+        //_buttonConfirm.onClick.RemoveAllListeners();
         _dialogue.canTalk = false;
         _fishing.start = true;
         _myAudio.PlayOneShot(_soundConfirm);
@@ -110,6 +111,7 @@ public class NPCFishing : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
+            //_buttonConfirm.onClick.RemoveAllListeners();
             _dialogue.playerInRange = false;
             _iconInteract.SetActive(false);
         }

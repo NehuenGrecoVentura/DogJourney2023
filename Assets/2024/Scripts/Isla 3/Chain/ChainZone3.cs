@@ -88,6 +88,10 @@ public class ChainZone3 : MonoBehaviour
         _myAudio.PlayOneShot(_soundConfirm);
         _iconQuest.SetActive(false);
         _myAnim.SetBool("Quest", true);
+
+        var questUI = FindObjectOfType<QuestUI>();
+        if (questUI != null) questUI.UIStatus(false);
+
         _questActive = true;
 
         foreach (var item in _iconInventory)
@@ -108,7 +112,7 @@ public class ChainZone3 : MonoBehaviour
     private void SetDialogue()
     {
         _iconInteract.transform.DOScale(0.01f, 0.5f);
-        _buttonConfirm.onClick.AddListener(() => Confirm());
+        _buttonConfirm.onClick.AddListener(() => Confirm());  
 
         if (!_questActive)
         {
@@ -147,6 +151,7 @@ public class ChainZone3 : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
+            _buttonConfirm.onClick.RemoveAllListeners();
             _dialogue.playerInRange = false;
             _iconInteract.transform.DOScale(0f, 0.5f);
         }

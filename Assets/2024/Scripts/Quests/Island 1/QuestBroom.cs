@@ -154,9 +154,11 @@ public class QuestBroom : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && _myCol.enabled)
+        //if (player != null && _myCol.enabled)
+        if (player != null)
         {
             //if (_activeQuest || !_activeQuest) _iconInteract.SetActive(false);
+            _buttonConfirm.onClick.RemoveAllListeners();
             _iconInteract.SetActive(false);
             _dialogue.playerInRange = false;
         }

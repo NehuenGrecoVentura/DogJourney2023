@@ -49,7 +49,7 @@ public class DogEnter : MonoBehaviour
     private Manager _gm;
     private LocationQuest _radar;
     private Character _player;
-    private bool _isPlay = false;
+    //private bool _isPlay = false;
 
     [SerializeField] AudioClip _soundQuick;
 
@@ -134,8 +134,9 @@ public class DogEnter : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (broomPicked && _canQuick && !_isPlay) StartCoroutine(Ending());
-            if (_isPlay) SkipExplication();
+            //if (broomPicked && _canQuick && !_isPlay) StartCoroutine(Ending());
+            if (broomPicked && _canQuick) StartCoroutine(Ending());
+            //if (_isPlay) SkipExplication();
         }
     }
 
@@ -152,7 +153,7 @@ public class DogEnter : MonoBehaviour
         _iconInterct.SetActive(true);
         _radar.StatusRadar(true);
         _dog.canTeletransport = false;
-        _isPlay = false;
+        //_isPlay = false;
     }
 
     public void EndingQuest()
@@ -186,7 +187,7 @@ public class DogEnter : MonoBehaviour
 
     private IEnumerator Message()
     {
-        _isPlay = true;
+        //_isPlay = true;
         _radar.StatusRadar(false);
         _myAudio.PlayOneShot(_messageSound);
         _message.anchoredPosition = new Vector2(0f, 125f);

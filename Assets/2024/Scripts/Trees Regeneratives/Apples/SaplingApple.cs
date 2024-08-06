@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class SaplingApple : MonoBehaviour
 {
-    [SerializeField] Camera _camPlayer;
+    //[SerializeField] Camera _camPlayer;
+    [SerializeField] CameraOrbit _camPlayer;
     [SerializeField] TreeApple _tree;
 
     public float growTime;
@@ -27,7 +28,8 @@ public class SaplingApple : MonoBehaviour
 
     private void Awake()
     {
-        _camPlayer = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+        //_camPlayer = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+        _camPlayer = FindObjectOfType<CameraOrbit>();
     }
 
 

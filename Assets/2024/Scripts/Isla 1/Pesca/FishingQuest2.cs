@@ -156,6 +156,7 @@ public class FishingQuest2 : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
+            //_buttonConfirm.onClick.RemoveAllListeners();
             _dialogue.playerInRange = false;
             _iconInteract.SetActive(false);
         }

@@ -148,6 +148,7 @@ public class NPCZone3 : MonoBehaviour
         var player = other.GetComponent<Character>();
         if (player != null)
         {
+            _buttonConfirm.onClick.RemoveAllListeners();
             _dialogue.playerInRange = false;
             _iconInteract.transform.DOScale(0f, 0.5f);
         }

@@ -80,6 +80,10 @@ public class ChainParkQuest : MonoBehaviour
         _articleMarketSkin.SetActive(true);
         _iconQuest.SetActive(false);
         _myAnim.SetBool("Quest", true);
+
+        var questUI = FindObjectOfType<QuestUI>();
+        if (questUI != null) questUI.UIStatus(false);
+
         questActive = true;
     }
 
@@ -87,10 +91,11 @@ public class ChainParkQuest : MonoBehaviour
     {
         _iconInteract.SetActive(true);
         _iconInteract.transform.DOScale(0.01f, 0.5f);
-        _buttonConfirm.onClick.AddListener(() => Confirm());
-
+        
         if (!questActive)
         {
+            _buttonConfirm.onClick.AddListener(() => Confirm());
+
             for (int i = 0; i < _dialogue._lines.Length; i++)
                 _dialogue._lines[i] = _lines[i];
         }
@@ -105,7 +110,7 @@ public class ChainParkQuest : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && _myCol.enabled)
+        if (player != null)
         {
             if (!questActive) SetDialogue();
             if (_questCompleted)
@@ -116,11 +121,19 @@ public class ChainParkQuest : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        var player = other.GetComponent<Character>();
+        if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract))
+            StartCoroutine(Ending(player));
+    }
+
     private void OnTriggerExit(Collider other)
     {
         var player = other.GetComponent<Character>();
         if (player != null)
         {
+            _buttonConfirm.onClick.RemoveAllListeners();
             _dialogue.playerInRange = false;
             _iconInteract.transform.DOScale(0f, 0.5f);
         }
