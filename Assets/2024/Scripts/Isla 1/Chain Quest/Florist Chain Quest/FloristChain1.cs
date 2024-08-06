@@ -21,12 +21,14 @@ public class FloristChain1 : MonoBehaviour
     [SerializeField, TextArea(4, 6)] string[] _lines;
     [SerializeField] Button _buttonConfirm;
     [SerializeField] Dialogue _dialogue;
+    [SerializeField] BoxMessages _boxMessages;
     #endregion
 
     [Header("QUEST")]
+    [SerializeField] LocationQuest _radar;
     [SerializeField] int _flowersRequired = 4;
     private bool _questActive = false;
-    private bool _questCompleted = false;
+    [SerializeField] private bool _questCompleted = false;
     [SerializeField] Dig[] _allDigs;
     private Manager _gm;
 
@@ -140,9 +142,31 @@ public class FloristChain1 : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //var player = other.GetComponent<Character>();
+        //if (player != null && _myCol.enabled && !_questActive && !_questCompleted)
+        //    SetDialogue();
+
+
         var player = other.GetComponent<Character>();
-        if (player != null && _myCol.enabled && !_questActive && !_questCompleted)
-            SetDialogue();
+        if (player != null && _myCol.enabled)
+        {
+            if (!_questActive) SetDialogue();
+            if (_questActive || _questCompleted) _iconInteract.SetActive(true);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        //var player = other.GetComponent<Character>();
+        //if (player != null && _myCol.enabled && _questCompleted && Input.GetKeyDown(KeyCode.F))
+        //    StartCoroutine(Ending());
+
+        var player = other.GetComponent<Character>();
+        if (player != null && _myCol.enabled && Input.GetKeyDown(KeyCode.F))
+        {
+            if (_questCompleted) StartCoroutine(Ending());
+            else if (!_questCompleted && _questActive) StartCoroutine(MessageTreasure(player));
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -155,28 +179,19 @@ public class FloristChain1 : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        var player = other.GetComponent<Character>();
-        if (player != null && _myCol.enabled && _questCompleted && Input.GetKeyDown(KeyCode.F))
-            StartCoroutine(Ending());
-    }
-
     private IEnumerator Ending()
     {
         _myCol.enabled = false;
-
-        _player.speed = 0;
         _player.FreezePlayer();
-
+        _radar.StatusRadar(false);
         _txtNPC.text = "Florist";
         _txtMessage.text = _messagesEnding[0];
         _recTransform.localScale = new Vector3(1, 1, 1);
         _recTransform.DOAnchorPosY(-1000f, 0f);
-
         _fadeOut.DOColor(Color.black, 1f);
         _camPlayer.gameObject.SetActive(false);
         _cinematicEnd.SetActive(true);
+        _iconInteract.SetActive(false);
 
         yield return new WaitForSeconds(2f);
         _recTransform.gameObject.SetActive(true);
@@ -185,32 +200,51 @@ public class FloristChain1 : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
         _recTransform.DOAnchorPosY(-1000f, 0.5f);
+
         yield return new WaitForSeconds(1f);
         _txtMessage.text = _messagesEnding[1];
         _recTransform.DOAnchorPosY(70f, 0f);
 
         yield return new WaitForSeconds(3f);
         _recTransform.DOAnchorPosY(-1000f, 0.5f);
+
         yield return new WaitForSeconds(1f);
         _txtMessage.text = _messagesEnding[2];
         _recTransform.DOAnchorPosY(70f, 0f);
 
         yield return new WaitForSeconds(3f);
         _recTransform.DOAnchorPosY(-1000f, 0.5f);
+
         yield return new WaitForSeconds(0.6f);
         _recTransform.gameObject.SetActive(false);
-
         _camPlayer.gameObject.SetActive(true);
         Destroy(_cinematicEnd);
-
-        _player.speed = _player.speedAux;
         _player.DeFreezePlayer();
-
         _gm.QuestCompleted();
         _iconFlowers.SetActive(false);
         _inventory.money += 100;
-        //_message.ShowUI("+100", _slideMoney, _textAmountMoney);
+        _radar.StatusRadar(true);
         _doTween.ShowLootCoroutine(_sliderMoney);
         Destroy(this);
+    }
+
+    private IEnumerator MessageTreasure(Character player)
+    {
+        _myCol.enabled = false;
+        _boxMessages.SetMessage("Florist");
+        player.FreezePlayer();
+        _iconInteract.SetActive(false);
+        _radar.StatusRadar(false);
+
+        yield return new WaitForSeconds(1f);
+        _boxMessages.ShowMessage(_messagesEnding[3]);
+
+        yield return new WaitForSeconds(3f);
+        player.DeFreezePlayer();
+        _myCol.enabled = true;
+        _radar.StatusRadar(true);
+
+        yield return new WaitForSeconds(1f);
+        _boxMessages.DesactivateMessage();
     }
 }
