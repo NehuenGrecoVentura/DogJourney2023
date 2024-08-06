@@ -126,9 +126,9 @@ public class TicketBooth : MonoBehaviour
 
     public void BuyGlassesSun()
     {
-        if (_inventory.tickets >= _priceAxe)
+        if (_inventory.tickets >= _priceGlasses)
         {
-            _inventory.tickets -= _priceAxe;
+            _inventory.tickets -= _priceGlasses;
             _glassesSun.SetActive(true);
             _myAudio.PlayOneShot(_soundBuy);
 
