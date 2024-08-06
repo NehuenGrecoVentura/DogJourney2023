@@ -12,6 +12,7 @@ public class Manager : MonoBehaviour
     private GameObject[] _allDecals;
 
     [Header("WIN")]
+    [SerializeField] LocationQuest _radar;
     [SerializeField] AudioClip _soundWin;
     [SerializeField] Text _winText;
     [SerializeField] float _winTextTime;
@@ -247,18 +248,20 @@ public class Manager : MonoBehaviour
         if (levelFishing == 3) _fishingGame.HookPower = 0.03f;
     }
 
-    public void ActiveTutorialChain()
+    public void ActiveTutorialChain(Collider myCol)
     {
         //if (!chainsActive) StartCoroutine(TutorialChain());
         //else return;
 
-        StartCoroutine(TutorialChain());
+        StartCoroutine(TutorialChain(myCol));
     }
 
-    private IEnumerator TutorialChain()
+    private IEnumerator TutorialChain(Collider myCol)
     {
         chainsActive = true;
+        myCol.enabled = false;
         _player.FreezePlayer();
+        _radar.StatusRadar(false);
 
         _cam.gameObject.SetActive(false);
         _camScenario.gameObject.SetActive(true);
@@ -295,6 +298,8 @@ public class Manager : MonoBehaviour
         _cam.gameObject.SetActive(true);
         Destroy(_camScenario.gameObject);
         _player.DeFreezePlayer();
+        myCol.enabled = true;
+        _radar.StatusRadar(true);
 
         yield return new WaitForSeconds(0.6f);
         _boxMessage.gameObject.SetActive(false);

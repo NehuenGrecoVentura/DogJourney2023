@@ -11,6 +11,7 @@ public class ArchaeologistQuest1 : MonoBehaviour
     [SerializeField] GameObject _iconQuest;
     [SerializeField] KeyCode _keyInteract = KeyCode.F;
     [SerializeField] Collider _myCol;
+    [SerializeField] LocationQuest _radar;
 
     [Header("DIALOGUE")]
     [SerializeField] TMP_Text _textDialogue;
@@ -26,12 +27,13 @@ public class ArchaeologistQuest1 : MonoBehaviour
     [SerializeField] TMP_Text _textAmountMoney;
     [SerializeField] RectTransform _rectMessage;
     [SerializeField] RectTransform _rectMoney;
-    [SerializeField, TextArea(4,6)] string[] _messagesEnding;
+    [SerializeField, TextArea(4, 6)] string[] _messagesEnding;
     [SerializeField] CharacterInventory _inventory;
+    [SerializeField] BoxMessages _boxMes;
 
     [Header("QUEST")]
     private bool _questActive = false;
-    private bool _treasureFound = false;
+    [SerializeField] private bool _treasureFound = false;
 
     [Header("INVENTORY UI")]
     [SerializeField] GameObject _canvasIconsChainsQuests;
@@ -76,7 +78,7 @@ public class ArchaeologistQuest1 : MonoBehaviour
         _dialogue.canTalk = false;
         //_buttonConfirm.gameObject.SetActive(false);
         //_dialogue.playerInRange = false;
-        _myCol.enabled = false;
+        //_myCol.enabled = false;
         _dialogue.Close();
         _iconInteract.SetActive(false);
 
@@ -84,7 +86,7 @@ public class ArchaeologistQuest1 : MonoBehaviour
         {
             _player.FreezePlayer();
             _gm.chainsActive = true;
-            _gm.ActiveTutorialChain();
+            _gm.ActiveTutorialChain(_myCol);
         }
 
         //_gm.ActiveTutorialChain();
@@ -121,15 +123,21 @@ public class ArchaeologistQuest1 : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && _myCol.enabled && !_questActive && !_treasureFound)
-            SetDialogue();
+        if (player != null && _myCol.enabled)
+        {
+            if (!_questActive) SetDialogue();
+            if(_questActive || _treasureFound)_iconInteract.SetActive(true);
+        }
     }
 
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && _myCol.enabled && _treasureFound && Input.GetKeyDown(KeyCode.F))
-            StartCoroutine(Ending());            
+        if (player != null && _myCol.enabled && Input.GetKeyDown(KeyCode.F))
+        {
+            if (_treasureFound) StartCoroutine(Ending());
+            else if (!_treasureFound && _questActive) StartCoroutine(MessageTreasure(player));
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -150,18 +158,36 @@ public class ArchaeologistQuest1 : MonoBehaviour
         _treasureFound = true;
     }
 
+    private IEnumerator MessageTreasure(Character player)
+    {
+        _myCol.enabled = false;
+        _boxMes.SetMessage("Archaeologist");
+        player.FreezePlayer();
+        _iconInteract.SetActive(false);
+        _radar.StatusRadar(false);
+
+        yield return new WaitForSeconds(1f);
+        _boxMes.ShowMessage(_messagesEnding[3]);
+
+        yield return new WaitForSeconds(3f);
+        player.DeFreezePlayer();
+        _myCol.enabled = true;
+        _radar.StatusRadar(true);
+
+        yield return new WaitForSeconds(1f);
+        _boxMes.DesactivateMessage();
+    }
+
     private IEnumerator Ending()
     {
         _myCol.enabled = false;
-
-        _player.speed = 0;
+        _radar.StatusRadar(false);
         _player.FreezePlayer();
-
+        _iconInteract.transform.DOScale(0f, 0f);
         _nameNPC.text = "Archaeologist";
         _textMessage.text = _messagesEnding[0];
         _rectMessage.localScale = new Vector3(1, 1, 1);
         _rectMessage.DOAnchorPosY(-1000f, 0f);
-
         _fadeOut.DOColor(Color.black, 1f);
         _camPlayer.gameObject.SetActive(false);
         _cinematicEnd.SetActive(true);
@@ -174,6 +200,7 @@ public class ArchaeologistQuest1 : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
         _rectMessage.DOAnchorPosY(-1000f, 0.5f);
+
         yield return new WaitForSeconds(1f);
         _textMessage.text = _messagesEnding[1];
         _myAudio.PlayOneShot(_sounds[1]);
@@ -181,6 +208,7 @@ public class ArchaeologistQuest1 : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
         _boxMessage.DOAnchorPosY(-1000f, 0.5f);
+
         yield return new WaitForSeconds(1f);
         _textMessage.text = _messagesEnding[2];
         _myAudio.PlayOneShot(_sounds[1]);
@@ -188,18 +216,15 @@ public class ArchaeologistQuest1 : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
         _rectMessage.DOAnchorPosY(-1000f, 0.5f);
+
         yield return new WaitForSeconds(0.6f);
         _rectMessage.gameObject.SetActive(false);
-
         _camPlayer.gameObject.SetActive(true);
         Destroy(_cinematicEnd);
-
-        _player.speed = _player.speedAux;
         _player.DeFreezePlayer();
-
         _gm.QuestCompleted();
+        _radar.StatusRadar(true);
         _iconTreasure.SetActive(false);
-        //_message.ShowUI("+100", _rectMoney, _textAmountMoney);
         _message.AddIconInventory(_boxMessage, _textSlide, "Minerva helmet received");
         Destroy(this);
     }

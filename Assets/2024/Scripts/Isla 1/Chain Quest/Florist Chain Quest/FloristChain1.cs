@@ -132,7 +132,7 @@ public class FloristChain1 : MonoBehaviour
         if (!_gm.chainsActive)
         {
             _gm.chainsActive = true;
-            _gm.ActiveTutorialChain();
+            _gm.ActiveTutorialChain(_myCol);
         }
 
         _questActive = true;
