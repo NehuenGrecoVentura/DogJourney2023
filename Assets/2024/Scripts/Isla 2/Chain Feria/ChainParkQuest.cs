@@ -24,6 +24,7 @@ public class ChainParkQuest : MonoBehaviour
     [SerializeField] DoTweenTest _doTween;
 
     [Header("QUEST")]
+    [SerializeField] LocationQuest _radar;
     [SerializeField] Manager _gm;
     [SerializeField] CharacterInventory _inventory;
     [SerializeField] GameObject _articleMarketSkin;
@@ -91,7 +92,7 @@ public class ChainParkQuest : MonoBehaviour
     {
         _iconInteract.SetActive(true);
         _iconInteract.transform.DOScale(0.01f, 0.5f);
-        
+
         if (!questActive)
         {
             _buttonConfirm.onClick.AddListener(() => Confirm());
@@ -113,7 +114,7 @@ public class ChainParkQuest : MonoBehaviour
         if (player != null)
         {
             if (!questActive) SetDialogue();
-            if (_questCompleted)
+            if (_questCompleted || questActive && !_questCompleted)
             {
                 _iconInteract.SetActive(true);
                 _iconInteract.transform.DOScale(0.01f, 0.5f);
@@ -124,8 +125,14 @@ public class ChainParkQuest : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract))
-            StartCoroutine(Ending(player));
+        //if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract))
+        //    StartCoroutine(Ending(player));
+
+        if (player != null && Input.GetKeyDown(_keyInteract))
+        {
+            if (_questCompleted) StartCoroutine(Ending(player));
+            else if (!_questCompleted && questActive) StartCoroutine(MessageTickets(player));
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -139,33 +146,6 @@ public class ChainParkQuest : MonoBehaviour
         }
     }
 
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    var player = other.GetComponent<Character>();
-    //    if (player != null && _myCol.enabled)
-    //    {
-    //        if (!questActive && !_questCompleted) SetDialogue();
-    //        else if (_questCompleted) _iconInteract.transform.DOScale(0.01f, 0.5f);
-    //    }
-    //}
-
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    var player = other.GetComponent<Character>();
-    //    if (player != null && _questCompleted && Input.GetKeyDown(_keyInteract))
-    //        StartCoroutine(Ending(player));
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    var player = other.GetComponent<Character>();
-    //    if (player != null)
-    //    {
-    //        _dialogue.playerInRange = false;
-    //        _iconInteract.transform.DOScale(0f, 0.5f);
-    //    }
-    //}
 
     public void Completed(AudioSource audio, AudioClip soundBuy, AudioClip soundError)
     {
@@ -202,6 +182,33 @@ public class ChainParkQuest : MonoBehaviour
         _iconQuest.SetActive(true);
         _iconInteract.SetActive(false);
     }
+
+
+    private IEnumerator MessageTickets(Character player)
+    {
+        _myCol.enabled = false;
+        _boxMessage.SetMessage(_nameNPC);
+        player.FreezePlayer();
+        _iconInteract.SetActive(false);
+
+        _radar.StatusRadar(false);
+        _camEnd.gameObject.SetActive(true);
+        _camPlayer.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(1f);
+        _boxMessage.ShowMessage(_messages[3]);
+
+        yield return new WaitForSeconds(3f);
+        _camEnd.gameObject.SetActive(false);
+        _camPlayer.gameObject.SetActive(true);
+        player.DeFreezePlayer();
+        _myCol.enabled = true;
+        _radar.StatusRadar(true);
+
+        yield return new WaitForSeconds(1f);
+        _boxMessage.DesactivateMessage();
+    }
+
 
     private IEnumerator Ending(Character player)
     {
