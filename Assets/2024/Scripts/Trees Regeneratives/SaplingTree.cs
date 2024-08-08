@@ -29,7 +29,11 @@ public class SaplingTree : MonoBehaviour
     {
         //_camPlayer = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
 
-        _camPlayer = FindObjectOfType<CameraOrbit>();
+        if (_camPlayer == null)
+        {
+            _camPlayer = FindObjectOfType<CameraOrbit>();
+        }
+    
     }
 
 
