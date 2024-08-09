@@ -171,7 +171,7 @@ public class DogEnter : MonoBehaviour
         _dog.quickEnd = false;
         _mainCam.gameObject.SetActive(true);
 
-        _player.enabled = true;
+        //_player.enabled = true;
         _player.DeFreezePlayer();
 
         _colTableQuest.enabled = true;
@@ -329,7 +329,7 @@ public class DogEnter : MonoBehaviour
         _fadeOut.DOColor(Color.black, 1f);
         _radar.StatusRadar(false);
         _player.FreezePlayer();
-        _player.enabled = false;
+        //_player.enabled = false;
 
         yield return new WaitForSeconds(1f);
         _fadeOut.DOColor(new Color(0, 0, 0, 0), 1f);
