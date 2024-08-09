@@ -132,9 +132,19 @@ public class Manager : MonoBehaviour
         _manzanas.CanPlay();
         StartCoroutine(WinTimeInScreen());
 
+        //var npcPark = FindObjectOfType<ChainParkQuest>();
+        //if (npcPark != null) npcPark.ActivateNPC();
+        //else return;
+
+        //var npcChain = FindObjectOfType<ChainZone3>();
+        //if (npcChain != null) npcChain.ActivateNPC();
+        //else return;
+
         var npcPark = FindObjectOfType<ChainParkQuest>();
-        if (npcPark != null) npcPark.ActivateNPC();
-        else return;
+        npcPark?.ActivateNPC();
+
+        var npcChain = FindObjectOfType<ChainZone3>();
+        npcChain?.ActivateNPC();
     }
 
     public void BlockMinigames()
@@ -144,9 +154,19 @@ public class Manager : MonoBehaviour
         _tiros.BlockMinigame();
         _manzanas.BlockMinigame();
 
+        //var npcPark = FindObjectOfType<ChainParkQuest>();
+        //if (npcPark != null) npcPark.DesactivateNPC();
+        //else return;
+
+        //var npcChain = FindObjectOfType<ChainZone3>();
+        //if (npcChain != null) npcChain.DesactivateNPC();
+        //else return;
+
         var npcPark = FindObjectOfType<ChainParkQuest>();
-        if (npcPark != null) npcPark.DesactivateNPC();
-        else return;
+        npcPark?.DesactivateNPC();
+
+        var npcChain = FindObjectOfType<ChainZone3>();
+        npcChain?.DesactivateNPC();
     }
 
     public void GreenTreesShader()

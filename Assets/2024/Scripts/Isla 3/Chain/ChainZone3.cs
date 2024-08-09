@@ -257,4 +257,23 @@ public class ChainZone3 : MonoBehaviour
         _batteryObtained = true;
         _myCol.enabled = true;
     }
+
+    public void DesactivateNPC()
+    {
+        _myCol.enabled = false;
+        _myAnim.SetBool("Quest", true);
+        _iconQuest.SetActive(false);
+        _iconInteract.SetActive(false);
+    }
+
+    public void ActivateNPC()
+    {
+        if (!_questActive)
+        {
+            _myCol.enabled = true;
+            _myAnim.SetBool("Quest", false);
+            _iconQuest.SetActive(true);
+            _iconInteract.SetActive(false);
+        }
+    }
 }
