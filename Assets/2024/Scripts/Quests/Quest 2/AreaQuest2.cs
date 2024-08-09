@@ -3,6 +3,7 @@ using System.Collections;
 
 public class AreaQuest2 : MonoBehaviour
 {
+    [SerializeField] CarrotItem _carrot;
     [SerializeField] GameObject _iconQuest;
     [Header("CINEMATIC")]
     [SerializeField] GameObject _cinematicRabbit;
@@ -34,11 +35,26 @@ public class AreaQuest2 : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<Character>();
-        if (player != null && !_firstContact)
+        //if (player != null && !_firstContact)
+        if (player != null)
         {
-            player.speed = 0;
-            player.FreezePlayer();
-            StartCoroutine(FocusPuzzle());
+            if (!_firstContact)
+            {
+                if (!_carrot.objectPicked)
+                {
+                    player.FreezePlayer();
+                    StartCoroutine(FocusPuzzle());
+                }
+
+                else
+                {
+                    Destroy(_cinematicRabbit);
+                    Destroy(_camBuild.gameObject);
+                    Destroy(_iconBuild.gameObject);
+                    Destroy(_iconQuest);
+                    Destroy(this);
+                }
+            }
         }
     }
 
