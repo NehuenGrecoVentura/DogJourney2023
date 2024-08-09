@@ -28,7 +28,7 @@ public class AreaRabbit : MonoBehaviour
         var carrot = other.GetComponent<CarrotItem>();
         if (carrot != null)
         {
-            if (!carrot.objectPicked)
+            if (!carrot.objectPicked && !_myRabbit._myMesh.enabled)
             {
                 Destroy(_boxMessage, 1.2f);
                 _myRabbit.GoToCarrot(carrot.gameObject.transform);

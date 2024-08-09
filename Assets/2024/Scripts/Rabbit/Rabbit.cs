@@ -22,7 +22,7 @@ public class Rabbit : MonoBehaviour, IPick
     [Header("INTERACT")]
     [SerializeField] KeyCode _keyInteractive = KeyCode.F;
     [SerializeField] GameObject _iconInteract;
-    [SerializeField] SkinnedMeshRenderer _myMesh;
+    public SkinnedMeshRenderer _myMesh;
 
     private void Awake()
     {
